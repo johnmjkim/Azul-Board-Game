@@ -5,13 +5,12 @@ Use the entries below as an example.
 
 ## Week 4
 
-Everyone: create application skeleton - meeting 13:00 16 Mar
-
 Everyone: decided meeting time - 14:00~16:00 AEDT
 
 ## Week 5
 
-
+Everyone: discussion about application skeleton - meeting 10:00 AEDT 25 Mar
+Everyone: decided application skeleton and pushed - meeting 16:00 SEDT 27 Mar
 
 ## Week 6
 
