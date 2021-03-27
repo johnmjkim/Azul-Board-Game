@@ -43,6 +43,7 @@ public class Viewer extends Application {
         boardTextField = new TextField();
         boardTextField.setPrefWidth(100);
         Button button = new Button("Refresh");
+        /*
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -50,6 +51,12 @@ public class Viewer extends Application {
                         boardTextField.getText()});
             }
         });
+         */
+        // Use lambda expression for button
+        button.setOnAction(ae -> {
+            displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
+        });
+
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
                 boardTextField, button);

@@ -54,6 +54,14 @@ public class Azul {
      * TASK 2
      */
     public static boolean isSharedStateWellFormed(String sharedState) {
+        /*
+        System.out.println(sharedState);
+        for(int i=0;i < sharedState.length();i++){
+            System.out.println(sharedState.charAt(i));
+        }
+
+         */
+        // A() is blablabla to do blabla
         // FIXME Task 2
         return false;
     }
@@ -61,7 +69,7 @@ public class Azul {
     /**
      * Given a playerState, determine if it is well-formed.
      * Note: you don't have to consider validity for this task.
-     * A playerState is composed of individual playerStrings.
+     * A playcome in agaierState is composed of individual playerStrings.
      * A playerState is well-formed if it satisfies the following conditions.
      * <p>
      * A playerString follows this pattern: [player][score][mosaic][storage][floor]
@@ -108,6 +116,7 @@ public class Azul {
      * TASK 3
      */
     public static boolean isPlayerStateWellFormed(String playerState) {
+        //System.out.println(playerState);
         // FIXME Task 3
         return false;
     }
@@ -210,6 +219,12 @@ public class Azul {
      * TASK 9
      */
     public static boolean isStateValid(String[] gameState) {
+        // This methos is to validata blabalal
+        /*
+        isSharedStateWellFormed();
+        isPlayerStateWellFormed();
+
+         */
         // FIXME Task 9
         return false;
     }
@@ -279,5 +294,17 @@ public class Azul {
         // FIXME Task 13
         return null;
         // FIXME Task 15 Implement a "smart" generateAction()
+    }
+
+    public static boolean isStartingValid(){
+        // Anno methos does blabla
+        /*
+        drawTileFromBag();
+        refillFactories();
+        isStateValid();
+        isMoveValid();
+
+         */
+        return false;
     }
 }
