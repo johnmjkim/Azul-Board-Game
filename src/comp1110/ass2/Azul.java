@@ -6,8 +6,7 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 public class Azul {
     public static String[] gameState;
     public static String move;
-    public static int score;
-
+    public static int gameScore;
 
     /**
      * Given a shared state string, determine if it is well-formed.
@@ -341,8 +340,6 @@ public class Azul {
         return null;
     }
 
-
-
     // isStartingValid() checks if starting round movement is valid
     // This is "2. Starting the round"
     public static boolean isStartingValid(String[] gameState, String move){
@@ -368,13 +365,15 @@ public class Azul {
         boolean valid_move = isMoveValid(gameState , move);
         return valid_state && valid_move;
     }
+
     public static void tileScore(String[] gameState){
+
     }
     public static boolean tilingEnd(String[] gameState){
         return false;
     }
 
-    //
+    // isTPreparingNextValid() checks if next round preparing movement is valid
     // “5. Preparing for next round”
     public static boolean isPreparingNextValid(String[] gameState) {
         nextRound(gameState);
@@ -385,22 +384,23 @@ public class Azul {
         isStateValid(gameState);
     }
     public static void scorePlayer(String[] gameState) {
+
     }
 
-    //
-    //“6. Other players play”
-    public static void isGameEnd(String[] gameState) {
-    }
-
-
-    //
-    //“7. End of the Game”
-    public static boolean endAzulGameValid(String[] gameState) {
-        isStateValid(gameState);
+    public static boolean isHumanPlayer(String[] gameState) {
         return false;
     }
 
+    // isGameEnd() checks if game is ended
+    // This is usd in "4. Mosaic-tiling/Scoring" and “6. Other players play”
+    public static void isGameEnd(String[] gameState) {
+    }
 
-
+    // isEndGameValid() checks is game end is valid
+    // This is “7. End of the Game”
+    public static boolean isEndGameValid(String[] gameState) {
+        isStateValid(gameState);
+        return false;
+    }
 
 }

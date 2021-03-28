@@ -83,6 +83,15 @@ public class Viewer extends Application {
         moveTile();
     };
 
+    // displayEnd() is to show the End of the game.
+    private void displayEnd(){
+        String[] _gameState = Azul.gameState;
+        int _gameScore = Azul.gameScore;
+        displayScore(_gameScore);
+        displayState(_gameState);
+        moveTile();
+    };
+
     // displayBoard() is to show the Center Board and Player Board of the Game class.
     private void displayBoard(){
         Game.animateBoard();
@@ -99,7 +108,7 @@ public class Viewer extends Application {
     };
 
     // displayScore() is to show the calculated Score.
-    private void displayScore(){
+    private void displayScore(int score){
 
     };
 
@@ -115,8 +124,10 @@ public class Viewer extends Application {
 
         animateTile();
         displayBoard();
-        displayScore();
-
+        displayScore(Azul.gameScore);
+        if(Azul.isEndGameValid(Azul.gameState)){
+            displayEnd();
+        }
         primaryStage.setScene(scene);
         primaryStage.show();
     }
