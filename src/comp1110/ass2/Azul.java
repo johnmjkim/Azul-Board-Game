@@ -17,7 +17,7 @@ public class Azul {
      * [factories][centre][bag][discard]
      * where [factories], [centre], [bag] and [discard] are replaced by the
      * corresponding small string as described below.
-     * <p>
+     * <p>,
      * 1. [factories] The factories substring begins with an 'F'
      * and is followed by a collection of *up to* 5 5-character factory strings
      * representing each factory.
@@ -320,7 +320,6 @@ public class Azul {
     // This is “3. Drafting” and “4. Mosaic-tiling/Scoring”.
     public static String[] applyMove(String[] gameState, String move) {
         // FIXME Task 11
-        String[] applyMove = applyMove(gameState, move);
         return null;
     }
 
@@ -331,16 +330,19 @@ public class Azul {
      * @return a move for the current game state.
      * TASK 13
      */
-    // generationAction() is to generation a "smart" Action.
     // This is “6. Other players play”.
     public static String generateAction(String[] gameState) {
         // FIXME Task 13
-        return null;
+        //return null;
+        // generationAction().
+        // generationAction() is to generation a "smart" Action.
         // FIXME Task 15 Implement a "smart" generateAction()
+        isDraftingValid(gameState, move);
+        isTilingValid(gameState, move);
+        return null;
     }
 
-    private static void generationAction(String[] gameState) {
-    }
+
 
     // isStartingValid() checks if starting round movement is valid
     // This is "2. Starting the round"
@@ -360,8 +362,46 @@ public class Azul {
         return valid_state && valid_move;
     }
 
-    private static void emptyFloor(String[] gameState) {
+    // isTilingValid() checks if tiling movement is valid
+    // This is “4. Mosaic-tiling/Scoring”
+    public static boolean isTilingValid(String[] gameState, String move){
+        boolean valid_state = isStateValid(gameState);
+        boolean valid_move = isMoveValid(gameState , move);
+        return valid_state && valid_move;
     }
-    private static void scorePlayer(String[] gameState) {
+    public static void tileScore(String[] gameState){
     }
+    public static boolean tilingEnd(String[] gameState){
+        return false;
+    }
+
+    //
+    // “5. Preparing for next round”
+    public static boolean isPreparingNextValid(String[] gameState) {
+        nextRound(gameState);
+        isStateValid(gameState);
+        return false;
+    }
+    public static void emptyFloor(String[] gameState) {
+        isStateValid(gameState);
+    }
+    public static void scorePlayer(String[] gameState) {
+    }
+
+    //
+    //“6. Other players play”
+    public static void isGameEnd(String[] gameState) {
+    }
+
+
+    //
+    //“7. End of the Game”
+    public static boolean endAzulGameValid(String[] gameState) {
+        isStateValid(gameState);
+        return false;
+    }
+
+
+
+
 }
