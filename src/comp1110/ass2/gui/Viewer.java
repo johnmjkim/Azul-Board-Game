@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Azul;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,32 +28,24 @@ public class Viewer extends Application {
      * @param state an array of two strings, representing the current game state
      *              TASK 4
      */
+
+    // displayState() is to show the Game State.
     void displayState(String[] state) {
-        // start();
-        // makeControls();
-        // setupViewer();
-        // displayBoard();
-        // displayError();
-        // displayState();
-        // animateTile();
-        // moveTile();
-        // displayScore();
-        // start() is to show the Game start.
-        // makeControls() is to make control of the Viewer.
-        // setupViewer() is to set up the Viewer.
-        // displayBoard() is to show the Center Board and Player Board of the Game class.
-        // displayError() is to show error.
-        // displayState() is to show the Game State.
-        // animateTile() is to show the animate of Tile.
-        // moveTile() is to show the move of the Tile in animate Board, Center Board and Player Board.
-        // displayScore() is to show the calculated Score.
         // FIXME Task 4: implement the simple state viewer
     }
 
     /**
      * Create a basic text field for input and a refresh button.
      */
+
+    // makeControls() is to make control of the Viewer.
     private void makeControls() {
+        setupViewer();
+        displayBoard();
+    }
+
+    // setupViewer() is to set up the Viewer and execute all "1. Game Setup" phase
+    private void setupViewer(){
         Label playerLabel = new Label("Player State:");
         playerTextField = new TextField();
         playerTextField.setPrefWidth(100);
@@ -73,7 +66,6 @@ public class Viewer extends Application {
         button.setOnAction(ae -> {
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
         });
-
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
                 boardTextField, button);
@@ -81,8 +73,37 @@ public class Viewer extends Application {
         hb.setLayoutX(50);
         hb.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(hb);
-    }
+    };
 
+    // animateTile() is to show the animate of Tile.
+    private void animateTile(){
+        String[] _gameState = Azul.gameState;
+        String _move = Azul.move;
+        displayState(_gameState);
+        moveTile();
+    };
+
+    // displayBoard() is to show the Center Board and Player Board of the Game class.
+    private void displayBoard(){
+        Game.animateBoard();
+    };
+
+    // displayError() is to show error.
+    private void displayError(){
+
+    };
+
+    // moveTile() is to show the move of the Tile in animate Board, Center Board and Player Board.
+    private void moveTile(){
+
+    };
+
+    // displayScore() is to show the calculated Score.
+    private void displayScore(){
+
+    };
+
+    // start() is to show the Game start.
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Azul Viewer");
@@ -91,6 +112,10 @@ public class Viewer extends Application {
         root.getChildren().add(controls);
 
         makeControls();
+
+        animateTile();
+        displayBoard();
+        displayScore();
 
         primaryStage.setScene(scene);
         primaryStage.show();
