@@ -18,8 +18,7 @@ public class Viewer extends Application {
 
     private final Group root = new Group();
     private final Group controls = new Group();
-    private TextField playerTextField;
-    private TextField boardTextField;
+    private TextField playerTextField;    private TextField boardTextField;
 
 
     /**
@@ -29,6 +28,24 @@ public class Viewer extends Application {
      *              TASK 4
      */
     void displayState(String[] state) {
+        // start();
+        // makeControls();
+        // setupViewer();
+        // displayBoard();
+        // displayError();
+        // displayState();
+        // animateTile();
+        // moveTile();
+        // displayScore();
+        // start() is to show the Game start.
+        // makeControls() is to make control of the Viewer.
+        // setupViewer() is to set up the Viewer.
+        // displayBoard() is to show the Center Board and Player Board of the Game class.
+        // displayError() is to show error.
+        // displayState() is to show the Game State.
+        // animateTile() is to show the animate of Tile.
+        // moveTile() is to show the move of the Tile in animate Board, Center Board and Player Board.
+        // displayScore() is to show the calculated Score.
         // FIXME Task 4: implement the simple state viewer
     }
 

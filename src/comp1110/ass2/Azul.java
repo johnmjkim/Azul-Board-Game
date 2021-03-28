@@ -59,9 +59,10 @@ public class Azul {
         for(int i=0;i < sharedState.length();i++){
             System.out.println(sharedState.charAt(i));
         }
-
          */
-        // A() is blablabla to do blabla
+        // isSharedStateWellFormed() contains four conditions: [factories][centre][bag][discard]
+        // This method is to check if the SharedState Well Formed, if true go to the method isPlayStateWellFormed()
+        // else the viewer display error.
         // FIXME Task 2
         return false;
     }
@@ -117,6 +118,12 @@ public class Azul {
      */
     public static boolean isPlayerStateWellFormed(String playerState) {
         //System.out.println(playerState);
+        for(int i=0;i < playerState.length();i++){
+            System.out.println(playerState.charAt(i));
+        }
+        // isPlayStateWellFormed() contains five patterns: [player][score][mosaic][storage][floor]
+        // This method is to check if the PlayerState Well Formed, if true go to start the round,
+        // else the viewer display error.
         // FIXME Task 3
         return false;
     }
@@ -124,13 +131,21 @@ public class Azul {
     /**
      * Given the gameState, draw a *random* tile from the bag.
      * If the bag is empty, refill the the bag with the discard pile and then draw a tile.
-     * If the discard pile is also empty, return 'Z'.
-     *
+     * If the discard pile is also empty, return 'Z'.     *
      * @param gameState the current game state
      * @return the tile drawn from the bag, or 'Z' if the bag and discard pile are empty.
      * TASK 5
      */
     public static char drawTileFromBag(String[] gameState) {
+        // isStartingValid();
+        // drawTileFromBag();
+        // isStateValid();
+        // isMoveValid();
+        // isStartingValid() is to check if the Starting is Valid.
+        // drawTileFromBag() is to draw a "random" tile from the bag.
+        // isStateValid() is to check if the current gameState is valid.
+        // isMoveValid() is to check if the move is valid.
+        // if all Valid, go to method refillFactories(),else the viewer display error.
         // FIXME Task 5
         return '0';
     }
@@ -145,6 +160,13 @@ public class Azul {
      * TASK 6
      */
     public static String[] refillFactories(String[] gameState) {
+        // refillFactories();
+        // isStateValid();
+        // isMoveValid();
+        // refillFactories() is to refill the Factories with tiles.
+        // isStateValid() is to check if the State is Valid.
+        // isMoveValid() is to check if the Move is Valid.
+        // if all Valid go to method isDraftingValid(), else the viewer display error.
         // FIXME Task 6
         return null;
     }
@@ -160,6 +182,8 @@ public class Azul {
      * TASK 7
      */
     public static int getBonusPoints(String[] gameState, char player) {
+        // getBonusPoints();
+        // getBonusPoints() is to calculate the Score when Game completed.
         // FIXME Task 7
         return -1;
     }
@@ -180,6 +204,14 @@ public class Azul {
      * TASK 8
      */
     public static String[] nextRound(String[] gameState) {
+        // prepareNextRound();
+        // emptyFloor();
+        // drawTileFromBag();
+        // refillFactories();
+        // prepareNextRound() is a method contains: emptyFloor(), drawTileFromBag() and refillFactories().
+        // emptyFloor() is to empty the floor area.
+        // drawTileFromBag() is to draw the Tiles from Bag.
+        // refillFactories() is to refill the Factories from the Bag.
         // FIXME TASK 8
         return null;
     }
@@ -219,12 +251,9 @@ public class Azul {
      * TASK 9
      */
     public static boolean isStateValid(String[] gameState) {
-        // This methos is to validata blabalal
-        /*
-        isSharedStateWellFormed();
-        isPlayerStateWellFormed();
-
-         */
+        // isSharedStateWellFormed();
+        // isPlayerStateWellFormed();
+        // The two method is to check if the entire game State is Valid.
         // FIXME Task 9
         return false;
     }
@@ -232,7 +261,7 @@ public class Azul {
     /**
      * Given a valid gameState and a move, determine whether the move is valid.
      * A Drafting move is a 4-character String.
-     * A Drafting move is valid if it satisfies the following conditions:
+     * A Drafting move is valid ifit satisfies the following conditions:
      * <p>
      * 1. The specified factory/centre contains at least one tile of the specified colour.
      * 2. The storage row the tile is being placed in does not already contain a different colour.
@@ -255,6 +284,10 @@ public class Azul {
      * TASK 10
      */
     public static boolean isMoveValid(String[] gameState, String move) {
+        // isDraftingMoveValid();
+        // isTilingMoveValid();
+        // isDraftingMoveValid() is to check if the Drafting move is Valid.
+        // isTilingMoveValid() is to check if the Tiling move is Valid.
         // FIXME Task 10
         return false;
     }
@@ -279,6 +312,10 @@ public class Azul {
      * TASK 11
      */
     public static String[] applyMove(String[] gameState, String move) {
+        // applyDraftingMove();
+        // applyTilingMove();
+        // applyDraftingMove() is to apply the Drafting Move.
+        // applyTilingMove() is to apply the Tiling Move.
         // FIXME Task 11
         return null;
     }
@@ -293,17 +330,18 @@ public class Azul {
     public static String generateAction(String[] gameState) {
         // FIXME Task 13
         return null;
+        // generationAction()；
+        // generationAction() is to generation a "smart" Action.
         // FIXME Task 15 Implement a "smart" generateAction()
     }
 
     public static boolean isStartingValid(){
-        // Anno methos does blabla
+        //  methods does
         /*
         drawTileFromBag();
         refillFactories();
         isStateValid();
         isMoveValid();
-        sibohu
          */
         return false;
     }
