@@ -330,12 +330,11 @@ public class Azul {
      * @return a move for the current game state.
      * TASK 13
      */
+    // generationAction() is to generation a "smart" Action.
     // This is “6. Other players play”.
     public static String generateAction(String[] gameState) {
         // FIXME Task 13
         //return null;
-        // generationAction().
-        // generationAction() is to generation a "smart" Action.
         // FIXME Task 15 Implement a "smart" generateAction()
         isDraftingValid(gameState, move);
         isTilingValid(gameState, move);
