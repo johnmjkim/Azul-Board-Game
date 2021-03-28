@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 public class Azul {
+    public static String[] gameState;
+    public static String move;
     /**
      * Given a shared state string, determine if it is well-formed.
      * Note: you don't need to consider validity for this task.
@@ -53,16 +55,18 @@ public class Azul {
      * @return true if sharedState is well-formed, otherwise return false
      * TASK 2
      */
+    // isSharedStateWellFormed() contains four conditions: [factories][centre][bag][discard]
+    // This method is to check if the SharedState Well Formed, if true go to the method isPlayStateWellFormed()
+    // else the viewer display error.
     public static boolean isSharedStateWellFormed(String sharedState) {
         /*
+        // Print Something
         System.out.println(sharedState);
         for(int i=0;i < sharedState.length();i++){
             System.out.println(sharedState.charAt(i));
         }
          */
-        // isSharedStateWellFormed() contains four conditions: [factories][centre][bag][discard]
-        // This method is to check if the SharedState Well Formed, if true go to the method isPlayStateWellFormed()
-        // else the viewer display error.
+
         // FIXME Task 2
         return false;
     }
@@ -116,15 +120,18 @@ public class Azul {
      * false if the playerState is not well-formed
      * TASK 3
      */
+    // isPlayStateWellFormed() contains five patterns: [player][score][mosaic][storage][floor]
+    // This method is to check if the PlayerState Well Formed, if true go to start the round,
+    // else the viewer display error.
     public static boolean isPlayerStateWellFormed(String playerState) {
+        // FIXME Task 3
         //System.out.println(playerState);
+        /*
         for(int i=0;i < playerState.length();i++){
             System.out.println(playerState.charAt(i));
         }
-        // isPlayStateWellFormed() contains five patterns: [player][score][mosaic][storage][floor]
-        // This method is to check if the PlayerState Well Formed, if true go to start the round,
-        // else the viewer display error.
-        // FIXME Task 3
+
+         */
         return false;
     }
 
@@ -136,13 +143,14 @@ public class Azul {
      * @return the tile drawn from the bag, or 'Z' if the bag and discard pile are empty.
      * TASK 5
      */
+
+    // drawTileFromBag() is to draw a "random" tile from the bag.
     public static char drawTileFromBag(String[] gameState) {
         // isStartingValid();
         // drawTileFromBag();
         // isStateValid();
         // isMoveValid();
         // isStartingValid() is to check if the Starting is Valid.
-        // drawTileFromBag() is to draw a "random" tile from the bag.
         // isStateValid() is to check if the current gameState is valid.
         // isMoveValid() is to check if the move is valid.
         // if all Valid, go to method refillFactories(),else the viewer display error.
@@ -159,11 +167,12 @@ public class Azul {
      * the given state if not all factories are empty.
      * TASK 6
      */
+
+    // refillFactories() is to refill the Factories with tiles.
     public static String[] refillFactories(String[] gameState) {
         // refillFactories();
         // isStateValid();
         // isMoveValid();
-        // refillFactories() is to refill the Factories with tiles.
         // isStateValid() is to check if the State is Valid.
         // isMoveValid() is to check if the Move is Valid.
         // if all Valid go to method isDraftingValid(), else the viewer display error.
@@ -250,12 +259,14 @@ public class Azul {
      * @return true if the state is valid, false if it is invalid.
      * TASK 9
      */
+    // isStateValid() checks two methods shared, player state if the entire game State is Valid.
+    // This is "1. Game Setup"
     public static boolean isStateValid(String[] gameState) {
-        // isSharedStateWellFormed();
-        // isPlayerStateWellFormed();
-        // The two method is to check if the entire game State is Valid.
         // FIXME Task 9
-        return false;
+
+        boolean valid_sharedstate = isSharedStateWellFormed(gameState[0]);
+        boolean valid_playerstate = isPlayerStateWellFormed(gameState[1]);
+        return valid_sharedstate && valid_playerstate;
     }
 
     /**
@@ -334,15 +345,21 @@ public class Azul {
         // generationAction() is to generation a "smart" Action.
         // FIXME Task 15 Implement a "smart" generateAction()
     }
+    // isStartingValid() checks if starting round movement is valid
+    // This is "2. Starting the round"
+    public static boolean isStartingValid(String[] gameState, String move){
+        drawTileFromBag(gameState);
+        refillFactories(gameState);
+        boolean valid_state = isStateValid(gameState);
+        boolean valid_move = isMoveValid(gameState , move);
+        return valid_state && valid_move;
+    }
 
-    public static boolean isStartingValid(){
-        //  methods does
-        /*
-        drawTileFromBag();
-        refillFactories();
-        isStateValid();
-        isMoveValid();
-         */
-        return false;
+    // isDraftingValid() checks if drafting movement is valid
+    // This is "3. Drafting"
+    public static boolean isDraftingValid(String[] gameState, String move){
+        boolean valid_state = isStateValid(gameState);
+        boolean valid_move = isMoveValid(gameState , move);
+        return valid_state && valid_move;
     }
 }
