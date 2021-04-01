@@ -66,30 +66,33 @@ public class Azul {
     public static boolean isSharedStateWellFormed(String sharedState) {
         int character = 1;
         String[] tranferS = sharedState.split("");
-        if (tranferS[0].equals("A") || tranferS[0].equals("B") || tranferS[0].equals("C") ||
-                tranferS[0].equals("D")) {
-            if (tranferS[1].equals("F")) {
-                do {
-                    character++;
-                    if (tranferS[character].equals("0") || tranferS[character].equals("1") || tranferS[character].equals("2") ||
-                            tranferS[character].equals("3") || tranferS[character].equals("4")) {
+        boolean isChABCD=tranferS[0].equals("A") || tranferS[0].equals("B") || tranferS[0].equals("C") || tranferS[0].equals("D");
+        boolean ischF=tranferS[1].equals("F");
+        boolean isF01234=tranferS[character].equals("0") || tranferS[character].equals("1") || tranferS[character].equals("2") || tranferS[character].equals("3") || tranferS[character].equals("4");
+        boolean notTile = !(tranferS[character].equals("a") && tranferS[character].equals("b") && tranferS[character].equals("c") && tranferS[character].equals("d") && tranferS[character].equals("e"));
+        boolean notchC=!tranferS[1].equals("C");
+        boolean ischC= tranferS[1].equals("C");
+        boolean notchfandB= !tranferS[character + 1].equals("f") && !tranferS[character].equals("B");
+        boolean isTile =tranferS[character].equals("a") || tranferS[character].equals("b") || tranferS[character].equals("c") || tranferS[character].equals("d") || tranferS[character].equals("e");
+        if (isChABCD) {
+            if (ischF) {
+                do { character++;
+                    if (isF01234) {
                         for (int k = 0; k <= 3; k++) {
                             character++;
-                            if (!tranferS[character].equals("a") || !tranferS[character].equals("b") || !tranferS[character].equals("c") ||
-                                    !tranferS[character].equals("d") || !tranferS[character].equals("e")) {
+                            if (notTile) {
                                 return true;
                             }
                         }
-                    } else if (!tranferS[character].equals("C")) {
+                    } else if (notchC) {
                         return false;
                     }
-                } while (!tranferS[character].equals("C"));
-                if (tranferS[character].equals("C")) {
-                    if (!tranferS[character + 1].equals("f") && !tranferS[character].equals("B")) {
+                } while (notchC);
+                if (ischC) {
+                    if (notchfandB) {
                         do {
                             character++;
-                            if (tranferS[character].equals("a") || tranferS[character].equals("b") || tranferS[character].equals("c") ||
-                                    tranferS[character].equals("d") || tranferS[character].equals("e")) {
+                            if (isTile) {
                                 return true;
                             } else {
                                 System.out.println(false + "2");
