@@ -11,6 +11,7 @@ public class Azul {
     /**
      * Given a shared state string, determine if it is well-formed.
      * Note: you don't need to consider validity for this task.
+     * <p>
      * A sharedState is well-formed if it satisfies the following conditions.
      * <p>
      * [factories][centre][bag][discard]
@@ -63,16 +64,95 @@ public class Azul {
     // isSharedStateWellFormed() checks if the SharedState Well Formed.
     // This is “1. Game Setup”.
     public static boolean isSharedStateWellFormed(String sharedState) {
-        // FIXME Task 2
-        /*
-        // Print Something
-        System.out.println(sharedState);
-        for(int i=0;i < sharedState.length();i++){
-            System.out.println(sharedState.charAt(i));
+        int character = 1;
+        String[] tranferS = sharedState.split("");
+        if (tranferS[0].equals("A") || tranferS[0].equals("B") || tranferS[0].equals("C") ||
+                tranferS[0].equals("D")) {
+            if (tranferS[1].equals("F")) {
+                do {
+                    character++;
+                    if (tranferS[character].equals("0") || tranferS[character].equals("1") || tranferS[character].equals("2") ||
+                            tranferS[character].equals("3") || tranferS[character].equals("4")) {
+                        for (int k = 0; k <= 3; k++) {
+                            character++;
+                            if (!tranferS[character].equals("a") || !tranferS[character].equals("b") || !tranferS[character].equals("c") ||
+                                    !tranferS[character].equals("d") || !tranferS[character].equals("e")) {
+                                return true;
+                            }
+                        }
+                    } else if (!tranferS[character].equals("C")) {
+                        return false;
+                    }
+                } while (!tranferS[character].equals("C"));
+                if (tranferS[character].equals("C")) {
+                    if (!tranferS[character + 1].equals("f") && !tranferS[character].equals("B")) {
+                        do {
+                            character++;
+                            if (tranferS[character].equals("a") || tranferS[character].equals("b") || tranferS[character].equals("c") ||
+                                    tranferS[character].equals("d") || tranferS[character].equals("e")) {
+                                return true;
+                            } else {
+                                System.out.println(false + "2");
+                            }
+                        } while (!tranferS[character].equals("B"));
+                        if (tranferS[character].equals("B")) {
+                            for (int i = 1; i <= 10; i += 2) {
+                                int numofa = Integer.parseInt(tranferS[character + i]) * 10 + Integer.parseInt(tranferS[character + i + 1]);
+                                if (numofa <= 20) {
+                                    return true;
+                                } else {
+                                    System.out.println(false + "3");
+                                }
+                            }
+                            character += 11;
+                            if (tranferS[character].equals("D")) {
+                                for (int j = 1; j <= 10; j += 2) {
+                                    int numofb = Integer.parseInt(tranferS[character + j]) * 10 + Integer.parseInt(tranferS[character + j + 1]);
+                                    if (numofb <= 20) {
+                                        return true;
+                                    }
+                                }
+                            } else {
+                                System.out.println(false + "4");
+                            }
+                        } else {
+                            System.out.println(false + "5");
+                        }
+                    } else if (tranferS[character + 1].equals("f")) {
+                        if (tranferS[character + 2].equals("B")) {
+                            for (int i = 1; i <= 10; i += 2) {
+                                int numofa = Integer.parseInt(tranferS[character + i + 2]) * 10 + Integer.parseInt(tranferS[character + i + 3]);
+                                if (numofa <= 20) {
+                                    return true;
+                                }
+                            }
+                            character += 13;
+                            if (tranferS[character].equals("D")) {
+                                for (int j = 1; j <= 10; j += 2) {
+                                    int numofb = Integer.parseInt(tranferS[character + j]) * 10 + Integer.parseInt(tranferS[character + j + 1]);
+                                    if (numofb <= 20) {
+                                        return true;
+                                    } else {
+                                        System.out.println(false + "6");
+                                    }
+                                }
+                            } else {
+                                System.out.println(false + "7");
+                            }
+                        } else {
+                            System.out.println(false + "8");
+                        }
+                    }
+                } else {
+                    System.out.println(false + "9");
+                }
+            } else {
+                System.out.println(false + "10");
+            }
         }
-        */
         return false;
     }
+
 
     /**
      * Given a playerState, determine if it is well-formed.
@@ -141,6 +221,7 @@ public class Azul {
      * Given the gameState, draw a *random* tile from the bag.
      * If the bag is empty, refill the the bag with the discard pile and then draw a tile.
      * If the discard pile is also empty, return 'Z'.     *
+     *
      * @param gameState the current game state
      * @return the tile drawn from the bag, or 'Z' if the bag and discard pile are empty.
      * TASK 5
@@ -216,8 +297,6 @@ public class Azul {
         refillFactories(gameState);
         return null;
     }
-
-
 
 
     /**
@@ -342,34 +421,35 @@ public class Azul {
 
     // isStartingValid() checks if starting round movement is valid
     // This is "2. Starting the round"
-    public static boolean isStartingValid(String[] gameState, String move){
+    public static boolean isStartingValid(String[] gameState, String move) {
         drawTileFromBag(gameState);
         refillFactories(gameState);
         boolean valid_state = isStateValid(gameState);
-        boolean valid_move = isMoveValid(gameState , move);
+        boolean valid_move = isMoveValid(gameState, move);
         return valid_state && valid_move;
     }
 
     // isDraftingValid() checks if drafting movement is valid
     // This is "3. Drafting"
-    public static boolean isDraftingValid(String[] gameState, String move){
+    public static boolean isDraftingValid(String[] gameState, String move) {
         boolean valid_state = isStateValid(gameState);
-        boolean valid_move = isMoveValid(gameState , move);
+        boolean valid_move = isMoveValid(gameState, move);
         return valid_state && valid_move;
     }
 
     // isTilingValid() checks if tiling movement is valid
     // This is “4. Mosaic-tiling/Scoring”
-    public static boolean isTilingValid(String[] gameState, String move){
+    public static boolean isTilingValid(String[] gameState, String move) {
         boolean valid_state = isStateValid(gameState);
-        boolean valid_move = isMoveValid(gameState , move);
+        boolean valid_move = isMoveValid(gameState, move);
         return valid_state && valid_move;
     }
 
-    public static void tileScore(String[] gameState){
+    public static void tileScore(String[] gameState) {
 
     }
-    public static boolean tilingEnd(String[] gameState){
+
+    public static boolean tilingEnd(String[] gameState) {
         return false;
     }
 
@@ -380,9 +460,11 @@ public class Azul {
         isStateValid(gameState);
         return false;
     }
+
     public static void emptyFloor(String[] gameState) {
         isStateValid(gameState);
     }
+
     public static void scorePlayer(String[] gameState) {
 
     }
