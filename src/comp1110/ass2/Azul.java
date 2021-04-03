@@ -66,7 +66,7 @@ public class Azul {
     // isSharedStateWellFormed() checks if the SharedState Well Formed.
     // This is “1. Game Setup”.
     public static boolean isSharedStateWellFormed(String sharedState) {
-        //System.out.println(sharedState);
+        // FIXME Task 2
         char [] sharedState_array = sharedState.toCharArray();
         ArrayList<Character> sharedState_name_arr = new ArrayList<Character>();
         ArrayList<String> sharedState_content_arr = new ArrayList<String>();
@@ -100,7 +100,7 @@ public class Azul {
             return false;
         }
         // Player is valid
-        boolean player_format = check_player_format(sharedState_name_arr.get(0), sharedState_content_arr.get(0));
+        boolean s_player_format = check_s_player_format(sharedState_name_arr.get(0), sharedState_content_arr.get(0));
         // Factory is valid
         boolean factory_format = check_factory_format(sharedState_name_arr.get(1), sharedState_content_arr.get(1));
         // Center is valid
@@ -109,7 +109,7 @@ public class Azul {
         boolean bag_format = check_bag_discard_format(sharedState_name_arr.get(3), sharedState_content_arr.get(3), 'B');
         // Discard is valid
         boolean discard_format = check_bag_discard_format(sharedState_name_arr.get(4), sharedState_content_arr.get(4), 'D');
-        return player_format && factory_format && center_format && bag_format && discard_format;
+        return s_player_format && factory_format && center_format && bag_format && discard_format;
 
         // Sibo's code
         /*
@@ -207,14 +207,14 @@ public class Azul {
          */
     }
 
-    public static boolean check_player_format(char player_char, String player_String){
+    public static boolean check_s_player_format(char s_player_char, String s_player_String){
         // Find capital letters valid
-        boolean player_name_format = (player_char >= 'A' && player_char <= 'D');
+        boolean s_player_name_format = (s_player_char >= 'A' && s_player_char <= 'D');
 
-        // Player is valid
-        boolean player_format = player_name_format && player_String.isEmpty();
-        System.out.println(player_name_format + ", " + player_String.isEmpty());
-        return player_format;
+        // S_Player is valid
+        boolean s_player_format = s_player_name_format && s_player_String.isEmpty();
+        System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
+        return s_player_format;
     }
 
     public static boolean check_factory_format(char factory_char, String factory_String){
@@ -249,7 +249,7 @@ public class Azul {
         int len = 0;
         boolean center_content_format = true;
         for(char c : center_String.toCharArray()){
-            if(!(c >= 'a' && c <= 'e' || c == 'f')){
+            if(!(c >= 'a' && c <= 'f')){
                 center_content_format = false;
             }
             len++;
@@ -343,14 +343,209 @@ public class Azul {
     // This is “1. Game Setup”.
     public static boolean isPlayerStateWellFormed(String playerState) {
         // FIXME Task 3
-        //System.out.println(playerState);
-        /*
-        for(int i=0;i < playerState.length();i++){
-            System.out.println(playerState.charAt(i));
+        char [] playerState_array = playerState.toCharArray();
+        ArrayList<Character> playerState_name_arr = new ArrayList<Character>();
+        ArrayList<String> playerState_content_arr = new ArrayList<String>();
+        StringBuilder SB = new StringBuilder();
+        int len = 0;
+        // Filter valid capital letters
+        for( char c : playerState_array ){
+            //System.out.println(c);
+            if( (c >= 'A' && c <= 'D') || c =='M' || c =='S' || c == 'F'){
+                //System.out.println(String.valueOf(c));
+                playerState_name_arr.add(c);
+                playerState_content_arr.add(String.valueOf(SB));
+                SB.delete(0,SB.length());
+                len++;
+            }
+            else{
+                SB.append(c);
+            }
+        }
+        playerState_content_arr.add(String.valueOf(SB));
+        SB.delete(0,SB.length());
+        playerState_content_arr.remove(0);
+
+        System.out.println(playerState);
+        for(int i=0; i < len; i++){
+            System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
+        }
+        // Find capital letters valid 1 : filter by size
+        if(!(playerState_name_arr.size() % 4 == 0)){
+            return false;
+        }
+        // Find capital letters valid 2 : filter by order
+        len = 0;
+        int toggle_int = 0, player_int = 0;
+        for( char c : playerState_name_arr){
+            toggle_int = len % 4;
+            if(toggle_int == 0){
+                if(!(c == 'A' + player_int)){
+                    return false;
+                }
+                player_int++;
+            }
+            else if(toggle_int == 1){
+                if(!(c == 'M')){
+                    return false;
+                }
+            }
+            else if(toggle_int == 2){
+                if(!(c == 'S')){
+                    return false;
+                }
+            }
+            else if(toggle_int == 3){
+                if(!(c == 'F')){
+                    return false;
+                }
+            }
+            len++;
         }
 
-         */
-        return false;
+        // Player is valid
+        boolean p_player_format = true;
+        boolean score_format = true;
+        boolean mosaic_format = true;
+        boolean storage_format = true;
+        boolean floor_format = true;
+
+        int floor_counts = 0;
+        for(int i=0; i < player_int; i++){
+            // Player is valid
+            p_player_format = p_player_format && check_p_player_format(playerState_name_arr.get(4*i));
+            // Score is valid
+            score_format = score_format && check_score_format(playerState_content_arr.get(4*i));
+            // Mosaic is valid
+            mosaic_format = mosaic_format && check_mosaic_format(playerState_name_arr.get(4*i + 1), playerState_content_arr.get(4*i + 1));
+            // Storage is valid
+            storage_format = storage_format && check_storage_format(playerState_name_arr.get(4*i + 2), playerState_content_arr.get(4*i + 2));
+            // Floor is valid
+            floor_format = floor_format && check_floor_format(playerState_name_arr.get(4*i + 3), playerState_content_arr.get(4*i + 3), floor_counts);
+            floor_counts = toss_floor_count(playerState_content_arr.get(4*i + 3), floor_counts);
+        }
+        return p_player_format && score_format && mosaic_format && storage_format && floor_format;
+    }
+
+    public static boolean check_p_player_format(char p_player_char){
+        // Find capital letters valid
+        boolean p_player_name_format = (p_player_char >= 'A' && p_player_char <= 'D');
+
+        // P_Player is valid
+        boolean p_player_format = p_player_name_format;
+        System.out.println(p_player_name_format);
+        return p_player_format;
+    }
+
+    public static boolean check_score_format(String score_String){
+        // Find capital letters valid
+        boolean score_name_format = true;
+        for( char c : score_String.toCharArray() ){
+            if(!(c >= '0' && c <= '9')){
+                score_name_format = false;
+            }
+        }
+        // P_Player is valid
+        boolean score_format = score_name_format && !score_String.isEmpty();
+        System.out.println(score_format + ", " + !score_String.isEmpty());
+        return score_format;
+    }
+
+    public static boolean check_mosaic_format(char mosaic_char, String mosaic_String){
+        boolean mosaic_name_format = (mosaic_char == 'M');
+        int len = 0;
+        boolean mosaic_content_format = true;
+        for(char c : mosaic_String.toCharArray()){
+            if(len % 3 == 0){
+                if(!(c >= 'a' && c <= 'e')){
+                    mosaic_content_format = false;
+                }
+            }
+            else{
+                if(!(c >= '0' && c <= '4')){
+                    mosaic_content_format = false;
+                }
+            }
+            len++;
+        }
+        if(len > 75){
+            mosaic_content_format = false;
+        }
+        else if(mosaic_String.isEmpty()){
+            mosaic_content_format = true;
+        }
+        boolean center_format = mosaic_name_format && mosaic_content_format;
+        System.out.println(mosaic_name_format + ", " + mosaic_content_format);
+        return center_format;
+    }
+
+    public static boolean check_storage_format(char storage_char, String storage_String){
+        boolean storage_name_format = (storage_char == 'S');
+        int len = 0;
+        boolean storage_content_format = true;
+        for(char c : storage_String.toCharArray()){
+            if(len % 3 == 0){
+                if(!(c >= '0' && c <= '4')){
+                    storage_content_format = false;
+                }
+            }
+            else if(len % 3 == 1){
+                if(!(c >= 'a' && c <= 'e')){
+                    storage_content_format = false;
+                }
+            }
+            else if(len % 3 == 2){
+                if(!(c >= '0' && c <= '5')){
+                    storage_content_format = false;
+                }
+            }
+            len++;
+        }
+        if(len > 15){
+            storage_content_format = false;
+        }
+        else if(storage_String.isEmpty()){
+            storage_content_format = true;
+        }
+        boolean storage_format = storage_name_format && storage_content_format;
+        System.out.println(storage_name_format + ", " + storage_content_format);
+        return storage_format;
+    }
+
+    public static boolean check_floor_format(char floor_char, String floor_String, int floor_counts){
+        boolean floor_name_format = (floor_char == 'F');
+        int len = 0;
+        boolean floor_content_format = true;
+        for(char c : floor_String.toCharArray()){
+            if(!(c >= 'a' && c <= 'f')){
+                floor_content_format = false;
+            }
+            if(c == 'f'){
+                floor_counts++;
+                if(floor_counts > 1){
+                    floor_content_format = false;
+                }
+            }
+            len++;
+        }
+        if(len > 7){
+            floor_content_format = false;
+        }
+        else if(floor_String.isEmpty()){
+            floor_content_format = true;
+        }
+        boolean storage_format = floor_name_format && floor_content_format;
+        System.out.println(floor_name_format + ", " + floor_content_format);
+        return storage_format;
+    }
+
+    public static int toss_floor_count(String floor_String, int floor_counts){
+        for(char c : floor_String.toCharArray()){
+            if(c == 'f'){
+                floor_counts++;
+            }
+        }
+        return floor_counts;
     }
 
     /**
