@@ -2,6 +2,8 @@ package comp1110.ass2;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Azul {
     public static String[] gameState;
@@ -64,6 +66,53 @@ public class Azul {
     // isSharedStateWellFormed() checks if the SharedState Well Formed.
     // This is “1. Game Setup”.
     public static boolean isSharedStateWellFormed(String sharedState) {
+        //System.out.println(sharedState);
+        char [] sharedState_array = sharedState.toCharArray();
+        ArrayList<Character> sharedState_name_arr = new ArrayList<Character>();
+        ArrayList<String> sharedState_content_arr = new ArrayList<String>();
+        StringBuilder SB = new StringBuilder();
+        int len = 0;
+        // Filter valid capital letters
+        for( char c : sharedState_array ){
+            //System.out.println(c);
+            if(c >= 'A' && c <= 'D' || c == 'F'){
+                //System.out.println(String.valueOf(c));
+                sharedState_name_arr.add(c);
+                sharedState_content_arr.add(String.valueOf(SB));
+                SB.delete(0,SB.length());
+                len++;
+            }
+            else{
+                SB.append(c);
+            }
+        }
+        sharedState_content_arr.add(String.valueOf(SB));
+        SB.delete(0,SB.length());
+        sharedState_content_arr.remove(0);
+
+        System.out.println(sharedState);
+        for(int i=0; i < len; i++){
+            System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
+        }
+
+        // Find capital letters valid
+        if(sharedState_name_arr.size() != 5){
+            return false;
+        }
+        // Player is valid
+        boolean player_format = check_player_format(sharedState_name_arr.get(0), sharedState_content_arr.get(0));
+        // Factory is valid
+        boolean factory_format = check_factory_format(sharedState_name_arr.get(1), sharedState_content_arr.get(1));
+        // Center is valid
+        boolean center_format = check_center_format(sharedState_name_arr.get(2), sharedState_content_arr.get(2));
+        // Bag is valid
+        boolean bag_format = check_bag_discard_format(sharedState_name_arr.get(3), sharedState_content_arr.get(3), 'B');
+        // Discard is valid
+        boolean discard_format = check_bag_discard_format(sharedState_name_arr.get(4), sharedState_content_arr.get(4), 'D');
+        return player_format && factory_format && center_format && bag_format && discard_format;
+
+        // Sibo's code
+        /*
         int character = 1;
         String[] tranferS = sharedState.split("");
         boolean isChABCD=tranferS[0].equals("A") || tranferS[0].equals("B") || tranferS[0].equals("C") || tranferS[0].equals("D");
@@ -154,8 +203,92 @@ public class Azul {
             }
         }
         return false;
+
+         */
     }
 
+    public static boolean check_player_format(char player_char, String player_String){
+        // Find capital letters valid
+        boolean player_name_format = (player_char >= 'A' && player_char <= 'D');
+
+        // Player is valid
+        boolean player_format = player_name_format && player_String.isEmpty();
+        System.out.println(player_name_format + ", " + player_String.isEmpty());
+        return player_format;
+    }
+
+    public static boolean check_factory_format(char factory_char, String factory_String){
+        int len = 0;
+        boolean factory_name_format = (factory_char == 'F');
+
+        boolean factory_content_format = true;
+        for(char c : factory_String.toCharArray()){
+            if( len % 5 == 0){
+                if(!(c >= '0' && c <= '4')){
+                    factory_content_format = false;
+                }
+            }
+            else{
+                if(!(c >= 'a' && c <= 'e')){
+                    factory_content_format = false;
+                }
+            }
+            len++;
+        }
+        if(!(len % 5 ==0)){
+            factory_content_format = false;
+        }
+        boolean factory_format = factory_name_format && factory_content_format;
+        System.out.println(factory_name_format + ", " + factory_content_format);
+
+        return factory_format;
+    }
+
+    public static boolean check_center_format(char center_char, String center_String){
+        boolean center_name_format = (center_char == 'C');
+        int len = 0;
+        boolean center_content_format = true;
+        for(char c : center_String.toCharArray()){
+            if(!(c >= 'a' && c <= 'e' || c == 'f')){
+                center_content_format = false;
+            }
+            len++;
+        }
+        if(len > 15){
+            center_content_format = false;
+        }
+        boolean center_format = center_name_format && center_content_format;
+        System.out.println(center_name_format + ", " + center_content_format);
+        return center_format;
+    }
+
+    public static boolean check_bag_discard_format(char bag_discard_char, String bag_discard_String, char compare){
+        boolean bag_discard_name_format = (bag_discard_char == compare);
+        boolean bag_discard_content_format = true;
+        StringBuilder SB = new StringBuilder();
+        int len=0;
+        for( char c : bag_discard_String.toCharArray()){
+            SB.append(c);
+            if(len >= 1 && len <= 10){
+                if(len % 2 == 1){
+                    if(!(Integer.valueOf(SB.toString()) >=0 && Integer.valueOf(SB.toString()) <= 20)){
+                        bag_discard_content_format = false;
+                    }
+                    SB.delete(0,SB.length());
+                }
+            }
+            else{
+            }
+            len++;
+        }
+        if(!(len==10)){
+            bag_discard_content_format = false;
+        }
+        SB.delete(0,SB.length());
+        boolean bag_discard_format = bag_discard_name_format && bag_discard_content_format && !bag_discard_String.isEmpty();
+        System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
+        return bag_discard_format;
+    }
 
     /**
      * Given a playerState, determine if it is well-formed.
