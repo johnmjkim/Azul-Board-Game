@@ -14,7 +14,7 @@ Everyone: decided application skeleton and pushed - meeting 16:00 SEDT 27 Mar
 
 ## Week 6
 
-...
+Everyone : discussion about feedback from D2B skeleton - meeting 10:00 AEDT 1 Apr
 
 ## Mid-Semester Break
 
