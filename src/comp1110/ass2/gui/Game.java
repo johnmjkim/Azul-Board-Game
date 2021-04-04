@@ -3,6 +3,7 @@ package comp1110.ass2.gui;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -76,5 +77,17 @@ public class Game extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    public class GameTile extends Polygon {
+
+    }
+
+    public class GameTileDrag extends GameTile{
+
+    }
+
+    public class GameBoard extends Polygon{
+
     }
 }

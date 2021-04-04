@@ -131,6 +131,23 @@ public class Viewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public class ViewerControlButtons extends Viewer{
+
+    }
+
+    public class ViewerDisplay extends Viewer{
+
+
+    }
+    public class ViewerDisplayButtons extends ViewerDisplay{
+
+    }
+
+    public class ViewerDisplayBoard extends ViewerDisplay{
+
+    }
+
 }
 
 
