@@ -4,6 +4,7 @@ public class PlayerA implements Player{
     int turn;
     int score;
     String playerState;
+    String nameState;
     String scoreState;
     String mosaicState;
     String storageState;
@@ -12,6 +13,11 @@ public class PlayerA implements Player{
     @Override
     public void Player(String playerState) {
         this.playerState = playerState;
+    }
+
+    @Override
+    public void Name(String nameState) {
+        this.nameState = nameState;
     }
 
     @Override
@@ -48,6 +54,11 @@ public class PlayerA implements Player{
     @Override
     public int getTurn() {
         return this.turn;
+    }
+
+    @Override
+    public String getName() {
+        return this.nameState;
     }
 
     @Override
