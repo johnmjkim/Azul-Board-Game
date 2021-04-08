@@ -589,10 +589,13 @@ public class Azul {
         for(int i=0; i < tiles.length; i++){
             exp_int_array.add(tiles[i]);
         }
+        /*
         System.out.println(gameState[0]);
         for(int i=0; i < exp_int_array.size(); i++){
             System.out.println(exp_char_array.get(i) + ", " + exp_int_array.get(i));
         }
+
+         */
 
         char rand_tile = randomTiles(exp_int_array, exp_char_array);
         return rand_tile;
