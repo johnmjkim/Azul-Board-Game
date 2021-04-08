@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Azul {
     public static String[] gameState;
@@ -562,7 +563,77 @@ public class Azul {
     //This is “2. Starting the round”.
     public static char drawTileFromBag(String[] gameState) {
         // FIXME Task 5
-        return '0';
+        String[] transferGameState = gameState[0].split("");
+        int B=gameState[0].indexOf("B");//find the number of the place where B start in gameState
+        int[] tiles={0,0,0,0,0};
+        for (int i=0; i<=4; i++){
+           tiles[i]= Integer.parseInt(transferGameState[B+1]+transferGameState[B+2]);
+           B+=2;
+        }
+        //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
+        int allTiles=0;
+        for (int i:tiles){
+            allTiles++;//==5
+        }
+        if (allTiles==0){
+            return '0';
+        }
+        //find out if the Bag is empty
+        Random r=new Random();
+        int output=r.nextInt(allTiles);
+        //generate random and give it to alltiles
+        int R1= tiles[0]+tiles[1];int R2= R1+tiles[2];int R3= R2+tiles[3];int R4= R3+tiles[4];
+        if (output<tiles[0]){
+            return 'a';
+        }else if (tiles[0]<=output && output<R1){
+            return 'b';
+        }else if (R1<=output && output<R2){
+            return 'c';
+        }else if (R2<=output && output<R3){
+            return 'd';
+        }else if (R3<=output && output<R4){
+            return 'e';
+        }
+        //put the random into a corresponding tileType colour
+        return 'B';
+    }
+
+    public static String[] updateBag(String[] gameState, char tileType, int drawnum){
+        int B = gameState[0].indexOf('B');
+        String[] transferGameState = gameState[0].split("");
+        drawnum=1;
+        if (tileType=='a'){
+            int t1=B+1;
+            int t2=B+2;
+            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
+            //move 1 tile from a type and calculate the number of a-1
+            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
+            //create a new String that replace the old number of a in a new number afterDraw
+        }else if (tileType=='b'){
+            int t1=B+3;
+            int t2=B+4;
+            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
+            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
+        }else if (tileType=='c'){
+            int t1=B+5;
+            int t2=B+6;
+            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
+            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
+        }else if (tileType=='d'){
+            int t1=B+7;
+            int t2=B+8;
+            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
+            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
+        }else if (tileType=='e'){
+            int t1=B+9;
+            int t2=B+10;
+            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
+            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
+        }else {
+            System.out.println("unknown tile");
+            return gameState;
+        }
+        return gameState;
     }
 
     /**
@@ -577,7 +648,23 @@ public class Azul {
 
     // refillFactories() is to refill the Factories with tiles.
     //This is “2. Starting the round”
+
+
     public static String[] refillFactories(String[] gameState) {
+        if (gameState[0].charAt(gameState[0].indexOf('F')+1)!='C'){
+            return gameState;
+        }
+        //If the factories are not all empty, return the given state.
+        String[] factory = new String[4];//one factory has 4 tiles
+        String[][] factories = new  String[5][];//5 factories
+        for (int i = 0; i < factories.length; i++){//factories.length==5
+            for (int j = 0; j< factory.length; j++) {
+                char makeDraw=drawTileFromBag(gameState);
+                gameState=updateBag(gameState, makeDraw, 1);
+                factory[j] = Character.toString(makeDraw);//makeDraw to each factory
+            }
+            factories[i] = factory;//makeDraw to 5 factories
+        }
         // FIXME Task 6
         return null;
     }
