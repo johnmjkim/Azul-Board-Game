@@ -2,6 +2,7 @@ package comp1110.ass2;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -567,14 +568,38 @@ public class Azul {
     //This is “2. Starting the round”.
     public static char drawTileFromBag(String[] gameState) {
         // FIXME Task 5
+        //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
         String[] transferGameState = gameState[0].split("");
         int B=gameState[0].indexOf("B");//find the number of the place where B start in gameState
         int[] tiles={0,0,0,0,0};
         for (int i=0; i<=4; i++){
-           tiles[i]= Integer.parseInt(transferGameState[B+1]+transferGameState[B+2]);
+           tiles[i]= Integer.parseInt(transferGameState[B+1] +transferGameState[B+2]);
            B+=2;
         }
-        //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
+
+        ArrayList<Character> exp_char_array = new ArrayList<Character>();
+        ArrayList<Integer> exp_int_array = new ArrayList<Integer>();
+
+        exp_char_array.add('a');
+        exp_char_array.add('b');
+        exp_char_array.add('c');
+        exp_char_array.add('d');
+        exp_char_array.add('e');
+
+        for(int i=0; i < tiles.length; i++){
+            exp_int_array.add(tiles[i]);
+        }
+        System.out.println(gameState[0]);
+        for(int i=0; i < exp_int_array.size(); i++){
+            System.out.println(exp_char_array.get(i) + ", " + exp_int_array.get(i));
+        }
+
+        char rand_tile = randomTiles(exp_int_array, exp_char_array);
+        return rand_tile;
+
+        // sibo's work
+        /*
+        //find out if the Bag is empty
         int allTiles=0;
         for (int i:tiles){
             allTiles++;//==5
@@ -582,10 +607,12 @@ public class Azul {
         if (allTiles==0){
             return '0';
         }
-        //find out if the Bag is empty
+
+        //generate random and give it to alltiles
         Random r=new Random();
         int output=r.nextInt(allTiles);
-        //generate random and give it to alltiles
+
+        //put the random into a corresponding tileType colour
         int R1= tiles[0]+tiles[1];int R2= R1+tiles[2];int R3= R2+tiles[3];int R4= R3+tiles[4];
         if (output<tiles[0]){
             return 'a';
@@ -598,8 +625,42 @@ public class Azul {
         }else if (R3<=output && output<R4){
             return 'e';
         }
-        //put the random into a corresponding tileType colour
         return 'B';
+
+         */
+    }
+
+    public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array){
+        char char_out = 'Z';
+        ArrayList<Integer> sums= new ArrayList<Integer>();
+
+        if(int_array.size() != char_array.size()){
+            return 'Z';
+        }
+        else{
+            int sum = 0;
+            sums.add(sum);
+            for(Integer i : int_array){
+                sum += i;
+                sums.add(sum);
+            }
+            Random r = new Random();
+            int r_output = r.nextInt(sum - 1) + 1;
+            //System.out.println(r_output);
+            for(int i=0; i < int_array.size(); i++){
+                if(i == 0){
+                    if(r_output >= 0 && r_output <= sums.get(i+1)){
+                        char_out = char_array.get(i);
+                    }
+                }
+                else{
+                    if(r_output > sums.get(i) && r_output <= sums.get(i+1)){
+                        char_out = char_array.get(i);
+                    }
+                }
+            }
+            return char_out;
+        }
     }
 
     public static String[] updateBag(String[] gameState, char tileType, int drawnum){
@@ -655,6 +716,7 @@ public class Azul {
 
 
     public static String[] refillFactories(String[] gameState) {
+        // FIXME Task 6
         if (gameState[0].charAt(gameState[0].indexOf('F')+1)!='C'){
             return gameState;
         }
@@ -669,7 +731,6 @@ public class Azul {
             }
             factories[i] = factory;//makeDraw to 5 factories
         }
-        // FIXME Task 6
         return null;
     }
 
