@@ -14,13 +14,17 @@ public class Azul {
     /**
      * Given a shared state string, determine if it is well-formed.
      * Note: you don't need to consider validity for this task.
-     * <p>
      * A sharedState is well-formed if it satisfies the following conditions.
      * <p>
-     * [factories][centre][bag][discard]
-     * where [factories], [centre], [bag] and [discard] are replaced by the
+     * [turn][factories][centre][bag][discard]
+     * where [turn][factories], [centre], [bag] and [discard] are replaced by the
      * corresponding small string as described below.
-     * <p>,
+     * <p>
+     * 0. [turn] The Turn substring is one character 'A'-'D' representing a
+     * player, which indicates that it is this player's turn to make the next
+     * drafting move. (In a two-player game, the turn substring can only take
+     * the values 'A' or 'B').
+     * <p>
      * 1. [factories] The factories substring begins with an 'F'
      * and is followed by a collection of *up to* 5 5-character factory strings
      * representing each factory.
@@ -294,7 +298,7 @@ public class Azul {
     /**
      * Given a playerState, determine if it is well-formed.
      * Note: you don't have to consider validity for this task.
-     * A playcome in agaierState is composed of individual playerStrings.
+     * A playerState is composed of individual playerStrings.
      * A playerState is well-formed if it satisfies the following conditions.
      * <p>
      * A playerString follows this pattern: [player][score][mosaic][storage][floor]
@@ -552,7 +556,7 @@ public class Azul {
     /**
      * Given the gameState, draw a *random* tile from the bag.
      * If the bag is empty, refill the the bag with the discard pile and then draw a tile.
-     * If the discard pile is also empty, return 'Z'.     *
+     * If the discard pile is also empty, return 'Z'.
      *
      * @param gameState the current game state
      * @return the tile drawn from the bag, or 'Z' if the bag and discard pile are empty.
@@ -686,7 +690,6 @@ public class Azul {
         return -1;
     }
 
-
     /**
      * Given a valid gameState prepare for the next round.
      * 1. Empty the floor area for each player and adjust their score accordingly (see the README).
@@ -715,7 +718,6 @@ public class Azul {
         refillFactories(gameState);
         return null;
     }
-
 
     /**
      * Given an entire game State, determine whether the state is valid.
@@ -763,7 +765,7 @@ public class Azul {
     /**
      * Given a valid gameState and a move, determine whether the move is valid.
      * A Drafting move is a 4-character String.
-     * A Drafting move is valid ifit satisfies the following conditions:
+     * A Drafting move is valid if it satisfies the following conditions:
      * <p>
      * 1. The specified factory/centre contains at least one tile of the specified colour.
      * 2. The storage row the tile is being placed in does not already contain a different colour.
