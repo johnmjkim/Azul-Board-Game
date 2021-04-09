@@ -20,6 +20,8 @@ public class Shareds implements Shared{
 
     // Maximum player numbers
     int max_player_number;
+
+    // Inner class fields
     private Center center;
     private Bag bag;
     private Discard discard;
@@ -137,7 +139,7 @@ public class Shareds implements Shared{
 
     @Override
     public void printFactory() {
-        System.out.println(this.factoryState);
+        System.out.println(" Factory State : " + this.factoryState);
         for( eachFactory factory : this.factories){
             System.out.println(factory.toString());
         }
@@ -151,7 +153,7 @@ public class Shareds implements Shared{
 
     @Override
     public void printCenter() {
-        System.out.println(this.centerState);
+        System.out.println(" Center State : " + this.centerState);
         char color = 'a';
         for(int i=0; i <= 'f' - 'a'; i++){
             System.out.print(" " + color + " : " + getCenterTilesNumber(color));
@@ -168,7 +170,7 @@ public class Shareds implements Shared{
 
     @Override
     public void printBag() {
-        System.out.println(this.bagState);
+        System.out.println(" Bag State : " + this.bagState);
         char color = 'a';
         for(int i=0; i <= 'e' - 'a'; i++){
             System.out.print(" " + color + " : " + getBagTilesNumber(color));
@@ -185,7 +187,7 @@ public class Shareds implements Shared{
 
     @Override
     public void printDiscard() {
-        System.out.println(this.discardState);
+        System.out.println(" Discard State : " + this.discardState);
         char color = 'a';
         for(int i=0; i <= 'e' - 'a'; i++){
             System.out.print(" " + color + " : " + getDiscardTilesNumber(color));

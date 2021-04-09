@@ -117,7 +117,13 @@ public class Players implements Player{
     @Override
     public void printMosaic() {
         for( eachPlayer player : this.players){
-            System.out.println(" Name : " + player.name + " Mosaic : " + player.mosaic);
+            System.out.println(" Name : " + player.name + " Mosaic State : " + player.mosaicState);
+            char color = 'a';
+            for(int i=0; i <= 'e' - 'a'; i++){
+                System.out.print(" " + color + " : " + player.getMosaicTilesNumber(color));
+                color++;
+            }
+            System.out.println();
         }
     }
 
@@ -134,7 +140,7 @@ public class Players implements Player{
     @Override
     public void printStorage() {
         for( eachPlayer player : this.players){
-            System.out.println(" Name : " + player.name + " Storage : " + player.storage);
+            System.out.println(" Name : " + player.name + " Storage State : " + player.storageState);
         }
     }
 
@@ -151,7 +157,13 @@ public class Players implements Player{
     @Override
     public void printFloor() {
         for( eachPlayer player : this.players){
-            System.out.println(" Name : " + player.name + " Floor : " + player.floor);
+            System.out.println(" Name : " + player.name + " Floor State : " + player.floorState);
+            char color = 'a';
+            for(int i=0; i <= 'f' - 'a'; i++){
+                System.out.print(" " + color + " : " + player.getFloorTilesNumber(color));
+                color++;
+            }
+            System.out.println();
         }
     }
 
@@ -183,10 +195,14 @@ public class Players implements Player{
         Character name;
         int score;
         int num_turn;
-        String mosaic = "";
-        String storage = "";
-        String floor = "";
+        String mosaicState = "";
+        String storageState = "";
+        String floorState = "";
 
+        // Inner class fields
+        private Mosaic mosaic;
+        //private Storage storage;
+        private Floor floor;
         /**
          * Each player has its name, score and turn
          * @param n
@@ -199,16 +215,18 @@ public class Players implements Player{
             this.num_turn = c;
         }
 
-        public void eachMosaic(String mosaic){
-            this.mosaic = mosaic;
+        public void eachMosaic(String mosaicState){
+            this.mosaicState = mosaicState;
+            this.mosaic = new Mosaic(mosaicState);
         }
 
-        public void eachStorage(String storage){
-            this.storage = storage;
+        public void eachStorage(String storageState){
+            this.storageState = storageState;
         }
 
-        public void eachFloor(String floor){
-            this.floor = floor;
+        public void eachFloor(String floorState){
+            this.floorState = floorState;
+            this.floor = new Floor(floorState);
         }
 
         public String toString() {
@@ -236,16 +254,25 @@ public class Players implements Player{
         }
 
         public String getMosaic(){
-            return this.mosaic;
+            return this.mosaicState;
         }
 
         public String getStorage(){
-            return this.storage;
+            return this.storageState;
         }
 
         public String getFloor(){
-            return this.floor;
+            return this.floorState;
         }
+
+        public int getMosaicTilesNumber(char color) {
+            return this.mosaic.getTilesNumber(color);
+        }
+
+        public int getFloorTilesNumber(char color) {
+            return this.floor.getTilesNumber(color);
+        }
+
 
         @Override
         public int compareTo(eachPlayer player) {
@@ -257,6 +284,121 @@ public class Players implements Player{
             }
             else{
                 return -1;
+            }
+        }
+
+        public class Mosaic {
+            String mosaicState;
+
+            int[] letters = new int[128];
+            final char blue = 'a';
+            final char green = 'b';
+            final char orange = 'c';
+            final char purple = 'd';
+            final char red = 'e';
+
+            public Mosaic(String mosaicState){
+                this.mosaicState = mosaicState;
+                countLetters(mosaicState);
+            }
+
+            public void countLetters(String mosaicState){
+
+                int[] letters_array = new int[128];
+                char[] mosaicState_char_array = mosaicState.toCharArray();
+                for(char c : mosaicState_char_array){
+                    letters_array[c]++;
+                }
+                // 'a'~'f'
+                this.letters[blue] = letters_array[blue];
+                this.letters[green] = letters_array[green];
+                this.letters[orange] = letters_array[orange];
+                this.letters[purple] = letters_array[purple];
+                this.letters[red] = letters_array[red];
+            }
+
+            public int getTilesNumber(char color){
+                return this.letters[color];
+            }
+        }
+
+        public class Storage{
+            String storageState;
+
+            int[] letters = new int[128];
+            final char blue = 'a';
+            final char green = 'b';
+            final char orange = 'c';
+            final char purple = 'd';
+            final char red = 'e';
+
+            public Storage(String storageState){
+                this.storageState = storageState;
+                countLetters(storageState);
+            }
+
+            public void countLetters(String storageState){
+                ArrayList<Integer> storage_counts = new ArrayList<Integer>();
+                char[] storageState_char_array = storageState.toCharArray();
+                StringBuilder SB = new StringBuilder();
+                int len = 0;
+                for(char c : storageState_char_array){
+                    if( len % 2 == 0 && len != 0){
+                        storage_counts.add(Integer.valueOf(String.valueOf(SB)));
+                        SB.delete(0,SB.length());
+                    }
+                    SB.append(c);
+                    len++;
+                }
+                storage_counts.add(Integer.valueOf(String.valueOf(SB)));
+                SB.delete(0,SB.length());
+                // 'a'~'f'
+                this.letters[blue] = storage_counts.get(0);
+                this.letters[green] = storage_counts.get(1);
+                this.letters[orange] = storage_counts.get(2);
+                this.letters[purple] = storage_counts.get(3);
+                this.letters[red] = storage_counts.get(4);
+            }
+
+            public int getTilesNumber(char color){
+                return this.letters[color];
+            }
+        }
+
+        public class Floor {
+            String floorState;
+
+            int[] letters = new int[128];
+            final char blue = 'a';
+            final char green = 'b';
+            final char orange = 'c';
+            final char purple = 'd';
+            final char red = 'e';
+            final char first_player = 'f';
+
+            public Floor(String floorState){
+                this.floorState = floorState;
+                countLetters(floorState);
+            }
+
+            public void countLetters(String floorState){
+
+                int[] letters_array = new int[128];
+                char[] floorState_char_array = floorState.toCharArray();
+                for(char c : floorState_char_array){
+                    letters_array[c]++;
+                }
+                // 'a'~'f'
+                this.letters[blue] = letters_array[blue];
+                this.letters[green] = letters_array[green];
+                this.letters[orange] = letters_array[orange];
+                this.letters[purple] = letters_array[purple];
+                this.letters[red] = letters_array[red];
+                this.letters[first_player] = letters_array[first_player];
+            }
+
+            public int getTilesNumber(char color){
+                return this.letters[color];
             }
         }
     }
