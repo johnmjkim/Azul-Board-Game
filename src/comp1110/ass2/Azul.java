@@ -571,6 +571,11 @@ public class Azul {
         }
     }
 
+   /*
+   As the task 5 give the corresponding random number to the tile type 'a' to 'e',
+   method updateBag modified the tile number of one type.
+   'afterDraw' moves 1 tile from a type and calculate the tile number-1, then update gameState.
+   */
     public static String[] updateBag(String[] gameState, char tileType, int drawnum){
         int B = gameState[0].indexOf('B');
         String[] transferGameState = gameState[0].split("");
@@ -579,9 +584,7 @@ public class Azul {
             int t1=B+1;
             int t2=B+2;
             int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            //move 1 tile from a type and calculate the number of a-1
             gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-            //create a new String that replace the old number of a in a new number afterDraw
         }else if (tileType=='b'){
             int t1=B+3;
             int t2=B+4;
@@ -625,21 +628,40 @@ public class Azul {
 
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
+        // If the factories are not all empty, return the given state.
         if (gameState[0].charAt(gameState[0].indexOf('F')+1)!='C'){
             return gameState;
         }
-        //If the factories are not all empty, return the given state.
-        String[] factory = new String[4];//one factory has 4 tiles
-        String[][] factories = new  String[5][];//5 factories
-        for (int i = 0; i < factories.length; i++){//factories.length==5
-            for (int j = 0; j< factory.length; j++) {
+
+        //one factory has 4 tiles,there are 5 factories each has 4 tiles
+        String[] factory = new String[4];
+        String[][] factories = new  String[5][4];
+
+        //step 1. Draw tiles 4 times to one factory, the type of the tiles is decided by the method 'drawTileFromBag'.
+        //step 2. give one factory[4] to the factories[5][4], do step 1. 5 times
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j< 4; j++) {
                 char makeDraw=drawTileFromBag(gameState);
                 gameState=updateBag(gameState, makeDraw, 1);
-                factory[j] = Character.toString(makeDraw);//makeDraw to each factory
-            }
-            factories[i] = factory;//makeDraw to 5 factories
+                factory[j] = Character.toString(makeDraw);
+            }factories[i] = factory;
         }
-        return null;
+
+        //print output like a part of gameState, and replace the old one
+        String output = "";
+        String[] emptyFactory = {"0","0","0","0"};
+        for (int i = 0; i<factories.length; i++){
+            if (factories[i] != emptyFactory){
+                output += i;
+                for (int j = 0; j<factory.length; j++){
+                    if (!factory[j].equals("0")){
+                        output += factories[i][j];
+                    }
+                }
+            }
+        }
+        gameState[0]=gameState[0].substring(0,gameState[0].indexOf("F")+1)+output+gameState[0].substring(gameState[0].indexOf("C"));
+        return gameState;
     }
 
     /**
