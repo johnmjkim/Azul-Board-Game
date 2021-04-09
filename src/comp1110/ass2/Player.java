@@ -1,20 +1,17 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
-
 public interface Player {
 
-    void Player(String playerState);
-    void Name(String nameState);
-    void Score(String scoreState);
-    void Mosaic(String mosaicState);
-    void Storage(String storageState);
-    void Floor(String floorState);
+    void PlayerState(String playerState);
+    void addPlayer(String name, Integer score, int turn);
+    void printPlayer();
+    void addMosaic(String mosaicState, int turn);
+    void printMosaic();
+    void addStorage(String storageState, int turn);
+    void printStorage();
+    void addFloor(String floorState, int turn);
+    void printFloor();
     void Move(String applyMove);
     void Turn(int turn);
-    int getTurn();
-    String getName();
-    int getScore();
-
 }
 
