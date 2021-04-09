@@ -121,17 +121,18 @@ public class Viewer extends Application {
         root.getChildren().add(controls);
 
         makeControls();
-
+        /*
         animateTile();
         displayBoard();
         displayScore(Azul.gameScore);
         if(Azul.isEndGameValid(Azul.gameState)){
             displayEnd();
         }
+
+         */
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     public class ViewerControlButtons extends Viewer{
 
     }
