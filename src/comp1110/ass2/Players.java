@@ -9,12 +9,22 @@ public class Players implements Player{
     // All information about players are stored in ArrayList players
     ArrayList<eachPlayer> players = new ArrayList<eachPlayer>();
 
-    // All HashMap of String and eachPlayer are stored
+    // All HashMap of Character and eachPlayer are stored
     HashMap<Character, eachPlayer> players_map = new HashMap<>();
 
     // Input String playerState is stored in this field
     String playerState;
 
+    // Maximum player numbers
+    int max_player_number;
+
+    /**
+     * Players constructor method puts number of maximum players
+     * @param max_player_number
+     */
+    public Players(int max_player_number){
+        this.max_player_number = max_player_number;
+    }
     /**
      * Take playerState as input
      * Automatically sorts information
@@ -23,6 +33,9 @@ public class Players implements Player{
     @Override
     public void PlayerState(String playerState) {
         this.playerState = playerState;
+        // Initialize Arraylists
+        this.players.clear();
+        this.players_map.clear();
         // Split String into character array
         char [] playerState_array = playerState.toCharArray();
         ArrayList<Character> playerState_name_arr = new ArrayList<Character>();
@@ -52,20 +65,20 @@ public class Players implements Player{
         }
 
         // Store information of each player into this.players
-        int turn = 0;
+        int num_turn = 0;
         for(int i=0; i < len; i++){
             if(i % 4 == 0){
-                turn++;
-                this.addPlayer(playerState_name_arr.get(i), Integer.valueOf(playerState_content_arr.get(i)), turn);
+                num_turn++;
+                this.addPlayer(playerState_name_arr.get(i), Integer.valueOf(playerState_content_arr.get(i)), num_turn);
             }
             else if(i % 4 == 1){
-                this.addMosaic(playerState_content_arr.get(i), turn);
+                this.addMosaic(playerState_content_arr.get(i), num_turn);
             }
             else if(i % 4 == 2){
-                this.addStorage(playerState_content_arr.get(i), turn);
+                this.addStorage(playerState_content_arr.get(i), num_turn);
             }
             else if(i % 4 == 3){
-                this.addFloor(playerState_content_arr.get(i), turn);
+                this.addFloor(playerState_content_arr.get(i), num_turn);
             }
         }
         // Produce HashMap<String, eachPlayer>
@@ -76,11 +89,11 @@ public class Players implements Player{
      * Automatically stores below information
      * @param name
      * @param score
-     * @param turn
+     * @param num_turn
      */
     @Override
-    public void addPlayer(Character name, Integer score, int turn){
-        this.players.add(new eachPlayer(name, score, turn));
+    public void addPlayer(Character name, Integer score, int num_turn){
+        this.players.add(new eachPlayer(name, score, num_turn));
         Collections.sort(this.players);
     }
 
@@ -94,11 +107,11 @@ public class Players implements Player{
     /**
      * Automatically stores below information
      * @param mosaicState
-     * @param turn
+     * @param num_turn
      */
     @Override
-    public void addMosaic(String mosaicState, int turn) {
-        this.players.get(turn - 1).eachMosaic(mosaicState);
+    public void addMosaic(String mosaicState, int num_turn) {
+        this.players.get(num_turn - 1).eachMosaic(mosaicState);
     }
 
     @Override
@@ -111,11 +124,11 @@ public class Players implements Player{
     /**
      * Automatically stores below information
      * @param storageState
-     * @param turn
+     * @param num_turn
      */
     @Override
-    public void addStorage(String storageState, int turn) {
-        this.players.get(turn - 1).eachStorage(storageState);
+    public void addStorage(String storageState, int num_turn) {
+        this.players.get(num_turn - 1).eachStorage(storageState);
     }
 
     @Override
@@ -128,11 +141,11 @@ public class Players implements Player{
     /**
      * Automatically stores below information
      * @param floorState
-     * @param turn
+     * @param num_turn
      */
     @Override
-    public void addFloor(String floorState, int turn) {
-        this.players.get(turn - 1).eachFloor(floorState);
+    public void addFloor(String floorState, int num_turn) {
+        this.players.get(num_turn - 1).eachFloor(floorState);
     }
 
     @Override
@@ -147,9 +160,14 @@ public class Players implements Player{
      * Use getPlayer method to get each player data
      */
     public void playerHashMap(){
-        for( eachPlayer eachplayer : players){
+        for( eachPlayer eachplayer : players ){
             this.players_map.put(eachplayer.name, eachplayer);
         }
+    }
+
+    @Override
+    public String getPlayerState() {
+        return this.playerState;
     }
 
     /**
@@ -164,7 +182,7 @@ public class Players implements Player{
     public class eachPlayer implements Comparable<eachPlayer>{
         Character name;
         int score;
-        int turn;
+        int num_turn;
         String mosaic = "";
         String storage = "";
         String floor = "";
@@ -175,10 +193,10 @@ public class Players implements Player{
          * @param s
          * @param c
          */
-        eachPlayer(Character n, int s, int c) {
+        public eachPlayer(Character n, int s, int c) {
             this.name = n;
             this.score = s;
-            this.turn = c;
+            this.num_turn = c;
         }
 
         public void eachMosaic(String mosaic){
@@ -194,7 +212,7 @@ public class Players implements Player{
         }
 
         public String toString() {
-            return " Name : " + this.name + " Turn : " + this.turn + " Score : " + this.score;
+            return " Name : " + this.name + " Turn : " + this.num_turn + " Score : " + this.score;
         }
 
         /**
@@ -213,8 +231,8 @@ public class Players implements Player{
             return this.score;
         }
 
-        public int getTurn(){
-            return this.turn;
+        public int getNum_turn(){
+            return this.num_turn;
         }
 
         public String getMosaic(){
@@ -231,10 +249,10 @@ public class Players implements Player{
 
         @Override
         public int compareTo(eachPlayer player) {
-            if(turn == player.turn){
+            if(num_turn == player.num_turn){
                 return 0;
             }
-            else if(turn > player.turn){
+            else if(num_turn > player.num_turn){
                 return 1;
             }
             else{
