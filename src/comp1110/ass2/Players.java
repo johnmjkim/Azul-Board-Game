@@ -59,7 +59,7 @@ public class Players implements Player{
 
     @Override
     public void addPlayer(String name, Integer score, int turn){
-        this.players.add(new eachPlayer(name, turn, score));
+        this.players.add(new eachPlayer(name, score, turn));
         Collections.sort(this.players);
     }
 
