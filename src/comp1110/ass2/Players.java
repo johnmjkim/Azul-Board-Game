@@ -18,6 +18,25 @@ public class Players implements Player{
     // Maximum player numbers
     int max_player_number;
 
+    // Players substring
+    public final char PLAYER_A = 'A';
+    public final char PLAYER_B = 'B';
+    public final char PLAYER_C = 'C';
+    public final char PLAYER_D = 'D';
+
+    // Players state substring
+    public final char MOSAIC = 'M';
+    public final char STORAGE = 'S';
+    public final char FLOOR = 'F';
+
+    // Colors and characters
+    public final char BLUE = 'a';
+    public final char GREEN = 'b';
+    public final char ORANGE = 'c';
+    public final char PURPLE = 'd';
+    public final char RED = 'e';
+    public final char FIRST_PLAYER = 'f';
+
     /**
      * Players constructor method puts number of maximum players
      * @param max_player_number
@@ -45,7 +64,7 @@ public class Players implements Player{
         // Filter valid capital letters player 'A' ~ 'D' || mosaic 'M || storage 'S' || floor 'F
         for( char c : playerState_array ){
             //System.out.println(c);
-            if( (c >= 'A' && c <= 'D') || c =='M' || c =='S' || c == 'F'){
+            if( (c >= PLAYER_A && c <= PLAYER_D) || c == MOSAIC || c == STORAGE || c == FLOOR){
                 //System.out.println(String.valueOf(c));
                 playerState_name_arr.add(c);
                 playerState_content_arr.add(String.valueOf(SB));
@@ -118,8 +137,8 @@ public class Players implements Player{
     public void printMosaic() {
         for( eachPlayer player : this.players){
             System.out.println(" Name : " + player.name + " Mosaic State : " + player.mosaicState);
-            char color = 'a';
-            for(int i=0; i <= 'e' - 'a'; i++){
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
                 System.out.print(" " + color + " : " + player.getMosaicTilesNumber(color));
                 color++;
             }
@@ -141,6 +160,12 @@ public class Players implements Player{
     public void printStorage() {
         for( eachPlayer player : this.players){
             System.out.println(" Name : " + player.name + " Storage State : " + player.storageState);
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                System.out.print(" " + color + " : " + player.getStorageTilesNumber(color));
+                color++;
+            }
+            System.out.println();
         }
     }
 
@@ -158,8 +183,8 @@ public class Players implements Player{
     public void printFloor() {
         for( eachPlayer player : this.players){
             System.out.println(" Name : " + player.name + " Floor State : " + player.floorState);
-            char color = 'a';
-            for(int i=0; i <= 'f' - 'a'; i++){
+            char color = BLUE;
+            for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
                 System.out.print(" " + color + " : " + player.getFloorTilesNumber(color));
                 color++;
             }
@@ -201,7 +226,7 @@ public class Players implements Player{
 
         // Inner class fields
         private Mosaic mosaic;
-        //private Storage storage;
+        private Storage storage;
         private Floor floor;
         /**
          * Each player has its name, score and turn
@@ -222,6 +247,7 @@ public class Players implements Player{
 
         public void eachStorage(String storageState){
             this.storageState = storageState;
+            this.storage = new Storage(storageState);
         }
 
         public void eachFloor(String floorState){
@@ -269,10 +295,13 @@ public class Players implements Player{
             return this.mosaic.getTilesNumber(color);
         }
 
+        public int getStorageTilesNumber(char color) {
+            return this.storage.getTilesNumber(color);
+        }
+
         public int getFloorTilesNumber(char color) {
             return this.floor.getTilesNumber(color);
         }
-
 
         @Override
         public int compareTo(eachPlayer player) {
@@ -291,11 +320,6 @@ public class Players implements Player{
             String mosaicState;
 
             int[] letters = new int[128];
-            final char blue = 'a';
-            final char green = 'b';
-            final char orange = 'c';
-            final char purple = 'd';
-            final char red = 'e';
 
             public Mosaic(String mosaicState){
                 this.mosaicState = mosaicState;
@@ -310,11 +334,11 @@ public class Players implements Player{
                     letters_array[c]++;
                 }
                 // 'a'~'f'
-                this.letters[blue] = letters_array[blue];
-                this.letters[green] = letters_array[green];
-                this.letters[orange] = letters_array[orange];
-                this.letters[purple] = letters_array[purple];
-                this.letters[red] = letters_array[red];
+                this.letters[BLUE] = letters_array[BLUE];
+                this.letters[GREEN] = letters_array[GREEN];
+                this.letters[ORANGE] = letters_array[ORANGE];
+                this.letters[PURPLE] = letters_array[PURPLE];
+                this.letters[RED] = letters_array[RED];
             }
 
             public int getTilesNumber(char color){
@@ -324,44 +348,121 @@ public class Players implements Player{
 
         public class Storage{
             String storageState;
+            ArrayList<eachStorageRow> storage_rows = new ArrayList<eachStorageRow>();
 
             int[] letters = new int[128];
-            final char blue = 'a';
-            final char green = 'b';
-            final char orange = 'c';
-            final char purple = 'd';
-            final char red = 'e';
 
             public Storage(String storageState){
+                this.storage_rows.clear();
                 this.storageState = storageState;
-                countLetters(storageState);
+                addStorageRow(storageState);
+                countTilesNumber();
             }
 
-            public void countLetters(String storageState){
-                ArrayList<Integer> storage_counts = new ArrayList<Integer>();
-                char[] storageState_char_array = storageState.toCharArray();
-                StringBuilder SB = new StringBuilder();
+            public void addStorageRow(String storageState){
+                ArrayList<String> storage_row = new ArrayList<String>();
+                int max_number = 5;
                 int len = 0;
-                for(char c : storageState_char_array){
-                    if( len % 2 == 0 && len != 0){
-                        storage_counts.add(Integer.valueOf(String.valueOf(SB)));
+                int str_row_num = 0;
+                StringBuilder SB = new StringBuilder();
+                for(char c : storageState.toCharArray()){
+                    if( len % 3 == 0){
+                        if(str_row_num == Character.getNumericValue(c)){
+                            storage_row.add(String.valueOf(SB));
+                        }
+                        else{
+                            storage_row.add(String.valueOf(SB));
+                            while(str_row_num != Character.getNumericValue(c)){
+                                storage_row.add("");
+                                str_row_num++;
+                            }
+                        }
                         SB.delete(0,SB.length());
+                        str_row_num++;
                     }
-                    SB.append(c);
+                    else{
+                        SB.append(c);
+                    }
                     len++;
                 }
-                storage_counts.add(Integer.valueOf(String.valueOf(SB)));
+                storage_row.add(String.valueOf(SB));
+                while(str_row_num < max_number){
+                    storage_row.add("");
+                    str_row_num++;
+                }
                 SB.delete(0,SB.length());
-                // 'a'~'f'
-                this.letters[blue] = storage_counts.get(0);
-                this.letters[green] = storage_counts.get(1);
-                this.letters[orange] = storage_counts.get(2);
-                this.letters[purple] = storage_counts.get(3);
-                this.letters[red] = storage_counts.get(4);
+                /*
+                for(String s : storage_row){
+                    System.out.println(" -> " + s);
+                }
+
+                 */
+
+                for(int i=0; i < max_number; i++){
+                    this.storage_rows.add(new eachStorageRow(storage_row.get(i+1),i));
+                }
+                Collections.sort(this.storage_rows);
+
+            }
+
+            public void countTilesNumber(){
+                for( eachStorageRow sr : this.storage_rows){
+                    if(!sr.isStorageRowEmpty()){
+                        //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
+                        this.letters[sr.getTilesColor()] += sr.getTilesNumber();
+                    }
+                }
             }
 
             public int getTilesNumber(char color){
                 return this.letters[color];
+            }
+
+            public class eachStorageRow implements Comparable<eachStorageRow>{
+                String storagerowState = "";
+                int row;
+
+                public eachStorageRow (String storagerowState, int row){
+                    this.storagerowState = storagerowState;
+                    this.row = row;
+                }
+
+                public int getTilesNumber(){
+                    if(this.isStorageRowEmpty()){
+                        return 0;
+                    }
+                    else{
+                        int storage_row_count = Character.getNumericValue(this.storagerowState.charAt(1));
+                        return storage_row_count;
+                    }
+                }
+
+                public char getTilesColor(){
+                    if(this.isStorageRowEmpty()){
+                        return ' ';
+                    }
+                    else{
+                        char storage_row_color = this.storagerowState.charAt(0);
+                        return storage_row_color;
+                    }
+                }
+
+                boolean isStorageRowEmpty(){
+                    return this.storagerowState.isEmpty();
+                }
+
+                @Override
+                public int compareTo(eachStorageRow storagerow) {
+                    if(row == storagerow.row){
+                        return 0;
+                    }
+                    else if(row > storagerow.row){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
             }
         }
 
@@ -369,12 +470,6 @@ public class Players implements Player{
             String floorState;
 
             int[] letters = new int[128];
-            final char blue = 'a';
-            final char green = 'b';
-            final char orange = 'c';
-            final char purple = 'd';
-            final char red = 'e';
-            final char first_player = 'f';
 
             public Floor(String floorState){
                 this.floorState = floorState;
@@ -389,12 +484,13 @@ public class Players implements Player{
                     letters_array[c]++;
                 }
                 // 'a'~'f'
-                this.letters[blue] = letters_array[blue];
-                this.letters[green] = letters_array[green];
-                this.letters[orange] = letters_array[orange];
-                this.letters[purple] = letters_array[purple];
-                this.letters[red] = letters_array[red];
-                this.letters[first_player] = letters_array[first_player];
+
+                this.letters[BLUE] = letters_array[BLUE];
+                this.letters[GREEN] = letters_array[GREEN];
+                this.letters[ORANGE] = letters_array[ORANGE];
+                this.letters[PURPLE] = letters_array[PURPLE];
+                this.letters[RED] = letters_array[RED];
+                this.letters[FIRST_PLAYER] = letters_array[FIRST_PLAYER];
             }
 
             public int getTilesNumber(char color){

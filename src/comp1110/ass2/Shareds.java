@@ -21,6 +21,14 @@ public class Shareds implements Shared{
     // Maximum player numbers
     int max_player_number;
 
+    // Colors and characters
+    public final char BLUE = 'a';
+    public final char GREEN = 'b';
+    public final char ORANGE = 'c';
+    public final char PURPLE = 'd';
+    public final char RED = 'e';
+    public final char FIRST_PLAYER = 'f';
+
     // Inner class fields
     private Center center;
     private Bag bag;
@@ -154,8 +162,8 @@ public class Shareds implements Shared{
     @Override
     public void printCenter() {
         System.out.println(" Center State : " + this.centerState);
-        char color = 'a';
-        for(int i=0; i <= 'f' - 'a'; i++){
+        char color = BLUE;
+        for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
             System.out.print(" " + color + " : " + getCenterTilesNumber(color));
             color++;
         }
@@ -171,8 +179,8 @@ public class Shareds implements Shared{
     @Override
     public void printBag() {
         System.out.println(" Bag State : " + this.bagState);
-        char color = 'a';
-        for(int i=0; i <= 'e' - 'a'; i++){
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
             System.out.print(" " + color + " : " + getBagTilesNumber(color));
             color++;
         }
@@ -188,8 +196,8 @@ public class Shareds implements Shared{
     @Override
     public void printDiscard() {
         System.out.println(" Discard State : " + this.discardState);
-        char color = 'a';
-        for(int i=0; i <= 'e' - 'a'; i++){
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
             System.out.print(" " + color + " : " + getDiscardTilesNumber(color));
             color++;
         }
@@ -246,12 +254,6 @@ public class Shareds implements Shared{
     public class Center{
         String centerState;
         int[] letters = new int[128];
-        final char blue = 'a';
-        final char green = 'b';
-        final char orange = 'c';
-        final char purple = 'd';
-        final char red = 'e';
-        final char first_player = 'f';
 
         public Center(String centerState){
             this.centerState = centerState;
@@ -265,12 +267,12 @@ public class Shareds implements Shared{
                 letters_array[c]++;
             }
             // 'a'~'f'
-            this.letters[blue] = letters_array[blue];
-            this.letters[green] = letters_array[green];
-            this.letters[orange] = letters_array[orange];
-            this.letters[purple] = letters_array[purple];
-            this.letters[red] = letters_array[red];
-            this.letters[first_player] = letters_array[first_player];
+            this.letters[BLUE] = letters_array[BLUE];
+            this.letters[GREEN] = letters_array[GREEN];
+            this.letters[ORANGE] = letters_array[ORANGE];
+            this.letters[PURPLE] = letters_array[PURPLE];
+            this.letters[RED] = letters_array[RED];
+            this.letters[FIRST_PLAYER] = letters_array[FIRST_PLAYER];
         }
 
         public int getTilesNumber(char color){
@@ -282,11 +284,6 @@ public class Shareds implements Shared{
         String bagState;
 
         int[] letters = new int[128];
-        final char blue = 'a';
-        final char green = 'b';
-        final char orange = 'c';
-        final char purple = 'd';
-        final char red = 'e';
 
         public Bag(String bagState){
             this.bagState = bagState;
@@ -309,11 +306,11 @@ public class Shareds implements Shared{
             bags_counts.add(Integer.valueOf(String.valueOf(SB)));
             SB.delete(0,SB.length());
             // 'a'~'f'
-            this.letters[blue] = bags_counts.get(0);
-            this.letters[green] = bags_counts.get(1);
-            this.letters[orange] = bags_counts.get(2);
-            this.letters[purple] = bags_counts.get(3);
-            this.letters[red] = bags_counts.get(4);
+            this.letters[BLUE] = bags_counts.get(0);
+            this.letters[GREEN] = bags_counts.get(1);
+            this.letters[ORANGE] = bags_counts.get(2);
+            this.letters[PURPLE] = bags_counts.get(3);
+            this.letters[RED] = bags_counts.get(4);
         }
 
         public int getTilesNumber(char color){
@@ -325,11 +322,6 @@ public class Shareds implements Shared{
         String discardState;
 
         int[] letters = new int[128];
-        final char blue = 'a';
-        final char green = 'b';
-        final char orange = 'c';
-        final char purple = 'd';
-        final char red = 'e';
 
         public Discard(String discardState){
             this.discardState = discardState;
@@ -352,11 +344,11 @@ public class Shareds implements Shared{
             discards_counts.add(Integer.valueOf(String.valueOf(SB)));
             SB.delete(0,SB.length());
             // 'a'~'f'
-            this.letters[blue] = discards_counts.get(0);
-            this.letters[green] = discards_counts.get(1);
-            this.letters[orange] = discards_counts.get(2);
-            this.letters[purple] = discards_counts.get(3);
-            this.letters[red] = discards_counts.get(4);
+            this.letters[BLUE] = discards_counts.get(0);
+            this.letters[GREEN] = discards_counts.get(1);
+            this.letters[ORANGE] = discards_counts.get(2);
+            this.letters[PURPLE] = discards_counts.get(3);
+            this.letters[RED] = discards_counts.get(4);
         }
 
         public int getTilesNumber(char color){
