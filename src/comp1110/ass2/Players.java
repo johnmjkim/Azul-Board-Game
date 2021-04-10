@@ -317,19 +317,72 @@ public class Players implements Player{
         }
 
         public class Mosaic {
-            String mosaicState;
+            String M_mosaicState;
+            ArrayList<String> mosaic_cols = new ArrayList<String>();
+            ArrayList<eachMosaicRow> mosaic_rows = new ArrayList<eachMosaicRow>();
 
             int[] letters = new int[128];
 
             public Mosaic(String mosaicState){
-                this.mosaicState = mosaicState;
-                countLetters(mosaicState);
+                this.M_mosaicState = mosaicState;
+                addMosaicRow(mosaicState);
+                countMosaicTilesNumber();
             }
 
-            public void countLetters(String mosaicState){
+            public void addMosaicRow(String mosaicState){
+                ArrayList<String> mosaic_row = new ArrayList<String>();
+                int max_number = 5;
+                int len = 0;
+                int msc_row_num = 0;
+                StringBuilder SB = new StringBuilder();
+                /*
+                for(char c : mosaicState.toCharArray()){
+                    if( len % 3 == 0){
+                        if(msc_row_num == Character.getNumericValue(c)){
+                            mosaic_row.add(String.valueOf(SB));
+                        }
+                        else{
+                            mosaic_row.add(String.valueOf(SB));
+                            while(msc_row_num != Character.getNumericValue(c)){
+                                mosaic_row.add("");
+                                msc_row_num++;
+                            }
+                        }
+                        SB.delete(0,SB.length());
+                        msc_row_num++;
+                    }
+                    else{
+                        SB.append(c);
+                    }
+                    len++;
+                }
+                mosaic_row.add(String.valueOf(SB));
+                while(msc_row_num < max_number){
+                    mosaic_row.add("");
+                    msc_row_num++;
+                }
+                SB.delete(0,SB.length());
+
+                 */
+                /*
+                for(String s : storage_row){
+                    System.out.println(" -> " + s);
+                }
+
+                 */
+                /*
+                for(int i=0; i < max_number; i++){
+                    this.mosaic_rows.add(new eachMosaicRow(mosaic_row.get(i+1),i));
+                }
+                Collections.sort(this.mosaic_rows);
+
+                 */
+            }
+
+            private void countMosaicTilesNumber(){
 
                 int[] letters_array = new int[128];
-                char[] mosaicState_char_array = mosaicState.toCharArray();
+                char[] mosaicState_char_array = this.M_mosaicState.toCharArray();
                 for(char c : mosaicState_char_array){
                     letters_array[c]++;
                 }
@@ -344,19 +397,66 @@ public class Players implements Player{
             public int getTilesNumber(char color){
                 return this.letters[color];
             }
+
+            public class eachMosaicRow implements Comparable<eachMosaicRow>{
+                String mosaic_rowState = "";
+                int row;
+
+                public eachMosaicRow (String mosaic_rowState, int row){
+                    this.mosaic_rowState = mosaic_rowState;
+                    this.row = row;
+                }
+
+                public int getTilesNumber(){
+                    if(this.isMosaicRowEmpty()){
+                        return 0;
+                    }
+                    else{
+                        int mosaic_row_count = 0;
+                        return mosaic_row_count;
+                    }
+                }
+
+                public char getTilesColor(){
+                    if(this.isMosaicRowEmpty()){
+                        return ' ';
+                    }
+                    else{
+                        char mosaic_row_color = ' ';
+                        return mosaic_row_color;
+                    }
+                }
+
+                boolean isMosaicRowEmpty(){
+                    return this.mosaic_rowState.isEmpty();
+                }
+
+                @Override
+                public int compareTo(eachMosaicRow mosaic_row) {
+                    if(row == mosaic_row.row){
+                        return 0;
+                    }
+                    else if(row > mosaic_row.row){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
+            }
         }
 
         public class Storage{
-            String storageState;
+            String S_storageState;
             ArrayList<eachStorageRow> storage_rows = new ArrayList<eachStorageRow>();
 
             int[] letters = new int[128];
 
             public Storage(String storageState){
                 this.storage_rows.clear();
-                this.storageState = storageState;
+                this.S_storageState = storageState;
                 addStorageRow(storageState);
-                countTilesNumber();
+                countStorageTilesNumber();
             }
 
             public void addStorageRow(String storageState){
@@ -405,7 +505,7 @@ public class Players implements Player{
 
             }
 
-            public void countTilesNumber(){
+            private void countStorageTilesNumber(){
                 for( eachStorageRow sr : this.storage_rows){
                     if(!sr.isStorageRowEmpty()){
                         //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
@@ -419,11 +519,11 @@ public class Players implements Player{
             }
 
             public class eachStorageRow implements Comparable<eachStorageRow>{
-                String storagerowState = "";
+                String storage_rowState = "";
                 int row;
 
-                public eachStorageRow (String storagerowState, int row){
-                    this.storagerowState = storagerowState;
+                public eachStorageRow (String storage_rowState, int row){
+                    this.storage_rowState = storage_rowState;
                     this.row = row;
                 }
 
@@ -432,7 +532,7 @@ public class Players implements Player{
                         return 0;
                     }
                     else{
-                        int storage_row_count = Character.getNumericValue(this.storagerowState.charAt(1));
+                        int storage_row_count = Character.getNumericValue(this.storage_rowState.charAt(1));
                         return storage_row_count;
                     }
                 }
@@ -442,21 +542,21 @@ public class Players implements Player{
                         return ' ';
                     }
                     else{
-                        char storage_row_color = this.storagerowState.charAt(0);
+                        char storage_row_color = this.storage_rowState.charAt(0);
                         return storage_row_color;
                     }
                 }
 
                 boolean isStorageRowEmpty(){
-                    return this.storagerowState.isEmpty();
+                    return this.storage_rowState.isEmpty();
                 }
 
                 @Override
-                public int compareTo(eachStorageRow storagerow) {
-                    if(row == storagerow.row){
+                public int compareTo(eachStorageRow storage_row) {
+                    if(row == storage_row.row){
                         return 0;
                     }
-                    else if(row > storagerow.row){
+                    else if(row > storage_row.row){
                         return 1;
                     }
                     else{
@@ -467,12 +567,12 @@ public class Players implements Player{
         }
 
         public class Floor {
-            String floorState;
+            String F_floorState;
 
             int[] letters = new int[128];
 
             public Floor(String floorState){
-                this.floorState = floorState;
+                this.F_floorState = floorState;
                 countLetters(floorState);
             }
 
