@@ -3,6 +3,7 @@ package comp1110.ass2;
 public interface Player {
     // Interface for Player class
 
+    // Input playerState, construct player/mosaic/storage/floor and print information
     /**
      * Input of PlayerState is String playerState
      * The method automatically sort players information as below :
@@ -22,7 +23,11 @@ public interface Player {
     void addFloor(String floorState, int num_turn);
     void printFloor();
 
+    // Get values from player/mosaic/storage/floor and print information
     String getPlayerState();
+    int getMosaicTotalTiles();
+    int getStorageTotalTiles();
+    int getFloorTotalTiles();
 
 }
 

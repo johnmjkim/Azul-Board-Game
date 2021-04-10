@@ -3,7 +3,6 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Players implements Player{
     // All information about players are stored in ArrayList players
@@ -144,6 +143,7 @@ public class Players implements Player{
             }
             System.out.println();
         }
+        System.out.println(" Mosaic tiles total : " + getMosaicTotalTiles());
     }
 
     /**
@@ -167,6 +167,7 @@ public class Players implements Player{
             }
             System.out.println();
         }
+        System.out.println(" Storage tiles total : " + getStorageTotalTiles());
     }
 
     /**
@@ -190,6 +191,7 @@ public class Players implements Player{
             }
             System.out.println();
         }
+        System.out.println(" Floor tiles total : " + getFloorTotalTiles());
     }
 
     /**
@@ -205,6 +207,33 @@ public class Players implements Player{
     @Override
     public String getPlayerState() {
         return this.playerState;
+    }
+
+    @Override
+    public int getMosaicTotalTiles() {
+        int tot_tiles = 0;
+        for( eachPlayer p : this.players){
+            tot_tiles += p.getMosaicTotalTilesNumber();
+        }
+        return tot_tiles;
+    }
+
+    @Override
+    public int getStorageTotalTiles() {
+        int tot_tiles = 0;
+        for( eachPlayer p : this.players){
+            tot_tiles += p.getStorageTotalTilesNumber();
+        }
+        return tot_tiles;
+    }
+
+    @Override
+    public int getFloorTotalTiles() {
+        int tot_tiles = 0;
+        for( eachPlayer p : this.players){
+            tot_tiles += p.getFloorTotalTilesNumber();
+        }
+        return tot_tiles;
     }
 
     /**
@@ -303,6 +332,18 @@ public class Players implements Player{
             return this.floor.getTilesNumber(color);
         }
 
+        public int getMosaicTotalTilesNumber() {
+            return this.mosaic.getTotalTilesNumber();
+        }
+
+        public int getStorageTotalTilesNumber() {
+            return this.storage.getTotalTilesNumber();
+        }
+
+        public int getFloorTotalTilesNumber() {
+            return this.floor.getTotalTilesNumber();
+        }
+
         @Override
         public int compareTo(eachPlayer player) {
             if(num_turn == player.num_turn){
@@ -330,6 +371,7 @@ public class Players implements Player{
             }
 
             public void addMosaicRow(String mosaicState){
+                // TODO finish addMosaicRow and addMosaicCol
                 ArrayList<String> mosaic_row = new ArrayList<String>();
                 int max_number = 5;
                 int len = 0;
@@ -398,7 +440,22 @@ public class Players implements Player{
                 return this.letters[color];
             }
 
+            public int getTotalTilesNumber(){
+                int tot_tiles = 0;
+                char color = BLUE;
+                for(int i=0; i <= RED - BLUE; i++){
+                    tot_tiles += this.letters[color];
+                    color++;
+                }
+                return tot_tiles;
+            }
+
+            boolean isMosaicEmpty(){
+                return this.M_mosaicState.isEmpty();
+            }
+
             public class eachMosaicRow implements Comparable<eachMosaicRow>{
+                // TODO finish eachMosaicRow and eachMosaicCol
                 String mosaic_rowState = "";
                 int row;
 
@@ -518,6 +575,20 @@ public class Players implements Player{
                 return this.letters[color];
             }
 
+            public int getTotalTilesNumber(){
+                int tot_tiles = 0;
+                char color = BLUE;
+                for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                    tot_tiles += this.letters[color];
+                    color++;
+                }
+                return tot_tiles;
+            }
+
+            boolean isStorageEmpty(){
+                return this.S_storageState.isEmpty();
+            }
+
             public class eachStorageRow implements Comparable<eachStorageRow>{
                 String storage_rowState = "";
                 int row;
@@ -595,6 +666,20 @@ public class Players implements Player{
 
             public int getTilesNumber(char color){
                 return this.letters[color];
+            }
+
+            public int getTotalTilesNumber(){
+                int tot_tiles = 0;
+                char color = BLUE;
+                for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                    tot_tiles += this.letters[color];
+                    color++;
+                }
+                return tot_tiles;
+            }
+
+            boolean isFloorEmpty(){
+                return this.F_floorState.isEmpty();
             }
         }
     }

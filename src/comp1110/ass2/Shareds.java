@@ -21,6 +21,18 @@ public class Shareds implements Shared{
     // Maximum player numbers
     int max_player_number;
 
+    // Players substring
+    public final char PLAYER_A = 'A';
+    public final char PLAYER_B = 'B';
+    public final char PLAYER_C = 'C';
+    public final char PLAYER_D = 'D';
+
+    // Shared state substring
+    public final char FACTORY = 'F';
+    public final char CENTER = 'C';
+    public final char BAG = 'B';
+    public final char DISCARD = 'D';
+
     // Colors and characters
     public final char BLUE = 'a';
     public final char GREEN = 'b';
@@ -51,7 +63,7 @@ public class Shareds implements Shared{
         // Filter valid capital letters
         for( char c : sharedState_array ){
             //System.out.println(c);
-            if(c >= 'A' && c <= 'D' || c == 'F'){
+            if(c >= PLAYER_A && c <= PLAYER_D || c == FACTORY || c == CENTER || c == BAG || c == DISCARD){
                 //System.out.println(String.valueOf(c));
                 sharedState_name_arr.add(c);
                 sharedState_content_arr.add(String.valueOf(SB));
@@ -151,6 +163,14 @@ public class Shareds implements Shared{
         for( eachFactory factory : this.factories){
             System.out.println(factory.toString());
         }
+        System.out.print(" Factory Total : ");
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
+            System.out.print(" " + color + " : " + getFactoryTilesNumber(color));
+            color++;
+        }
+        System.out.println();
+        System.out.println(" Factory tiles total : " + getFactoryTotalTiles());
     }
 
     @Override
@@ -168,6 +188,7 @@ public class Shareds implements Shared{
             color++;
         }
         System.out.println();
+        System.out.println(" Center tiles total : " + getCenterTotalTiles());
     }
 
     @Override
@@ -185,6 +206,7 @@ public class Shareds implements Shared{
             color++;
         }
         System.out.println();
+        System.out.println(" Bag tiles total : " + getBagTotalTiles());
     }
 
     @Override
@@ -202,11 +224,21 @@ public class Shareds implements Shared{
             color++;
         }
         System.out.println();
+        System.out.println(" Discard tiles total : " + getDiscardTotalTiles());
     }
 
     @Override
     public String getSharedState() {
         return this.sharedState;
+    }
+
+    @Override
+    public int getFactoryTilesNumber(char color) {
+        int tot_tiles = 0;
+        for( eachFactory f : this.factories){
+            tot_tiles += f.getTilesNumber(color);
+        }
+        return tot_tiles;
     }
 
     @Override
@@ -224,17 +256,81 @@ public class Shareds implements Shared{
         return this.discard.getTilesNumber(color);
     }
 
+    @Override
+    public int getFactoryTotalTiles() {
+        int tot_tiles = 0;
+        for( eachFactory f : this.factories){
+            tot_tiles += f.getTotalTilesNumber();
+        }
+        return tot_tiles;
+    }
+
+    @Override
+    public int getCenterTotalTiles() {
+        return this.center.getTotalTilesNumber();
+    }
+
+    @Override
+    public int getBagTotalTiles() {
+        return this.bag.getTotalTilesNumber();
+    }
+
+    @Override
+    public int getDiscardTotalTiles() {
+        return this.discard.getTotalTilesNumber();
+    }
+
     public class eachFactory implements Comparable<eachFactory>{
         int number;
-        String factory = "";
+        int[] letters = new int[128];
+        String F_eachFactoryState = "";
 
-        eachFactory(String factory, int number) {
-            this.factory = factory;
+        public eachFactory(String eachFactoryState, int number) {
+            this.F_eachFactoryState = eachFactoryState;
             this.number = number;
+            count_eachFactoryTilesNumber();
+        }
+
+        public void count_eachFactoryTilesNumber(){
+            int[] letters_array = new int[128];
+            char[] eachFactoryState_char_array = F_eachFactoryState.toCharArray();
+            for(char c : eachFactoryState_char_array){
+                letters_array[c]++;
+            }
+            // 'a'~'f'
+            this.letters[BLUE] = letters_array[BLUE];
+            this.letters[GREEN] = letters_array[GREEN];
+            this.letters[ORANGE] = letters_array[ORANGE];
+            this.letters[PURPLE] = letters_array[PURPLE];
+            this.letters[RED] = letters_array[RED];
+        }
+
+        public int getTilesNumber(char color){
+            return this.letters[color];
+        }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
+        }
+
+        boolean is_eachFactoryEmpty(){
+            return this.F_eachFactoryState.isEmpty();
         }
 
         public String toString() {
-            return " Number : " + this.number + " Factory : " + this.factory;
+            String each_factory_str = " Number : " + this.number + " Factory : " + this.F_eachFactoryState + "\n";
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                each_factory_str += " " + color + " : " + this.getTilesNumber(color);
+                color++;
+            }
+            return each_factory_str;
         }
 
         @Override
@@ -252,15 +348,15 @@ public class Shareds implements Shared{
     }
 
     public class Center{
-        String centerState;
+        String C_centerState;
         int[] letters = new int[128];
 
         public Center(String centerState){
-            this.centerState = centerState;
-            countLetters(centerState);
+            this.C_centerState = centerState;
+            countCenterTilesNumber(centerState);
         }
 
-        public void countLetters(String centerState){
+        public void countCenterTilesNumber(String centerState){
             int[] letters_array = new int[128];
             char[] centerState_char_array = centerState.toCharArray();
             for(char c : centerState_char_array){
@@ -278,19 +374,32 @@ public class Shareds implements Shared{
         public int getTilesNumber(char color){
             return this.letters[color];
         }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
+        }
+
+        boolean isCenterEmpty(){
+            return this.C_centerState.isEmpty();
+        }
     }
 
     public class Bag{
-        String bagState;
-
+        String B_bagState;
         int[] letters = new int[128];
 
         public Bag(String bagState){
-            this.bagState = bagState;
-            countLetters(bagState);
+            this.B_bagState = bagState;
+            countBagTilesNumber(bagState);
         }
 
-        public void countLetters(String bagState){
+        public void countBagTilesNumber(String bagState){
             ArrayList<Integer> bags_counts = new ArrayList<Integer>();
             char[] bagState_char_array = bagState.toCharArray();
             StringBuilder SB = new StringBuilder();
@@ -316,19 +425,33 @@ public class Shareds implements Shared{
         public int getTilesNumber(char color){
             return this.letters[color];
         }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
+        }
+
+        boolean isBagEmpty(){
+            return this.B_bagState.isEmpty();
+        }
     }
 
     public class Discard{
-        String discardState;
+        String D_discardState;
 
         int[] letters = new int[128];
 
         public Discard(String discardState){
-            this.discardState = discardState;
-            countLetters(discardState);
+            this.D_discardState = discardState;
+            countDiscardTilesNumber(discardState);
         }
 
-        public void countLetters(String discardState){
+        public void countDiscardTilesNumber(String discardState){
             ArrayList<Integer> discards_counts = new ArrayList<Integer>();
             char[] discardState_char_array = discardState.toCharArray();
             StringBuilder SB = new StringBuilder();
@@ -353,6 +476,20 @@ public class Shareds implements Shared{
 
         public int getTilesNumber(char color){
             return this.letters[color];
+        }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
+        }
+
+        boolean isDiscardEmpty(){
+            return this.D_discardState.isEmpty();
         }
     }
 }
