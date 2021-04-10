@@ -13,6 +13,26 @@ public class Azul {
     public static String move;
     public static int gameScore;
 
+    // Players substring
+    public final char PLAYER_A = 'A';
+    public final char PLAYER_B = 'B';
+    public final char PLAYER_C = 'C';
+    public final char PLAYER_D = 'D';
+
+    // Shared state substring
+    public final char FACTORY = 'F';
+    public final char CENTER = 'C';
+    public final char BAG = 'B';
+    public final char DISCARD = 'D';
+
+    // Colors and characters
+    public final char BLUE = 'a';
+    public final char GREEN = 'b';
+    public final char ORANGE = 'c';
+    public final char PURPLE = 'd';
+    public final char RED = 'e';
+    public final char FIRST_PLAYER = 'f';
+
     /**
      * Given a shared state string, determine if it is well-formed.
      * Note: you don't need to consider validity for this task.
@@ -74,6 +94,7 @@ public class Azul {
     // This is “1. Game Setup”.
     public static boolean isSharedStateWellFormed(String sharedState) {
         // FIXME Task 2
+
         char[] sharedState_array = sharedState.toCharArray();
         ArrayList<Character> sharedState_name_arr = new ArrayList<Character>();
         ArrayList<String> sharedState_content_arr = new ArrayList<String>();
@@ -95,11 +116,13 @@ public class Azul {
         sharedState_content_arr.add(String.valueOf(SB));
         SB.delete(0, SB.length());
         sharedState_content_arr.remove(0);
-
+        /*
         System.out.println(sharedState);
         for (int i = 0; i < len; i++) {
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
+
+         */
 
         // Find capital letters valid
         if (sharedState_name_arr.size() != 5) {
@@ -116,6 +139,7 @@ public class Azul {
         // Discard is valid
         boolean discard_format = check_bag_discard_format(sharedState_name_arr.get(4), sharedState_content_arr.get(4), 'D');
         return s_player_format && factory_format && center_format && bag_format && discard_format;
+
     }
 
     public static boolean check_s_player_format(char s_player_char, String s_player_String) {
@@ -124,7 +148,7 @@ public class Azul {
 
         // S_Player is valid
         boolean s_player_format = s_player_name_format && s_player_String.isEmpty();
-        System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
+        //System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
         return s_player_format;
     }
 
@@ -149,7 +173,7 @@ public class Azul {
             factory_content_format = false;
         }
         boolean factory_format = factory_name_format && factory_content_format;
-        System.out.println(factory_name_format + ", " + factory_content_format);
+        //System.out.println(factory_name_format + ", " + factory_content_format);
 
         return factory_format;
     }
@@ -168,7 +192,7 @@ public class Azul {
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;
-        System.out.println(center_name_format + ", " + center_content_format);
+        //System.out.println(center_name_format + ", " + center_content_format);
         return center_format;
     }
 
@@ -195,7 +219,7 @@ public class Azul {
         }
         SB.delete(0, SB.length());
         boolean bag_discard_format = bag_discard_name_format && bag_discard_content_format && !bag_discard_String.isEmpty();
-        System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
+        //System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
         return bag_discard_format;
     }
 
@@ -273,11 +297,13 @@ public class Azul {
         playerState_content_arr.add(String.valueOf(SB));
         SB.delete(0, SB.length());
         playerState_content_arr.remove(0);
-
+        /*
         System.out.println(playerState);
         for (int i = 0; i < len; i++) {
             System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
         }
+
+         */
         // Find capital letters valid 1 : filter by size
         if (!(playerState_name_arr.size() % 4 == 0)) {
             return false;
@@ -338,7 +364,7 @@ public class Azul {
 
         // P_Player is valid
         boolean p_player_format = p_player_name_format;
-        System.out.println(p_player_name_format);
+        //System.out.println(p_player_name_format);
         return p_player_format;
     }
 
@@ -352,7 +378,7 @@ public class Azul {
         }
         // P_Player is valid
         boolean score_format = score_name_format && !score_String.isEmpty();
-        System.out.println(score_format + ", " + !score_String.isEmpty());
+        //System.out.println(score_format + ", " + !score_String.isEmpty());
         return score_format;
     }
 
@@ -378,7 +404,7 @@ public class Azul {
             mosaic_content_format = true;
         }
         boolean center_format = mosaic_name_format && mosaic_content_format;
-        System.out.println(mosaic_name_format + ", " + mosaic_content_format);
+        //System.out.println(mosaic_name_format + ", " + mosaic_content_format);
         return center_format;
     }
 
@@ -408,7 +434,7 @@ public class Azul {
             storage_content_format = true;
         }
         boolean storage_format = storage_name_format && storage_content_format;
-        System.out.println(storage_name_format + ", " + storage_content_format);
+        //System.out.println(storage_name_format + ", " + storage_content_format);
         return storage_format;
     }
 
@@ -434,7 +460,7 @@ public class Azul {
             floor_content_format = true;
         }
         boolean storage_format = floor_name_format && floor_content_format;
-        System.out.println(floor_name_format + ", " + floor_content_format);
+        //System.out.println(floor_name_format + ", " + floor_content_format);
         return storage_format;
     }
 
@@ -461,7 +487,15 @@ public class Azul {
     //This is “2. Starting the round”.
     public static char drawTileFromBag(String[] gameState) {
         // FIXME Task 5
+
+        Shareds azulShareds = new Shareds(2);
+        String input_sharedState = gameState[0];
+        azulShareds.SharedState(input_sharedState);
+        char random_tile = azulShareds.getRandomTileBag();
+        return random_tile;
+
         //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
+        /*
         String[] transferGameState = gameState[0].split("");
         int B = gameState[0].indexOf("B");//find the number of the place where B start in gameState
         int[] tiles = {0, 0, 0, 0, 0};
@@ -482,6 +516,8 @@ public class Azul {
         for (int i = 0; i < tiles.length; i++) {
             exp_int_array.add(tiles[i]);
         }
+
+         */
         /*
         System.out.println(gameState[0]);
         for(int i=0; i < exp_int_array.size(); i++){
@@ -489,9 +525,11 @@ public class Azul {
         }
 
          */
-
+        /*
         char rand_tile = randomTiles(exp_int_array, exp_char_array);
         return rand_tile;
+
+         */
 
         // sibo's work
         /*
@@ -525,7 +563,8 @@ public class Azul {
 
          */
     }
-
+    // Useless method
+    /*
     public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array) {
         char char_out = 'Z';
         ArrayList<Integer> sums = new ArrayList<Integer>();
@@ -556,6 +595,8 @@ public class Azul {
             return char_out;
         }
     }
+
+     */
 
     /*
     As the task 5 give the corresponding random number to the tile type 'a' to 'e',

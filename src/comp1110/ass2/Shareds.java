@@ -3,6 +3,7 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Shareds implements Shared{
     // Input String sharedState is stored in this field
@@ -46,10 +47,19 @@ public class Shareds implements Shared{
     private Bag bag;
     private Discard discard;
 
+    /**
+     * Shareds constructor method puts number of maximum players
+     * @param max_player_number
+     */
     public Shareds(int max_player_number){
         this.max_player_number = max_player_number;
     }
 
+    /**
+     * Take sharedState as input
+     * Automatically sorts information
+     * @param sharedState
+     */
     @Override
     public void SharedState(String sharedState) {
         this.sharedState = sharedState;
@@ -77,10 +87,12 @@ public class Shareds implements Shared{
         sharedState_content_arr.add(String.valueOf(SB));
         SB.delete(0,SB.length());
         sharedState_content_arr.remove(0);
-
+        /*
         for(int i=0; i < len; i++){
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
+
+         */
 
         for(int i=0; i < len; i++){
             if(i == 0){
@@ -280,6 +292,25 @@ public class Shareds implements Shared{
         return this.discard.getTotalTilesNumber();
     }
 
+    @Override
+    public void refillBag() {
+
+    }
+
+    @Override
+    public char getRandomTileBag() {
+        return this.bag.getRandomTile();
+    }
+
+    @Override
+    public void clearDiscard() {
+
+    }
+
+    /**
+     * Inner class eachFactory of Shareds class
+     * All eachFactory state stored here
+     */
     public class eachFactory implements Comparable<eachFactory>{
         int number;
         int[] letters = new int[128];
@@ -347,6 +378,10 @@ public class Shareds implements Shared{
         }
     }
 
+    /**
+     * Inner class Center of Shareds class
+     * All Center state stored here
+     */
     public class Center{
         String C_centerState;
         int[] letters = new int[128];
@@ -390,6 +425,10 @@ public class Shareds implements Shared{
         }
     }
 
+    /**
+     * Inner class Bag of Shareds class
+     * All Bag state stored here
+     */
     public class Bag{
         String B_bagState;
         int[] letters = new int[128];
@@ -439,8 +478,42 @@ public class Shareds implements Shared{
         boolean isBagEmpty(){
             return this.B_bagState.isEmpty();
         }
+
+        char getRandomTile(){
+            char picked_tile = 'Z';
+            int prob_blue = getTilesNumber(BLUE);
+            int prob_green = prob_blue + getBagTilesNumber(GREEN);
+            int prob_orange = prob_green + getBagTilesNumber(ORANGE);
+            int prob_purple = prob_orange + getBagTilesNumber(PURPLE);
+            int prob_red = prob_purple + getBagTilesNumber(RED);
+
+            Random r = new Random();
+            int r_output = r.nextInt(getTotalTilesNumber() - 1) + 1;
+            //System.out.println(prob_blue + ", " + prob_green + ", " + prob_orange + ", " + prob_purple + ", " + prob_red + " : " + r_output);
+
+            if (r_output > 0 && r_output <= prob_blue) {
+                picked_tile = BLUE;
+            }
+            else if (r_output > prob_blue && r_output <= prob_green) {
+                picked_tile = GREEN;
+            }
+            else if (r_output > prob_green && r_output <= prob_orange) {
+                picked_tile = ORANGE;
+            }
+            else if (r_output > prob_orange && r_output <= prob_purple) {
+                picked_tile = PURPLE;
+            }
+            else if (r_output > prob_purple && r_output <= prob_red) {
+                picked_tile = RED;
+            }
+            return picked_tile;
+        }
     }
 
+    /**
+     * Inner class Discard of Shareds class
+     * All Discard state stored here
+     */
     public class Discard{
         String D_discardState;
 

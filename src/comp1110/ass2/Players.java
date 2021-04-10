@@ -43,6 +43,7 @@ public class Players implements Player{
     public Players(int max_player_number){
         this.max_player_number = max_player_number;
     }
+
     /**
      * Take playerState as input
      * Automatically sorts information
@@ -77,10 +78,12 @@ public class Players implements Player{
         playerState_content_arr.add(String.valueOf(SB));
         SB.delete(0,SB.length());
         playerState_content_arr.remove(0);
-
+        /*
         for(int i=0; i < len; i++){
             System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
         }
+
+         */
 
         // Store information of each player into this.players
         int num_turn = 0;
@@ -245,6 +248,10 @@ public class Players implements Player{
         return players_map.get(player_name);
     }
 
+    /**
+     * Inner class eachPlayer of Players class
+     * Each player stored in order by turn
+     */
     public class eachPlayer implements Comparable<eachPlayer>{
         Character name;
         int score;
@@ -257,12 +264,7 @@ public class Players implements Player{
         private Mosaic mosaic;
         private Storage storage;
         private Floor floor;
-        /**
-         * Each player has its name, score and turn
-         * @param n
-         * @param s
-         * @param c
-         */
+
         public eachPlayer(Character n, int s, int c) {
             this.name = n;
             this.score = s;
@@ -288,18 +290,10 @@ public class Players implements Player{
             return " Name : " + this.name + " Turn : " + this.num_turn + " Score : " + this.score;
         }
 
-        /**
-         * Type of this.name is Character
-         * @return
-         */
         public char getName(){
             return this.name;
         }
 
-        /**
-         * Type of this.score is int
-         * @return
-         */
         public int getScore(){
             return this.score;
         }
@@ -357,6 +351,10 @@ public class Players implements Player{
             }
         }
 
+        /**
+         * Inner class Mosaic of eachPlayer class
+         * Each player has Mosaic state stored here
+         */
         public class Mosaic {
             String M_mosaicState;
             ArrayList<String> mosaic_cols = new ArrayList<String>();
@@ -454,6 +452,10 @@ public class Players implements Player{
                 return this.M_mosaicState.isEmpty();
             }
 
+            /**
+             * Inner class eachMosaicRow of Mosaic class
+             * Each player has eachMosaicRow state stored here
+             */
             public class eachMosaicRow implements Comparable<eachMosaicRow>{
                 // TODO finish eachMosaicRow and eachMosaicCol
                 String mosaic_rowState = "";
@@ -503,6 +505,10 @@ public class Players implements Player{
             }
         }
 
+        /**
+         * Inner class Storage of eachPlayer class
+         * Each player has Storage state stored here
+         */
         public class Storage{
             String S_storageState;
             ArrayList<eachStorageRow> storage_rows = new ArrayList<eachStorageRow>();
@@ -589,6 +595,10 @@ public class Players implements Player{
                 return this.S_storageState.isEmpty();
             }
 
+            /**
+             * Inner class eachStorageRow of Storage class
+             * Each player has eachStorageRow state stored here
+             */
             public class eachStorageRow implements Comparable<eachStorageRow>{
                 String storage_rowState = "";
                 int row;
@@ -637,6 +647,10 @@ public class Players implements Player{
             }
         }
 
+        /**
+         * Inner class Floor of eachPlayer class
+         * Each player has Floor state stored here
+         */
         public class Floor {
             String F_floorState;
 

@@ -4,6 +4,16 @@ public interface Shared {
     // Interface for Shared class
 
     // Input sharedState, construct factory/center/bag/discard and print information
+
+    /**
+     * Input of PlayerState is String playerState
+     * The method automatically sort shared information as below :
+     * addTurn : String name, Integer score, int num_turn
+     * addFactory : String factoryState
+     * addCenter : String storageState
+     * addBag : String bagState
+     * @param sharedState
+     */
     void SharedState(String sharedState);
     void addTurn(Character turnState);
     void printTurn();
@@ -11,7 +21,7 @@ public interface Shared {
     void printFactory();
     void addCenter(String centerState);
     void printCenter();
-    void addBag(String BagState);
+    void addBag(String bagState);
     void printBag();
     void addDiscard(String discardState);
     void printDiscard();
@@ -27,4 +37,16 @@ public interface Shared {
     int getCenterTotalTiles();
     int getBagTotalTiles();
     int getDiscardTotalTiles();
+
+    // Methods for Factory
+
+    // Methods for Center
+
+    // Methods for Bag
+    void refillBag();
+    char getRandomTileBag();
+
+    // Methods for Discard
+    void clearDiscard();
+
 }
