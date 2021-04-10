@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -73,36 +74,35 @@ public class Azul {
     // This is “1. Game Setup”.
     public static boolean isSharedStateWellFormed(String sharedState) {
         // FIXME Task 2
-        char [] sharedState_array = sharedState.toCharArray();
+        char[] sharedState_array = sharedState.toCharArray();
         ArrayList<Character> sharedState_name_arr = new ArrayList<Character>();
         ArrayList<String> sharedState_content_arr = new ArrayList<String>();
         StringBuilder SB = new StringBuilder();
         int len = 0;
         // Filter valid capital letters
-        for( char c : sharedState_array ){
+        for (char c : sharedState_array) {
             //System.out.println(c);
-            if(c >= 'A' && c <= 'D' || c == 'F'){
+            if (c >= 'A' && c <= 'D' || c == 'F') {
                 //System.out.println(String.valueOf(c));
                 sharedState_name_arr.add(c);
                 sharedState_content_arr.add(String.valueOf(SB));
-                SB.delete(0,SB.length());
+                SB.delete(0, SB.length());
                 len++;
-            }
-            else{
+            } else {
                 SB.append(c);
             }
         }
         sharedState_content_arr.add(String.valueOf(SB));
-        SB.delete(0,SB.length());
+        SB.delete(0, SB.length());
         sharedState_content_arr.remove(0);
 
         System.out.println(sharedState);
-        for(int i=0; i < len; i++){
+        for (int i = 0; i < len; i++) {
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
 
         // Find capital letters valid
-        if(sharedState_name_arr.size() != 5){
+        if (sharedState_name_arr.size() != 5) {
             return false;
         }
         // Player is valid
@@ -213,7 +213,7 @@ public class Azul {
          */
     }
 
-    public static boolean check_s_player_format(char s_player_char, String s_player_String){
+    public static boolean check_s_player_format(char s_player_char, String s_player_String) {
         // Find capital letters valid
         boolean s_player_name_format = (s_player_char >= 'A' && s_player_char <= 'D');
 
@@ -223,25 +223,24 @@ public class Azul {
         return s_player_format;
     }
 
-    public static boolean check_factory_format(char factory_char, String factory_String){
+    public static boolean check_factory_format(char factory_char, String factory_String) {
         int len = 0;
         boolean factory_name_format = (factory_char == 'F');
 
         boolean factory_content_format = true;
-        for(char c : factory_String.toCharArray()){
-            if( len % 5 == 0){
-                if(!(c >= '0' && c <= '4')){
+        for (char c : factory_String.toCharArray()) {
+            if (len % 5 == 0) {
+                if (!(c >= '0' && c <= '4')) {
                     factory_content_format = false;
                 }
-            }
-            else{
-                if(!(c >= 'a' && c <= 'e')){
+            } else {
+                if (!(c >= 'a' && c <= 'e')) {
                     factory_content_format = false;
                 }
             }
             len++;
         }
-        if(!(len % 5 ==0)){
+        if (!(len % 5 == 0)) {
             factory_content_format = false;
         }
         boolean factory_format = factory_name_format && factory_content_format;
@@ -250,17 +249,17 @@ public class Azul {
         return factory_format;
     }
 
-    public static boolean check_center_format(char center_char, String center_String){
+    public static boolean check_center_format(char center_char, String center_String) {
         boolean center_name_format = (center_char == 'C');
         int len = 0;
         boolean center_content_format = true;
-        for(char c : center_String.toCharArray()){
-            if(!(c >= 'a' && c <= 'f')){
+        for (char c : center_String.toCharArray()) {
+            if (!(c >= 'a' && c <= 'f')) {
                 center_content_format = false;
             }
             len++;
         }
-        if(len > 15){
+        if (len > 15) {
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;
@@ -268,29 +267,28 @@ public class Azul {
         return center_format;
     }
 
-    public static boolean check_bag_discard_format(char bag_discard_char, String bag_discard_String, char compare){
+    public static boolean check_bag_discard_format(char bag_discard_char, String bag_discard_String, char compare) {
         boolean bag_discard_name_format = (bag_discard_char == compare);
         boolean bag_discard_content_format = true;
         StringBuilder SB = new StringBuilder();
-        int len=0;
-        for( char c : bag_discard_String.toCharArray()){
+        int len = 0;
+        for (char c : bag_discard_String.toCharArray()) {
             SB.append(c);
-            if(len >= 1 && len <= 10){
-                if(len % 2 == 1){
-                    if(!(Integer.valueOf(SB.toString()) >=0 && Integer.valueOf(SB.toString()) <= 20)){
+            if (len >= 1 && len <= 10) {
+                if (len % 2 == 1) {
+                    if (!(Integer.valueOf(SB.toString()) >= 0 && Integer.valueOf(SB.toString()) <= 20)) {
                         bag_discard_content_format = false;
                     }
-                    SB.delete(0,SB.length());
+                    SB.delete(0, SB.length());
                 }
-            }
-            else{
+            } else {
             }
             len++;
         }
-        if(!(len==10)){
+        if (!(len == 10)) {
             bag_discard_content_format = false;
         }
-        SB.delete(0,SB.length());
+        SB.delete(0, SB.length());
         boolean bag_discard_format = bag_discard_name_format && bag_discard_content_format && !bag_discard_String.isEmpty();
         System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
         return bag_discard_format;
@@ -349,60 +347,56 @@ public class Azul {
     // This is “1. Game Setup”.
     public static boolean isPlayerStateWellFormed(String playerState) {
         // FIXME Task 3
-        char [] playerState_array = playerState.toCharArray();
+        char[] playerState_array = playerState.toCharArray();
         ArrayList<Character> playerState_name_arr = new ArrayList<Character>();
         ArrayList<String> playerState_content_arr = new ArrayList<String>();
         StringBuilder SB = new StringBuilder();
         int len = 0;
         // Filter valid capital letters
-        for( char c : playerState_array ){
+        for (char c : playerState_array) {
             //System.out.println(c);
-            if( (c >= 'A' && c <= 'D') || c =='M' || c =='S' || c == 'F'){
+            if ((c >= 'A' && c <= 'D') || c == 'M' || c == 'S' || c == 'F') {
                 //System.out.println(String.valueOf(c));
                 playerState_name_arr.add(c);
                 playerState_content_arr.add(String.valueOf(SB));
-                SB.delete(0,SB.length());
+                SB.delete(0, SB.length());
                 len++;
-            }
-            else{
+            } else {
                 SB.append(c);
             }
         }
         playerState_content_arr.add(String.valueOf(SB));
-        SB.delete(0,SB.length());
+        SB.delete(0, SB.length());
         playerState_content_arr.remove(0);
 
         System.out.println(playerState);
-        for(int i=0; i < len; i++){
+        for (int i = 0; i < len; i++) {
             System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
         }
         // Find capital letters valid 1 : filter by size
-        if(!(playerState_name_arr.size() % 4 == 0)){
+        if (!(playerState_name_arr.size() % 4 == 0)) {
             return false;
         }
         // Find capital letters valid 2 : filter by order
         len = 0;
         int toggle_int = 0, player_int = 0;
-        for( char c : playerState_name_arr){
+        for (char c : playerState_name_arr) {
             toggle_int = len % 4;
-            if(toggle_int == 0){
-                if(!(c == 'A' + player_int)){
+            if (toggle_int == 0) {
+                if (!(c == 'A' + player_int)) {
                     return false;
                 }
                 player_int++;
-            }
-            else if(toggle_int == 1){
-                if(!(c == 'M')){
+            } else if (toggle_int == 1) {
+                if (!(c == 'M')) {
                     return false;
                 }
-            }
-            else if(toggle_int == 2){
-                if(!(c == 'S')){
+            } else if (toggle_int == 2) {
+                if (!(c == 'S')) {
                     return false;
                 }
-            }
-            else if(toggle_int == 3){
-                if(!(c == 'F')){
+            } else if (toggle_int == 3) {
+                if (!(c == 'F')) {
                     return false;
                 }
             }
@@ -417,23 +411,23 @@ public class Azul {
         boolean floor_format = true;
 
         int floor_counts = 0;
-        for(int i=0; i < player_int; i++){
+        for (int i = 0; i < player_int; i++) {
             // Player is valid
-            p_player_format = p_player_format && check_p_player_format(playerState_name_arr.get(4*i));
+            p_player_format = p_player_format && check_p_player_format(playerState_name_arr.get(4 * i));
             // Score is valid
-            score_format = score_format && check_score_format(playerState_content_arr.get(4*i));
+            score_format = score_format && check_score_format(playerState_content_arr.get(4 * i));
             // Mosaic is valid
-            mosaic_format = mosaic_format && check_mosaic_format(playerState_name_arr.get(4*i + 1), playerState_content_arr.get(4*i + 1));
+            mosaic_format = mosaic_format && check_mosaic_format(playerState_name_arr.get(4 * i + 1), playerState_content_arr.get(4 * i + 1));
             // Storage is valid
-            storage_format = storage_format && check_storage_format(playerState_name_arr.get(4*i + 2), playerState_content_arr.get(4*i + 2));
+            storage_format = storage_format && check_storage_format(playerState_name_arr.get(4 * i + 2), playerState_content_arr.get(4 * i + 2));
             // Floor is valid
-            floor_format = floor_format && check_floor_format(playerState_name_arr.get(4*i + 3), playerState_content_arr.get(4*i + 3), floor_counts);
-            floor_counts = toss_floor_count(playerState_content_arr.get(4*i + 3), floor_counts);
+            floor_format = floor_format && check_floor_format(playerState_name_arr.get(4 * i + 3), playerState_content_arr.get(4 * i + 3), floor_counts);
+            floor_counts = toss_floor_count(playerState_content_arr.get(4 * i + 3), floor_counts);
         }
         return p_player_format && score_format && mosaic_format && storage_format && floor_format;
     }
 
-    public static boolean check_p_player_format(char p_player_char){
+    public static boolean check_p_player_format(char p_player_char) {
         // Find capital letters valid
         boolean p_player_name_format = (p_player_char >= 'A' && p_player_char <= 'D');
 
@@ -443,11 +437,11 @@ public class Azul {
         return p_player_format;
     }
 
-    public static boolean check_score_format(String score_String){
+    public static boolean check_score_format(String score_String) {
         // Find capital letters valid
         boolean score_name_format = true;
-        for( char c : score_String.toCharArray() ){
-            if(!(c >= '0' && c <= '9')){
+        for (char c : score_String.toCharArray()) {
+            if (!(c >= '0' && c <= '9')) {
                 score_name_format = false;
             }
         }
@@ -457,27 +451,25 @@ public class Azul {
         return score_format;
     }
 
-    public static boolean check_mosaic_format(char mosaic_char, String mosaic_String){
+    public static boolean check_mosaic_format(char mosaic_char, String mosaic_String) {
         boolean mosaic_name_format = (mosaic_char == 'M');
         int len = 0;
         boolean mosaic_content_format = true;
-        for(char c : mosaic_String.toCharArray()){
-            if(len % 3 == 0){
-                if(!(c >= 'a' && c <= 'e')){
+        for (char c : mosaic_String.toCharArray()) {
+            if (len % 3 == 0) {
+                if (!(c >= 'a' && c <= 'e')) {
                     mosaic_content_format = false;
                 }
-            }
-            else{
-                if(!(c >= '0' && c <= '4')){
+            } else {
+                if (!(c >= '0' && c <= '4')) {
                     mosaic_content_format = false;
                 }
             }
             len++;
         }
-        if(len > 75){
+        if (len > 75) {
             mosaic_content_format = false;
-        }
-        else if(mosaic_String.isEmpty()){
+        } else if (mosaic_String.isEmpty()) {
             mosaic_content_format = true;
         }
         boolean center_format = mosaic_name_format && mosaic_content_format;
@@ -485,32 +477,29 @@ public class Azul {
         return center_format;
     }
 
-    public static boolean check_storage_format(char storage_char, String storage_String){
+    public static boolean check_storage_format(char storage_char, String storage_String) {
         boolean storage_name_format = (storage_char == 'S');
         int len = 0;
         boolean storage_content_format = true;
-        for(char c : storage_String.toCharArray()){
-            if(len % 3 == 0){
-                if(!(c >= '0' && c <= '4')){
+        for (char c : storage_String.toCharArray()) {
+            if (len % 3 == 0) {
+                if (!(c >= '0' && c <= '4')) {
                     storage_content_format = false;
                 }
-            }
-            else if(len % 3 == 1){
-                if(!(c >= 'a' && c <= 'e')){
+            } else if (len % 3 == 1) {
+                if (!(c >= 'a' && c <= 'e')) {
                     storage_content_format = false;
                 }
-            }
-            else if(len % 3 == 2){
-                if(!(c >= '0' && c <= '5')){
+            } else if (len % 3 == 2) {
+                if (!(c >= '0' && c <= '5')) {
                     storage_content_format = false;
                 }
             }
             len++;
         }
-        if(len > 15){
+        if (len > 15) {
             storage_content_format = false;
-        }
-        else if(storage_String.isEmpty()){
+        } else if (storage_String.isEmpty()) {
             storage_content_format = true;
         }
         boolean storage_format = storage_name_format && storage_content_format;
@@ -518,26 +507,25 @@ public class Azul {
         return storage_format;
     }
 
-    public static boolean check_floor_format(char floor_char, String floor_String, int floor_counts){
+    public static boolean check_floor_format(char floor_char, String floor_String, int floor_counts) {
         boolean floor_name_format = (floor_char == 'F');
         int len = 0;
         boolean floor_content_format = true;
-        for(char c : floor_String.toCharArray()){
-            if(!(c >= 'a' && c <= 'f')){
+        for (char c : floor_String.toCharArray()) {
+            if (!(c >= 'a' && c <= 'f')) {
                 floor_content_format = false;
             }
-            if(c == 'f'){
+            if (c == 'f') {
                 floor_counts++;
-                if(floor_counts > 1){
+                if (floor_counts > 1) {
                     floor_content_format = false;
                 }
             }
             len++;
         }
-        if(len > 7){
+        if (len > 7) {
             floor_content_format = false;
-        }
-        else if(floor_String.isEmpty()){
+        } else if (floor_String.isEmpty()) {
             floor_content_format = true;
         }
         boolean storage_format = floor_name_format && floor_content_format;
@@ -545,9 +533,9 @@ public class Azul {
         return storage_format;
     }
 
-    public static int toss_floor_count(String floor_String, int floor_counts){
-        for(char c : floor_String.toCharArray()){
-            if(c == 'f'){
+    public static int toss_floor_count(String floor_String, int floor_counts) {
+        for (char c : floor_String.toCharArray()) {
+            if (c == 'f') {
                 floor_counts++;
             }
         }
@@ -570,11 +558,11 @@ public class Azul {
         // FIXME Task 5
         //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
         String[] transferGameState = gameState[0].split("");
-        int B=gameState[0].indexOf("B");//find the number of the place where B start in gameState
-        int[] tiles={0,0,0,0,0};
-        for (int i=0; i<=4; i++){
-           tiles[i]= Integer.parseInt(transferGameState[B+1] +transferGameState[B+2]);
-           B+=2;
+        int B = gameState[0].indexOf("B");//find the number of the place where B start in gameState
+        int[] tiles = {0, 0, 0, 0, 0};
+        for (int i = 0; i <= 4; i++) {
+            tiles[i] = Integer.parseInt(transferGameState[B + 1] + transferGameState[B + 2]);
+            B += 2;
         }
 
         ArrayList<Character> exp_char_array = new ArrayList<Character>();
@@ -586,7 +574,7 @@ public class Azul {
         exp_char_array.add('d');
         exp_char_array.add('e');
 
-        for(int i=0; i < tiles.length; i++){
+        for (int i = 0; i < tiles.length; i++) {
             exp_int_array.add(tiles[i]);
         }
         /*
@@ -633,31 +621,29 @@ public class Azul {
          */
     }
 
-    public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array){
+    public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array) {
         char char_out = 'Z';
-        ArrayList<Integer> sums= new ArrayList<Integer>();
+        ArrayList<Integer> sums = new ArrayList<Integer>();
 
-        if(int_array.size() != char_array.size()){
+        if (int_array.size() != char_array.size()) {
             return 'Z';
-        }
-        else{
+        } else {
             int sum = 0;
             sums.add(sum);
-            for(Integer i : int_array){
+            for (Integer i : int_array) {
                 sum += i;
                 sums.add(sum);
             }
             Random r = new Random();
             int r_output = r.nextInt(sum - 1) + 1;
             //System.out.println(r_output);
-            for(int i=0; i < int_array.size(); i++){
-                if(i == 0){
-                    if(r_output >= 0 && r_output <= sums.get(i+1)){
+            for (int i = 0; i < int_array.size(); i++) {
+                if (i == 0) {
+                    if (r_output >= 0 && r_output <= sums.get(i + 1)) {
                         char_out = char_array.get(i);
                     }
-                }
-                else{
-                    if(r_output > sums.get(i) && r_output <= sums.get(i+1)){
+                } else {
+                    if (r_output > sums.get(i) && r_output <= sums.get(i + 1)) {
                         char_out = char_array.get(i);
                     }
                 }
@@ -666,41 +652,41 @@ public class Azul {
         }
     }
 
-   /*
-   As the task 5 give the corresponding random number to the tile type 'a' to 'e',
-   method updateBag modified the tile number of one type.
-   'afterDraw' moves 1 tile from a type and calculate the tile number-1, then update gameState.
-   */
-    public static String[] updateBag(String[] gameState, char tileType, int drawnum){
+    /*
+    As the task 5 give the corresponding random number to the tile type 'a' to 'e',
+    method updateBag modified the tile number of one type.
+    'afterDraw' moves 1 tile from a type and calculate the tile number-1, then update gameState.
+    */
+    public static String[] updateBag(String[] gameState, char tileType, int drawnum) {
         int B = gameState[0].indexOf('B');
         String[] transferGameState = gameState[0].split("");
-        drawnum=1;
-        if (tileType=='a'){
-            int t1=B+1;
-            int t2=B+2;
-            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-        }else if (tileType=='b'){
-            int t1=B+3;
-            int t2=B+4;
-            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-        }else if (tileType=='c'){
-            int t1=B+5;
-            int t2=B+6;
-            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-        }else if (tileType=='d'){
-            int t1=B+7;
-            int t2=B+8;
-            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-        }else if (tileType=='e'){
-            int t1=B+9;
-            int t2=B+10;
-            int afterDraw=Integer.parseInt(transferGameState[t1]+transferGameState[t2])-1;
-            gameState[0]=gameState[0].substring(0,t1)+ afterDraw +gameState[0].substring(t2+1);
-        }else {
+        drawnum = 1;
+        if (tileType == 'a') {
+            int t1 = B + 1;
+            int t2 = B + 2;
+            int afterDraw = Integer.parseInt(transferGameState[t1] + transferGameState[t2]) - 1;
+            gameState[0] = gameState[0].substring(0, t1) + afterDraw + gameState[0].substring(t2 + 1);
+        } else if (tileType == 'b') {
+            int t1 = B + 3;
+            int t2 = B + 4;
+            int afterDraw = Integer.parseInt(transferGameState[t1] + transferGameState[t2]) - 1;
+            gameState[0] = gameState[0].substring(0, t1) + afterDraw + gameState[0].substring(t2 + 1);
+        } else if (tileType == 'c') {
+            int t1 = B + 5;
+            int t2 = B + 6;
+            int afterDraw = Integer.parseInt(transferGameState[t1] + transferGameState[t2]) - 1;
+            gameState[0] = gameState[0].substring(0, t1) + afterDraw + gameState[0].substring(t2 + 1);
+        } else if (tileType == 'd') {
+            int t1 = B + 7;
+            int t2 = B + 8;
+            int afterDraw = Integer.parseInt(transferGameState[t1] + transferGameState[t2]) - 1;
+            gameState[0] = gameState[0].substring(0, t1) + afterDraw + gameState[0].substring(t2 + 1);
+        } else if (tileType == 'e') {
+            int t1 = B + 9;
+            int t2 = B + 10;
+            int afterDraw = Integer.parseInt(transferGameState[t1] + transferGameState[t2]) - 1;
+            gameState[0] = gameState[0].substring(0, t1) + afterDraw + gameState[0].substring(t2 + 1);
+        } else {
             System.out.println("unknown tile");
             return gameState;
         }
@@ -719,43 +705,43 @@ public class Azul {
 
     // refillFactories() is to refill the Factories with tiles.
     //This is “2. Starting the round”
-
-
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
         // If the factories are not all empty, return the given state.
-        if (gameState[0].charAt(gameState[0].indexOf('F')+1)!='C'){
+        if (gameState[0].charAt(gameState[0].indexOf('F') + 1) != 'C') {
             return gameState;
         }
 
         //one factory has 4 tiles,there are 5 factories each has 4 tiles
         String[] factory = new String[4];
-        String[][] factories = new  String[5][4];
+        String[][] factories = new String[5][4];
 
         //step 1. Draw tiles 4 times to one factory, the type of the tiles is decided by the method 'drawTileFromBag'.
         //step 2. give one factory[4] to the factories[5][4], do step 1. 5 times
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j< 4; j++) {
-                char makeDraw=drawTileFromBag(gameState);
-                gameState=updateBag(gameState, makeDraw, 1);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 4; j++) {
+                char makeDraw = drawTileFromBag(gameState);
+                gameState = updateBag(gameState, makeDraw, 1);
+                System.out.println(gameState[0]);
                 factory[j] = Character.toString(makeDraw);
-            }factories[i] = factory;
+            }
+            factories[i] = factory;
         }
 
         //print output like a part of gameState, and replace the old one
         String output = "";
-        String[] emptyFactory = {"0","0","0","0"};
-        for (int i = 0; i<factories.length; i++){
-            if (factories[i] != emptyFactory){
+        String[] emptyFactory = {"0", "0", "0", "0"};
+        for (int i = 0; i < factories.length; i++) {
+            if (factories[i] != emptyFactory) {
                 output += i;
-                for (int j = 0; j<factory.length; j++){
-                    if (!factory[j].equals("0")){
+                for (int j = 0; j < factory.length; j++) {
+                    if (!factory[j].equals("0")) {
                         output += factories[i][j];
                     }
                 }
             }
         }
-        gameState[0]=gameState[0].substring(0,gameState[0].indexOf("F")+1)+output+gameState[0].substring(gameState[0].indexOf("C"));
+        gameState[0] = gameState[0].substring(0, gameState[0].indexOf("F") + 1) + output + gameState[0].substring(gameState[0].indexOf("C"));
         return gameState;
     }
 
@@ -771,9 +757,167 @@ public class Azul {
      */
     // getBonusPoints() is to calculate the Score when Game completed.
     // This is “7. End of the Game”
+
+
+    //字符串压缩方法
+    public static String compressString(String str) {
+        int length = str.length();
+        String str0 = "";
+        String str1 = "";
+        int n = 1;
+        if (!str.equals(" ")) {
+            for (int i = 0; i < length; i++) {
+                if (i != length - 1) {
+                    if (str.charAt(i) == str.charAt(i + 1)) {
+                        n++;
+                    } else {
+                        str0 += "" + str.charAt(i) + n;
+                        n = 1;
+                    }
+                } else {
+                    str0 += "" + str.charAt(i) + n;
+                }
+            }
+        } else {
+            str0 = "";
+        }
+        for (int j = 0; j < str0.length(); j += 2) {
+            if (str0.charAt(j + 1) == '1') {
+                str1 += "" + str0.charAt(j);
+            } else {
+                str1 += "" + str0.charAt(j) + str0.charAt(j + 1);
+            }
+        }
+        return str1;
+    }
+
+    //字符串排序方法
+    private static String sortChar(String str) {
+        char[] chs = stringToArray(str);
+        sort(chs);
+        return toString(chs);
+    }
+
+    private static String toString(char[] chs) {
+        return new String(chs);
+    }
+
+    private static void sort(char[] chs) {
+        Arrays.sort(chs);
+    }
+
+    private static char[] stringToArray(String string) {
+        return string.toCharArray();
+    }
+
     public static int getBonusPoints(String[] gameState, char player) {
         // FIXME Task 7
-        return -1;
+        //find where M starts and then print out the information,give the points,print out results
+        //row 0, column 0 (0,0); 5 rows same value +2, 5 columns same value +7,5 same type of tile +10,
+        //"b00a02a13e42" means there is one b tile located at row 0, column 0 (0,0) two a tiles located at (0,2) and (1,3)
+        if (player == 'A') {
+            //get the 2 player's MosaicState use M to divide
+            String palyer_A_State = gameState[1].substring(gameState[1].indexOf("M"), gameState[1].indexOf("S"));
+            String[] palyer_A = palyer_A_State.split("");
+
+            String row_A = "";
+            String column_A = "";
+            String alphabet_A = "";
+            int BonusPointsofA = 0;
+
+            //get player A's kind of tile
+            for (int i = 1; i < palyer_A.length; i += 3) {
+                alphabet_A += palyer_A[i];
+            }
+            //get player A's point of row
+            for (int i = 2; i < palyer_A.length; i += 3) {
+                row_A += palyer_A[i];
+            }
+            //get player A's point of column
+            for (int i = 3; i < palyer_A.length; i += 3) {
+                column_A += palyer_A[i];
+            }
+
+            //output the compressString
+            alphabet_A = compressString(sortChar(alphabet_A));
+            row_A = compressString(row_A);
+            column_A = compressString(sortChar(column_A));
+
+            String[] alphabetofA = alphabet_A.split("");
+            String[] rowofA = row_A.split("");
+            String[] columnofA = column_A.split("");
+
+            for (int i = 1; i < alphabet_A.length(); i += 2) {
+                if (alphabetofA[i].equals("5")) {
+                    BonusPointsofA += 10;
+                }
+            }
+            for (int i = 1; i < row_A.length(); i += 2) {
+                if (rowofA[i].equals("5")) {
+                    BonusPointsofA += 2;
+                }
+            }
+            for (int i = 1; i < column_A.length(); i += 2) {
+                if (columnofA[i].equals("5")) {
+                    BonusPointsofA += 7;
+                }
+            }
+
+            return BonusPointsofA;
+        }
+
+        if (player == 'B') {
+            String palyer_B_State = gameState[1].substring(gameState[1].indexOf("B") + 3, gameState[1].indexOf("SF"));
+            String[] palyer_B = palyer_B_State.split("");
+
+            String row_B = "";
+            String column_B = "";
+            String alphabet_B = "";
+            int BonusPointsofB = 0;
+
+            //get player B's kind of tile
+            for (int i = 1; i < palyer_B.length; i += 3) {
+                alphabet_B += palyer_B[i];
+            }
+            //get player B's point of row
+            for (int i = 2; i < palyer_B.length; i += 3) {
+                row_B += palyer_B[i];
+            }
+            //get player B's point of column
+            for (int i = 3; i < palyer_B.length; i += 3) {
+                column_B += palyer_B[i];
+            }
+
+            //output the compressString
+            alphabet_B = compressString(sortChar(alphabet_B));
+            row_B = compressString(row_B);
+            column_B = compressString(sortChar(column_B));
+
+            String[] alphabetofB = alphabet_B.split("");
+            String[] rowofB = row_B.split("");
+            String[] columnofB = column_B.split("");
+
+
+            for (int i = 1; i < row_B.length(); i += 2) {
+                if (rowofB[i].equals("5")) {
+                    BonusPointsofB += 2;
+                }
+            }
+
+            for (int i = 1; i < alphabet_B.length(); i += 2) {
+                if (alphabetofB[i].equals("5")) {
+                    BonusPointsofB += 10;
+                }
+            }
+
+            for (int i = 1; i < column_B.length(); i += 2) {
+                if (columnofB[i].equals("5")) {
+                    BonusPointsofB += 7;
+                }
+            }
+
+            return BonusPointsofB;
+        }return 0;
     }
 
     /**
