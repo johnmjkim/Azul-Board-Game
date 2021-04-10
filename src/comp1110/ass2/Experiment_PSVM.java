@@ -46,6 +46,8 @@ public class Experiment_PSVM {
 
         azulShareds.printBag();
         System.out.println(azulShareds.getRandomTileBag());
-
+        azulShareds.printBag();
+        System.out.println(azulShareds.getRandomTileBag());
+        azulShareds.printBag();
     }
 }

@@ -14,6 +14,7 @@ public interface Player {
      * @param playerState the state of player
      */
     void PlayerState(String playerState);
+    void printPlayerState();
     void addPlayer(Character name, Integer score, int num_turn);
     void printPlayer();
     void addMosaic(String mosaicState, int num_turn);
@@ -25,6 +26,9 @@ public interface Player {
 
     // Get values from player/mosaic/storage/floor and print information
     String getPlayerState();
+    String[] getMosaicState();
+    String[] getStorageState();
+    String[] getFloorState();
     int getMosaicTotalTiles();
     int getStorageTotalTiles();
     int getFloorTotalTiles();

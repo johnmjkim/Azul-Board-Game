@@ -518,6 +518,7 @@ public class Azul {
         }
 
          */
+
         /*
         System.out.println(gameState[0]);
         for(int i=0; i < exp_int_array.size(); i++){
@@ -564,7 +565,7 @@ public class Azul {
          */
     }
     // Useless method
-    /*
+
     public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array) {
         char char_out = 'Z';
         ArrayList<Integer> sums = new ArrayList<Integer>();
@@ -595,8 +596,6 @@ public class Azul {
             return char_out;
         }
     }
-
-     */
 
     /*
     As the task 5 give the corresponding random number to the tile type 'a' to 'e',
@@ -653,6 +652,22 @@ public class Azul {
     //This is “2. Starting the round”
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
+
+        Shareds azulShareds = new Shareds(2);
+        String input_sharedState = gameState[0];
+        azulShareds.SharedState(input_sharedState);
+        azulShareds.printSharedState();
+        azulShareds.printFactory();
+        if(azulShareds.isFactoryFull()){
+            System.out.println("Full");
+            return gameState;
+        }
+        else{
+            System.out.println("Not Full");
+            return gameState;
+        }
+
+        /*
         // If the factories are not all empty, return the given state.
         if (gameState[0].charAt(gameState[0].indexOf('F') + 1) != 'C') {
             return gameState;
@@ -689,6 +704,9 @@ public class Azul {
         }
         gameState[0] = gameState[0].substring(0, gameState[0].indexOf("F") + 1) + output + gameState[0].substring(gameState[0].indexOf("C"));
         return gameState;
+
+         */
+
     }
 
     /**

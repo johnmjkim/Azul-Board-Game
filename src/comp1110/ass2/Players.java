@@ -106,6 +106,11 @@ public class Players implements Player{
         playerHashMap();
     }
 
+    @Override
+    public void printPlayerState() {
+        System.out.println(this.playerState);
+    }
+
     /**
      * Automatically stores below information
      * @param name
@@ -210,6 +215,39 @@ public class Players implements Player{
     @Override
     public String getPlayerState() {
         return this.playerState;
+    }
+
+    @Override
+    public String[] getMosaicState() {
+        String[] str_return = new String[this.players.size()];
+        int i=0;
+        for( eachPlayer p : this.players ){
+            str_return[i] = p.getMosaic();
+            i++;
+        }
+        return str_return;
+    }
+
+    @Override
+    public String[] getStorageState() {
+        String[] str_return = new String[this.players.size()];
+        int i=0;
+        for( eachPlayer p : this.players ){
+            str_return[i] = p.getStorage();
+            i++;
+        }
+        return str_return;
+    }
+
+    @Override
+    public String[] getFloorState() {
+        String[] str_return = new String[this.players.size()];
+        int i=0;
+        for( eachPlayer p : this.players ){
+            str_return[i] = p.getFloor();
+            i++;
+        }
+        return str_return;
     }
 
     @Override
@@ -448,7 +486,7 @@ public class Players implements Player{
                 return tot_tiles;
             }
 
-            boolean isMosaicEmpty(){
+            boolean isMosaicStateEmpty(){
                 return this.M_mosaicState.isEmpty();
             }
 
@@ -467,7 +505,7 @@ public class Players implements Player{
                 }
 
                 public int getTilesNumber(){
-                    if(this.isMosaicRowEmpty()){
+                    if(this.isMosaicRowStateEmpty()){
                         return 0;
                     }
                     else{
@@ -477,7 +515,7 @@ public class Players implements Player{
                 }
 
                 public char getTilesColor(){
-                    if(this.isMosaicRowEmpty()){
+                    if(this.isMosaicRowStateEmpty()){
                         return ' ';
                     }
                     else{
@@ -486,7 +524,7 @@ public class Players implements Player{
                     }
                 }
 
-                boolean isMosaicRowEmpty(){
+                boolean isMosaicRowStateEmpty(){
                     return this.mosaic_rowState.isEmpty();
                 }
 
@@ -570,7 +608,7 @@ public class Players implements Player{
 
             private void countStorageTilesNumber(){
                 for( eachStorageRow sr : this.storage_rows){
-                    if(!sr.isStorageRowEmpty()){
+                    if(!sr.isStorageRowStateEmpty()){
                         //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
                         this.letters[sr.getTilesColor()] += sr.getTilesNumber();
                     }
@@ -591,7 +629,7 @@ public class Players implements Player{
                 return tot_tiles;
             }
 
-            boolean isStorageEmpty(){
+            boolean isStorageStateEmpty(){
                 return this.S_storageState.isEmpty();
             }
 
@@ -609,7 +647,7 @@ public class Players implements Player{
                 }
 
                 public int getTilesNumber(){
-                    if(this.isStorageRowEmpty()){
+                    if(this.isStorageRowStateEmpty()){
                         return 0;
                     }
                     else{
@@ -619,7 +657,7 @@ public class Players implements Player{
                 }
 
                 public char getTilesColor(){
-                    if(this.isStorageRowEmpty()){
+                    if(this.isStorageRowStateEmpty()){
                         return ' ';
                     }
                     else{
@@ -628,7 +666,7 @@ public class Players implements Player{
                     }
                 }
 
-                boolean isStorageRowEmpty(){
+                boolean isStorageRowStateEmpty(){
                     return this.storage_rowState.isEmpty();
                 }
 
@@ -692,7 +730,7 @@ public class Players implements Player{
                 return tot_tiles;
             }
 
-            boolean isFloorEmpty(){
+            boolean isFloorStateEmpty(){
                 return this.F_floorState.isEmpty();
             }
         }

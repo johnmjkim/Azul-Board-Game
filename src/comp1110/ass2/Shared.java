@@ -15,6 +15,7 @@ public interface Shared {
      * @param sharedState
      */
     void SharedState(String sharedState);
+    void printSharedState();
     void addTurn(Character turnState);
     void printTurn();
     void addFactory(String factoryState);
@@ -28,6 +29,10 @@ public interface Shared {
 
     // Get values from factory/center/bag/discard
     String getSharedState();
+    String getFactoryState();
+    String getCenterState();
+    String getBagState();
+    String getDiscardState();
     int getFactoryTilesNumber(char color);
     int getCenterTilesNumber(char color);
     int getBagTilesNumber(char color);
@@ -39,12 +44,13 @@ public interface Shared {
     int getDiscardTotalTiles();
 
     // Methods for Factory
+    boolean isFactoryFull();
 
     // Methods for Center
 
     // Methods for Bag
-    void refillBag();
     char getRandomTileBag();
+    void refillBag();
 
     // Methods for Discard
     void clearDiscard();
