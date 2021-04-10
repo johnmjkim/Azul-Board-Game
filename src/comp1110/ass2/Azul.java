@@ -491,7 +491,7 @@ public class Azul {
         Shareds azulShareds = new Shareds(2);
         String input_sharedState = gameState[0];
         azulShareds.SharedState(input_sharedState);
-        char random_tile = azulShareds.getRandomTileBag();
+        char random_tile = azulShareds.bag.getRandomTile();
         return random_tile;
 
         //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
@@ -657,13 +657,16 @@ public class Azul {
         String input_sharedState = gameState[0];
         azulShareds.SharedState(input_sharedState);
         azulShareds.printSharedState();
-        azulShareds.printFactory();
+        //azulShareds.printFactory();
         if(azulShareds.isFactoryFull()){
             System.out.println("Full");
             return gameState;
         }
         else{
             System.out.println("Not Full");
+            azulShareds.refillFactory();
+            azulShareds.printSharedState();
+            gameState[0] = azulShareds.getSharedState();
             return gameState;
         }
 

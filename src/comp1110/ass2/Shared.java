@@ -45,6 +45,7 @@ public interface Shared {
 
     // Methods for Factory
     boolean isFactoryFull();
+    void refillFactory();
 
     // Methods for Center
 

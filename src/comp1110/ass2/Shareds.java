@@ -42,10 +42,15 @@ public class Shareds implements Shared{
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
 
+    // Size, Numbers of all components
+    public final int FACTORY_MAX_NUMBER = 2 * max_player_number + 1;
+    public final int FACTORY_SIZE = 4;
+    public final String EMPTY_TILES = "0000000000";
+
     // Inner class fields
-    private Center center;
-    private Bag bag;
-    private Discard discard;
+    public Center center;
+    public Bag bag;
+    public Discard discard;
 
     /**
      * Shareds constructor method puts number of maximum players
@@ -193,7 +198,7 @@ public class Shareds implements Shared{
     @Override
     public void addCenter(String centerState) {
         this.centerState = centerState;
-        this.center = new Shareds.Center(centerState);
+        this.center = new Center(centerState);
     }
 
     @Override
@@ -243,6 +248,10 @@ public class Shareds implements Shared{
         System.out.println();
         System.out.println(" Discard tiles total : " + getDiscardTotalTiles());
     }
+
+    /**
+     * Get values from factory/center/bag/discard
+     */
 
     @Override
     public String getSharedState() {
@@ -317,29 +326,78 @@ public class Shareds implements Shared{
         return this.discard.getTotalTilesNumber();
     }
 
+    /**
+     * Methods for Factory
+     */
+
     @Override
     public boolean isFactoryFull() {
         int max_factory = 2 * this.max_player_number + 1;
-        return (4 * max_factory == getFactoryTotalTiles());
+        return ( FACTORY_SIZE * max_factory == getFactoryTotalTiles());
     }
 
     @Override
-    public void refillBag() {
+    public void refillFactory() {
+        char[] factory_tiles = new char[FACTORY_SIZE];
+        int factory_num = this.factories.size();
+        for(int i=0; i < factory_num; i++){
+            if(this.factories.get(i).is_eachFactoryStateEmpty()){
+                for(int j=0; j < FACTORY_SIZE; j++){
+                    factory_tiles[j] = getRandomTileBag();
+                }
+                this.factories.get(i).refill_eachFactory(factory_tiles);
+            }
+        }
+        updateSharedState();
+    }
 
+    /**
+     * Methods for Bag
+     */
+
+    @Override
+    public void refillBag() {
+        if(this.discard.getTotalTilesNumber() > 0){
+            String discard_tiles = this.discard.D_discardState;
+            this.bag.refillB_Bag(discard_tiles);
+            clearDiscard();
+            updateSharedState();
+        }
     }
 
     @Override
     public char getRandomTileBag() {
-        char tile_drawn = this.bag.getRandomTile();
-        this.bag.removeTile(tile_drawn);
-        updateSharedState();
-        return tile_drawn;
+        //printBag();
+        if(this.bag.getTotalTilesNumber() > 0){
+            char tile_drawn = this.bag.getRandomTile();
+            this.bag.removeTile(tile_drawn);
+            updateSharedState();
+            return tile_drawn;
+        }
+        else if(this.discard.getTotalTilesNumber() > 0){
+            refillBag();
+            char tile_drawn = this.bag.getRandomTile();
+            this.bag.removeTile(tile_drawn);
+            updateSharedState();
+            return tile_drawn;
+        }
+        else{
+            return 'Z';
+        }
     }
+
+    /**
+     * Methods for Discard
+     */
 
     @Override
     public void clearDiscard() {
-
+        this.discard.clearD_Discard();
     }
+
+    /**
+     * Private methods for Shareds
+     */
 
     private void updateSharedState(){
         StringBuilder SB = new StringBuilder();
@@ -356,6 +414,7 @@ public class Shareds implements Shared{
         SB.append(this.bagState);
         SB.append(DISCARD);
         SB.append(this.discardState);
+        SharedState(String.valueOf(SB));
     }
 
     private void updateFactoryState(){
@@ -375,9 +434,10 @@ public class Shareds implements Shared{
         SB.append("");
         int[] center_letters = this.center.letters;
         char color = BLUE;
-        for(int i=0; i < FIRST_PLAYER - BLUE; i++){
+        for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
             while(center_letters[color + i] > 0){
-                SB.append(color + i);
+                SB.append((char)(color + i));
+                //System.out.println( "char : " + (char)(color + i) + " added : " + SB);
                 center_letters[color + i]--;
             }
         }
@@ -389,7 +449,7 @@ public class Shareds implements Shared{
         SB.append("");
         int[] bag_letters = this.bag.letters;
         char color = BLUE;
-        for(int i=0; i < RED - BLUE; i++){
+        for(int i=0; i <= RED - BLUE; i++){
             if(bag_letters[color + i] < 10){
                 SB.append("0");
             }
@@ -403,7 +463,7 @@ public class Shareds implements Shared{
         SB.append("");
         int[] discard_letters = this.discard.letters;
         char color = BLUE;
-        for(int i=0; i < RED - BLUE; i++){
+        for(int i=0; i <= RED - BLUE; i++){
             if(discard_letters[color + i] < 10){
                 SB.append("0");
             }
@@ -459,6 +519,15 @@ public class Shareds implements Shared{
             return this.F_eachFactoryState.isEmpty();
         }
 
+        void refill_eachFactory(char[] factoryTiles ){
+            StringBuilder SB = new StringBuilder();
+            for( char c : factoryTiles ){
+                SB.append(c);
+                this.letters[c]++;
+            }
+            this.F_eachFactoryState = String.valueOf(SB);
+        }
+
         public String toString() {
             String each_factory_str = " Number : " + this.number + " Factory : " + this.F_eachFactoryState + "\n";
             char color = BLUE;
@@ -488,7 +557,7 @@ public class Shareds implements Shared{
      * All Center state stored here
      */
     public class Center{
-        String C_centerState;
+        String C_centerState = "";
         int[] letters = new int[128];
 
         public Center(String centerState){
@@ -535,7 +604,7 @@ public class Shareds implements Shared{
      * All Bag state stored here
      */
     public class Bag{
-        String B_bagState;
+        String B_bagState ="";
         int[] letters = new int[128];
 
         public Bag(String bagState){
@@ -593,7 +662,14 @@ public class Shareds implements Shared{
             int prob_red = prob_purple + getBagTilesNumber(RED);
 
             Random r = new Random();
-            int r_output = r.nextInt(getTotalTilesNumber() - 1) + 1;
+            int r_range = getTotalTilesNumber() - 1;
+            int r_output = 0;
+            if(r_range > 0){
+                r_output = r.nextInt(getTotalTilesNumber() - 1) + 1;
+            }
+            else{
+                r_output = 1;
+            }
             //System.out.println(prob_blue + ", " + prob_green + ", " + prob_orange + ", " + prob_purple + ", " + prob_red + " : " + r_output);
 
             if (r_output > 0 && r_output <= prob_blue) {
@@ -617,6 +693,11 @@ public class Shareds implements Shared{
         public void removeTile(char color){
             this.letters[color]--;
         }
+
+        public void refillB_Bag(String refill_bagState){
+            this.B_bagState = refill_bagState;
+            countBagTilesNumber(refill_bagState);
+        }
     }
 
     /**
@@ -624,7 +705,7 @@ public class Shareds implements Shared{
      * All Discard state stored here
      */
     public class Discard{
-        String D_discardState;
+        String D_discardState = "";
 
         int[] letters = new int[128];
 
@@ -672,6 +753,10 @@ public class Shareds implements Shared{
 
         boolean isDiscardStateEmpty(){
             return this.D_discardState.isEmpty();
+        }
+
+        public void clearD_Discard(){
+            countDiscardTilesNumber(EMPTY_TILES);
         }
     }
 }
