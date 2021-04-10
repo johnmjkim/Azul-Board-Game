@@ -662,59 +662,6 @@ public class Azul {
      */
     // getBonusPoints() is to calculate the Score when Game completed.
     // This is “7. End of the Game”
-
-
-    //字符串压缩方法
-    public static String compressString(String str) {
-        int length = str.length();
-        String str0 = "";
-        String str1 = "";
-        int n = 1;
-        if (!str.equals(" ")) {
-            for (int i = 0; i < length; i++) {
-                if (i != length - 1) {
-                    if (str.charAt(i) == str.charAt(i + 1)) {
-                        n++;
-                    } else {
-                        str0 += "" + str.charAt(i) + n;
-                        n = 1;
-                    }
-                } else {
-                    str0 += "" + str.charAt(i) + n;
-                }
-            }
-        } else {
-            str0 = "";
-        }
-        for (int j = 0; j < str0.length(); j += 2) {
-            if (str0.charAt(j + 1) == '1') {
-                str1 += "" + str0.charAt(j);
-            } else {
-                str1 += "" + str0.charAt(j) + str0.charAt(j + 1);
-            }
-        }
-        return str1;
-    }
-
-    //字符串排序方法
-    private static String sortChar(String str) {
-        char[] chs = stringToArray(str);
-        sort(chs);
-        return toString(chs);
-    }
-
-    private static String toString(char[] chs) {
-        return new String(chs);
-    }
-
-    private static void sort(char[] chs) {
-        Arrays.sort(chs);
-    }
-
-    private static char[] stringToArray(String string) {
-        return string.toCharArray();
-    }
-
     public static int getBonusPoints(String[] gameState, char player) {
         // FIXME Task 7
         //find where M starts and then print out the information,give the points,print out results
@@ -822,7 +769,57 @@ public class Azul {
             }
 
             return BonusPointsofB;
-        }return 0;
+        }
+        return 0;
+    }
+
+    public static String compressString(String str) {
+        int length = str.length();
+        String str0 = "";
+        String str1 = "";
+        int n = 1;
+        if (!str.equals(" ")) {
+            for (int i = 0; i < length; i++) {
+                if (i != length - 1) {
+                    if (str.charAt(i) == str.charAt(i + 1)) {
+                        n++;
+                    } else {
+                        str0 += "" + str.charAt(i) + n;
+                        n = 1;
+                    }
+                } else {
+                    str0 += "" + str.charAt(i) + n;
+                }
+            }
+        } else {
+            str0 = "";
+        }
+        for (int j = 0; j < str0.length(); j += 2) {
+            if (str0.charAt(j + 1) == '1') {
+                str1 += "" + str0.charAt(j);
+            } else {
+                str1 += "" + str0.charAt(j) + str0.charAt(j + 1);
+            }
+        }
+        return str1;
+    }
+
+    private static String sortChar(String str) {
+        char[] chs = stringToArray(str);
+        sort(chs);
+        return toString(chs);
+    }
+
+    private static String toString(char[] chs) {
+        return new String(chs);
+    }
+
+    private static void sort(char[] chs) {
+        Arrays.sort(chs);
+    }
+
+    private static char[] stringToArray(String string) {
+        return string.toCharArray();
     }
 
     /**
