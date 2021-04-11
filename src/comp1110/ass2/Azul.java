@@ -729,6 +729,7 @@ public class Azul {
     // This is “7. End of the Game”
     public static int getBonusPoints(String[] gameState, char player) {
         // FIXME Task 7
+
         //find where M starts and then print out the information,give the points,print out results
         //row 0, column 0 (0,0); 5 rows same value +2, 5 columns same value +7,5 same type of tile +10,
         //"b00a02a13e42" means there is one b tile located at row 0, column 0 (0,0) two a tiles located at (0,2) and (1,3)
@@ -909,9 +910,7 @@ public class Azul {
     // This is “5. Preparing for next round”
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
-        //gameState = emptyFloor(gameState);
-        //gameState = scorePlayer(gameState);
-        gameState = refillFactories(gameState);
+
         return gameState;
     }
 

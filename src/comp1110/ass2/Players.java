@@ -271,12 +271,6 @@ public class Players implements Player{
         return tot_tiles;
     }
 
-    @Override
-    public int[] getFloorTiles_clearFloor(Character name) {
-        getPlayer(name).clearFloorScoring();
-        return new int[0];
-    }
-
     /**
      * Private methods for PLayers
      * updatePlayerState() : updates update_eachPlayerState()
@@ -325,12 +319,12 @@ public class Players implements Player{
 
     private void updateStorageState(Character name){
         String storageState = getPlayer(name).getS_StorageState();
-        getPlayer(name).eachMosaic(storageState);
+        getPlayer(name).eachStorage(storageState);
     }
 
     private void updateFloorState(Character name){
         String floorState = getPlayer(name).getF_FloorState();
-        getPlayer(name).eachMosaic(floorState);
+        getPlayer(name).eachFloor(floorState);
     }
 
     /**
@@ -451,6 +445,16 @@ public class Players implements Player{
             else{
                 this.score = 0;
             }
+        }
+
+        public void clearFloor(){
+            System.out.println(this.floorState);
+            this.floor.clearFloor();
+            System.out.println(this.floorState);
+        }
+
+        public int[] getClearedTilesFloor(){
+            return this.floor.getClearedTilesFloor();
         }
 
         @Override
@@ -768,7 +772,6 @@ public class Players implements Player{
          */
         public class Floor {
             String F_floorState;
-
             int[] letters = new int[128];
 
             public Floor(String floorState){
@@ -835,7 +838,7 @@ public class Players implements Player{
                 }
             }
 
-            public int[] clearFloor(){
+            public void clearFloor(){
                 this.F_floorState = EMPTY_STATE;
                 int[] tiles_to_discard = new int[128];
                 char color = BLUE;
@@ -846,7 +849,10 @@ public class Players implements Player{
                     }
                     color++;
                 }
-                return tiles_to_discard;
+            }
+
+            public int[] getClearedTilesFloor(){
+                return this.letters;
             }
 
             public boolean isFloorStateEmpty(){

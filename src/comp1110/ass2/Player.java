@@ -41,7 +41,6 @@ public interface Player {
     // Methods for Storage
 
     // Methods for Floor
-    int[] getFloorTiles_clearFloor(Character name);
 
 }
 

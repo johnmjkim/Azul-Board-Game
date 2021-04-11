@@ -52,7 +52,7 @@ public interface Shared {
     // Methods for Bag
     char getRandomTileBag();
     void removeTileDrawnBag(char tile);
-    void refillBag();
+    void refillDiscardtoBag();
 
     // Methods for Discard
     void clearDiscard();

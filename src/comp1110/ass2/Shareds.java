@@ -395,7 +395,7 @@ public class Shareds implements Shared{
      * 2. Remove all tiles from discard
      */
     @Override
-    public void refillBag() {
+    public void refillDiscardtoBag() {
         if(this.discard.getTotalTilesNumber() > 0){
             String discard_tiles = this.discard.D_discardState;
             this.bag.refillB_Bag(discard_tiles);
@@ -419,7 +419,7 @@ public class Shareds implements Shared{
             return tile_drawn;
         }
         else if(this.discard.getTotalTilesNumber() > 0){
-            refillBag();
+            refillDiscardtoBag();
             char tile_drawn = this.bag.getRandomTile();
             return tile_drawn;
         }
@@ -710,6 +710,29 @@ public class Shareds implements Shared{
             this.letters[ORANGE] = bags_counts.get(2);
             this.letters[PURPLE] = bags_counts.get(3);
             this.letters[RED] = bags_counts.get(4);
+        }
+
+        public void addBagTilesNumber(String addbagState){
+            ArrayList<Integer> addbags_counts = new ArrayList<Integer>();
+            char[] addbagState_char_array = addbagState.toCharArray();
+            StringBuilder SB = new StringBuilder();
+            int len = 0;
+            for(char c : addbagState_char_array){
+                if( len % 2 == 0 && len != 0){
+                    addbags_counts.add(Integer.valueOf(String.valueOf(SB)));
+                    SB.delete(0,SB.length());
+                }
+                SB.append(c);
+                len++;
+            }
+            addbags_counts.add(Integer.valueOf(String.valueOf(SB)));
+            SB.delete(0,SB.length());
+            // 'a'~'f'
+            this.letters[BLUE] += addbags_counts.get(0);
+            this.letters[GREEN] += addbags_counts.get(1);
+            this.letters[ORANGE] += addbags_counts.get(2);
+            this.letters[PURPLE] += addbags_counts.get(3);
+            this.letters[RED] += addbags_counts.get(4);
         }
 
         public int getTilesNumber(char color){
