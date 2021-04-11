@@ -5,17 +5,24 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class Viewer extends Application {
 
-    private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 700;
+    private static final int VIEWER_WIDTH = 1000;
+    private static final int VIEWER_HEIGHT = 500;
 
     private final Group root = new Group();
     private final Group controls = new Group();
@@ -32,7 +39,26 @@ public class Viewer extends Application {
     // displayState() is to show the Game State.
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
+
+        //get gameState from Azul
+        String playerState = state[0];
+        String boardState = state[1];
+
+        //creat new labels
+        Label playerLabel1 = new Label("Player State: "+"\n"+playerState);
+        Label boardLabel1 = new Label("Board State: "+"\n"+boardState);
+
+        //add them all
+        HBox ds = new HBox();
+        ds.getChildren().addAll(playerLabel1,boardLabel1);
+        ds.setSpacing(10);
+        ds.setLayoutX(500);
+        ds.setLayoutY(VIEWER_HEIGHT - 300);
+        controls.getChildren().add(ds);
+
     }
+
+
 
     /**
      * Create a basic text field for input and a refresh button.
@@ -117,10 +143,9 @@ public class Viewer extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Azul Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-
         root.getChildren().add(controls);
-
         makeControls();
+
         /*
         animateTile();
         displayBoard();
