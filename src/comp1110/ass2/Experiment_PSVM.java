@@ -103,18 +103,34 @@ public class Experiment_PSVM {
 
          */
 
-        String[] input_gameState1 = {input_sharedState_2, input_playerState_1};
-        String[] output_gameState1 = new String[2];
-        /*
-        for( String s : input_gameState1){
-            System.out.println(s);
-        }
+        SharedState ss = new SharedState(input_sharedState_2, 2);
+        PlayerState ps = new PlayerState(input_playerState_1, 2);
 
-         */
-        output_gameState1 = Azul.nextRound(input_gameState1);
+        System.out.println(ss.getState());
+        System.out.println(ps.getState());
 
-        for( String s : output_gameState1){
-            System.out.println(s);
-        }
+        System.out.println(ps.scoreState[0]);
+        System.out.println(ss.getSharedState());
+        ss.bag.removeTile('a');
+        ss.bag.removeTile('b');
+        ss.discard.removeTile('b');
+        ss.discard.removeTile('b');
+        ss.center.removeTile('c');
+        ss.center.removeTile('d');
+        System.out.println(ss.getSharedState());
+        ss.bag.refillTilesBag("0304000000");
+        ss.discard.refillTilesDiscard("0204000405");
+        System.out.println(ss.getSharedState());
+        ss.center.addTile('c');
+        ss.center.addTile('b');
+        System.out.println(ss.getSharedState());
+        ss.center.removeAllTiles();
+        System.out.println(ss.getSharedState());
+        System.out.println(ss.factories.getFactoriesState());
+        System.out.println(ss.factories.factory.get(1));
+        System.out.println(ss.factories.getFactoryTotalTiles());
+        System.out.println(ss.factories.getFactoryTilesNumber('c'));
+
+
     }
 }

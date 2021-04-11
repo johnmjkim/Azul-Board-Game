@@ -486,6 +486,9 @@ public class Azul {
     public static char drawTileFromBag(String[] gameState) {
         // FIXME Task 5
 
+        SharedState ss = new SharedState(gameState[0], 2);
+        return ss.bag.getRandomTile();
+        /*
         Shareds azulShareds = new Shareds(2);
         String input_sharedState = gameState[0];
         azulShareds.SharedState(input_sharedState);
@@ -493,6 +496,8 @@ public class Azul {
 
         char random_tile = azulShareds.getRandomTileBag();
         return random_tile;
+
+         */
 
         //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
         /*
