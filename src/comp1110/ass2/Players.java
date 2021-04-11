@@ -22,6 +22,7 @@ public class Players implements Player{
     public final char PLAYER_B = 'B';
     public final char PLAYER_C = 'C';
     public final char PLAYER_D = 'D';
+    public final char[] ALL_PLAYERS = {PLAYER_A, PLAYER_B, PLAYER_C, PLAYER_D};
 
     // Players state substring
     public final char MOSAIC = 'M';
@@ -35,6 +36,9 @@ public class Players implements Player{
     public final char PURPLE = 'd';
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
+
+    // Size, Numbers of all components
+    public final String EMPTY_STATE = "";
 
     /**
      * Players constructor method puts number of maximum players
@@ -202,16 +206,6 @@ public class Players implements Player{
         System.out.println(" Floor tiles total : " + getFloorTotalTiles());
     }
 
-    /**
-     * Stores name of each player and each player to HashMap
-     * Use getPlayer method to get each player data
-     */
-    public void playerHashMap(){
-        for( eachPlayer eachplayer : players ){
-            this.players_map.put(eachplayer.name, eachplayer);
-        }
-    }
-
     @Override
     public String getPlayerState() {
         return this.playerState;
@@ -222,7 +216,7 @@ public class Players implements Player{
         String[] str_return = new String[this.players.size()];
         int i=0;
         for( eachPlayer p : this.players ){
-            str_return[i] = p.getMosaic();
+            str_return[i] = p.getM_MosaicState();
             i++;
         }
         return str_return;
@@ -233,7 +227,7 @@ public class Players implements Player{
         String[] str_return = new String[this.players.size()];
         int i=0;
         for( eachPlayer p : this.players ){
-            str_return[i] = p.getStorage();
+            str_return[i] = p.getS_StorageState();
             i++;
         }
         return str_return;
@@ -244,7 +238,7 @@ public class Players implements Player{
         String[] str_return = new String[this.players.size()];
         int i=0;
         for( eachPlayer p : this.players ){
-            str_return[i] = p.getFloor();
+            str_return[i] = p.getF_FloorState();
             i++;
         }
         return str_return;
@@ -278,6 +272,72 @@ public class Players implements Player{
     }
 
     /**
+     * Private methods for PLayers
+     * updatePlayerState() : updates update_eachPlayerState()
+     * update_eachPlayerState() : updates updateMosaicState(), updateStorageState(), updateFloorState()
+     * updateMosaicState() : factory number and string
+     * updateStorageState() : all tile characters
+     * updateFloorState() : all tile characters
+     */
+
+    private void updatePlayerState(){
+        StringBuilder SB = new StringBuilder();
+
+        for(int i=0; i < max_player_number; i++){
+            // Update all strings of each player, mosaic, storage, floor
+            update_eachPlayerState(ALL_PLAYERS[i]);
+
+            int score = this.players.get(i).score;
+
+            // Form sharedState
+            SB.append(ALL_PLAYERS[i]);
+            if(score < 10){
+                SB.append("0");
+            }
+            SB.append(String.valueOf(score));
+            SB.append(MOSAIC);
+            SB.append(this.players.get(i).mosaicState);
+            SB.append(STORAGE);
+            SB.append(this.players.get(i).storageState);
+            SB.append(FLOOR);
+            SB.append(this.players.get(i).floorState);
+        }
+
+        PlayerState(String.valueOf(SB));
+    }
+
+    private void update_eachPlayerState(Character name){
+        updateMosaicState(name);
+        updateStorageState(name);
+        updateFloorState(name);
+    }
+
+    private void updateMosaicState(Character name){
+        String mosaicState = getPlayer(name).getM_MosaicState();
+        getPlayer(name).eachMosaic(mosaicState);
+    }
+
+    private void updateStorageState(Character name){
+        String storageState = getPlayer(name).getS_StorageState();
+        getPlayer(name).eachStorage(storageState);
+    }
+
+    private void updateFloorState(Character name){
+        String floorState = getPlayer(name).getF_FloorState();
+        getPlayer(name).eachFloor(floorState);
+    }
+
+    /**
+     * Stores name of each player and each player to HashMap
+     * Use getPlayer method to get each player data
+     */
+    public void playerHashMap(){
+        for( eachPlayer eachplayer : players ){
+            this.players_map.put(eachplayer.name, eachplayer);
+        }
+    }
+
+    /**
      * Get player data by player name
      * @param player_name
      * @return
@@ -294,9 +354,9 @@ public class Players implements Player{
         Character name;
         int score;
         int num_turn;
-        String mosaicState = "";
-        String storageState = "";
-        String floorState = "";
+        String mosaicState = EMPTY_STATE;
+        String storageState = EMPTY_STATE;
+        String floorState = EMPTY_STATE;
 
         // Inner class fields
         private Mosaic mosaic;
@@ -340,15 +400,15 @@ public class Players implements Player{
             return this.num_turn;
         }
 
-        public String getMosaic(){
+        public String getM_MosaicState(){
             return this.mosaicState;
         }
 
-        public String getStorage(){
+        public String getS_StorageState(){
             return this.storageState;
         }
 
-        public String getFloor(){
+        public String getF_FloorState(){
             return this.floorState;
         }
 
@@ -374,6 +434,27 @@ public class Players implements Player{
 
         public int getFloorTotalTilesNumber() {
             return this.floor.getTotalTilesNumber();
+        }
+
+        public void clearFloorScoring(){
+            int score_lost = this.floor.scoreLoseFloor();
+            int adjusted_score = this.score;
+            if(adjusted_score + score_lost > 0){
+                this.score = adjusted_score + score_lost;
+            }
+            else{
+                this.score = 0;
+            }
+        }
+
+        public void clearFloor(){
+            System.out.println(this.floorState);
+            this.floor.clearFloor();
+            System.out.println(this.floorState);
+        }
+
+        public int[] getClearedTilesFloor(){
+            return this.floor.getClearedTilesFloor();
         }
 
         @Override
@@ -422,7 +503,7 @@ public class Players implements Player{
                         else{
                             mosaic_row.add(String.valueOf(SB));
                             while(msc_row_num != Character.getNumericValue(c)){
-                                mosaic_row.add("");
+                                mosaic_row.add(EMPTY_STATE);
                                 msc_row_num++;
                             }
                         }
@@ -436,7 +517,7 @@ public class Players implements Player{
                 }
                 mosaic_row.add(String.valueOf(SB));
                 while(msc_row_num < max_number){
-                    mosaic_row.add("");
+                    mosaic_row.add(EMPTY_STATE);
                     msc_row_num++;
                 }
                 SB.delete(0,SB.length());
@@ -496,7 +577,7 @@ public class Players implements Player{
              */
             public class eachMosaicRow implements Comparable<eachMosaicRow>{
                 // TODO finish eachMosaicRow and eachMosaicCol
-                String mosaic_rowState = "";
+                String mosaic_rowState = EMPTY_STATE;
                 int row;
 
                 public eachMosaicRow (String mosaic_rowState, int row){
@@ -574,7 +655,7 @@ public class Players implements Player{
                         else{
                             storage_row.add(String.valueOf(SB));
                             while(str_row_num != Character.getNumericValue(c)){
-                                storage_row.add("");
+                                storage_row.add(EMPTY_STATE);
                                 str_row_num++;
                             }
                         }
@@ -588,7 +669,7 @@ public class Players implements Player{
                 }
                 storage_row.add(String.valueOf(SB));
                 while(str_row_num < max_number){
-                    storage_row.add("");
+                    storage_row.add(EMPTY_STATE);
                     str_row_num++;
                 }
                 SB.delete(0,SB.length());
@@ -638,7 +719,7 @@ public class Players implements Player{
              * Each player has eachStorageRow state stored here
              */
             public class eachStorageRow implements Comparable<eachStorageRow>{
-                String storage_rowState = "";
+                String storage_rowState = EMPTY_STATE;
                 int row;
 
                 public eachStorageRow (String storage_rowState, int row){
@@ -691,7 +772,6 @@ public class Players implements Player{
          */
         public class Floor {
             String F_floorState;
-
             int[] letters = new int[128];
 
             public Floor(String floorState){
@@ -730,7 +810,52 @@ public class Players implements Player{
                 return tot_tiles;
             }
 
-            boolean isFloorStateEmpty(){
+            public int scoreLoseFloor(){
+                int floor_length = this.F_floorState.length();
+                if(floor_length == 0){
+                    return 0;
+                }
+                else if(floor_length == 1){
+                    return -1;
+                }
+                else if(floor_length == 2){
+                    return -2;
+                }
+                else if(floor_length == 3){
+                    return -4;
+                }
+                else if(floor_length == 4){
+                    return -6;
+                }
+                else if(floor_length == 5){
+                    return -8;
+                }
+                else if(floor_length == 6){
+                    return -11;
+                }
+                else{
+                    return -14;
+                }
+            }
+
+            public void clearFloor(){
+                this.F_floorState = EMPTY_STATE;
+                int[] tiles_to_discard = new int[128];
+                char color = BLUE;
+                for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                    while(this.letters[color] > 0){
+                        this.letters[color]--;
+                        tiles_to_discard[color]++;
+                    }
+                    color++;
+                }
+            }
+
+            public int[] getClearedTilesFloor(){
+                return this.letters;
+            }
+
+            public boolean isFloorStateEmpty(){
                 return this.F_floorState.isEmpty();
             }
         }

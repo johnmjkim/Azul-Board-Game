@@ -33,5 +33,14 @@ public interface Player {
     int getStorageTotalTiles();
     int getFloorTotalTiles();
 
+    // Methods for Player
+
+
+    // Methods for Mosaic
+
+    // Methods for Storage
+
+    // Methods for Floor
+
 }
 
