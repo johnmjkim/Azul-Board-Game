@@ -112,6 +112,9 @@ public class Viewer extends Application {
          */
         // Use lambda expression for button
         button.setOnAction(ae -> {
+            javafx.scene.shape.Rectangle r = new Rectangle(50, 200, 3000, 115);
+            r.setFill(Color.WHITE);
+            controls.getChildren().add(r);
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
         });
         HBox hb = new HBox();

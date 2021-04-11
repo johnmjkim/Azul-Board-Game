@@ -103,18 +103,28 @@ public class Experiment_PSVM {
 
          */
 
-        String[] input_gameState1 = {input_sharedState_2, input_playerState_1};
-        String[] output_gameState1 = new String[2];
+        //String[] input_gameState1 = {input_sharedState_2, input_playerState_1};
+        //String[] output_gameState1 = new String[2];
         /*
         for( String s : input_gameState1){
             System.out.println(s);
         }
 
          */
-        output_gameState1 = Azul.nextRound(input_gameState1);
-
+        //output_gameState1 = Azul.nextRound(input_gameState1);
+        /*
         for( String s : output_gameState1){
             System.out.println(s);
         }
+
+         */
+
+        SharedState sharedState = new SharedState(input_sharedState_2);
+        PlayerState playerState = new PlayerState(input_playerState_1);
+        System.out.println(sharedState.getName());
+        System.out.println(playerState.getName());
+
+        System.out.println(sharedState.name);
+
     }
 }
