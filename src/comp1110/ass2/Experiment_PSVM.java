@@ -130,7 +130,9 @@ public class Experiment_PSVM {
         System.out.println(ss.factories.factory.get(1));
         System.out.println(ss.factories.getFactoryTotalTiles());
         System.out.println(ss.factories.getFactoryTilesNumber('c'));
-
+        ss.bag.removeAllTiles();
+        ss.refillFactory();
+        System.out.println(ss.getSharedState());
 
     }
 }

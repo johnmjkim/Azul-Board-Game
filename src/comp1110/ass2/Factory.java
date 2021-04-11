@@ -74,7 +74,7 @@ public class Factory {
      *
      * @param factoryTiles
      */
-    void refillFactory(char[] factoryTiles) {
+    void refill_eachFactory(char[] factoryTiles) {
         StringBuilder SB = new StringBuilder();
         for (char c : factoryTiles) {
             SB.append(c);

@@ -112,30 +112,6 @@ public class Factories {
         return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());
     }
 
-    /**
-     * 1. Find out if each factory is empty
-     * 2. If factory is empty
-     * 3a. Draw four tiles from bag
-     * 3b. Remove tile drawn from bag
-     * 4. Update sharedState
-     */
-    /*
-    public void refillFactory() {
-        char[] factory_tiles = new char[FACTORY_SIZE];
-        int factory_num = this.factory.size();
-        for(int i=0; i < factory_num; i++){
-            if(this.factory.get(i).isFactoryStateEmpty()){
-                for(int j=0; j < FACTORY_SIZE; j++){
-                    factory_tiles[j] = bag.getRandomTile();
-                    removeTileDrawnBag(factory_tiles[j]);
-                }
-                this.factories.get(i).refill_eachFactory(factory_tiles);
-            }
-        }
-        updateSharedState();
-    }
-    
-     */
 
     boolean isFactoriesStateEmpty(){
         return this.factoriesState.isEmpty();

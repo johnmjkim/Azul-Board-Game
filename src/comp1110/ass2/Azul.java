@@ -661,6 +661,23 @@ public class Azul {
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
 
+        SharedState ss = new SharedState(gameState[0], 2);
+        ss.printState();
+        //azulShareds.printFactory();
+        if(ss.factories.isFactoryFull()){
+            System.out.println("Full");
+            return gameState;
+        }
+        else{
+            System.out.println("Not Full");
+            ss.refillFactory();
+            ss.printState();
+            gameState[0] = ss.getSharedState();
+            return gameState;
+        }
+
+
+        /*
         Shareds azulShareds = new Shareds(2);
         String input_sharedState = gameState[0];
         azulShareds.SharedState(input_sharedState);
@@ -677,6 +694,8 @@ public class Azul {
             gameState[0] = azulShareds.getSharedState();
             return gameState;
         }
+
+         */
 
         /*
         // If the factories are not all empty, return the given state.

@@ -90,4 +90,42 @@ public class SharedState extends States{
         this.discard = discard;
     }
 
+    /**
+     * 1. Find out if each factory is empty
+     * 2. If factory is empty
+     * 3a. Draw four tiles from bag
+     * 3b. Remove tile drawn from bag
+     * 4. Update sharedState
+     */
+    public void refillFactory() {
+        char[] factory_tiles = new char[FACTORY_SIZE];
+        int factory_num = this.factories.factory.size();
+        for(int i=0; i < factory_num; i++){
+            if(this.factories.factory.get(i).isFactoryStateEmpty()){
+                for(int j=0; j < FACTORY_SIZE; j++){
+                    if(!(this.bag.getTotalTilesNumber() > 0)){
+                        this.refillDiscardtoBag();
+                    }
+                    factory_tiles[j] = this.bag.getRandomTile();
+                    this.bag.removeTile(factory_tiles[j]);
+                }
+                this.factories.factory.get(i).refill_eachFactory(factory_tiles);
+            }
+        }
+        this.factories.updatefactoriesState();
+    }
+
+    /**
+     * If discard is not empty :
+     * 1. Refill all tiles to bag
+     * 2. Remove all tiles from discard
+     */
+    public void refillDiscardtoBag() {
+        if(this.discard.getTotalTilesNumber() > 0){
+            String discard_tiles = this.discard.getDiscardState();
+            this.bag.refillTilesBag(discard_tiles);
+            this.discard.removeAllTiles();
+        }
+    }
+
 }
