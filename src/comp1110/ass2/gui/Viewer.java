@@ -48,7 +48,6 @@ public class Viewer extends Application {
         //creat 2 labels and a button
         Label playerLabel1 = new Label("Player State: "+"\n\n"+playerState);
         Label boardLabel1 = new Label("Board State: "+"\n\n"+boardState);
-        Button button = new Button("Clean");
 
         //add the labels and button in different lines
         HBox pl = new HBox();
@@ -62,20 +61,6 @@ public class Viewer extends Application {
         bl.setLayoutX(50);
         bl.setLayoutY(VIEWER_HEIGHT - 240);
         controls.getChildren().add(bl);
-
-        HBox bt = new HBox();
-        bt.getChildren().addAll(button);
-        bt.setLayoutX(440);
-        bt.setLayoutY(VIEWER_HEIGHT - 170);
-        controls.getChildren().add(bt);
-
-
-        //give the function of the button to clean the labels
-        button.setOnAction(clean -> {
-            javafx.scene.shape.Rectangle r = new Rectangle(50, 200, 3000, 115);
-            r.setFill(Color.WHITE);
-            controls.getChildren().add(r);
-        });
 
         //use "A07Me01a11d20b30b41S0a11b22c13c44d1FeeB08Md03b13e23c32b41S0b11c12a33d24e4Fab" to text in
     }
@@ -116,6 +101,7 @@ public class Viewer extends Application {
             r.setFill(Color.WHITE);
             controls.getChildren().add(r);
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
+
         });
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
