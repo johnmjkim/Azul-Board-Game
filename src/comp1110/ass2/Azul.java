@@ -3,12 +3,10 @@ package comp1110.ass2;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Azul {
+    Set<Metadata> metadataCollection;
     public static String[] gameState;
     public static String move;
     public static int gameScore;
@@ -491,7 +489,9 @@ public class Azul {
         Shareds azulShareds = new Shareds(2);
         String input_sharedState = gameState[0];
         azulShareds.SharedState(input_sharedState);
-        char random_tile = azulShareds.bag.getRandomTile();
+        //char random_tile = azulShareds.bag.getRandomTile();
+
+        char random_tile = azulShareds.getRandomTileBag();
         return random_tile;
 
         //put the string of gamestate such as B0005101520 in a new array {"00","05","10","15","20"}
@@ -565,7 +565,7 @@ public class Azul {
          */
     }
     // Useless method
-
+    /*
     public static char randomTiles(ArrayList<Integer> int_array, ArrayList<Character> char_array) {
         char char_out = 'Z';
         ArrayList<Integer> sums = new ArrayList<Integer>();
@@ -596,12 +596,14 @@ public class Azul {
             return char_out;
         }
     }
+     */
 
     /*
     As the task 5 give the corresponding random number to the tile type 'a' to 'e',
     method updateBag modified the tile number of one type.
     'afterDraw' moves 1 tile from a type and calculate the tile number-1, then update gameState.
     */
+    /*
     public static String[] updateBag(String[] gameState, char tileType, int drawnum) {
         int B = gameState[0].indexOf('B');
         String[] transferGameState = gameState[0].split("");
@@ -637,6 +639,7 @@ public class Azul {
         }
         return gameState;
     }
+    */
 
     /**
      * Given a state, refill the factories with tiles.
@@ -906,11 +909,10 @@ public class Azul {
     // This is “5. Preparing for next round”
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
-        emptyFloor(gameState);
-        scorePlayer(gameState);
-        drawTileFromBag(gameState);
-        refillFactories(gameState);
-        return null;
+        //gameState = emptyFloor(gameState);
+        //gameState = scorePlayer(gameState);
+        gameState = refillFactories(gameState);
+        return gameState;
     }
 
     /**

@@ -46,13 +46,14 @@ public class Experiment_PSVM {
         //azulPlayers.printFloor();
         //System.out.println(azulPlayers.getPlayer('A').getName());
 
-        azulPlayers.PlayerState(input_playerState_2);
-        System.out.println(azulPlayers.playerState);
+        //azulPlayers.PlayerState(input_playerState_2);
+        //System.out.println(azulPlayers.playerState);
         //azulPlayers.printPlayer();
         //azulPlayers.printMosaic();
         //azulPlayers.printStorage();
         //azulPlayers.printFloor();
 
+        /*
         System.out.println(" Before Draw Tile ");
         azulShareds.printSharedState();
         //azulShareds.printFactory();
@@ -92,5 +93,12 @@ public class Experiment_PSVM {
         //azulShareds.printCenter();
         azulShareds.printBag();
         //azulShareds.printDiscard();
+
+         */
+
+        azulPlayers.printPlayer();
+        azulPlayers.printMosaic();
+        azulPlayers.printStorage();
+        azulPlayers.printFloor();
     }
 }
