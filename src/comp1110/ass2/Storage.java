@@ -14,8 +14,7 @@ public class Storage {
     public final char FIRST_PLAYER = 'f';
 
     // Size, Numbers of all components
-    public final int MAX_MOSAIC_ROW = 5;
-    public final int MAX_MOSAIC_COL = 5;
+    public final int MAX_STORAGE_ROW = 5;
     public final String EMPTY_TILES = "0000000000";
     public final String EMPTY_STATE = "";
 
@@ -105,6 +104,21 @@ public class Storage {
         return tot_tiles;
     }
 
+    boolean isStorageTilesValid(){
+        boolean[] isrowstilesvalid = new boolean[MAX_STORAGE_ROW];
+        boolean isStorageTilesValid = true;
+
+        for(int i=0; i < MAX_STORAGE_ROW; i++){
+            isrowstilesvalid[i] = storage_rows.get(i).isStorageRowTilesValid();
+        }
+        for(int i=0; i < MAX_STORAGE_ROW; i++){
+            if(isrowstilesvalid[i] == false){
+                isStorageTilesValid = false;
+            }
+        }
+        return isStorageTilesValid;
+    }
+
     boolean isStorageStateEmpty(){
         return this.storageState.isEmpty();
     }
@@ -116,10 +130,17 @@ public class Storage {
     public class StorageRow implements Comparable<StorageRow>{
         String storage_rowState = EMPTY_STATE;
         int row;
+        final int MAX_TILES_LIMIT = row + 1;
+        int[] letters = new int[128];
 
         public StorageRow (String storage_rowState, int row){
             this.storage_rowState = storage_rowState;
             this.row = row;
+            this.letters[getTilesColor()] = getTilesNumber();
+        }
+
+        public String getStorage_rowState(){
+            return this.storage_rowState;
         }
 
         public int getTilesNumber(){
@@ -140,6 +161,39 @@ public class Storage {
                 char storage_row_color = this.storage_rowState.charAt(0);
                 return storage_row_color;
             }
+        }
+
+        public void removeTile(char color) {
+            this.letters[color]--;
+            updateStorageRowState();
+        }
+
+        public void removeAllTiles(){
+            char color = BLUE;
+            for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                while(this.letters[color] > 0){
+                    this.letters[color]--;
+                }
+                color++;
+            }
+            updateStorageRowState();
+        }
+
+        public void addTile(char color){
+            this.letters[color]++;
+            updateStorageRowState();
+        }
+
+        public void updateStorageRowState(){
+            StringBuilder SB = new StringBuilder();
+            this.letters[getTilesColor()] = getTilesNumber();
+            SB.append(getTilesColor());
+            SB.append(getTilesNumber());
+            this.storage_rowState = String.valueOf(SB);
+        }
+
+        boolean isStorageRowTilesValid(){
+            return (this.MAX_TILES_LIMIT >= getTilesNumber());
         }
 
         boolean isStorageRowStateEmpty(){

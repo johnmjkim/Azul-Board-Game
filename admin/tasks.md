@@ -19,6 +19,7 @@ Everyone : discussion about feedback from D2B skeleton - meeting 10:00 AEDT 1 Ap
 ## Mid-Semester Break
 
 Everyone : reflection about feedback, discussion about D2C - meeting 9:00 AEDT 5 Apr
+Everyone : D2C up to task 8 done - meeting 15:00 AEDT 12 Apr
 
 ## Week 7
 

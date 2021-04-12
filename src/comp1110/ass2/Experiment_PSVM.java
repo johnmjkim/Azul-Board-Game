@@ -12,7 +12,6 @@ public class Experiment_PSVM {
         //String input_playerState_2 = "A75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3FB60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF";
 
         // Shared State Experiment
-        /*
         SharedState ss = new SharedState(input_sharedState_2, 2);
 
         System.out.println(ss.getState());
@@ -65,8 +64,7 @@ public class Experiment_PSVM {
         System.out.println(ss.getSharedState());
         System.out.println(ps.getPlayerState());
 
-         */
-
+        /*
         // NextRound experiment
         String[] gameState = new String[2];
         gameState[0] = input_sharedState_2;
@@ -77,6 +75,12 @@ public class Experiment_PSVM {
         System.out.println("After all preparation for next round");
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
+
+         */
+
+        System.out.println(ps.getPlayerState());
+        System.out.println(ps.nplayers.get(0).storage.getStorageState());
+        System.out.println(ps.nplayers.get(0).storage.storage_rows.get(3).getTilesNumber());
 
     }
 }
