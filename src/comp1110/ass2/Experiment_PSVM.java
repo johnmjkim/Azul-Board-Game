@@ -4,15 +4,15 @@ import comp1110.ass2.backend.Azul;
 import comp1110.ass2.backend.player.PlayerState;
 import comp1110.ass2.backend.shared.SharedState;
 
-public class Experiment_PSVM {
+public class Experiment_PSVM implements Metadata{
 
     public static void main(String[] args) {
         //String input_sharedState_1 = "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000";
         String input_sharedState_2 = "BF1cbde3dcceCaaabcddeB0807121119D1216150803";
         //String input_sharedState_3 = "BFCB0505040402D0609040610";
-        String input_playerState_1 = "A07Me01a11d20b30b41S0a11b22c13c44d1FeefB08Md03b13e23c32b41S0b11c12a33d24e4Fabcd";
+        String input_playerState_1 = "A07Me01a11d20b30b41S0a11b22c13c44d1FeefB08Mb13e23c32b41S0b11c12a33d24e4Fabcd";
         //String input_playerState_2 = "A75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3FB60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF";
-        /*
+
 
         // Shared State Experiment
 
@@ -48,11 +48,12 @@ public class Experiment_PSVM {
 
         // Player State Experiment
         PlayerState ps = new PlayerState(input_playerState_1, 2);
+
         System.out.println(ps.getState());
         System.out.println(ps.getPlayerState());
         System.out.println(ps.nplayers.get(0).getnplayerState());
         System.out.println(ps.nplayers.get(0).score.getScoreState());
-        System.out.println(ps.nplayers.get(0).mosaice.getMosaicState());
+        System.out.println(ps.nplayers.get(0).mosaic.getMosaicState());
         System.out.println(ps.nplayers.get(0).storage.getStorageState());
         System.out.println(ps.nplayers.get(0).floor.getFloorState());
 
@@ -67,8 +68,6 @@ public class Experiment_PSVM {
         ss.discard.refillTilesDiscard(tiles_to_discard);
         System.out.println(ss.getSharedState());
         System.out.println(ps.getPlayerState());
-
-         */
 
 
         // NextRound experiment
@@ -85,12 +84,28 @@ public class Experiment_PSVM {
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
 
-        /*
         System.out.println(ps.getPlayerState());
         System.out.println(ps.nplayers.get(0).storage.getStorageState());
-        System.out.println(ps.nplayers.get(0).storage.storage_rows.get(3).getTilesNumber());
+        System.out.println(ps.nplayers.get(0).storage.storage_rows.get(2).getTilesNumber());
+        ps.nplayers.get(0).storage.storage_rows.get(2).addTile('c');
+        System.out.println(ps.nplayers.get(0).storage.getStorageState());
+        System.out.println(ps.nplayers.get(0).mosaic.getMosaicState());
 
-         */
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getMosaic_rowState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(1).getMosaic_rowState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(2).getMosaic_rowState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(3).getMosaic_rowState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(4).getMosaic_rowState());
 
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

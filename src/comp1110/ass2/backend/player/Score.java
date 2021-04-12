@@ -54,10 +54,10 @@ public class Score {
         else{
             this.score = 0;
         }
-        updatescoreState();
+        updateScoreState();
     }
 
-    public void updatescoreState(){
+    public void updateScoreState(){
         StringBuilder SB = new StringBuilder();
         if(this.score < 10){
             SB.append("0");

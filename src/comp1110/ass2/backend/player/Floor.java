@@ -1,16 +1,8 @@
 package comp1110.ass2.backend.player;
 
-public class Floor {
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-    public final char FIRST_PLAYER = 'f';
+import comp1110.ass2.Metadata;
 
-    // Size, Numbers of all components
-    public final String EMPTY_STATE = "";
+public class Floor implements Metadata {
 
     String floorState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -114,5 +106,15 @@ public class Floor {
 
     public boolean isFloorStateEmpty() {
         return this.floorState.isEmpty();
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

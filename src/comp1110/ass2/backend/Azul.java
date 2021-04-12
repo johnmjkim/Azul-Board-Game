@@ -6,7 +6,7 @@ import comp1110.ass2.backend.shared.SharedState;
 
 import java.util.*;
 
-public class Azul {
+public class Azul implements Metadata{
 
     // Maximum player numbers
     public static int MAX_PLAYER_NUMBER = 2;
@@ -17,50 +17,8 @@ public class Azul {
     public static SharedState sharedState;
     public static PlayerState playerState;
 
-    // Players substring
-    public static final char PLAYER_A = 'A';
-    public static final char PLAYER_B = 'B';
-    public static final char PLAYER_C = 'C';
-    public static final char PLAYER_D = 'D';
-    public static final char[] ALL_PLAYERS = {PLAYER_A, PLAYER_B, PLAYER_C, PLAYER_D};
-
-    // Shared state substring
-    public static final char FACTORY = 'F';
-    public static final char CENTER = 'C';
-    public static final char BAG = 'B';
-    public static final char DISCARD = 'D';
-
-    // Players state substring
-    public static final char MOSAIC = 'M';
-    public static final char STORAGE = 'S';
-    public static final char FLOOR = 'F';
-
-    // Colors and characters
-    public static final char BLUE = 'a';
-    public static final char GREEN = 'b';
-    public static final char ORANGE = 'c';
-    public static final char PURPLE = 'd';
-    public static final char RED = 'e';
-    public static final char FIRST_PLAYER = 'f';
-
-    // Number in characters
-    public static final char ZERO = '0';
-    public static final char ONE = '1';
-    public static final char TWO = '2';
-    public static final char THREE = '3';
-    public static final char FOUR = '4';
-    public static final char FIVE = '5';
-    public static final char SIX = '6';
-    public static final char SEVEN = '7';
-    public static final char EIGHT = '8';
-    public static final char NINE = '9';
-
     // Size, Numbers of all components
     public static final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
-    public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
-    public static final int FACTORY_SIZE = 4;
-    public static final String EMPTY_TILES = "0000000000";
-    public static final String EMPTY_STATE = "";
 
     /**
      * Given a shared state string, determine if it is well-formed.
@@ -1065,4 +1023,13 @@ public class Azul {
         return false;
     }
 
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
+    }
 }

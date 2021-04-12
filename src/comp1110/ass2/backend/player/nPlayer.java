@@ -1,21 +1,8 @@
 package comp1110.ass2.backend.player;
 
-public class nPlayer {
+import comp1110.ass2.Metadata;
 
-    // Players substring
-    public final char PLAYER_A = 'A';
-    public final char PLAYER_B = 'B';
-    public final char PLAYER_C = 'C';
-    public final char PLAYER_D = 'D';
-    public final char[] ALL_PLAYERS = {PLAYER_A, PLAYER_B, PLAYER_C, PLAYER_D};
-
-    // Players state substring
-    public final char MOSAIC = 'M';
-    public final char STORAGE = 'S';
-    public final char FLOOR = 'F';
-
-    // Size, Numbers of all components
-    public final String EMPTY_STATE = "";
+public class nPlayer implements Metadata {
 
     // Player fields strings
     String nplayerState = EMPTY_STATE;
@@ -27,7 +14,7 @@ public class nPlayer {
 
     // Class fields
     public Score score;
-    public Mosaic mosaice;
+    public Mosaic mosaic;
     public Storage storage;
     public Floor floor;
 
@@ -53,7 +40,7 @@ public class nPlayer {
         StringBuilder SB = new StringBuilder();
         SB.append(this.score.getScoreState());
         SB.append(MOSAIC);
-        SB.append(this.mosaice.getMosaicState());
+        SB.append(this.mosaic.getMosaicState());
         SB.append(STORAGE);
         SB.append(this.storage.getStorageState());
         SB.append(FLOOR);
@@ -69,7 +56,7 @@ public class nPlayer {
 
     private void setMosaicState( String mosaicState ) {
         this.mosaicState = mosaicState;
-        this.mosaice = new Mosaic( mosaicState );
+        this.mosaic = new Mosaic( mosaicState );
     }
 
     private void setStorageState( String storageState ){
@@ -82,4 +69,13 @@ public class nPlayer {
         this.floor = new Floor( floorState );
     }
 
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
+    }
 }

@@ -1,25 +1,11 @@
 package comp1110.ass2.backend.shared;
 
+import comp1110.ass2.Metadata;
 import comp1110.ass2.backend.shared.Factory;
 
 import java.util.ArrayList;
 
-public class Factories {
-
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-    public final char FIRST_PLAYER = 'f';
-
-    // Size, Numbers of all components
-    public final String EMPTY_TILES = "0000000000";
-    public final String EMPTY_STATE = "";
-
-    // Size, Numbers of all components
-    public final int FACTORY_SIZE = 4;
+public class Factories implements Metadata {
 
     String factoriesState;
     int max_factories_number;
@@ -118,5 +104,15 @@ public class Factories {
 
     boolean isFactoriesStateEmpty(){
         return this.factoriesState.isEmpty();
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

@@ -1,21 +1,11 @@
 package comp1110.ass2.backend.shared;
 
+import comp1110.ass2.Metadata;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Bag {
-
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-    public final char FIRST_PLAYER = 'f';
-
-    // Size, Numbers of all components
-    public final String EMPTY_TILES = "0000000000";
-    public final String EMPTY_STATE = "";
+public class Bag implements Metadata {
 
     String bagState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -174,5 +164,15 @@ public class Bag {
 
     public void printState(){
         System.out.println(this.bagState);
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

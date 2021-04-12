@@ -1,25 +1,13 @@
 package comp1110.ass2.backend.player;
 
+import comp1110.ass2.Metadata;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Storage {
-
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-    public final char FIRST_PLAYER = 'f';
-
-    // Size, Numbers of all components
-    public final int MAX_STORAGE_ROW = 5;
-    public final String EMPTY_TILES = "0000000000";
-    public final String EMPTY_STATE = "";
+public class Storage implements Metadata {
 
     String storageState = EMPTY_STATE;
-    // TODO State Mosaic Row ArrayList needed
     public ArrayList<StorageRow> storage_rows = new ArrayList<StorageRow>();
 
     int[] letters = new int[128];
@@ -87,10 +75,11 @@ public class Storage {
     }
 
     public String getStorageState(){
+        updateStorageState();
         return this.storageState;
     }
 
-    public int getTilesNumber(char color){
+    public int getTilesNumber(char color) {
         return this.letters[color];
     }
 
@@ -102,6 +91,19 @@ public class Storage {
             color++;
         }
         return tot_tiles;
+    }
+
+    public void updateStorageState(){
+        StringBuilder SB = new StringBuilder();
+        int i=0;
+        for( StorageRow sr : storage_rows ){
+            if(!sr.isStorageRowStateEmpty()){
+                SB.append(i);
+                SB.append(sr.getStorage_rowState());
+            }
+            i++;
+        }
+        this.storageState = String.valueOf(SB);
     }
 
     boolean isStorageTilesValid(){
@@ -123,6 +125,16 @@ public class Storage {
         return this.storageState.isEmpty();
     }
 
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
+    }
+
     /**
      * Inner class eachStorageRow of Storage class
      * Each player has eachStorageRow state stored here
@@ -130,12 +142,13 @@ public class Storage {
     public class StorageRow implements Comparable<StorageRow>{
         String storage_rowState = EMPTY_STATE;
         int row;
-        final int MAX_TILES_LIMIT = row + 1;
+        int MAX_TILES_LIMIT;
         int[] letters = new int[128];
 
         public StorageRow (String storage_rowState, int row){
             this.storage_rowState = storage_rowState;
             this.row = row;
+            this.MAX_TILES_LIMIT = row + 1;
             this.letters[getTilesColor()] = getTilesNumber();
         }
 
@@ -190,6 +203,8 @@ public class Storage {
                 else{
                     System.out.println("Max storage row tiles reached");
                 }
+            }
+            else{
                 System.out.println("Max incompatible tile adding");
             }
         }
@@ -197,9 +212,8 @@ public class Storage {
         public void updateStorageRowState(){
             StringBuilder SB = new StringBuilder();
             if(getTilesColor() >= BLUE && getTilesColor() <= RED){
-                this.letters[getTilesColor()] = getTilesNumber();
                 SB.append(getTilesColor());
-                SB.append(getTilesNumber());
+                SB.append(this.letters[getTilesColor()]);
             }
             else{
                 SB.append("");
@@ -209,6 +223,10 @@ public class Storage {
 
         boolean isStorageRowTileColorValid(char color){
             return (getTilesColor() == color);
+        }
+
+        boolean isStorageRowTilesFull(){
+            return (this.MAX_TILES_LIMIT == getTilesNumber());
         }
 
         boolean isStorageRowTilesValid(){

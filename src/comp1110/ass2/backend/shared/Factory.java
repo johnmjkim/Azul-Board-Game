@@ -1,19 +1,8 @@
 package comp1110.ass2.backend.shared;
 
-public class Factory {
+import comp1110.ass2.Metadata;
 
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-
-    // Size, Numbers of all components
-    public final String EMPTY_STATE = "";
-
-    // Size, Numbers of all components
-    public final int FACTORY_SIZE = 4;
+public class Factory implements Metadata {
 
     int number;
     int[] letters = new int[128];
@@ -95,5 +84,15 @@ public class Factory {
 
     boolean isFactoryStateEmpty() {
         return this.factoryState.isEmpty();
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

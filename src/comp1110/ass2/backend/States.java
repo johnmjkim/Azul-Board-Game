@@ -4,9 +4,12 @@ import comp1110.ass2.Metadata;
 
 public class States implements Metadata {
     String State;
+
     // Maximum player numbers
     public int MAX_PLAYER_NUMBER;
+    //public final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
 
+    /*
     // Players substring
     public final char PLAYER_A = 'A';
     public final char PLAYER_B = 'B';
@@ -38,6 +41,8 @@ public class States implements Metadata {
     public final int FACTORY_SIZE = 4;
     public final String EMPTY_TILES = "0000000000";
     public final String EMPTY_STATE = "";
+
+     */
 
     // Shared fields Strings
     public String sharedState = EMPTY_STATE;

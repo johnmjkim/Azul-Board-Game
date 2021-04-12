@@ -1,17 +1,8 @@
 package comp1110.ass2.backend.shared;
 
-public class Center {
-    // Colors and characters
-    public final char BLUE = 'a';
-    public final char GREEN = 'b';
-    public final char ORANGE = 'c';
-    public final char PURPLE = 'd';
-    public final char RED = 'e';
-    public final char FIRST_PLAYER = 'f';
+import comp1110.ass2.Metadata;
 
-    // Size, Numbers of all components
-    public final String EMPTY_TILES = "0000000000";
-    public final String EMPTY_STATE = "";
+public class Center implements Metadata {
 
     String centerState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -99,5 +90,15 @@ public class Center {
 
     boolean isCenterStateEmpty(){
         return this.centerState.isEmpty();
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }
