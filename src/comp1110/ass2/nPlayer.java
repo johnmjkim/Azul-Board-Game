@@ -67,6 +67,16 @@ public class nPlayer implements Metadata {
         this.floor = new Floor( floorState );
     }
 
+    public boolean isEndofGame(){
+        boolean isGameEnd = false;
+        for(int i=0; i < MAX_MOSAIC_ROW; i++){
+            if(this.mosaic.mosaic_rows.get(i).getTotalTilesNumber() == MAX_MOSAIC_ROW){
+                isGameEnd = true;
+            }
+        }
+        return isGameEnd;
+    }
+
     @Override
     public String printBriefMetadata() {
         return null;

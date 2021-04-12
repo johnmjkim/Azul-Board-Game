@@ -61,4 +61,14 @@ public class PlayerState extends States {
         }
         super.playerState = String.valueOf(SB);
     }
+
+    public boolean isEndofGame(){
+        boolean isGameEnd = false;
+        for( nPlayer p : this.nplayers ){
+            if(p.isEndofGame() == true){
+                isGameEnd = true;
+            }
+        }
+        return isGameEnd;
+    }
 }

@@ -779,14 +779,25 @@ public class Azul implements Metadata{
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
 
-        boolean isNextRound = true;
-
         sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
+        boolean isEndofGame = playerState.isEndofGame();
         boolean isFactoriesEmpty = sharedState.factories.isFactoriesStateEmpty();
         boolean isCenterEmpty = sharedState.center.isCenterStateEmpty();
         boolean hasOneFirstPlayerToken = sharedState.center.hasOnlyOneFirstPlayerToken();
+
+        String current_player = sharedState.turnState;
+
+        int current_player_idx = 0;
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+            if(ALL_PLAYERS[i] == current_player.charAt(0)){
+                current_player_idx = i;
+            }
+        }
+        boolean isCurrentFirstPlayer = playerState.nplayers.get(current_player_idx).floor.hasFirstPlayerToken();
+
+
         /*
         if(isFactoriesEmpty || isCenterEmpty || hasOneFirstPlayerToken){
             isNextRound = false;
@@ -825,17 +836,25 @@ public class Azul implements Metadata{
 
         //System.out.println("Refill all factories");
 
-        gameState = refillFactories(gameState);
-
-        if(isNextRound){
+        if(isEndofGame){
             sharedState.changeTurn();
+            sharedState.center.addTile(FIRST_PLAYER);
             gameState[0] = sharedState.getSharedState();
-            System.out.println(" Next round ready ");
+            System.out.println(" End of game ");
         }
         else{
-            System.out.println(" Returned current round ");
+            gameState = refillFactories(gameState);
+            if(isCurrentFirstPlayer){
+
+            }
+            else{
+                sharedState.changeTurn();
+                gameState[0] = sharedState.getSharedState();
+
+            }
         }
 
+        System.out.println(" Next round ready ");
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
         System.out.println();
