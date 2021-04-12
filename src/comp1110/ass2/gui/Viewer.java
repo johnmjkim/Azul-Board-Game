@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,22 +41,28 @@ public class Viewer extends Application {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        //get gameState from Azul
+        //get State
         String playerState = state[0];
         String boardState = state[1];
 
-        //creat new labels
-        Label playerLabel1 = new Label("Player State: "+"\n"+playerState);
-        Label boardLabel1 = new Label("Board State: "+"\n"+boardState);
+        //creat 2 labels and a button
+        Label playerLabel1 = new Label("Player State: "+"\n\n"+playerState);
+        Label boardLabel1 = new Label("Board State: "+"\n\n"+boardState);
 
-        //add them all
-        HBox ds = new HBox();
-        ds.getChildren().addAll(playerLabel1,boardLabel1);
-        ds.setSpacing(10);
-        ds.setLayoutX(500);
-        ds.setLayoutY(VIEWER_HEIGHT - 300);
-        controls.getChildren().add(ds);
+        //add the labels and button in different lines
+        HBox pl = new HBox();
+        pl.getChildren().addAll(playerLabel1);
+        pl.setLayoutX(50);
+        pl.setLayoutY(VIEWER_HEIGHT - 300);
+        controls.getChildren().add(pl);
 
+        HBox bl = new HBox();
+        bl.getChildren().addAll(boardLabel1);
+        bl.setLayoutX(50);
+        bl.setLayoutY(VIEWER_HEIGHT - 240);
+        controls.getChildren().add(bl);
+
+        //use "A07Me01a11d20b30b41S0a11b22c13c44d1FeeB08Md03b13e23c32b41S0b11c12a33d24e4Fab" to text in
     }
 
 
@@ -90,7 +97,11 @@ public class Viewer extends Application {
          */
         // Use lambda expression for button
         button.setOnAction(ae -> {
+            javafx.scene.shape.Rectangle r = new Rectangle(50, 200, 3000, 115);
+            r.setFill(Color.WHITE);
+            controls.getChildren().add(r);
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
+
         });
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
