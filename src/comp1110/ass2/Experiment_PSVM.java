@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Experiment_PSVM {
 
     public static void main(String[] args) {
-        ArrayList<Player> players = new ArrayList<Player>();
         //String input_sharedState_1 = "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000";
         String input_sharedState_2 = "BF1cbde3dcceCaaabcddeB0807121119D1216150803";
         //String input_sharedState_3 = "BFCB0505040402D0609040610";
