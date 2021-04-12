@@ -3,7 +3,8 @@ package comp1110.ass2;
 import comp1110.ass2.backend.Azul;
 import org.junit.jupiter.api.Test;
 
-import static comp1110.ass2.ExampleGames.*;
+import static comp1110.ass2.ExampleGames.NOT_WELL_FORMED_SHARED_STATE;
+import static comp1110.ass2.ExampleGames.VALID_STATES;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class IsSharedStateWellFormedTest {
     private void test(String in, boolean expected) {
         boolean out = Azul.isSharedStateWellFormed(in);
-        assertEquals(expected, out, "isSharedStateWellFormed for input state: " + in + "'");
+        assertEquals(expected, out, "isSharedStateWellFormed for input state: \"" + in + "\"");
     }
 
     @Test
