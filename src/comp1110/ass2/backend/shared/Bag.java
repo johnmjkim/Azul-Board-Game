@@ -136,7 +136,12 @@ public class Bag implements Metadata {
             r_output = r.nextInt(getTotalTilesNumber()) + 1;
         }
         else{
-            r_output = 1;
+            prob_blue = 1;
+            prob_green = 2;
+            prob_orange = 3;
+            prob_purple = 4;
+            prob_red = 5;
+            r_output = r.nextInt(5) + 1;
         }
         //System.out.println(r_range + " : " + prob_blue + ", " + prob_green + ", " + prob_orange + ", " + prob_purple + ", " + prob_red + " : " + r_output);
 

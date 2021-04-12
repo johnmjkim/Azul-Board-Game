@@ -144,7 +144,7 @@ public class Mosaic implements Metadata {
         int row;
 
         public MosaicRow (String mosaic_rowState, int row){
-            System.out.println(" row " + row + " : " + mosaic_rowState);
+            //System.out.println(" row " + row + " : " + mosaic_rowState);
             this.mosaic_rowState = mosaic_rowState;
             this.row = row;
             generateMosaicMask(row);
@@ -193,7 +193,7 @@ public class Mosaic implements Metadata {
         int col;
 
         public MosaicCol(String mosaic_colState, int col) {
-            System.out.println(" col " + col + " : " + mosaic_colState);
+            //System.out.println(" col " + col + " : " + mosaic_colState);
             this.mosaic_colState = mosaic_colState;
             this.col = col;
             generateMosaicMask(col);

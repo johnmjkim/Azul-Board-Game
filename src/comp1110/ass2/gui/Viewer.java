@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.backend.Azul;
+import comp1110.ass2.Azul;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
