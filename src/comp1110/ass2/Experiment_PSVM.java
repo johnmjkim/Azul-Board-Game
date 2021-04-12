@@ -68,7 +68,8 @@ public class Experiment_PSVM {
         System.out.println(ss.getSharedState());
         System.out.println(ps.getPlayerState());
 
-        /*
+         */
+
         // NextRound experiment
         String[] gameState = new String[2];
         gameState[0] = input_sharedState_2;
@@ -79,7 +80,12 @@ public class Experiment_PSVM {
         System.out.println("After all preparation for next round");
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
+
          */
+
+        System.out.println(ps.getPlayerState());
+        System.out.println(ps.nplayers.get(0).storage.getStorageState());
+        System.out.println(ps.nplayers.get(0).storage.storage_rows.get(3).getTilesNumber());
 
     }
 }

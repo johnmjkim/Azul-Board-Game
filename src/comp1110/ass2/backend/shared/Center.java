@@ -56,7 +56,7 @@ public class Center {
 
     public void removeTile(char color) {
         this.letters[color]--;
-        updatecenterState();
+        updateCenterState();
     }
 
     public void removeAllTiles(){
@@ -67,15 +67,15 @@ public class Center {
             }
             color++;
         }
-        updatecenterState();
+        updateCenterState();
     }
 
     public void addTile(char color){
         this.letters[color]++;
-        updatecenterState();
+        updateCenterState();
     }
 
-    public void updatecenterState(){
+    public void updateCenterState(){
         StringBuilder SB = new StringBuilder();
         SB.append(EMPTY_STATE);
         int[] center_letters = new int[128];
