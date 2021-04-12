@@ -78,6 +78,7 @@ public class Factories {
     }
 
     public String getFactoriesState(){
+        updatefactoriesState();
         return this.factoriesState;
     }
 

@@ -38,10 +38,10 @@ public class States {
     public final String EMPTY_STATE = "";
 
     // Shared fields Strings
-    String sharedState;
+    String sharedState = EMPTY_STATE;
 
     // Player fields strings
-    String playerState;
+    String playerState = EMPTY_STATE;
 
     // Class fields
     /*

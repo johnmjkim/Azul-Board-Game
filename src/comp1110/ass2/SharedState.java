@@ -59,7 +59,9 @@ public class SharedState extends States{
         SB.append(this.bagState);
         SB.append(DISCARD);
         SB.append(this.discardState);
-        return String.valueOf(SB);
+
+        super.sharedState = String.valueOf(SB);
+        return super.sharedState;
     }
 
     private void setTurnState( String turnState ){

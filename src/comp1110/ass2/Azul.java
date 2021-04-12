@@ -665,13 +665,16 @@ public class Azul {
         ss.printState();
         //azulShareds.printFactory();
         if(ss.factories.isFactoryFull()){
-            System.out.println("Full");
+            System.out.println("Factory Full");
+            System.out.println();
             return gameState;
         }
         else{
-            System.out.println("Not Full");
+            System.out.println("Factory Not Full");
             ss.refillFactory();
+            System.out.println("Factory filled");
             ss.printState();
+            System.out.println();
             gameState[0] = ss.getSharedState();
             return gameState;
         }
@@ -934,6 +937,45 @@ public class Azul {
     // This is “5. Preparing for next round”
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
+        int max_player_number = 2;
+        SharedState ss = new SharedState(gameState[0], max_player_number);
+        PlayerState ps = new PlayerState(gameState[1], max_player_number);
+
+        int tot_tiles = 0;
+        String tiles_to_discard;
+
+        // Print shared and player state
+        System.out.println(" Before next round ");
+        System.out.println(ss.getSharedState());
+        System.out.println(ps.getPlayerState());
+        System.out.println();
+
+        for(int i=0; i < max_player_number; i++){
+            // Get number of total tiles in floor to discard for each players
+            tot_tiles = ps.nplayers.get(i).floor.getTotalTilesNumber();
+            tiles_to_discard = ps.nplayers.get(i).floor.getFloorTilesString();
+
+            // Adjust score, remove tiles from floor to discard for each player accordingly
+            ps.nplayers.get(i).score.clearFloorScore(tot_tiles);
+            ps.nplayers.get(i).floor.removeAllTiles();
+            ss.discard.refillTilesDiscard(tiles_to_discard);
+
+            System.out.println(" Player " + i + " Floor Cleared ");
+            System.out.println(ss.getSharedState());
+            System.out.println(ps.getPlayerState());
+            System.out.println();
+        }
+
+        gameState[0] = ss.getSharedState();
+        gameState[1] = ps.getPlayerState();
+
+        System.out.println("Refill all factories");
+
+        gameState = refillFactories(gameState);
+
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
+        System.out.println();
 
         return gameState;
     }

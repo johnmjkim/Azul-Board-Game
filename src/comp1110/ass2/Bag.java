@@ -40,7 +40,7 @@ public class Bag {
         }
         bags_counts.add(Integer.valueOf(String.valueOf(SB)));
         SB.delete(0,SB.length());
-        // 'a'~'f'
+        // 'a'~'r'
         this.letters[BLUE] = bags_counts.get(0);
         this.letters[GREEN] = bags_counts.get(1);
         this.letters[ORANGE] = bags_counts.get(2);

@@ -108,6 +108,9 @@ public class Discard {
         this.letters[ORANGE] += discards_counts.get(2);
         this.letters[PURPLE] += discards_counts.get(3);
         this.letters[RED] += discards_counts.get(4);
+        if(discards_counts.size() > 5){
+            this.letters[FIRST_PLAYER] += discards_counts.get(4);
+        }
         updatediscardState();
     }
 
@@ -125,6 +128,8 @@ public class Discard {
         }
         this.discardState = String.valueOf(SB);
     }
+
+    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
 
     public boolean isDiscardStateEmpty(){
         return this.discardState.isEmpty();
