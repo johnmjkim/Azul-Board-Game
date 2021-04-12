@@ -1,4 +1,4 @@
-package comp1110.ass2;
+package comp1110.ass2.backend.shared;
 
 import java.util.ArrayList;
 import java.util.Random;

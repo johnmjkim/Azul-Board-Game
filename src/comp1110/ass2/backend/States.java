@@ -1,9 +1,11 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
-public class States {
+import comp1110.ass2.Metadata;
+
+public class States implements Metadata {
     String State;
     // Maximum player numbers
-    int MAX_PLAYER_NUMBER;
+    public int MAX_PLAYER_NUMBER;
 
     // Players substring
     public final char PLAYER_A = 'A';
@@ -38,10 +40,10 @@ public class States {
     public final String EMPTY_STATE = "";
 
     // Shared fields Strings
-    String sharedState = EMPTY_STATE;
+    public String sharedState = EMPTY_STATE;
 
     // Player fields strings
-    String playerState = EMPTY_STATE;
+    public String playerState = EMPTY_STATE;
 
     // Class fields
     /*
@@ -70,5 +72,15 @@ public class States {
 
     public void printState() {
         System.out.println(State);
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 }

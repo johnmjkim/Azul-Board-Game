@@ -1,6 +1,12 @@
-package comp1110.ass2;
+package comp1110.ass2.backend.shared;
 
-public class SharedState extends States{
+import comp1110.ass2.backend.States;
+import comp1110.ass2.backend.shared.Bag;
+import comp1110.ass2.backend.shared.Center;
+import comp1110.ass2.backend.shared.Discard;
+import comp1110.ass2.backend.shared.Factories;
+
+public class SharedState extends States {
 
     // Shared fields Strings
     String turnState = EMPTY_STATE;

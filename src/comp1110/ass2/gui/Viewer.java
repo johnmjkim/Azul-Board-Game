@@ -1,11 +1,8 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Azul;
+import comp1110.ass2.backend.Azul;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,12 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class Viewer extends Application {
 
@@ -123,9 +115,6 @@ public class Viewer extends Application {
     // displayEnd() is to show the End of the game.
     private void displayEnd(){
         String[] _gameState = Azul.gameState;
-        int _gameScore = Azul.gameScore;
-        displayScore(_gameScore);
-        displayState(_gameState);
         moveTile();
     };
 

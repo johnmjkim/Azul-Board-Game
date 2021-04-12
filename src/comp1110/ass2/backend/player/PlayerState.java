@@ -1,8 +1,11 @@
-package comp1110.ass2;
+package comp1110.ass2.backend.player;
+
+import comp1110.ass2.backend.States;
+import comp1110.ass2.backend.player.nPlayer;
 
 import java.util.ArrayList;
 
-public class PlayerState extends States{
+public class PlayerState extends States {
 
     // Player fields strings
     String[] playerNameState = new String[MAX_PLAYER_NUMBER];
