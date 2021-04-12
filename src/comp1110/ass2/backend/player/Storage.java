@@ -20,7 +20,7 @@ public class Storage {
 
     String storageState = EMPTY_STATE;
     // TODO State Mosaic Row ArrayList needed
-    ArrayList<StorageRow> storage_rows = new ArrayList<StorageRow>();
+    public ArrayList<StorageRow> storage_rows = new ArrayList<StorageRow>();
 
     int[] letters = new int[128];
 
@@ -63,10 +63,12 @@ public class Storage {
             str_row_num++;
         }
         SB.delete(0,SB.length());
-
+        /*
         for (String s : storage_row) {
             System.out.println(" -> " + s);
         }
+
+         */
 
         for(int i=0; i < max_number; i++){
             this.storage_rows.add(new StorageRow(storage_row.get(i+1),i));
@@ -162,7 +164,9 @@ public class Storage {
         }
 
         public void removeTile(char color) {
-            this.letters[color]--;
+            if(isStorageRowTileColorValid(color)){
+                this.letters[color]--;
+            }
             updateStorageRowState();
         }
 
@@ -178,16 +182,33 @@ public class Storage {
         }
 
         public void addTile(char color){
-            this.letters[color]++;
-            updateStorageRowState();
+            if(isStorageRowTileColorValid(color) || (getTilesNumber() == 0)){
+                if(this.MAX_TILES_LIMIT > getTilesNumber()) {
+                    this.letters[color]++;
+                    updateStorageRowState();
+                }
+                else{
+                    System.out.println("Max storage row tiles reached");
+                }
+                System.out.println("Max incompatible tile adding");
+            }
         }
 
         public void updateStorageRowState(){
             StringBuilder SB = new StringBuilder();
-            this.letters[getTilesColor()] = getTilesNumber();
-            SB.append(getTilesColor());
-            SB.append(getTilesNumber());
+            if(getTilesColor() >= BLUE && getTilesColor() <= RED){
+                this.letters[getTilesColor()] = getTilesNumber();
+                SB.append(getTilesColor());
+                SB.append(getTilesNumber());
+            }
+            else{
+                SB.append("");
+            }
             this.storage_rowState = String.valueOf(SB);
+        }
+
+        boolean isStorageRowTileColorValid(char color){
+            return (getTilesColor() == color);
         }
 
         boolean isStorageRowTilesValid(){

@@ -93,7 +93,6 @@ public class Viewer extends Application {
             r.setFill(Color.WHITE);
             controls.getChildren().add(r);
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
-
         });
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
