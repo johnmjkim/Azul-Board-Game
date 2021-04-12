@@ -37,7 +37,7 @@ public class Viewer extends Application {
      *              TASK 4
      */
 
-    // displayState() is to show the Game State.
+
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
@@ -61,6 +61,8 @@ public class Viewer extends Application {
         bl.setLayoutX(50);
         bl.setLayoutY(VIEWER_HEIGHT - 240);
         controls.getChildren().add(bl);
+
+
 
         //use "A07Me01a11d20b30b41S0a11b22c13c44d1FeeB08Md03b13e23c32b41S0b11c12a33d24e4Fab" to text in
     }
@@ -101,7 +103,6 @@ public class Viewer extends Application {
             r.setFill(Color.WHITE);
             controls.getChildren().add(r);
             displayState(new String[]{playerTextField.getText(),boardTextField.getText()});
-
         });
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
