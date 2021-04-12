@@ -1,26 +1,24 @@
-package comp1110.ass2.backend.player;
+package comp1110.ass2;
 
 import comp1110.ass2.Metadata;
 
-public class Floor implements Metadata {
+public class Center implements Metadata {
 
-    String floorState = EMPTY_STATE;
+    String centerState = EMPTY_STATE;
     int[] letters = new int[128];
 
-    public Floor(String floorState) {
-        this.floorState = floorState;
-        countFloorTilesNumber(floorState);
+    public Center(String centerState){
+        this.centerState = centerState;
+        countCenterTilesNumber(centerState);
     }
 
-    public void countFloorTilesNumber(String floorState) {
-
+    public void countCenterTilesNumber(String centerState){
         int[] letters_array = new int[128];
-        char[] floorState_char_array = floorState.toCharArray();
-        for (char c : floorState_char_array) {
+        char[] centerState_char_array = centerState.toCharArray();
+        for(char c : centerState_char_array){
             letters_array[c]++;
         }
         // 'a'~'f'
-
         this.letters[BLUE] = letters_array[BLUE];
         this.letters[GREEN] = letters_array[GREEN];
         this.letters[ORANGE] = letters_array[ORANGE];
@@ -29,32 +27,18 @@ public class Floor implements Metadata {
         this.letters[FIRST_PLAYER] = letters_array[FIRST_PLAYER];
     }
 
-    public String getFloorState(){
-        return this.floorState;
+    public String getCenterState(){
+        return this.centerState;
     }
 
-    // Discard
-    public String getFloorTilesString(){
-        StringBuilder SB = new StringBuilder();
-        char color = BLUE;
-        for (int i = 0; i <= FIRST_PLAYER - BLUE; i++) {
-            if(this.letters[color] < 10){
-                SB.append("0");
-            }
-            SB.append(this.letters[color]);
-            color++;
-        }
-        return String.valueOf(SB);
-    }
-
-    public int getTilesNumber(char color) {
+    public int getTilesNumber(char color){
         return this.letters[color];
     }
 
-    public int getTotalTilesNumber() {
+    public int getTotalTilesNumber(){
         int tot_tiles = 0;
         char color = BLUE;
-        for (int i = 0; i <= FIRST_PLAYER - BLUE; i++) {
+        for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
             tot_tiles += this.letters[color];
             color++;
         }
@@ -63,7 +47,7 @@ public class Floor implements Metadata {
 
     public void removeTile(char color) {
         this.letters[color]--;
-        updatefloorState();
+        updateCenterState();
     }
 
     public void removeAllTiles(){
@@ -74,38 +58,38 @@ public class Floor implements Metadata {
             }
             color++;
         }
-        updatefloorState();
+        updateCenterState();
     }
 
     public void addTile(char color){
         this.letters[color]++;
-        updatefloorState();
+        updateCenterState();
     }
 
-    public void updatefloorState(){
+    public void updateCenterState(){
         StringBuilder SB = new StringBuilder();
         SB.append(EMPTY_STATE);
-        int[] floor_letters = new int[128];
+        int[] center_letters = new int[128];
         char color = BLUE;
         for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
-            floor_letters[color] = this.letters[color];
+            center_letters[color] = this.letters[color];
             color++;
         }
         color = BLUE;
         for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
-            while(floor_letters[color] > 0){
+            while(center_letters[color] > 0){
                 SB.append(color);
-                floor_letters[color]--;
+                center_letters[color]--;
             }
             color++;
         }
-        this.floorState = String.valueOf(SB);
+        this.centerState = String.valueOf(SB);
     }
 
     boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
 
-    public boolean isFloorStateEmpty() {
-        return this.floorState.isEmpty();
+    boolean isCenterStateEmpty(){
+        return this.centerState.isEmpty();
     }
 
     @Override

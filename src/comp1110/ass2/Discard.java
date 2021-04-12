@@ -1,4 +1,4 @@
-package comp1110.ass2.backend.shared;
+package comp1110.ass2;
 
 import comp1110.ass2.Metadata;
 

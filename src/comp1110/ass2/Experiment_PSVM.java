@@ -1,8 +1,5 @@
 package comp1110.ass2;
 
-import comp1110.ass2.backend.player.PlayerState;
-import comp1110.ass2.backend.shared.SharedState;
-
 public class Experiment_PSVM implements Metadata{
 
     public static void main(String[] args) {

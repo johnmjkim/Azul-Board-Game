@@ -1,6 +1,4 @@
-package comp1110.ass2.backend.player;
-
-import comp1110.ass2.Metadata;
+package comp1110.ass2;
 
 public class nPlayer implements Metadata {
 

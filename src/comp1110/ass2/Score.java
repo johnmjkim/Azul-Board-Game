@@ -1,4 +1,4 @@
-package comp1110.ass2.backend.player;
+package comp1110.ass2;
 
 public class Score {
 

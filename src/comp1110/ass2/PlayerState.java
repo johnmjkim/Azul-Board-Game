@@ -1,7 +1,4 @@
-package comp1110.ass2.backend.player;
-
-import comp1110.ass2.backend.States;
-import comp1110.ass2.backend.player.nPlayer;
+package comp1110.ass2;
 
 import java.util.ArrayList;
 

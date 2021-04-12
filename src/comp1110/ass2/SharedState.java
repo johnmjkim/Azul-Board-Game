@@ -1,10 +1,4 @@
-package comp1110.ass2.backend.shared;
-
-import comp1110.ass2.backend.States;
-import comp1110.ass2.backend.shared.Bag;
-import comp1110.ass2.backend.shared.Center;
-import comp1110.ass2.backend.shared.Discard;
-import comp1110.ass2.backend.shared.Factories;
+package comp1110.ass2;
 
 public class SharedState extends States {
 

@@ -1,9 +1,5 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
-import comp1110.ass2.backend.player.PlayerState;
-import comp1110.ass2.backend.shared.SharedState;
-
 import java.util.*;
 
 public class Azul implements Metadata{
@@ -284,6 +280,7 @@ public class Azul implements Metadata{
         playerState_content_arr.add(String.valueOf(SB));
         SB.delete(0, SB.length());
         playerState_content_arr.remove(0);
+
         /*
         System.out.println(playerState);
         for (int i = 0; i < len; i++) {
@@ -291,6 +288,7 @@ public class Azul implements Metadata{
         }
 
          */
+
         // Find capital letters valid 1 : filter by size
         if (!(playerState_name_arr.size() % 4 == 0)) {
             return false;
