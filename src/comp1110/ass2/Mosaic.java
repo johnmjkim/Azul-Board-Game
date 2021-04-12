@@ -141,6 +141,7 @@ public class Mosaic implements Metadata {
         // TODO finish eachMosaicRow and eachMosaicCol
         String mosaic_rowState = EMPTY_STATE;
         char[] MOSAIC_MASK = new char[MAX_MOSAIC_ROW];
+        int[] letters = new int[128];
         int row;
 
         public MosaicRow (String mosaic_rowState, int row){
@@ -148,6 +149,36 @@ public class Mosaic implements Metadata {
             this.mosaic_rowState = mosaic_rowState;
             this.row = row;
             generateMosaicMask(row);
+            countMosaicRowTilesNumber();
+        }
+
+        private void countMosaicRowTilesNumber(){
+
+            int[] letters_array = new int[128];
+            char[] mosaic_rowState_char_array = this.mosaic_rowState.toCharArray();
+            for(char c : mosaic_rowState_char_array){
+                letters_array[c]++;
+            }
+            // 'a'~'f'
+            this.letters[BLUE] = letters_array[BLUE];
+            this.letters[GREEN] = letters_array[GREEN];
+            this.letters[ORANGE] = letters_array[ORANGE];
+            this.letters[PURPLE] = letters_array[PURPLE];
+            this.letters[RED] = letters_array[RED];
+        }
+
+        public int getTilesNumber(char color){
+            return this.letters[color];
+        }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
         }
 
         private void generateMosaicMask(int row){
@@ -160,26 +191,6 @@ public class Mosaic implements Metadata {
             return this.mosaic_rowState;
         }
 
-        public int getTilesNumber(){
-            if(this.isMosaicRowStateEmpty()){
-                return 0;
-            }
-            else{
-                int mosaic_row_count = 0;
-                return mosaic_row_count;
-            }
-        }
-
-        public char getTilesColor(){
-            if(this.isMosaicRowStateEmpty()){
-                return ' ';
-            }
-            else{
-                char mosaic_row_color = ' ';
-                return mosaic_row_color;
-            }
-        }
-
         boolean isMosaicRowStateEmpty(){
             return this.mosaic_rowState.isEmpty();
         }
@@ -190,6 +201,7 @@ public class Mosaic implements Metadata {
         // TODO finish eachMosaicRow and eachMosaicCol
         String mosaic_colState = EMPTY_STATE;
         char[] MOSAIC_MASK = new char[MAX_MOSAIC_COL];
+        int[] letters = new int[128];
         int col;
 
         public MosaicCol(String mosaic_colState, int col) {
@@ -197,6 +209,36 @@ public class Mosaic implements Metadata {
             this.mosaic_colState = mosaic_colState;
             this.col = col;
             generateMosaicMask(col);
+            countMosaicColTilesNumber();
+        }
+
+        private void countMosaicColTilesNumber(){
+
+            int[] letters_array = new int[128];
+            char[] mosaic_colState_char_array = this.mosaic_colState.toCharArray();
+            for(char c : mosaic_colState_char_array){
+                letters_array[c]++;
+            }
+            // 'a'~'f'
+            this.letters[BLUE] = letters_array[BLUE];
+            this.letters[GREEN] = letters_array[GREEN];
+            this.letters[ORANGE] = letters_array[ORANGE];
+            this.letters[PURPLE] = letters_array[PURPLE];
+            this.letters[RED] = letters_array[RED];
+        }
+
+        public int getTilesNumber(char color){
+            return this.letters[color];
+        }
+
+        public int getTotalTilesNumber(){
+            int tot_tiles = 0;
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                tot_tiles += this.letters[color];
+                color++;
+            }
+            return tot_tiles;
         }
 
         private void generateMosaicMask(int col) {
@@ -207,24 +249,6 @@ public class Mosaic implements Metadata {
 
         public String getMosaic_colState() {
             return this.mosaic_colState;
-        }
-
-        public int getTilesNumber() {
-            if (this.isMosaicColStateEmpty()) {
-                return 0;
-            } else {
-                int mosaic_col_count = 0;
-                return mosaic_col_count;
-            }
-        }
-
-        public char getTilesColor() {
-            if (this.isMosaicColStateEmpty()) {
-                return ' ';
-            } else {
-                char mosaic_col_color = ' ';
-                return mosaic_col_color;
-            }
         }
 
         boolean isMosaicColStateEmpty() {

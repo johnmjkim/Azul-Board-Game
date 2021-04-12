@@ -64,6 +64,17 @@ public class SharedState extends States {
         return super.sharedState;
     }
 
+    public void changeTurn(){
+        char now_turn = this.turnState.charAt(0);
+        int player_idx = 0;
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+            if(now_turn == ALL_PLAYERS[i]){
+                player_idx = i;
+            }
+        }
+        setTurnState(String.valueOf(ALL_PLAYERS[(player_idx+1) % MAX_PLAYER_NUMBER]));
+    }
+
     private void setTurnState( String turnState ){
         this.turnState = turnState;
     }

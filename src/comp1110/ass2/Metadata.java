@@ -46,9 +46,13 @@ public interface Metadata {
     public final int FACTORY_SIZE = 4;
     public final int MAX_MOSAIC_ROW = 5;
     public final int MAX_MOSAIC_COL = 5;
+    public final int MAX_MOSAIC_COLOR = 5;
     public final int MAX_STORAGE_ROW = 5;
     public final String EMPTY_TILES = "0000000000";
     public final String EMPTY_STATE = "";
+    public final int ROW_BONUS_POINT = 2;
+    public final int COL_BONUS_POINT = 7;
+    public final int COLOR_BONUS_POINT = 10;
 
     String printBriefMetadata();
 

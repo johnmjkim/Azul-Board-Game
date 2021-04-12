@@ -59,9 +59,11 @@ public class Score {
 
     public void updateScoreState(){
         StringBuilder SB = new StringBuilder();
+        /*
         if(this.score < 10){
             SB.append("0");
         }
+         */
         SB.append(this.score);
         this.scoreState = String.valueOf(SB);
     }

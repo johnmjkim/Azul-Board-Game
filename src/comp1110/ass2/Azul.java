@@ -547,13 +547,58 @@ public class Azul implements Metadata{
     // This is “7. End of the Game”
     public static int getBonusPoints(String[] gameState, char player) {
         // FIXME Task 7
+        int row_tiles, col_tiles, color_tiles;
+        int player_turn;
+        int bonus_points = 0;
+        sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
+        if(player == PLAYER_A){
+            player_turn = 0;
+        }
+        else if(player == PLAYER_B){
+            player_turn = 1;
+        }
+        else if(player == PLAYER_C){
+            player_turn = 2;
+        }
+        else{
+            player_turn = 3;
+        }
+
+        for(int i=0; i < MAX_MOSAIC_ROW; i++){
+            row_tiles = playerState.nplayers.get(player_turn).mosaic.mosaic_rows.get(i).getTotalTilesNumber();
+            if(row_tiles == MAX_MOSAIC_ROW){
+                bonus_points += ROW_BONUS_POINT;
+            }
+        }
+
+        for(int i=0; i < MAX_MOSAIC_COL; i++){
+            col_tiles = playerState.nplayers.get(player_turn).mosaic.mosaic_cols.get(i).getTotalTilesNumber();
+            if(col_tiles == MAX_MOSAIC_COL){
+                bonus_points += COL_BONUS_POINT;
+            }
+        }
+
+        char color = BLUE;
+        for(int i=0; i < RED - BLUE; i++){
+            color_tiles = playerState.nplayers.get(player_turn).mosaic.getTilesNumber(color);
+            if(color_tiles == MAX_MOSAIC_COLOR){
+                bonus_points += COLOR_BONUS_POINT;
+            }
+            color++;
+        }
+
+        return bonus_points;
+        // Sibo Hu's work
+        /*
         //find where M starts and then print out the information,give the points,print out results
         //row 0, column 0 (0,0); 5 rows same value +2, 5 columns same value +7,5 same type of tile +10,
         //"b00a02a13e42" means there is one b tile located at row 0, column 0 (0,0) two a tiles located at (0,2) and (1,3)
         if (player == 'A') {
             //get the 2 player's MosaicState use M to divide
-            String palyer_A_State = gameState[1].substring(gameState[1].indexOf("M"), gameState[1].indexOf("S"));
+            //String palyer_A_State = gameState[1].substring(gameState[1].indexOf("M"), gameState[1].indexOf("S"));
+            String palyer_A_State = playerState.nplayers.get(0).mosaic.getMosaicState();
             String[] palyer_A = palyer_A_State.split("");
 
             String row_A = "";
@@ -603,7 +648,8 @@ public class Azul implements Metadata{
         }
 
         if (player == 'B') {
-            String palyer_B_State = gameState[1].substring(gameState[1].indexOf("B") + 3, gameState[1].indexOf("SF"));
+            //String palyer_B_State = gameState[1].substring(gameState[1].indexOf("B") + 3, gameState[1].indexOf("SF"));
+            String palyer_B_State = playerState.nplayers.get(1).mosaic.getMosaicState();
             String[] palyer_B = palyer_B_State.split("");
 
             String row_B = "";
@@ -654,7 +700,11 @@ public class Azul implements Metadata{
 
             return BonusPointsofB;
         }
+
         return 0;
+
+         */
+
     }
 
     public static String compressString(String str) {
@@ -729,20 +779,30 @@ public class Azul implements Metadata{
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
 
+        boolean isNextRound = true;
+
         sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+
+        boolean isFactoriesEmpty = sharedState.factories.isFactoriesStateEmpty();
+        boolean isCenterEmpty = sharedState.center.isCenterStateEmpty();
+        boolean hasOneFirstPlayerToken = sharedState.center.hasOnlyOneFirstPlayerToken();
+        /*
+        if(isFactoriesEmpty || isCenterEmpty || hasOneFirstPlayerToken){
+            isNextRound = false;
+        }
+
+         */
 
         int tot_tiles = 0;
         String tiles_to_discard;
 
         // Print shared and player state
-        /*
+
         System.out.println(" Before next round ");
         System.out.println(sharedState.getSharedState());
         System.out.println(playerState.getPlayerState());
         System.out.println();
-
-         */
 
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             // Get number of total tiles in floor to discard for each players
@@ -754,13 +814,10 @@ public class Azul implements Metadata{
             playerState.nplayers.get(i).floor.removeAllTiles();
             sharedState.discard.refillTilesDiscard(tiles_to_discard);
 
-            /*
-            System.out.println(" Player " + i + " Floor Cleared ");
+            System.out.println(" Player " + ALL_PLAYERS[i] + " Floor Cleared ");
             System.out.println(sharedState.getSharedState());
             System.out.println(playerState.getPlayerState());
             System.out.println();
-
-             */
         }
 
         gameState[0] = sharedState.getSharedState();
@@ -770,12 +827,18 @@ public class Azul implements Metadata{
 
         gameState = refillFactories(gameState);
 
-        /*
+        if(isNextRound){
+            sharedState.changeTurn();
+            gameState[0] = sharedState.getSharedState();
+            System.out.println(" Next round ready ");
+        }
+        else{
+            System.out.println(" Returned current round ");
+        }
+
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
         System.out.println();
-
-         */
 
         return gameState;
 

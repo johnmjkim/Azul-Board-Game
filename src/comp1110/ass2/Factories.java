@@ -101,7 +101,6 @@ public class Factories implements Metadata {
         return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());
     }
 
-
     boolean isFactoriesStateEmpty(){
         return this.factoriesState.isEmpty();
     }

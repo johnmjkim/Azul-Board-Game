@@ -6,7 +6,7 @@ public class Experiment_PSVM implements Metadata{
         //String input_sharedState_1 = "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000";
         String input_sharedState_2 = "BF1cbde3dcceCaaabcddeB0807121119D1216150803";
         //String input_sharedState_3 = "BFCB0505040402D0609040610";
-        String input_playerState_1 = "A07Me01a11d20b30b41S0a11b22c13c44d1FeefB08Mb13e23c32b41S0b11c12a33d24e4Fabcd";
+        String input_playerState_1 = "A07Me01c02a11d20b30b41S0a11b22c13c44d1FeefB08Mb13e23c32b41S0b11c12a33d24e4Fabcd";
         //String input_playerState_2 = "A75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3FB60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF";
 
 
@@ -92,6 +92,15 @@ public class Experiment_PSVM implements Metadata{
         System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(2).getMosaic_rowState());
         System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(3).getMosaic_rowState());
         System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(4).getMosaic_rowState());
+        System.out.println();
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(0).getMosaic_colState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(1).getMosaic_colState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(2).getMosaic_colState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(3).getMosaic_colState());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(4).getMosaic_colState());
+
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
+        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
 
     }
 
