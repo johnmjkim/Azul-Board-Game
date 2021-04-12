@@ -10,13 +10,13 @@ declaration: >-
 contributions:
   - uid: u7269158
     contribution: 50
-  - uid:
-    contribution:
+  - uid: u7271125
+    contribution: 50
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members)
 signatures:
   - name: Min Jae, Kim
     uid: u7269158
-  - name:
-    uid:
+  - name: Sibo Hu
+    uid: u7271125
