@@ -43,8 +43,21 @@ public class Azul {
     public static final char RED = 'e';
     public static final char FIRST_PLAYER = 'f';
 
+    // Number in characters
+    public static final char ZERO = '0';
+    public static final char ONE = '1';
+    public static final char TWO = '2';
+    public static final char THREE = '3';
+    public static final char FOUR = '4';
+    public static final char FIVE = '5';
+    public static final char SIX = '6';
+    public static final char SEVEN = '7';
+    public static final char EIGHT = '8';
+    public static final char NINE = '9';
+
     // Size, Numbers of all components
     public static final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
+    public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
     public static final int FACTORY_SIZE = 4;
     public static final String EMPTY_TILES = "0000000000";
     public static final String EMPTY_STATE = "";
@@ -119,7 +132,7 @@ public class Azul {
         // Filter valid capital letters
         for (char c : sharedState_array) {
             //System.out.println(c);
-            if (c >= PLAYER_A && c <= 'D' || c == 'F') {
+            if (c >= PLAYER_A && c < ALL_PLAYERS[MAX_PLAYER_NUMBER] || c == FACTORY || c == CENTER || c == BAG || c == DISCARD) {
                 //System.out.println(String.valueOf(c));
                 sharedState_name_arr.add(c);
                 sharedState_content_arr.add(String.valueOf(SB));
@@ -160,7 +173,7 @@ public class Azul {
 
     public static boolean check_s_player_format(char s_player_char, String s_player_String) {
         // Find capital letters valid
-        boolean s_player_name_format = (s_player_char >= 'A' && s_player_char <= 'D');
+        boolean s_player_name_format = (s_player_char >= PLAYER_A && s_player_char <= PLAYER_D );
 
         // S_Player is valid
         boolean s_player_format = s_player_name_format && s_player_String.isEmpty();
@@ -170,16 +183,16 @@ public class Azul {
 
     public static boolean check_factory_format(char factory_char, String factory_String) {
         int len = 0;
-        boolean factory_name_format = (factory_char == 'F');
+        boolean factory_name_format = (factory_char == FACTORY );
 
         boolean factory_content_format = true;
         for (char c : factory_String.toCharArray()) {
             if (len % 5 == 0) {
-                if (!(c >= '0' && c <= '4')) {
+                if (!(c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2])) {
                     factory_content_format = false;
                 }
             } else {
-                if (!(c >= 'a' && c <= 'e')) {
+                if (!(c >= BLUE && c <= RED)) {
                     factory_content_format = false;
                 }
             }
@@ -195,16 +208,16 @@ public class Azul {
     }
 
     public static boolean check_center_format(char center_char, String center_String) {
-        boolean center_name_format = (center_char == 'C');
+        boolean center_name_format = (center_char == CENTER);
         int len = 0;
         boolean center_content_format = true;
         for (char c : center_String.toCharArray()) {
-            if (!(c >= 'a' && c <= 'f')) {
+            if (!(c >= BLUE && c <= FIRST_PLAYER)) {
                 center_content_format = false;
             }
             len++;
         }
-        if (len > 15) {
+        if (len > 3 * FACTORY_MAX_NUMBER) {
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;
@@ -300,7 +313,7 @@ public class Azul {
         // Filter valid capital letters
         for (char c : playerState_array) {
             //System.out.println(c);
-            if ((c >= 'A' && c <= 'D') || c == 'M' || c == 'S' || c == 'F') {
+            if ((c >= PLAYER_A && c < ALL_PLAYERS[MAX_PLAYER_NUMBER]) || c == MOSAIC || c == STORAGE || c == FLOOR) {
                 //System.out.println(String.valueOf(c));
                 playerState_name_arr.add(c);
                 playerState_content_arr.add(String.valueOf(SB));
@@ -330,20 +343,20 @@ public class Azul {
         for (char c : playerState_name_arr) {
             toggle_int = len % 4;
             if (toggle_int == 0) {
-                if (!(c == 'A' + player_int)) {
+                if (!(c == ALL_PLAYERS[player_int])) {
                     return false;
                 }
                 player_int++;
             } else if (toggle_int == 1) {
-                if (!(c == 'M')) {
+                if (!(c == MOSAIC)) {
                     return false;
                 }
             } else if (toggle_int == 2) {
-                if (!(c == 'S')) {
+                if (!(c == STORAGE)) {
                     return false;
                 }
             } else if (toggle_int == 3) {
-                if (!(c == 'F')) {
+                if (!(c == FLOOR)) {
                     return false;
                 }
             }
@@ -376,7 +389,7 @@ public class Azul {
 
     public static boolean check_p_player_format(char p_player_char) {
         // Find capital letters valid
-        boolean p_player_name_format = (p_player_char >= 'A' && p_player_char <= 'D');
+        boolean p_player_name_format = (p_player_char >= PLAYER_A && p_player_char <= ALL_PLAYERS[MAX_PLAYER_NUMBER]);
 
         // P_Player is valid
         boolean p_player_format = p_player_name_format;
@@ -388,7 +401,7 @@ public class Azul {
         // Find capital letters valid
         boolean score_name_format = true;
         for (char c : score_String.toCharArray()) {
-            if (!(c >= '0' && c <= '9')) {
+            if (!(c >= ZERO && c <= NINE)) {
                 score_name_format = false;
             }
         }
@@ -399,16 +412,16 @@ public class Azul {
     }
 
     public static boolean check_mosaic_format(char mosaic_char, String mosaic_String) {
-        boolean mosaic_name_format = (mosaic_char == 'M');
+        boolean mosaic_name_format = (mosaic_char == MOSAIC);
         int len = 0;
         boolean mosaic_content_format = true;
         for (char c : mosaic_String.toCharArray()) {
             if (len % 3 == 0) {
-                if (!(c >= 'a' && c <= 'e')) {
+                if (!(c >= BLUE && c <= RED)) {
                     mosaic_content_format = false;
                 }
             } else {
-                if (!(c >= '0' && c <= '4')) {
+                if (!(c >= ZERO && c <= FOUR)) {
                     mosaic_content_format = false;
                 }
             }
@@ -425,20 +438,20 @@ public class Azul {
     }
 
     public static boolean check_storage_format(char storage_char, String storage_String) {
-        boolean storage_name_format = (storage_char == 'S');
+        boolean storage_name_format = (storage_char == STORAGE);
         int len = 0;
         boolean storage_content_format = true;
         for (char c : storage_String.toCharArray()) {
             if (len % 3 == 0) {
-                if (!(c >= '0' && c <= '4')) {
+                if (!(c >= ZERO && c <= FOUR)) {
                     storage_content_format = false;
                 }
             } else if (len % 3 == 1) {
-                if (!(c >= 'a' && c <= 'e')) {
+                if (!(c >= BLUE && c <= RED)) {
                     storage_content_format = false;
                 }
             } else if (len % 3 == 2) {
-                if (!(c >= '0' && c <= '5')) {
+                if (!(c >= ZERO && c <= FIVE)) {
                     storage_content_format = false;
                 }
             }
@@ -455,14 +468,14 @@ public class Azul {
     }
 
     public static boolean check_floor_format(char floor_char, String floor_String, int floor_counts) {
-        boolean floor_name_format = (floor_char == 'F');
+        boolean floor_name_format = (floor_char == FLOOR);
         int len = 0;
         boolean floor_content_format = true;
         for (char c : floor_String.toCharArray()) {
-            if (!(c >= 'a' && c <= 'f')) {
+            if (!(c >= BLUE && c <= FIRST_PLAYER)) {
                 floor_content_format = false;
             }
-            if (c == 'f') {
+            if (c == FIRST_PLAYER) {
                 floor_counts++;
                 if (floor_counts > 1) {
                     floor_content_format = false;
@@ -482,7 +495,7 @@ public class Azul {
 
     public static int toss_floor_count(String floor_String, int floor_counts) {
         for (char c : floor_String.toCharArray()) {
-            if (c == 'f') {
+            if (c == FIRST_PLAYER) {
                 floor_counts++;
             }
         }
@@ -1091,7 +1104,17 @@ public class Azul {
         // FIXME Task 9
         boolean valid_SharedState = isSharedStateWellFormed(gameState[0]);
         boolean valid_PlayerState = isPlayerStateWellFormed(gameState[1]);
-        return valid_SharedState && valid_PlayerState;
+
+        if(valid_SharedState && valid_PlayerState){
+            System.out.println(" Shared : " + gameState[0]);
+            System.out.println(" Player : " + gameState[1]);
+            //sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+            //playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+            return valid_SharedState && valid_PlayerState;
+        }
+        else{
+            return false;
+        }
     }
 
     /**

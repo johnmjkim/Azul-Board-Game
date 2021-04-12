@@ -64,12 +64,10 @@ public class Storage {
             str_row_num++;
         }
         SB.delete(0,SB.length());
-                /*
-                for(String s : storage_row){
-                    System.out.println(" -> " + s);
-                }
 
-                 */
+        for (String s : storage_row) {
+            System.out.println(" -> " + s);
+        }
 
         for(int i=0; i < max_number; i++){
             this.storage_rows.add(new StorageRow(storage_row.get(i+1),i));

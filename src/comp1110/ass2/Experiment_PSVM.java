@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 import comp1110.ass2.backend.Azul;
+import comp1110.ass2.backend.player.PlayerState;
+import comp1110.ass2.backend.shared.SharedState;
 
 public class Experiment_PSVM {
 
@@ -11,8 +13,9 @@ public class Experiment_PSVM {
         String input_playerState_1 = "A07Me01a11d20b30b41S0a11b22c13c44d1FeefB08Md03b13e23c32b41S0b11c12a33d24e4Fabcd";
         //String input_playerState_2 = "A75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3FB60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF";
 
+
         // Shared State Experiment
-        /*
+
         SharedState ss = new SharedState(input_sharedState_2, 2);
 
         System.out.println(ss.getState());
@@ -65,8 +68,7 @@ public class Experiment_PSVM {
         System.out.println(ss.getSharedState());
         System.out.println(ps.getPlayerState());
 
-         */
-
+        /*
         // NextRound experiment
         String[] gameState = new String[2];
         gameState[0] = input_sharedState_2;
@@ -77,7 +79,7 @@ public class Experiment_PSVM {
         System.out.println("After all preparation for next round");
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
-
+         */
 
     }
 }
