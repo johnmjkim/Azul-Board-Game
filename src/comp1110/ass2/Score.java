@@ -18,6 +18,18 @@ public class Score {
         return this.scoreState;
     }
 
+    public void addScore( int score_added ){
+        int current_score = this.score;
+        int adjusted_score = current_score + score_added;
+        if(adjusted_score < 0){
+            this.score = 0;
+        }
+        else{
+            this.score = adjusted_score;
+        }
+        updateScoreState();
+    }
+
     public int scoreLose_clearFloor( int floor_length ) {
         if (floor_length == 0) {
             return 0;
@@ -47,13 +59,7 @@ public class Score {
 
     public void clearFloorScore( int floor_length ){
         int score_lost = scoreLose_clearFloor(floor_length);
-        int adjusted_score = this.score;
-        if(adjusted_score + score_lost > 0){
-            this.score = adjusted_score + score_lost;
-        }
-        else{
-            this.score = 0;
-        }
+        addScore(score_lost);
         updateScoreState();
     }
 

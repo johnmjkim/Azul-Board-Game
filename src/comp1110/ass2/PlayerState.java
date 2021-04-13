@@ -18,8 +18,8 @@ public class PlayerState extends States {
     }
 
     public void setPlayerState( String playerState , int max_player_number ){
-        String[] playerNameState = new String[MAX_PLAYER_NUMBER];
-        String[] playerStates = new String[MAX_PLAYER_NUMBER];
+        String[] playerNameState = new String[max_player_number];
+        String[] playerStates = new String[max_player_number];
 
         String playerState_substring = EMPTY_STATE;
 
@@ -65,10 +65,31 @@ public class PlayerState extends States {
     public boolean isEndofGame(){
         boolean isGameEnd = false;
         for( nPlayer p : this.nplayers ){
-            if(p.isEndofGame() == true){
+            if(p.isEnder() == true){
                 isGameEnd = true;
             }
         }
         return isGameEnd;
+    }
+
+    public char getEnder(){
+        int ender_idx = 0;
+        for( nPlayer p : this.nplayers ){
+            if(p.isEnder() == true){
+                return ALL_PLAYERS[ender_idx];
+            }
+            ender_idx++;
+        }
+        return ' ';
+    }
+
+    public boolean existsPlayerFullStorageRow(){
+        boolean existsRowTilesFull = false;
+        for( nPlayer p : this.nplayers ){
+            if(p.existsStorageRowTilesFull()){
+                existsRowTilesFull = true;
+            }
+        }
+        return existsRowTilesFull;
     }
 }

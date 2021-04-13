@@ -23,10 +23,11 @@ public class SharedState extends States {
         super(sharedState, max_player_number);
         super.sharedState = sharedState;
         super.MAX_PLAYER_NUMBER = max_player_number;
-        setSharedState(sharedState);
+        setSharedState(sharedState, max_player_number);
     }
 
-    public void setSharedState( String sharedState ){
+    public void setSharedState( String sharedState , int max_player_number ){
+        super.MAX_PLAYER_NUMBER = max_player_number;
         String turnState = sharedState.substring(0, sharedState.indexOf(FACTORY));
         String rest_sharedState = sharedState.substring(sharedState.indexOf(turnState) + 1, sharedState.length());
         String factoryState = rest_sharedState.substring(rest_sharedState.indexOf(FACTORY) + 1, rest_sharedState.indexOf(CENTER));
