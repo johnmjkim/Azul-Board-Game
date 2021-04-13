@@ -927,9 +927,12 @@ public class Azul implements Metadata{
                         ender_idx = i;
                     }
                 }
+                // Game ended and add bonus point to one who ended
                 int bonus_points = getBonusPoints(output_gameState, ALL_PLAYERS[ender_idx]);
                 //playerState.nplayers.get(ender_idx).score.addScore(bonus_points);
                 System.out.println(" It is end of game, ender is : " + ender + " , bonus points are : " + bonus_points);
+
+                // Set First Player token at that center and end the game
                 sharedState.center.addTile(FIRST_PLAYER);
                 output_gameState[0] = sharedState.getSharedState();
                 output_gameState[1] = playerState.getPlayerState();
@@ -943,7 +946,8 @@ public class Azul implements Metadata{
             }
             else {
                 System.out.println(" It is not end of game ");
-                //System.out.println("Refill all factories");
+
+                // Game is not end and refill factories
                 output_gameState = refillFactories(output_gameState);
 
                 sharedState.setSharedState(output_gameState[0],MAX_PLAYER_NUMBER);
@@ -953,6 +957,7 @@ public class Azul implements Metadata{
                 System.out.println(playerState.getPlayerState());
                 System.out.println();
 
+                // Start the turn to first player for the next round
                 if(!isCurrentFirstPlayer){
                     sharedState.changeTurn();
                 }
