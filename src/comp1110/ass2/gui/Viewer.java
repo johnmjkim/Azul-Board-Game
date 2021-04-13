@@ -46,7 +46,6 @@ public class Viewer extends Application {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        //get the text in State
         String playerState = state[0];
         String boardState = state[1];
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
@@ -189,7 +188,6 @@ public class Viewer extends Application {
         //FACTORIES
         String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C"));
         String[] Factories = factories.split("");
-        //5个字符串，1，a,b,c,d，1代表后面字符串的起始位置，每个字符串放四格不同位置，i都一致
         String number_of_f ="";
         for (int i=0; i<factories.length(); i+=5){
             number_of_f += Factories[i];
@@ -253,7 +251,7 @@ public class Viewer extends Application {
         //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
         //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
 
-        //floor Done
+        //floor
         String floor_A = player_state_of_A.substring(player_state_of_A.indexOf("F") + 1);
         String[] Floor_A = floor_A.split("");
         for (int i = 0; i < Floor_A.length; i++) {
@@ -282,8 +280,6 @@ public class Viewer extends Application {
 
 
         //STORAGE
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
         String storage_A = player_state_of_A.substring(player_state_of_A.indexOf("S") + 1, player_state_of_A.indexOf("F"));
         String[] Storage_A = storage_A.split("");
 
@@ -390,8 +386,6 @@ public class Viewer extends Application {
             matrixBoard.getChildren().add(A);
         }
 
-
-        //MOSAIC B
         String mosaic_B = player_state_of_B.substring(player_state_of_B.indexOf("M") + 1, player_state_of_B.indexOf("S"));
         String[] Mosaic_B = mosaic_B.split("");
 
@@ -427,7 +421,6 @@ public class Viewer extends Application {
         }
 
         //SCORE
-
         String score_A = player_state_of_A.substring(player_state_of_A.indexOf("A") + 1, player_state_of_A.indexOf("M"));
         String[] Score_A = score_A.split("");
         int a = Integer.parseInt(Score_A[0])*10+Integer.parseInt(Score_A[1]);
@@ -492,7 +485,6 @@ public class Viewer extends Application {
             boardA.setLayoutX(0);
             boardA.setLayoutY(15);
             matrixBoard.getChildren().add(boardA);
-
             displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
 
         });
