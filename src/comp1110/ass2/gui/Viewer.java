@@ -47,8 +47,6 @@ public class Viewer extends Application {
         // FIXME Task 4: implement the simple state viewer
 
         //get the text in State
-        String playerState = state[0];
-        String boardState = state[1];
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
@@ -189,7 +187,6 @@ public class Viewer extends Application {
         //FACTORIES
         String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C"));
         String[] Factories = factories.split("");
-        //5个字符串，1，a,b,c,d，1代表后面字符串的起始位置，每个字符串放四格不同位置，i都一致
         String number_of_f ="";
         for (int i=0; i<factories.length(); i+=5){
             number_of_f += Factories[i];
