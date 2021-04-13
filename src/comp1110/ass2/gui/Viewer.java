@@ -2,6 +2,7 @@ package comp1110.ass2.gui;
 
 import com.sun.javafx.css.Combinator;
 import comp1110.ass2.Azul;
+//After I got the history, the two backend become red, and the statement are not used, so I use this//
 //import comp1110.ass2.backend.Azul;
 //import comp1110.ass2.backend.player.Floor;
 import javafx.application.Application;
@@ -46,6 +47,8 @@ public class Viewer extends Application {
         // FIXME Task 4: implement the simple state viewer
 
         //get the text in State
+        String playerState = state[0];
+        String boardState = state[1];
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
