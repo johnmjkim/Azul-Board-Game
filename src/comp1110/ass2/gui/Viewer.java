@@ -347,8 +347,8 @@ public class Viewer extends Application {
                 B.setFitWidth(35);
                 B.setFitHeight(39);
                 double Y1 = Double.parseDouble(Row_B1[i]);
-                double x = 416 + 38.1 * (4 - j);;
-                double y = 227 + 42.9 * Y1;
+                double x = 417 + 38.1 * (4 - j);;
+                double y = 226 + 42.9 * Y1;
                 B.setLayoutX(x);
                 B.setLayoutY(y);
                 matrixBoard.getChildren().add(B);
