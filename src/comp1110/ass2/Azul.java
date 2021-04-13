@@ -141,9 +141,9 @@ public class Azul implements Metadata{
         boolean factory_content_format = true;
 
         // Factory numerical, alphabetical order reflected, factory tiles count needed
-        /*
         boolean factory_alphabetical_order = true;
         boolean factory_numerical_order = true;
+        boolean factory_tilesnumber = true;
 
         StringBuilder SB = new StringBuilder();
 
@@ -174,9 +174,15 @@ public class Azul implements Metadata{
             if(!check_alphabetical_order(factoryState_content_arr.get(0))){
                 factory_alphabetical_order = false;
             }
+            if(!(factoryState_content_arr.get(0).length() == FACTORY_SIZE)){
+                factory_tilesnumber = false;
+            }
             for(int i = 1; i < len; i++){
                 if(!check_alphabetical_order(factoryState_content_arr.get(i))){
                     factory_alphabetical_order = false;
+                }
+                if(!(factoryState_content_arr.get(i).length() == FACTORY_SIZE)){
+                    factory_tilesnumber = false;
                 }
                 if(Character.getNumericValue(factoryState_name_arr.get(i)) < Character.getNumericValue(factoryState_name_arr.get(i-1))){
                     factory_numerical_order = false;
@@ -186,11 +192,9 @@ public class Azul implements Metadata{
         else if(len ==1){
             factory_alphabetical_order = check_alphabetical_order(factoryState_content_arr.get(0));
         }
-        factory_content_format = factory_numerical_order && factory_alphabetical_order;
+        factory_content_format = factory_numerical_order && factory_alphabetical_order && factory_tilesnumber;
 
-         */
-
-
+        /*
         for (char c : factory_String.toCharArray()) {
             if (len % 5 == 0) {
                 if (!(c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2])) {
@@ -206,6 +210,8 @@ public class Azul implements Metadata{
         if (!(len % 5 == 0)) {
             factory_content_format = false;
         }
+
+         */
 
         boolean factory_format = factory_name_format && factory_content_format;
         System.out.println(factory_name_format + ", " + factory_content_format);
