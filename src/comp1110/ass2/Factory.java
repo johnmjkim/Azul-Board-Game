@@ -2,6 +2,8 @@ package comp1110.ass2;
 
 import comp1110.ass2.Metadata;
 
+import java.util.Arrays;
+
 public class Factory implements Metadata {
 
     int number;
@@ -65,10 +67,12 @@ public class Factory implements Metadata {
      */
     void refill_eachFactory(char[] factoryTiles) {
         StringBuilder SB = new StringBuilder();
+        Arrays.sort(factoryTiles);
         for (char c : factoryTiles) {
             SB.append(c);
             this.letters[c]++;
         }
+
         this.factoryState = String.valueOf(SB);
     }
 

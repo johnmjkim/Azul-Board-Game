@@ -121,6 +121,20 @@ public class Storage implements Metadata {
         return isStorageTilesValid;
     }
 
+    boolean existsStorageRowTilesFull() {
+        boolean existsRowTilesFull = false;
+        for( StorageRow sr : this.storage_rows){
+            if(sr.isStorageRowTilesFull()){
+                existsRowTilesFull = true;
+            }
+        }
+        return existsRowTilesFull;
+    }
+
+    boolean isStorageRowTilesFull( int row ){
+        return this.storage_rows.get(row).isStorageRowTilesFull();
+    }
+
     boolean isStorageStateEmpty(){
         return this.storageState.isEmpty();
     }

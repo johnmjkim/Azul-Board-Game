@@ -573,7 +573,10 @@ public class Azul implements Metadata{
     //This is “2. Starting the round”
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
-        sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        String[] output_gameState = new String[2];
+        output_gameState[0] = gameState[0];
+        output_gameState[1] = gameState[1];
+        sharedState = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
 
         if(sharedState.factories.isFactoryFull()){
             //System.out.println("Factory Full");
@@ -586,8 +589,8 @@ public class Azul implements Metadata{
             //System.out.println("Factory filled");
             //SharedState.printState();
             //System.out.println();
-            gameState[0] = sharedState.getSharedState();
-            return gameState;
+            output_gameState[0] = sharedState.getSharedState();
+            return output_gameState;
         }
 
         /*
@@ -858,88 +861,117 @@ public class Azul implements Metadata{
     // This is “5. Preparing for next round”
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
+        // Store gameState information
+        String[] output_gameState = new String[2];
+        output_gameState[0] = gameState[0];
+        output_gameState[1] = gameState[1];
+        sharedState = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+        playerState = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
 
-        sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-        playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
-
-        boolean isEndofGame = playerState.isEndofGame();
-        boolean isFactoriesEmpty = sharedState.factories.isFactoriesStateEmpty();
-        boolean isCenterEmpty = sharedState.center.isCenterStateEmpty();
-        boolean hasOneFirstPlayerToken = sharedState.center.hasOnlyOneFirstPlayerToken();
-
+        // Find if it is time to progress next round
         String current_player = sharedState.turnState;
-
         int current_player_idx = 0;
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             if(ALL_PLAYERS[i] == current_player.charAt(0)){
                 current_player_idx = i;
             }
         }
+
+        boolean isFactoryEmpty = sharedState.factories.isFactoriesStateEmpty();
+        boolean isCenterEmpty = sharedState.center.isCenterStateEmpty();
+        boolean existsFullStorageRow = playerState.existsPlayerFullStorageRow();
+        boolean isNextRound = isFactoryEmpty && isCenterEmpty && !existsFullStorageRow;
+
+        // Find if current player is first player
         boolean isCurrentFirstPlayer = playerState.nplayers.get(current_player_idx).floor.hasFirstPlayerToken();
 
-
-        /*
-        if(isFactoriesEmpty || isCenterEmpty || hasOneFirstPlayerToken){
-            isNextRound = false;
-        }
-
-         */
-
-        int tot_tiles = 0;
-        String tiles_to_discard;
+        // Find if game is end
+        boolean isEndofGame = playerState.isEndofGame();
 
         // Print shared and player state
-
         System.out.println(" Before next round ");
         System.out.println(sharedState.getSharedState());
         System.out.println(playerState.getPlayerState());
         System.out.println();
 
-        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
-            // Get number of total tiles in floor to discard for each players
-            tot_tiles = playerState.nplayers.get(i).floor.getTotalTilesNumber();
-            tiles_to_discard = playerState.nplayers.get(i).floor.getFloorTilesString();
-
-            // Adjust score, remove tiles from floor to discard for each player accordingly
-            playerState.nplayers.get(i).score.clearFloorScore(tot_tiles);
-            playerState.nplayers.get(i).floor.removeAllTiles();
-            sharedState.discard.refillTilesDiscard(tiles_to_discard);
-
-            System.out.println(" Player " + ALL_PLAYERS[i] + " Floor Cleared ");
+        if(!isNextRound){
+            // Return current state if it is not the time to progress next round
+            System.out.println(" It is not next round ");
             System.out.println(sharedState.getSharedState());
             System.out.println(playerState.getPlayerState());
             System.out.println();
-        }
 
-        gameState[0] = sharedState.getSharedState();
-        gameState[1] = playerState.getPlayerState();
+            output_gameState[0] = sharedState.getSharedState();
+            output_gameState[1] = playerState.getPlayerState();
 
-        //System.out.println("Refill all factories");
-
-        if(isEndofGame){
-            sharedState.changeTurn();
-            sharedState.center.addTile(FIRST_PLAYER);
-            gameState[0] = sharedState.getSharedState();
-            System.out.println(" End of game ");
+            return output_gameState;
         }
         else{
-            gameState = refillFactories(gameState);
-            if(isCurrentFirstPlayer){
+            // Time to progress next round
+            System.out.println(" It is next round ");
+            System.out.println(sharedState.getSharedState());
+            System.out.println(playerState.getPlayerState());
+            System.out.println();
 
-            }
-            else{
-                sharedState.changeTurn();
-                gameState[0] = sharedState.getSharedState();
+            output_gameState[0] = sharedState.getSharedState();
+            output_gameState[1] = playerState.getPlayerState();
 
+            output_gameState = clearFloor(output_gameState);
+
+            // Check if it is end of the game
+            if(isEndofGame){
+                char ender = playerState.getEnder();
+                int ender_idx = 0;
+                for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+                    if(ALL_PLAYERS[i] == current_player.charAt(0)){
+                        ender_idx = i;
+                    }
+                }
+                int bonus_points = getBonusPoints(output_gameState, ALL_PLAYERS[ender_idx]);
+                //playerState.nplayers.get(ender_idx).score.addScore(bonus_points);
+                System.out.println(" It is end of game, ender is : " + ender + " , bonus points are : " + bonus_points);
+                sharedState.center.addTile(FIRST_PLAYER);
+                output_gameState[0] = sharedState.getSharedState();
+                output_gameState[1] = playerState.getPlayerState();
+
+                sharedState.setSharedState(output_gameState[0],MAX_PLAYER_NUMBER);
+                playerState.setPlayerState(output_gameState[1],MAX_PLAYER_NUMBER);
+
+                System.out.println(sharedState.getSharedState());
+                System.out.println(playerState.getPlayerState());
+                System.out.println();
             }
+            else {
+                System.out.println(" It is not end of game ");
+                //System.out.println("Refill all factories");
+                output_gameState = refillFactories(output_gameState);
+
+                sharedState.setSharedState(output_gameState[0],MAX_PLAYER_NUMBER);
+                playerState.setPlayerState(output_gameState[1],MAX_PLAYER_NUMBER);
+
+                System.out.println(sharedState.getSharedState());
+                System.out.println(playerState.getPlayerState());
+                System.out.println();
+
+                if(!isCurrentFirstPlayer){
+                    sharedState.changeTurn();
+                }
+
+                System.out.println(sharedState.getSharedState());
+                System.out.println(playerState.getPlayerState());
+                System.out.println();
+
+                output_gameState[0] = sharedState.getSharedState();
+                output_gameState[1] = playerState.getPlayerState();
+            }
+
+            System.out.println(" Next round ready ");
+            System.out.println(output_gameState[0]);
+            System.out.println(output_gameState[1]);
+            System.out.println();
+
+            return output_gameState;
         }
-
-        System.out.println(" Next round ready ");
-        System.out.println(gameState[0]);
-        System.out.println(gameState[1]);
-        System.out.println();
-
-        return gameState;
 
         /*
         int max_player_number = 2;
@@ -985,6 +1017,39 @@ public class Azul implements Metadata{
         return gameState;
 
          */
+    }
+
+    public static String[] clearFloor(String[] gameState) {
+        // Store gameState information
+        String[] output_gameState = new String[2];
+        output_gameState[0] = gameState[0];
+        output_gameState[1] = gameState[1];
+        sharedState = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+        playerState = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
+        int tot_tiles = 0;
+        String tiles_to_discard;
+
+        // Clear the floor of each player
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+            // Get number of total tiles in floor to discard for each players
+            tot_tiles = playerState.nplayers.get(i).floor.getTotalTilesNumber();
+            tiles_to_discard = playerState.nplayers.get(i).floor.getFloorTilesString();
+
+            // Adjust score, remove tiles from floor to discard for each player accordingly
+            playerState.nplayers.get(i).score.clearFloorScore(tot_tiles);
+            playerState.nplayers.get(i).floor.removeAllTiles();
+            sharedState.discard.refillTilesDiscard(tiles_to_discard);
+
+            System.out.println(" Player " + ALL_PLAYERS[i] + " Floor Cleared ");
+            System.out.println(sharedState.getSharedState());
+            System.out.println(playerState.getPlayerState());
+            System.out.println();
+        }
+
+        output_gameState[0] = sharedState.getSharedState();
+        output_gameState[1] = playerState.getPlayerState();
+        return output_gameState;
     }
 
     /**
@@ -1157,10 +1222,6 @@ public class Azul implements Metadata{
         nextRound(gameState);
         isStateValid(gameState);
         return false;
-    }
-
-    public static void emptyFloor(String[] gameState) {
-        isStateValid(gameState);
     }
 
     public static void scorePlayer(String[] gameState) {
