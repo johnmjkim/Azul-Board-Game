@@ -99,16 +99,15 @@ public class Azul implements Metadata{
         sharedState_content_arr.add(String.valueOf(SB));
         SB.delete(0, SB.length());
         sharedState_content_arr.remove(0);
-        /*
+
         System.out.println(sharedState);
         for (int i = 0; i < len; i++) {
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
 
-         */
-
         // Find capital letters valid
         if (sharedState_name_arr.size() != 5) {
+            System.out.println(sharedState_name_arr.size() == 5);
             return false;
         }
         // Player is valid
@@ -121,25 +120,77 @@ public class Azul implements Metadata{
         boolean bag_format = check_bag_discard_format(sharedState_name_arr.get(3), sharedState_content_arr.get(3), 'B');
         // Discard is valid
         boolean discard_format = check_bag_discard_format(sharedState_name_arr.get(4), sharedState_content_arr.get(4), 'D');
+        System.out.println(s_player_format && factory_format && center_format && bag_format && discard_format);
         return s_player_format && factory_format && center_format && bag_format && discard_format;
 
     }
 
     public static boolean check_s_player_format(char s_player_char, String s_player_String) {
         // Find capital letters valid
-        boolean s_player_name_format = (s_player_char >= PLAYER_A && s_player_char <= PLAYER_D );
+        boolean s_player_name_format = (s_player_char >= PLAYER_A && s_player_char <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1] );
 
         // S_Player is valid
         boolean s_player_format = s_player_name_format && s_player_String.isEmpty();
-        //System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
+        System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
         return s_player_format;
     }
 
     public static boolean check_factory_format(char factory_char, String factory_String) {
         int len = 0;
         boolean factory_name_format = (factory_char == FACTORY );
-
         boolean factory_content_format = true;
+
+        // Factory numerical, alphabetical order reflected, factory tiles count needed
+        /*
+        boolean factory_alphabetical_order = true;
+        boolean factory_numerical_order = true;
+
+        StringBuilder SB = new StringBuilder();
+
+        ArrayList<Character> factoryState_name_arr = new ArrayList<Character>();
+        ArrayList<String> factoryState_content_arr = new ArrayList<String>();
+        for (char c : factory_String.toCharArray()) {
+            //System.out.println(c);
+            if (c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2]) {
+                //System.out.println(String.valueOf(c));
+                factoryState_name_arr.add(c);
+                factoryState_content_arr.add(String.valueOf(SB));
+                SB.delete(0, SB.length());
+                len++;
+            } else {
+                SB.append(c);
+            }
+        }
+        factoryState_content_arr.add(String.valueOf(SB));
+        SB.delete(0, SB.length());
+        factoryState_content_arr.remove(0);
+
+        System.out.println(factory_String);
+        for (int i = 0; i < len; i++) {
+            System.out.println(factoryState_name_arr.get(i) + ", " + factoryState_content_arr.get(i));
+        }
+
+        if(len > 1){
+            if(!check_alphabetical_order(factoryState_content_arr.get(0))){
+                factory_alphabetical_order = false;
+            }
+            for(int i = 1; i < len; i++){
+                if(!check_alphabetical_order(factoryState_content_arr.get(i))){
+                    factory_alphabetical_order = false;
+                }
+                if(Character.getNumericValue(factoryState_name_arr.get(i)) < Character.getNumericValue(factoryState_name_arr.get(i-1))){
+                    factory_numerical_order = false;
+                }
+            }
+        }
+        else if(len ==1){
+            factory_alphabetical_order = check_alphabetical_order(factoryState_content_arr.get(0));
+        }
+        factory_content_format = factory_numerical_order && factory_alphabetical_order;
+
+         */
+
+
         for (char c : factory_String.toCharArray()) {
             if (len % 5 == 0) {
                 if (!(c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2])) {
@@ -155,8 +206,9 @@ public class Azul implements Metadata{
         if (!(len % 5 == 0)) {
             factory_content_format = false;
         }
+
         boolean factory_format = factory_name_format && factory_content_format;
-        //System.out.println(factory_name_format + ", " + factory_content_format);
+        System.out.println(factory_name_format + ", " + factory_content_format);
 
         return factory_format;
     }
@@ -165,6 +217,7 @@ public class Azul implements Metadata{
         boolean center_name_format = (center_char == CENTER);
         int len = 0;
         boolean center_content_format = true;
+        center_content_format = check_alphabetical_order(center_String);
         for (char c : center_String.toCharArray()) {
             if (!(c >= BLUE && c <= FIRST_PLAYER)) {
                 center_content_format = false;
@@ -175,7 +228,7 @@ public class Azul implements Metadata{
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;
-        //System.out.println(center_name_format + ", " + center_content_format);
+        System.out.println(center_name_format + ", " + center_content_format);
         return center_format;
     }
 
@@ -202,8 +255,29 @@ public class Azul implements Metadata{
         }
         SB.delete(0, SB.length());
         boolean bag_discard_format = bag_discard_name_format && bag_discard_content_format && !bag_discard_String.isEmpty();
-        //System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
+        System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
         return bag_discard_format;
+    }
+
+    public static boolean check_alphabetical_order( String alphabet_string ){
+        boolean string_alphabet = true;
+        boolean string_alphabetical_order = true;
+        char[] alphabet_string_char_arr = alphabet_string.toCharArray();
+        char[] alphabet_string_char_arr_sort = alphabet_string.toCharArray();
+        Arrays.sort(alphabet_string_char_arr_sort);
+
+        int idx = 0;
+        for( char c : alphabet_string_char_arr){
+            if(!(c >= BLUE && c <= FIRST_PLAYER)){
+                string_alphabet = false;
+            }
+            if(c != alphabet_string_char_arr_sort[idx]){
+                string_alphabetical_order = false;
+            }
+            idx++;
+        }
+
+        return string_alphabet && string_alphabetical_order;
     }
 
     /**
