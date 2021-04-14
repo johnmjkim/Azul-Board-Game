@@ -1,6 +1,5 @@
 package comp1110.ass2.gui;
 
-import com.sun.javafx.css.Combinator;
 import comp1110.ass2.Azul;
 //After I got the history, the two backend become red, and the statement are not used, so I use this//
 //import comp1110.ass2.backend.Azul;
