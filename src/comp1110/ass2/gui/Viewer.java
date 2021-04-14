@@ -49,8 +49,8 @@ public class Viewer extends Application {
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
+        //state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019";
+        //state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
 
         //center
         String center = state[0].substring(state[0].indexOf("C") + 1, state[0].indexOf("B"));
