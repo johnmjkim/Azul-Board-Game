@@ -3,6 +3,8 @@ package comp1110.ass2;
 public class Experiment_PSVM implements Metadata{
 
     public static void main(String[] args) {
+        int MAX_PLAYER_NUMBER = 2;
+
         //String input_sharedState_1 = "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000";
         String input_sharedState_2 = "BF1cbde3dcceCaaabcddeB0807121119D1216150803";
         //String input_sharedState_3 = "BFCB0505040402D0609040610";
@@ -102,6 +104,17 @@ public class Experiment_PSVM implements Metadata{
         System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
         System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
 
+        String sharedState_String = input_sharedState_2;
+        String playerState_String = input_playerState_1;
+
+        SharedState sharedState_class = new SharedState(sharedState_String , MAX_PLAYER_NUMBER);
+        PlayerState playerState_class = new PlayerState(playerState_String , MAX_PLAYER_NUMBER);
+
+        String player_state_of_A = playerState_class.getPlayerState('A');
+        String player_state_of_B = playerState_class.getPlayerState('B');
+
+        System.out.println(player_state_of_A);
+        System.out.println(player_state_of_B);
     }
 
     @Override

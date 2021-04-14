@@ -4,6 +4,9 @@ import comp1110.ass2.Azul;
 //After I got the history, the two backend become red, and the statement are not used, so I use this//
 //import comp1110.ass2.backend.Azul;
 //import comp1110.ass2.backend.player.Floor;
+import comp1110.ass2.Metadata;
+import comp1110.ass2.PlayerState;
+import comp1110.ass2.SharedState;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,7 +25,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class Viewer extends Application {
+public class Viewer extends Application implements Metadata {
+
+    // Maximum player numbers
+    public static int MAX_PLAYER_NUMBER = 2;
 
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 600;
@@ -46,10 +52,22 @@ public class Viewer extends Application {
         // FIXME Task 4: implement the simple state viewer
 
         //get the text in State
+
         String playerState = state[0];
         String boardState = state[1];
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
+
+        /*
+        String sharedState_String = state[0];
+        String playerState_String = state[1];
+
+        SharedState sharedState_class = new SharedState(sharedState_String , MAX_PLAYER_NUMBER);
+        PlayerState playerState_class = new PlayerState(playerState_String , MAX_PLAYER_NUMBER);
+
+        String player_state_of_A = playerState_class.getPlayerState('A');
+        String player_state_of_B = playerState_class.getPlayerState('B');
+         */
 
         //floor Done
         String floor_A = player_state_of_A.substring(player_state_of_A.indexOf("F") + 1);
@@ -274,6 +292,16 @@ public class Viewer extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Override
+    public String printBriefMetadata() {
+        return null;
+    }
+
+    @Override
+    public String printDetailMetadata() {
+        return null;
     }
 
     public class ViewerControlButtons extends Viewer {

@@ -100,10 +100,13 @@ public class Azul implements Metadata{
         SB.delete(0, SB.length());
         sharedState_content_arr.remove(0);
 
+        /*
         System.out.println(sharedState);
         for (int i = 0; i < len; i++) {
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
+
+         */
 
         // Find capital letters valid
         if (sharedState_name_arr.size() != 5) {
@@ -120,7 +123,7 @@ public class Azul implements Metadata{
         boolean bag_format = check_bag_discard_format(sharedState_name_arr.get(3), sharedState_content_arr.get(3), 'B');
         // Discard is valid
         boolean discard_format = check_bag_discard_format(sharedState_name_arr.get(4), sharedState_content_arr.get(4), 'D');
-        System.out.println(s_player_format && factory_format && center_format && bag_format && discard_format);
+        //System.out.println(s_player_format && factory_format && center_format && bag_format && discard_format);
         return s_player_format && factory_format && center_format && bag_format && discard_format;
 
     }
@@ -131,7 +134,7 @@ public class Azul implements Metadata{
 
         // S_Player is valid
         boolean s_player_format = s_player_name_format && s_player_String.isEmpty();
-        System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
+        //System.out.println(s_player_name_format + ", " + s_player_String.isEmpty());
         return s_player_format;
     }
 
@@ -165,10 +168,13 @@ public class Azul implements Metadata{
         SB.delete(0, SB.length());
         factoryState_content_arr.remove(0);
 
+        /*
         System.out.println(factory_String);
         for (int i = 0; i < len; i++) {
             System.out.println(factoryState_name_arr.get(i) + ", " + factoryState_content_arr.get(i));
         }
+
+         */
 
         if(len > 1){
             if(!check_alphabetical_order(factoryState_content_arr.get(0))){
@@ -214,7 +220,7 @@ public class Azul implements Metadata{
          */
 
         boolean factory_format = factory_name_format && factory_content_format;
-        System.out.println(factory_name_format + ", " + factory_content_format);
+        //System.out.println(factory_name_format + ", " + factory_content_format);
 
         return factory_format;
     }
@@ -234,7 +240,7 @@ public class Azul implements Metadata{
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;
-        System.out.println(center_name_format + ", " + center_content_format);
+        //System.out.println(center_name_format + ", " + center_content_format);
         return center_format;
     }
 
@@ -261,7 +267,7 @@ public class Azul implements Metadata{
         }
         SB.delete(0, SB.length());
         boolean bag_discard_format = bag_discard_name_format && bag_discard_content_format && !bag_discard_String.isEmpty();
-        System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
+        //System.out.println(bag_discard_name_format + ", " + bag_discard_content_format + ", " + !bag_discard_String.isEmpty());
         return bag_discard_format;
     }
 
@@ -366,7 +372,7 @@ public class Azul implements Metadata{
         for (int i = 0; i < len; i++) {
             System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
         }
-
+        
          */
 
         // Find capital letters valid 1 : filter by size

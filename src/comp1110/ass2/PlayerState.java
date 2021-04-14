@@ -50,6 +50,24 @@ public class PlayerState extends States {
         return super.playerState;
     }
 
+    public String getPlayerState( char player ){
+        updatePlayerState();
+        int index = getPlayer_index( player );
+        return this.playerStates[index];
+    }
+
+    public int getPlayer_index( char player ){
+        int player_index = 0;
+        int i = 0;
+        for( char c : ALL_PLAYERS ){
+            if(c == player){
+                player_index = i;
+            }
+            i++;
+        }
+        return player_index;
+    }
+
     public void updatePlayerState(){
         StringBuilder SB = new StringBuilder();
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){

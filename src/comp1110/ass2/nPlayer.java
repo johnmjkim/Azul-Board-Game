@@ -77,6 +77,10 @@ public class nPlayer implements Metadata {
         return isEnder;
     }
 
+    public char getnPlayerChar(){
+        return this.nplayerNameState;
+    }
+
     boolean existsStorageRowTilesFull() {
         return this.storage.existsStorageRowTilesFull();
     }
