@@ -184,38 +184,91 @@ public class Viewer extends Application {
         }
 
         //FACTORIES
-        String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C"));
+
+        {String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C")+1);
         String[] Factories = factories.split("");
-        String number_of_f ="";
-        for (int i=0; i<factories.length(); i+=5){
-            number_of_f += Factories[i];
+        //0cdde1bbbe2abde3cdee4bcceC
+
+        String num_of_factory = "";
+        String num_of_factory_withoutC = "";
+            for (int i = 0; i < factories.length(); i++) {
+                if (Factories[i].equals("0") || Factories[i].equals("1") || Factories[i].equals("2") || Factories[i].equals("3") || Factories[i].equals("4") || Factories[i].equals("C")) {
+                    num_of_factory += Factories[i];
+                }
+                if (Factories[i].equals("0") || Factories[i].equals("1") || Factories[i].equals("2") || Factories[i].equals("3") || Factories[i].equals("4")) {
+                    num_of_factory_withoutC += Factories[i];
+                }
+            }
+            String[] Num_of_factory = {};
+        Num_of_factory = num_of_factory.split("");
+            String[] Num_of_factory_withoutC = {};
+        Num_of_factory_withoutC = num_of_factory_withoutC.split("");
+        //0,1,2,3,4,c,&0,1,2,3,4
+
+        String[] tiles_in_factories = {"nnnn", "nnnn", "nnnn", "nnnn", "nnnn", "", ""};
+        for (int i = 0; i < Num_of_factory_withoutC.length; i++) {
+            String start ="";
+                    start = Num_of_factory[i];
+            String end ="";
+                    end = Num_of_factory[i + 1];
+            tiles_in_factories[Integer.parseInt(Num_of_factory[i])] = factories.substring(factories.indexOf(start)+1, factories.indexOf(end));
         }
-        String[] Number_of_f = number_of_f.split("");
+        //AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019,cdde,bbbe,abde,cdee
+
+        for (int i = 0; i < tiles_in_factories.length; i++) {
+            if (4 - tiles_in_factories[i].length() == 0) {
+                tiles_in_factories[i] = tiles_in_factories[i];
+            }
+            if (4 - tiles_in_factories[i].length() == 1) {
+                tiles_in_factories[i] = tiles_in_factories[i] + "n";
+            }
+            if (4 - tiles_in_factories[i].length() == 2) {
+                tiles_in_factories[i] = tiles_in_factories[i] + "n" + "n";
+            }
+            if (4 - tiles_in_factories[i].length() == 3) {
+                tiles_in_factories[i] = tiles_in_factories[i] + "n" + "n" + "n";
+            }
+        }
+
+        String full_srting_of_factories = "";
+        int i = 0;
+        do {
+            full_srting_of_factories += tiles_in_factories[i];
+            i++;
+        } while (i < 5);
+        String[] Full_srting_of_factories=full_srting_of_factories.split("");
+            System.out.println(full_srting_of_factories);
+
         String alphabet_1 ="";
-        for (int i=1; i<factories.length(); i+=5){
-            alphabet_1 += Factories[i];
+        for (int j=0; j<full_srting_of_factories.length(); j+=4){
+            alphabet_1 += Full_srting_of_factories[j];
         }
         String[] Alphabet_1 = alphabet_1.split("");
+        System.out.println(Alphabet_1[0]+"+"+Alphabet_1[1]+"+"+Alphabet_1[2]+"+"+Alphabet_1[3]+"+"+Alphabet_1[4]);
+
         String alphabet_2 ="";
-        for (int i=2; i<factories.length(); i+=5){
-            alphabet_2 += Factories[i];
+        for (int j=1; j<full_srting_of_factories.length(); j+=4){
+            alphabet_2 += Full_srting_of_factories[j];
         }
         String[] Alphabet_2 = alphabet_2.split("");
+
         String alphabet_3 ="";
-        for (int i=3; i<factories.length(); i+=5){
-            alphabet_3 += Factories[i];
+        for (int j=2; j<full_srting_of_factories.length(); j+=4){
+            alphabet_3 += Full_srting_of_factories[j];
         }
         String[] Alphabet_3 = alphabet_3.split("");
         String alphabet_4 ="";
-        for (int i=4; i<factories.length(); i+=5){
-            alphabet_4 += Factories[i];
+        for (int j=3; j<full_srting_of_factories.length(); j+=4){
+            alphabet_4 += Full_srting_of_factories[j];
         }
         String[] Alphabet_4 = alphabet_4.split("");
-        for (int i = 0; i < number_of_f.length(); i++) {
+
+        int[] all_numbers = {0,1,2,3,4};
+        for (i = 0; i < all_numbers.length; i++) {
             ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_1[i] + ".png"));
             A.setFitWidth(35);
             A.setFitHeight(39);
-            double x = 5 + 41.5 * 2* (Integer.parseInt(Number_of_f[i]));
+            double x = 5 + 41.5 * 2* (all_numbers[i]);
             A.setLayoutX(x);
             double y = 49;
             A.setLayoutY(y);
@@ -223,7 +276,7 @@ public class Viewer extends Application {
             ImageView B = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_2[i] + ".png"));
             B.setFitWidth(35);
             B.setFitHeight(39);
-            double x1 = 42.2 + 41.5 * 2* (Integer.parseInt(Number_of_f[i]));
+            double x1 = 42.2 + 41.5 * 2* (all_numbers[i]);
             B.setLayoutX(x1);
             double y1 = 49;
             B.setLayoutY(y1);
@@ -231,7 +284,7 @@ public class Viewer extends Application {
             ImageView C = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_3[i] + ".png"));
             C.setFitWidth(35);
             C.setFitHeight(39);
-            double x2 = 5 + 41.5 * 2* (Integer.parseInt(Number_of_f[i]));
+            double x2 = 5 + 41.5 * 2* (all_numbers[i]);
             C.setLayoutX(x2);
             double y2 = 91;
             C.setLayoutY(y2);
@@ -239,14 +292,14 @@ public class Viewer extends Application {
             ImageView D = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_4[i] + ".png"));
             D.setFitWidth(35);
             D.setFitHeight(39);
-            double x3 = 42.2 + 41.5 * 2* (Integer.parseInt(Number_of_f[i]));
+            double x3 = 42.2 + 41.5 * 2* (all_numbers[i]);
             D.setLayoutX(x3);
             double y3 = 91;
             D.setLayoutY(y3);
             matrixBoard.getChildren().add(D);
-        }
+        }}
 
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
+        //state[0]=AF1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
         //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
 
         //floor Done
