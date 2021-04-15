@@ -1,10 +1,10 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
 import java.util.ArrayList;
 
-public class Discard implements Metadata {
+public class Discard implements State {
 
     String discardState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -37,10 +37,6 @@ public class Discard implements Metadata {
         this.letters[RED] = discards_counts.get(4);
     }
 
-    public String getDiscardState(){
-        return this.discardState;
-    }
-
     public int getTilesNumber(char color){
         return this.letters[color];
     }
@@ -57,7 +53,7 @@ public class Discard implements Metadata {
 
     public void removeTile(char color){
         this.letters[color]--;
-        updatediscardState();
+        updateState();
     }
 
     public void removeAllTiles(){
@@ -68,12 +64,12 @@ public class Discard implements Metadata {
             }
             color++;
         }
-        updatediscardState();
+        updateState();
     }
 
     public void addTile(char color){
         this.letters[color]++;
-        updatediscardState();
+        updateState();
     }
 
     public void refillTilesDiscard(String refill){
@@ -97,12 +93,15 @@ public class Discard implements Metadata {
         this.letters[ORANGE] += discards_counts.get(2);
         this.letters[PURPLE] += discards_counts.get(3);
         this.letters[RED] += discards_counts.get(4);
+        /*
         if(discards_counts.size() > 5){
             this.letters[FIRST_PLAYER] += discards_counts.get(4);
         }
-        updatediscardState();
-    }
 
+         */
+        updateState();
+    }
+    /*
     public void updatediscardState(){
         StringBuilder SB = new StringBuilder();
         SB.append(EMPTY_STATE);
@@ -118,23 +117,39 @@ public class Discard implements Metadata {
         this.discardState = String.valueOf(SB);
     }
 
-    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+     */
 
-    public boolean isDiscardStateEmpty(){
-        return this.discardState.isEmpty();
-    }
+    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
 
     public void printState(){
         System.out.println(this.discardState);
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public boolean isStateEmpty() {
+        updateState();
+        return this.discardState.isEmpty();
     }
 
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public String getStateString() {
+        updateState();
+        return this.discardState;
+    }
+
+    @Override
+    public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        SB.append(EMPTY_STATE);
+        int[] discard_letters = this.letters;
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
+            if(discard_letters[color] < 10){
+                SB.append("0");
+            }
+            SB.append(String.valueOf(discard_letters[color]));
+            color++;
+        }
+        this.discardState = String.valueOf(SB);
     }
 }

@@ -4,7 +4,7 @@ public class SharedState extends States {
 
     // Shared fields Strings
     String turnState = EMPTY_STATE;
-    String factoryState = EMPTY_STATE;
+    String factoriesState = EMPTY_STATE;
     String centerState = EMPTY_STATE;
     String bagState = EMPTY_STATE;
     String discardState = EMPTY_STATE;
@@ -18,6 +18,13 @@ public class SharedState extends States {
     // Size, Numbers of all components
     public final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
     public final int FACTORY_SIZE = 4;
+
+    public SharedState(){
+        super( EMPTY_STATE, DEFAULT_MAX_PLAYER);
+        super.sharedState = EMPTY_STATE;
+        super.MAX_PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
+        setSharedState( sharedState, MAX_PLAYER_NUMBER );
+    }
 
     public SharedState( String sharedState , int max_player_number ){
         super(sharedState, max_player_number);
@@ -36,7 +43,7 @@ public class SharedState extends States {
         String discardState = rest_sharedState.substring(rest_sharedState.indexOf(DISCARD) + 1, rest_sharedState.length());
 
         setTurnState(turnState);
-        setFactoryState(factoryState);
+        setFactoriesState(factoryState);
         setCenterState(centerState);
         setBagState(bagState);
         setDiscardState(discardState);
@@ -45,15 +52,15 @@ public class SharedState extends States {
     public String getSharedState(){
         StringBuilder SB = new StringBuilder();
         // Update all strings of factory, center, bag, discard
-        this.centerState = this.center.getCenterState();
-        this.bagState = this.bag.getBagState();
-        this.discardState = this.discard.getDiscardState();
-        this.factoryState = this.factories.getFactoriesState();
+        this.centerState = this.center.getStateString();
+        this.bagState = this.bag.getStateString();
+        this.discardState = this.discard.getStateString();
+        this.factoriesState = this.factories.getStateString();
 
         // Form sharedState
         SB.append(this.turnState);
         SB.append(FACTORY);
-        SB.append(this.factoryState);
+        SB.append(this.factoriesState);
         SB.append(CENTER);
         SB.append(this.centerState);
         SB.append(BAG);
@@ -80,8 +87,8 @@ public class SharedState extends States {
         this.turnState = turnState;
     }
 
-    private void setFactoryState( String factoryState ){
-        this.factoryState = factoryState;
+    private void setFactoriesState( String factoryState ){
+        this.factoriesState = factoryState;
         Factories factories = new Factories(factoryState, FACTORY_MAX_NUMBER);
         this.factories = factories;
     }
@@ -115,7 +122,7 @@ public class SharedState extends States {
         char[] factory_tiles = new char[FACTORY_SIZE];
         int factory_num = this.factories.factory.size();
         for(int i=0; i < factory_num; i++){
-            if(this.factories.factory.get(i).isFactoryStateEmpty()){
+            if(this.factories.factory.get(i).isStateEmpty()){
                 for(int j=0; j < FACTORY_SIZE; j++){
                     if(!(this.bag.getTotalTilesNumber() > 0)){
                         this.refillDiscardtoBag();
@@ -126,7 +133,7 @@ public class SharedState extends States {
                 this.factories.factory.get(i).refill_eachFactory(factory_tiles);
             }
         }
-        this.factories.updatefactoriesState();
+        this.factories.updateState();
     }
 
     /**
@@ -136,7 +143,7 @@ public class SharedState extends States {
      */
     public void refillDiscardtoBag() {
         if(this.discard.getTotalTilesNumber() > 0){
-            String discard_tiles = this.discard.getDiscardState();
+            String discard_tiles = this.discard.getStateString();
             this.bag.refillTilesBag(discard_tiles);
             this.discard.removeAllTiles();
         }

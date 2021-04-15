@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-public class Experiment_PSVM implements Metadata{
+public class Experiment_PSVM implements Constants{
 
     public static void main(String[] args) {
         int MAX_PLAYER_NUMBER = 2;
@@ -49,11 +49,11 @@ public class Experiment_PSVM implements Metadata{
 
         System.out.println(ps.getState());
         System.out.println(ps.getPlayerState());
-        System.out.println(ps.nplayers.get(0).getnplayerState());
-        System.out.println(ps.nplayers.get(0).score.getScoreState());
-        System.out.println(ps.nplayers.get(0).mosaic.getMosaicState());
-        System.out.println(ps.nplayers.get(0).storage.getStorageState());
-        System.out.println(ps.nplayers.get(0).floor.getFloorState());
+        System.out.println(ps.nplayers.get(0).getStateString());
+        System.out.println(ps.nplayers.get(0).score.getStateString());
+        System.out.println(ps.nplayers.get(0).mosaic.getStateString());
+        System.out.println(ps.nplayers.get(0).storage.getStateString());
+        System.out.println(ps.nplayers.get(0).floor.getStateString());
 
         int tot_tiles = 0;
         String tiles_to_discard;
@@ -115,15 +115,8 @@ public class Experiment_PSVM implements Metadata{
 
         System.out.println(player_state_of_A);
         System.out.println(player_state_of_B);
-    }
 
-    @Override
-    public String printBriefMetadata() {
-        return null;
-    }
+        System.out.println(sharedState_class.bag.getStateString());
 
-    @Override
-    public String printDetailMetadata() {
-        return null;
     }
 }

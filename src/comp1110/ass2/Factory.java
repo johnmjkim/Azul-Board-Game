@@ -1,10 +1,10 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
 import java.util.Arrays;
 
-public class Factory implements Metadata {
+public class Factory implements State {
 
     int number;
     int[] letters = new int[128];
@@ -28,10 +28,6 @@ public class Factory implements Metadata {
         this.letters[ORANGE] = letters_array[ORANGE];
         this.letters[PURPLE] = letters_array[PURPLE];
         this.letters[RED] = letters_array[RED];
-    }
-
-    public String getFactoryState() {
-        return this.factoryState;
     }
 
     /**
@@ -72,7 +68,6 @@ public class Factory implements Metadata {
             SB.append(c);
             this.letters[c]++;
         }
-
         this.factoryState = String.valueOf(SB);
     }
 
@@ -86,17 +81,20 @@ public class Factory implements Metadata {
         return each_factory_str;
     }
 
-    boolean isFactoryStateEmpty() {
+    @Override
+    public boolean isStateEmpty() {
         return this.factoryState.isEmpty();
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public String getStateString() {
+        return this.factoryState;
     }
 
+    // TODO update factory state
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public void updateState() {
+
     }
+
 }

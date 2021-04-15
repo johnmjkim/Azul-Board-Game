@@ -1,8 +1,8 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
-public class Floor implements Metadata {
+public class Floor implements State {
 
     String floorState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -27,10 +27,6 @@ public class Floor implements Metadata {
         this.letters[PURPLE] = letters_array[PURPLE];
         this.letters[RED] = letters_array[RED];
         this.letters[FIRST_PLAYER] = letters_array[FIRST_PLAYER];
-    }
-
-    public String getFloorState(){
-        return this.floorState;
     }
 
     // Discard
@@ -63,7 +59,7 @@ public class Floor implements Metadata {
 
     public void removeTile(char color) {
         this.letters[color]--;
-        updatefloorState();
+        updateState();
     }
 
     public void removeAllTiles(){
@@ -74,15 +70,30 @@ public class Floor implements Metadata {
             }
             color++;
         }
-        updatefloorState();
+        updateState();
     }
 
     public void addTile(char color){
         this.letters[color]++;
-        updatefloorState();
+        updateState();
     }
 
-    public void updatefloorState(){
+    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+
+    @Override
+    public boolean isStateEmpty() {
+        updateState();
+        return this.floorState.isEmpty();
+    }
+
+    @Override
+    public String getStateString() {
+        updateState();
+        return this.floorState;
+    }
+
+    @Override
+    public void updateState() {
         StringBuilder SB = new StringBuilder();
         SB.append(EMPTY_STATE);
         int[] floor_letters = new int[128];
@@ -100,21 +111,5 @@ public class Floor implements Metadata {
             color++;
         }
         this.floorState = String.valueOf(SB);
-    }
-
-    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
-
-    public boolean isFloorStateEmpty() {
-        return this.floorState.isEmpty();
-    }
-
-    @Override
-    public String printBriefMetadata() {
-        return null;
-    }
-
-    @Override
-    public String printDetailMetadata() {
-        return null;
     }
 }

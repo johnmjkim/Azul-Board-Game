@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-public class Score {
+public class Score implements State{
 
     // Size, Numbers of all components
     public final String EMPTY_STATE = "";
@@ -27,7 +27,7 @@ public class Score {
         else{
             this.score = adjusted_score;
         }
-        updateScoreState();
+        updateState();
     }
 
     public int scoreLose_clearFloor( int floor_length ) {
@@ -60,17 +60,23 @@ public class Score {
     public void clearFloorScore( int floor_length ){
         int score_lost = scoreLose_clearFloor(floor_length);
         addScore(score_lost);
-        updateScoreState();
+        updateState();
     }
 
-    public void updateScoreState(){
+    @Override
+    public boolean isStateEmpty() {
+        return this.scoreState.isEmpty();
+    }
+
+    @Override
+    public String getStateString() {
+        return this.scoreState;
+    }
+
+    @Override
+    public void updateState() {
         StringBuilder SB = new StringBuilder();
         SB.append(this.score);
         this.scoreState = String.valueOf(SB);
     }
-
-    boolean isScoreStateEmpty(){
-        return this.scoreState.isEmpty();
-    }
-
 }

@@ -1,11 +1,11 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Storage implements Metadata {
+public class Storage implements State {
 
     String storageState = EMPTY_STATE;
     public ArrayList<StorageRow> storage_rows = new ArrayList<StorageRow>();
@@ -75,7 +75,7 @@ public class Storage implements Metadata {
     }
 
     public String getStorageState(){
-        updateStorageState();
+        updateState();
         return this.storageState;
     }
 
@@ -91,19 +91,6 @@ public class Storage implements Metadata {
             color++;
         }
         return tot_tiles;
-    }
-
-    public void updateStorageState(){
-        StringBuilder SB = new StringBuilder();
-        int i=0;
-        for( StorageRow sr : storage_rows ){
-            if(!sr.isStorageRowStateEmpty()){
-                SB.append(i);
-                SB.append(sr.getStorage_rowState());
-            }
-            i++;
-        }
-        this.storageState = String.valueOf(SB);
     }
 
     boolean isStorageTilesValid(){
@@ -135,18 +122,28 @@ public class Storage implements Metadata {
         return this.storage_rows.get(row).isStorageRowTilesFull();
     }
 
-    boolean isStorageStateEmpty(){
+    @Override
+    public boolean isStateEmpty() {
         return this.storageState.isEmpty();
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public String getStateString() {
+        return this.storageState;
     }
 
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        int i=0;
+        for( StorageRow sr : storage_rows ){
+            if(!sr.isStorageRowStateEmpty()){
+                SB.append(i);
+                SB.append(sr.getStorage_rowState());
+            }
+            i++;
+        }
+        this.storageState = String.valueOf(SB);
     }
 
     /**

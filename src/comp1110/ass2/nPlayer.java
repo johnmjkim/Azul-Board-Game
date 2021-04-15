@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-public class nPlayer implements Metadata {
+public class nPlayer implements State {
 
     // Player fields strings
     String nplayerState = EMPTY_STATE;
@@ -33,7 +33,7 @@ public class nPlayer implements Metadata {
         setStorageState(storageState);
         setFloorState(floorState);
     }
-
+    /*
     public String getnplayerState(){
         StringBuilder SB = new StringBuilder();
         SB.append(this.score.getScoreState());
@@ -46,6 +46,8 @@ public class nPlayer implements Metadata {
         this.nplayerState = String.valueOf(SB);
         return this.nplayerState;
     }
+
+     */
 
     private void setScoreState( String scoreState ) {
         this.scoreState = scoreState;
@@ -80,18 +82,46 @@ public class nPlayer implements Metadata {
     public char getnPlayerChar(){
         return this.nplayerNameState;
     }
+    /*
+    public void updatenPlayerState(){
+        StringBuilder SB = new StringBuilder();
+        SB.append(this.score.getStateString());
+        SB.append(MOSAIC);
+        SB.append(this.mosaic.getStateString());
+        SB.append(STORAGE);
+        SB.append(this.storage.getStateString());
+        SB.append(FLOOR);
+        SB.append(this.floor.getStateString());
+        this.nplayerState = String.valueOf(SB);
+    }
+
+     */
 
     boolean existsStorageRowTilesFull() {
         return this.storage.existsStorageRowTilesFull();
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public boolean isStateEmpty() {
+        return this.nplayerState.isEmpty();
     }
 
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public String getStateString() {
+        updateState();
+        return this.nplayerState;
+    }
+
+    @Override
+    public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        SB.append(this.score.getStateString());
+        SB.append(MOSAIC);
+        SB.append(this.mosaic.getStateString());
+        SB.append(STORAGE);
+        SB.append(this.storage.getStateString());
+        SB.append(FLOOR);
+        SB.append(this.floor.getStateString());
+        this.nplayerState = String.valueOf(SB);
     }
 }

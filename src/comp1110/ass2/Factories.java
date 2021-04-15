@@ -1,11 +1,11 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 import comp1110.ass2.Factory;
 
 import java.util.ArrayList;
 
-public class Factories implements Metadata {
+public class Factories implements State {
 
     String factoriesState;
     int max_factories_number;
@@ -66,7 +66,7 @@ public class Factories implements Metadata {
     }
 
     public String getFactoriesState(){
-        updatefactoriesState();
+        updateState();
         return this.factoriesState;
     }
 
@@ -85,11 +85,11 @@ public class Factories implements Metadata {
         }
         return tot_tiles;
     }
-
+    /*
     public void updatefactoriesState(){
         StringBuilder SB = new StringBuilder();
         for(int i=0; i < max_factories_number; i++){
-            if(!this.factory.get(i).isFactoryStateEmpty()){
+            if(!this.factory.get(i).isStateEmpty()){
                 SB.append(this.factory.get(i).number);
                 SB.append(this.factory.get(i).factoryState);
             }
@@ -97,21 +97,32 @@ public class Factories implements Metadata {
         this.factoriesState = String.valueOf(SB);
     }
 
+     */
+
     public boolean isFactoryFull() {
         return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());
     }
 
-    boolean isFactoriesStateEmpty(){
+    @Override
+    public boolean isStateEmpty() {
         return this.factoriesState.isEmpty();
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public String getStateString() {
+        updateState();
+        return this.factoriesState;
     }
 
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        for(int i=0; i < max_factories_number; i++){
+            if(!this.factory.get(i).isStateEmpty()){
+                SB.append(this.factory.get(i).number);
+                SB.append(this.factory.get(i).factoryState);
+            }
+        }
+        this.factoriesState = String.valueOf(SB);
     }
 }

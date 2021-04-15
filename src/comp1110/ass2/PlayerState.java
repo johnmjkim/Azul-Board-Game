@@ -10,6 +10,13 @@ public class PlayerState extends States {
 
     public ArrayList<nPlayer> nplayers = new ArrayList<nPlayer>();
 
+    public PlayerState(){
+        super(EMPTY_STATE, DEFAULT_MAX_PLAYER);
+        super.playerState = EMPTY_STATE;
+        super.MAX_PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
+        setPlayerState( playerState , MAX_PLAYER_NUMBER );
+    }
+
     public PlayerState( String playerState , int max_player_number){
         super(playerState, max_player_number);
         super.playerState = playerState;
@@ -75,7 +82,7 @@ public class PlayerState extends States {
             this.playerStates[i] = this.nplayers.get(i).nplayerState;
 
             SB.append(this.nplayers.get(i).nplayerNameState);
-            SB.append(this.nplayers.get(i).getnplayerState());
+            SB.append(this.nplayers.get(i).getStateString());
         }
         super.playerState = String.valueOf(SB);
     }

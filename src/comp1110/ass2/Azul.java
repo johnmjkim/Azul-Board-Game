@@ -2,12 +2,11 @@ package comp1110.ass2;
 
 import java.util.*;
 
-public class Azul implements Metadata{
+public class Azul implements Constants{
 
     // Maximum player numbers
     public static int MAX_PLAYER_NUMBER = 2;
 
-    Set<Metadata> metadataCollection;
     public static String[] gameState;
     public static String move;
     public static SharedState sharedState;
@@ -883,8 +882,8 @@ public class Azul implements Metadata{
             }
         }
 
-        boolean isFactoryEmpty = sharedState.factories.isFactoriesStateEmpty();
-        boolean isCenterEmpty = sharedState.center.isCenterStateEmpty();
+        boolean isFactoryEmpty = sharedState.factories.isStateEmpty();
+        boolean isCenterEmpty = sharedState.center.isStateEmpty();
         boolean existsFullStorageRow = playerState.existsPlayerFullStorageRow();
         boolean isNextRound = isFactoryEmpty && isCenterEmpty && !existsFullStorageRow;
 
@@ -1253,15 +1252,5 @@ public class Azul implements Metadata{
     public static boolean isEndGameValid(String[] gameState) {
         isStateValid(gameState);
         return false;
-    }
-
-    @Override
-    public String printBriefMetadata() {
-        return null;
-    }
-
-    @Override
-    public String printDetailMetadata() {
-        return null;
     }
 }

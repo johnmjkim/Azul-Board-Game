@@ -1,11 +1,11 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Bag implements Metadata {
+public class Bag implements State {
 
     String bagState = EMPTY_STATE;
     int[] letters = new int[128];
@@ -38,10 +38,6 @@ public class Bag implements Metadata {
         this.letters[RED] = bags_counts.get(4);
     }
 
-    public String getBagState(){
-        return this.bagState;
-    }
-
     public int getTilesNumber(char color){
         return this.letters[color];
     }
@@ -58,7 +54,7 @@ public class Bag implements Metadata {
 
     public void removeTile(char color){
         this.letters[color]--;
-        updatebagState();
+        updateState();
     }
 
     public void removeAllTiles(){
@@ -69,12 +65,12 @@ public class Bag implements Metadata {
             }
             color++;
         }
-        updatebagState();
+        updateState();
     }
 
     public void addTile(char color){
         this.letters[color]++;
-        updatebagState();
+        updateState();
     }
 
     public void refillTilesBag(String refill){
@@ -98,22 +94,7 @@ public class Bag implements Metadata {
         this.letters[ORANGE] += bags_counts.get(2);
         this.letters[PURPLE] += bags_counts.get(3);
         this.letters[RED] += bags_counts.get(4);
-        updatebagState();
-    }
-
-    public void updatebagState(){
-        StringBuilder SB = new StringBuilder();
-        SB.append(EMPTY_STATE);
-        int[] bag_letters = this.letters;
-        char color = BLUE;
-        for(int i=0; i <= RED - BLUE; i++){
-            if(bag_letters[color] < 10){
-                SB.append("0");
-            }
-            SB.append(String.valueOf(bag_letters[color]));
-            color++;
-        }
-        this.bagState = String.valueOf(SB);
+        updateState();
     }
 
     /**
@@ -163,21 +144,35 @@ public class Bag implements Metadata {
         return picked_tile;
     }
 
-    public boolean isBagStateEmpty(){
-        return this.bagState.isEmpty();
-    }
-
     public void printState(){
         System.out.println(this.bagState);
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public boolean isStateEmpty() {
+        updateState();
+        return this.bagState.isEmpty();
     }
 
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public String getStateString() {
+        updateState();
+        return this.bagState;
+    }
+
+    @Override
+    public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        SB.append(EMPTY_STATE);
+        int[] bag_letters = this.letters;
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
+            if(bag_letters[color] < 10){
+                SB.append("0");
+            }
+            SB.append(String.valueOf(bag_letters[color]));
+            color++;
+        }
+        this.bagState = String.valueOf(SB);
     }
 }

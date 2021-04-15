@@ -1,7 +1,6 @@
 package comp1110.ass2;
 
-public interface Metadata {
-
+public interface Constants {
     // Players substring
     public final char PLAYER_A = 'A';
     public final char PLAYER_B = 'B';
@@ -42,6 +41,8 @@ public interface Metadata {
     public static final char NINE = '9';
 
     // Size, Numbers of all components
+    public static final int DEFAULT_MAX_PLAYER = 2;
+    public static final int DEFAULT_FACTORY_MAX_NUMBER = 2 * DEFAULT_MAX_PLAYER + 1;
     public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
     public final int FACTORY_SIZE = 4;
     public final int MAX_MOSAIC_ROW = 5;
@@ -53,8 +54,4 @@ public interface Metadata {
     public final int ROW_BONUS_POINT = 2;
     public final int COL_BONUS_POINT = 7;
     public final int COLOR_BONUS_POINT = 10;
-
-    String printBriefMetadata();
-
-    String printDetailMetadata();
 }

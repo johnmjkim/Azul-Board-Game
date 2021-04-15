@@ -1,14 +1,13 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Metadata;
+import comp1110.ass2.State;
 
 import java.util.ArrayList;
 
-public class Mosaic implements Metadata {
+public class Mosaic implements State {
 
     String mosaicState = EMPTY_STATE;
 
-    // TODO State Mosaic Row Col ArrayList needed
     public ArrayList<MosaicRow> mosaic_rows = new ArrayList<MosaicRow>();
     public ArrayList<MosaicCol> mosaic_cols = new ArrayList<MosaicCol>();
 
@@ -119,18 +118,20 @@ public class Mosaic implements Metadata {
         return tot_tiles;
     }
 
-    boolean isMosaicStateEmpty(){
+    @Override
+    public boolean isStateEmpty() {
         return this.mosaicState.isEmpty();
     }
 
     @Override
-    public String printBriefMetadata() {
-        return null;
+    public String getStateString() {
+        return this.mosaicState;
     }
 
+    // TODO finish updatemosaicState()
     @Override
-    public String printDetailMetadata() {
-        return null;
+    public void updateState() {
+
     }
 
     /**
