@@ -52,6 +52,16 @@ public class PlayerState extends States {
 
     }
 
+    public nPlayer getnPlayer( char player ){
+        int nplayer_index = 0;
+        for( int i=0; i < MAX_PLAYER_NUMBER; i++){
+            if(ALL_PLAYERS[i] == player){
+                nplayer_index = i;
+            }
+        }
+        return this.nplayers.get(nplayer_index);
+    }
+
     public String getPlayerState(){
         updatePlayerState();
         return super.playerState;

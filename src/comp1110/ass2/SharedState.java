@@ -47,9 +47,15 @@ public class SharedState extends States {
         setCenterState(centerState);
         setBagState(bagState);
         setDiscardState(discardState);
+        updateSharedState();
     }
 
     public String getSharedState(){
+        updateSharedState();
+        return super.sharedState;
+    }
+
+    public void updateSharedState(){
         StringBuilder SB = new StringBuilder();
         // Update all strings of factory, center, bag, discard
         this.centerState = this.center.getStateString();
@@ -69,7 +75,6 @@ public class SharedState extends States {
         SB.append(this.discardState);
 
         super.sharedState = String.valueOf(SB);
-        return super.sharedState;
     }
 
     public void changeTurn(){
@@ -130,7 +135,8 @@ public class SharedState extends States {
                     factory_tiles[j] = this.bag.getRandomTile();
                     this.bag.removeTile(factory_tiles[j]);
                 }
-                this.factories.factory.get(i).refill_eachFactory(factory_tiles);
+                //this.factories.factory.get(i).refill_eachFactory(factory_tiles);
+                this.factories.factory.get(i).refillTiles(factory_tiles);
             }
         }
         this.factories.updateState();

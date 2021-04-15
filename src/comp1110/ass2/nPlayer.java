@@ -72,7 +72,7 @@ public class nPlayer implements State {
     public boolean isEnder(){
         boolean isEnder = false;
         for(int i=0; i < MAX_MOSAIC_ROW; i++){
-            if(this.mosaic.mosaic_rows.get(i).getTotalTilesNumber() == MAX_MOSAIC_ROW){
+            if(this.mosaic.mosaic_rows.get(i).isRowTilesFull()){
                 isEnder = true;
             }
         }
@@ -82,20 +82,6 @@ public class nPlayer implements State {
     public char getnPlayerChar(){
         return this.nplayerNameState;
     }
-    /*
-    public void updatenPlayerState(){
-        StringBuilder SB = new StringBuilder();
-        SB.append(this.score.getStateString());
-        SB.append(MOSAIC);
-        SB.append(this.mosaic.getStateString());
-        SB.append(STORAGE);
-        SB.append(this.storage.getStateString());
-        SB.append(FLOOR);
-        SB.append(this.floor.getStateString());
-        this.nplayerState = String.valueOf(SB);
-    }
-
-     */
 
     boolean existsStorageRowTilesFull() {
         return this.storage.existsStorageRowTilesFull();

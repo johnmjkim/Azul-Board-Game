@@ -85,6 +85,10 @@ public class Factories implements State {
         return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());
     }
 
+    public Factory getFactory(int factory_number){
+        return this.factory.get(factory_number);
+    }
+
     @Override
     public boolean isStateEmpty() {
         return this.factoriesState.isEmpty();
@@ -94,6 +98,11 @@ public class Factories implements State {
     public String getStateString() {
         updateState();
         return this.factoriesState;
+    }
+
+    @Override
+    public String toString(){
+        return getStateString();
     }
 
     @Override

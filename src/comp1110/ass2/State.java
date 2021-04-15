@@ -28,5 +28,7 @@ public interface State extends Constants {
      */
     String getStateString();
 
+    public String toString();
+
     void updateState();
 }

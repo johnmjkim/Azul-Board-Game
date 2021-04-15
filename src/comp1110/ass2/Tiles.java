@@ -7,10 +7,4 @@ public interface Tiles extends State{
 
     public int getTotalTilesNumber();
 
-    public void removeTile(char color);
-
-    public void removeAllTiles();
-
-    public void addTile(char color);
-
 }

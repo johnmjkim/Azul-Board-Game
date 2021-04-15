@@ -4,7 +4,7 @@ import comp1110.ass2.State;
 
 import java.util.ArrayList;
 
-public class Mosaic implements State {
+public class Mosaic implements Tiles {
 
     String mosaicState = EMPTY_STATE;
 
@@ -16,7 +16,7 @@ public class Mosaic implements State {
     public Mosaic(String mosaicState){
         this.mosaicState = mosaicState;
         addMosaicRowCol(mosaicState);
-        countMosaicTilesNumber();
+        countTilesNumber(mosaicState);
     }
 
     public void addMosaicRowCol(String mosaicState){
@@ -85,10 +85,19 @@ public class Mosaic implements State {
 
     }
 
-    private void countMosaicTilesNumber(){
+    public MosaicRow getMosaicRow(int row){
+        return this.mosaic_rows.get(row);
+    }
+
+    public MosaicCol getMosaicCol(int col){
+        return this.mosaic_cols.get(col);
+    }
+
+    @Override
+    public void countTilesNumber(String mosaicState){
 
         int[] letters_array = new int[128];
-        char[] mosaicState_char_array = this.mosaicState.toCharArray();
+        char[] mosaicState_char_array = mosaicState.toCharArray();
         for(char c : mosaicState_char_array){
             letters_array[c]++;
         }
@@ -100,14 +109,12 @@ public class Mosaic implements State {
         this.letters[RED] = letters_array[RED];
     }
 
-    public String getMosaicState(){
-        return this.mosaicState;
-    }
-
+    @Override
     public int getTilesNumber(char color){
         return this.letters[color];
     }
 
+    @Override
     public int getTotalTilesNumber(){
         int tot_tiles = 0;
         char color = BLUE;
@@ -128,21 +135,30 @@ public class Mosaic implements State {
         return this.mosaicState;
     }
 
-    // TODO finish updatemosaicState()
+    @Override
+    public String toString(){
+        return getStateString();
+    }
+
     @Override
     public void updateState() {
-
+        StringBuilder SB = new StringBuilder();
+        for( MosaicRow mr : this.mosaic_rows ){
+            SB.append(mr.getStateString());
+        }
+        this.mosaicState = String.valueOf(SB);
     }
 
     /**
      * Inner class eachMosaicRow of Mosaic class
      * Each player has eachMosaicRow state stored here
      */
-    public class MosaicRow {
+    public class MosaicRow implements CoordinateTyped, Comparable<MosaicRow>{
         // TODO finish eachMosaicRow and eachMosaicCol
         String mosaic_rowState = EMPTY_STATE;
         char[] MOSAIC_MASK = new char[MAX_MOSAIC_ROW];
         int[] letters = new int[128];
+        int MAX_TILES_LIMIT = MAX_MOSAIC_ROW;
         int row;
 
         public MosaicRow (String mosaic_rowState, int row){
@@ -150,13 +166,19 @@ public class Mosaic implements State {
             this.mosaic_rowState = mosaic_rowState;
             this.row = row;
             generateMosaicMask(row);
-            countMosaicRowTilesNumber();
+            countTilesNumber(mosaic_rowState);
         }
 
-        private void countMosaicRowTilesNumber(){
+        private void generateMosaicMask(int row){
+            for(int i=0; i < MAX_MOSAIC_ROW; i++) {
+                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_ROW - row) % MAX_MOSAIC_ROW];
+            }
+        }
 
+        @Override
+        public void countTilesNumber(String State) {
             int[] letters_array = new int[128];
-            char[] mosaic_rowState_char_array = this.mosaic_rowState.toCharArray();
+            char[] mosaic_rowState_char_array = State.toCharArray();
             for(char c : mosaic_rowState_char_array){
                 letters_array[c]++;
             }
@@ -166,12 +188,15 @@ public class Mosaic implements State {
             this.letters[ORANGE] = letters_array[ORANGE];
             this.letters[PURPLE] = letters_array[PURPLE];
             this.letters[RED] = letters_array[RED];
+
         }
 
+        @Override
         public int getTilesNumber(char color){
             return this.letters[color];
         }
 
+        @Override
         public int getTotalTilesNumber(){
             int tot_tiles = 0;
             char color = BLUE;
@@ -182,27 +207,52 @@ public class Mosaic implements State {
             return tot_tiles;
         }
 
-        private void generateMosaicMask(int row){
-            for(int i=0; i < MAX_MOSAIC_ROW; i++) {
-                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_ROW - row) % MAX_MOSAIC_ROW];
+        @Override
+        public int compareTo(MosaicRow mosaic_row) {
+            if(row == mosaic_row.row){
+                return 0;
+            }
+            else if(row > mosaic_row.row){
+                return 1;
+            }
+            else{
+                return -1;
             }
         }
 
-        public String getMosaic_rowState(){
+        @Override
+        public boolean isRowTilesFull() {
+            return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
+        }
+
+        @Override
+        public boolean isStateEmpty() {
+            return this.mosaic_rowState.isEmpty();
+        }
+
+        @Override
+        public String getStateString() {
             return this.mosaic_rowState;
         }
 
-        boolean isMosaicRowStateEmpty(){
-            return this.mosaic_rowState.isEmpty();
+        @Override
+        public String toString(){
+            return getStateString();
+        }
+
+        @Override
+        public void updateState() {
+
         }
     }
 
 
-    public class MosaicCol {
+    public class MosaicCol implements CoordinateTyped, Comparable<MosaicCol> {
         // TODO finish eachMosaicRow and eachMosaicCol
         String mosaic_colState = EMPTY_STATE;
         char[] MOSAIC_MASK = new char[MAX_MOSAIC_COL];
         int[] letters = new int[128];
+        int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int col;
 
         public MosaicCol(String mosaic_colState, int col) {
@@ -210,13 +260,19 @@ public class Mosaic implements State {
             this.mosaic_colState = mosaic_colState;
             this.col = col;
             generateMosaicMask(col);
-            countMosaicColTilesNumber();
+            countTilesNumber(mosaic_colState);
         }
 
-        private void countMosaicColTilesNumber(){
+        private void generateMosaicMask(int col) {
+            for (int i = 0; i < MAX_MOSAIC_COL; i++) {
+                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_COL - col) % MAX_MOSAIC_ROW];
+            }
+        }
 
+        @Override
+        public void countTilesNumber(String mosaic_colState){
             int[] letters_array = new int[128];
-            char[] mosaic_colState_char_array = this.mosaic_colState.toCharArray();
+            char[] mosaic_colState_char_array = mosaic_colState.toCharArray();
             for(char c : mosaic_colState_char_array){
                 letters_array[c]++;
             }
@@ -228,32 +284,58 @@ public class Mosaic implements State {
             this.letters[RED] = letters_array[RED];
         }
 
+        @Override
         public int getTilesNumber(char color){
             return this.letters[color];
         }
 
-        public int getTotalTilesNumber(){
+        @Override
+        public int getTotalTilesNumber() {
             int tot_tiles = 0;
             char color = BLUE;
-            for(int i=0; i <= RED - BLUE; i++){
+            for (int i = 0; i <= RED - BLUE; i++) {
                 tot_tiles += this.letters[color];
                 color++;
             }
             return tot_tiles;
         }
 
-        private void generateMosaicMask(int col) {
-            for (int i = 0; i < MAX_MOSAIC_COL; i++) {
-                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_COL - col) % MAX_MOSAIC_ROW];
+        @Override
+        public int compareTo(MosaicCol mosaic_col) {
+            if(col == mosaic_col.col){
+                return 0;
+            }
+            else if(col > mosaic_col.col){
+                return 1;
+            }
+            else{
+                return -1;
             }
         }
 
-        public String getMosaic_colState() {
+        @Override
+        public boolean isRowTilesFull() {
+            return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
+        }
+
+        @Override
+        public boolean isStateEmpty() {
+            return this.mosaic_colState.isEmpty();
+        }
+
+        @Override
+        public String getStateString() {
             return this.mosaic_colState;
         }
 
-        boolean isMosaicColStateEmpty() {
-            return this.mosaic_colState.isEmpty();
+        @Override
+        public String toString(){
+            return getStateString();
+        }
+
+        @Override
+        public void updateState() {
+
         }
     }
 

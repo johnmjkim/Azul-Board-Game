@@ -5,7 +5,7 @@ import comp1110.ass2.State;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Storage implements State {
+public class Storage implements Tiles {
 
     String storageState = EMPTY_STATE;
     public ArrayList<StorageRow> storage_rows = new ArrayList<StorageRow>();
@@ -16,7 +16,7 @@ public class Storage implements State {
         this.storage_rows.clear();
         this.storageState = storageState;
         addStorageRow(storageState);
-        countStorageTilesNumber();
+        countTilesNumber(storageState);
     }
 
     public void addStorageRow(String storageState){
@@ -65,24 +65,22 @@ public class Storage implements State {
 
     }
 
-    private void countStorageTilesNumber(){
+    @Override
+    public void countTilesNumber(String storageState){
         for( StorageRow sr : this.storage_rows){
-            if(!sr.isStorageRowStateEmpty()){
+            if(!sr.isStateEmpty()){
                 //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
-                this.letters[sr.getTilesColor()] += sr.getTilesNumber();
+                this.letters[sr.getTilesColor()] += sr.getTotalTilesNumber();
             }
         }
     }
 
-    public String getStorageState(){
-        updateState();
-        return this.storageState;
-    }
-
+    @Override
     public int getTilesNumber(char color) {
         return this.letters[color];
     }
 
+    @Override
     public int getTotalTilesNumber(){
         int tot_tiles = 0;
         char color = BLUE;
@@ -111,7 +109,7 @@ public class Storage implements State {
     boolean existsStorageRowTilesFull() {
         boolean existsRowTilesFull = false;
         for( StorageRow sr : this.storage_rows){
-            if(sr.isStorageRowTilesFull()){
+            if(sr.isRowTilesFull()){
                 existsRowTilesFull = true;
             }
         }
@@ -119,7 +117,11 @@ public class Storage implements State {
     }
 
     boolean isStorageRowTilesFull( int row ){
-        return this.storage_rows.get(row).isStorageRowTilesFull();
+        return this.storage_rows.get(row).isRowTilesFull();
+    }
+
+    public StorageRow getStorageRow(int row){
+        return this.storage_rows.get(row);
     }
 
     @Override
@@ -133,13 +135,18 @@ public class Storage implements State {
     }
 
     @Override
+    public String toString(){
+        return getStateString();
+    }
+
+    @Override
     public void updateState() {
         StringBuilder SB = new StringBuilder();
         int i=0;
         for( StorageRow sr : storage_rows ){
-            if(!sr.isStorageRowStateEmpty()){
+            if(!sr.isStateEmpty()){
                 SB.append(i);
-                SB.append(sr.getStorage_rowState());
+                SB.append(sr.getStateString());
             }
             i++;
         }
@@ -150,8 +157,9 @@ public class Storage implements State {
      * Inner class eachStorageRow of Storage class
      * Each player has eachStorageRow state stored here
      */
-    public class StorageRow implements Comparable<StorageRow>{
+    public class StorageRow implements CoordinateTyped, Comparable<StorageRow>{
         String storage_rowState = EMPTY_STATE;
+        char storage_row_color;
         int row;
         int MAX_TILES_LIMIT;
         int[] letters = new int[128];
@@ -160,25 +168,11 @@ public class Storage implements State {
             this.storage_rowState = storage_rowState;
             this.row = row;
             this.MAX_TILES_LIMIT = row + 1;
-            this.letters[getTilesColor()] = getTilesNumber();
-        }
-
-        public String getStorage_rowState(){
-            return this.storage_rowState;
-        }
-
-        public int getTilesNumber(){
-            if(this.isStorageRowStateEmpty()){
-                return 0;
-            }
-            else{
-                int storage_row_count = Character.getNumericValue(this.storage_rowState.charAt(1));
-                return storage_row_count;
-            }
+            countTilesNumber(storage_rowState);
         }
 
         public char getTilesColor(){
-            if(this.isStorageRowStateEmpty()){
+            if(this.isStateEmpty()){
                 return ' ';
             }
             else{
@@ -187,14 +181,22 @@ public class Storage implements State {
             }
         }
 
+        boolean isStorageRowTileColorValid(char color){
+            return (getTilesColor() == color);
+        }
+
+        boolean isStorageRowTilesValid(){
+            return (this.MAX_TILES_LIMIT >= getTotalTilesNumber());
+        }
+
         public void removeTile(char color) {
             if(isStorageRowTileColorValid(color)){
                 this.letters[color]--;
             }
-            updateStorageRowState();
+            updateState();
         }
 
-        public void removeAllTiles(){
+        public void removeAllTiles() {
             char color = BLUE;
             for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
                 while(this.letters[color] > 0){
@@ -202,50 +204,20 @@ public class Storage implements State {
                 }
                 color++;
             }
-            updateStorageRowState();
+            updateState();
         }
 
-        public void addTile(char color){
-            if(isStorageRowTileColorValid(color) || (getTilesNumber() == 0)){
-                if(this.MAX_TILES_LIMIT > getTilesNumber()) {
+        public void addTile(char color) {
+            if (isStorageRowTileColorValid(color) || (getTilesNumber(color) == 0)) {
+                if (this.MAX_TILES_LIMIT > getTilesNumber(color)) {
                     this.letters[color]++;
-                    updateStorageRowState();
-                }
-                else{
+                    updateState();
+                } else {
                     System.out.println("Max storage row tiles reached");
                 }
-            }
-            else{
+            } else {
                 System.out.println("Max incompatible tile adding");
             }
-        }
-
-        public void updateStorageRowState(){
-            StringBuilder SB = new StringBuilder();
-            if(getTilesColor() >= BLUE && getTilesColor() <= RED){
-                SB.append(getTilesColor());
-                SB.append(this.letters[getTilesColor()]);
-            }
-            else{
-                SB.append("");
-            }
-            this.storage_rowState = String.valueOf(SB);
-        }
-
-        boolean isStorageRowTileColorValid(char color){
-            return (getTilesColor() == color);
-        }
-
-        boolean isStorageRowTilesFull(){
-            return (this.MAX_TILES_LIMIT == getTilesNumber());
-        }
-
-        boolean isStorageRowTilesValid(){
-            return (this.MAX_TILES_LIMIT >= getTilesNumber());
-        }
-
-        boolean isStorageRowStateEmpty(){
-            return this.storage_rowState.isEmpty();
         }
 
         @Override
@@ -259,6 +231,66 @@ public class Storage implements State {
             else{
                 return -1;
             }
+        }
+
+        @Override
+        public boolean isStateEmpty() {
+            return this.storage_rowState.isEmpty();
+        }
+
+        @Override
+        public String getStateString() {
+            return this.storage_rowState;
+        }
+
+        @Override
+        public String toString(){
+            return getStateString();
+        }
+
+        @Override
+        public void updateState() {
+            StringBuilder SB = new StringBuilder();
+            if(getTilesColor() >= BLUE && getTilesColor() <= RED){
+                SB.append(getTilesColor());
+                SB.append(this.letters[getTilesColor()]);
+            }
+            else{
+                SB.append("");
+            }
+            this.storage_rowState = String.valueOf(SB);
+        }
+
+        @Override
+        public void countTilesNumber(String State) {
+            this.storage_row_color = getTilesColor();
+            if(this.isStateEmpty()){
+
+            }
+            else{
+                int storage_row_count = Character.getNumericValue(State.charAt(1));
+                this.letters[storage_row_color] = storage_row_count;
+            }
+        }
+
+        @Override
+        public int getTilesNumber(char color) {
+            if(this.isStateEmpty()){
+                return 0;
+            }
+            else {
+                return this.letters[color];
+            }
+        }
+
+        @Override
+        public int getTotalTilesNumber() {
+            return getTilesNumber(this.storage_row_color);
+        }
+
+        @Override
+        public boolean isRowTilesFull() {
+            return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
     }
 }

@@ -28,10 +28,6 @@ public class States implements State {
         this.State = setState;
     }
 
-    public void printState() {
-        System.out.println(State);
-    }
-
     @Override
     public boolean isStateEmpty() {
         return this.State.isEmpty();
@@ -40,6 +36,11 @@ public class States implements State {
     @Override
     public String getStateString() {
         return this.State;
+    }
+
+    @Override
+    public String toString(){
+        return getStateString();
     }
 
     @Override

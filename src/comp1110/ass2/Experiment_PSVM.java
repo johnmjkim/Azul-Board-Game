@@ -14,109 +14,38 @@ public class Experiment_PSVM implements Constants{
 
         // Shared State Experiment
 
-        SharedState ss = new SharedState(input_sharedState_2, 2);
+        SharedState ss = new SharedState(input_sharedState_2, DEFAULT_MAX_PLAYER);
+        PlayerState ps = new PlayerState(input_playerState_1, DEFAULT_MAX_PLAYER);
 
-        System.out.println(ss.getState());
-
-        System.out.println(ss.getSharedState());
-        ss.bag.removeTile('a');
-        ss.bag.removeTile('b');
-        ss.discard.removeTile('b');
-        ss.discard.removeTile('b');
-        ss.center.removeTile('c');
-        ss.center.removeTile('d');
-        System.out.println(ss.getSharedState());
-        //ss.bag.refillTilesBag("0304000000");
-        //ss.discard.refillTilesDiscard("0204000405");
-        System.out.println(ss.getSharedState());
-        ss.center.addTile('c');
-        ss.center.addTile('b');
-        System.out.println(ss.getSharedState());
-        ss.center.removeAllTiles();
-        System.out.println(ss.getSharedState());
-        System.out.println(ss.factories.getStateString());
-        System.out.println(ss.factories.factory.get(1));
-        System.out.println(ss.factories.getFactoryTotalTiles());
-        System.out.println(ss.factories.getFactoryTilesNumber('c'));
-        ss.bag.removeAllTiles();
-        ss.refillFactory();
-        System.out.println(ss.getSharedState());
-
-        System.out.println(ss.factories.factory.get(0));
-
-        // Player State Experiment
-        PlayerState ps = new PlayerState(input_playerState_1, 2);
-
-        System.out.println(ps.getState());
-        System.out.println(ps.getPlayerState());
-        System.out.println(ps.nplayers.get(0).getStateString());
-        System.out.println(ps.nplayers.get(0).score.getStateString());
-        System.out.println(ps.nplayers.get(0).mosaic.getStateString());
-        System.out.println(ps.nplayers.get(0).storage.getStateString());
-        System.out.println(ps.nplayers.get(0).floor.getStateString());
-
-        int tot_tiles = 0;
-        String tiles_to_discard;
-        System.out.println(ss.getSharedState());
-        System.out.println(ps.getPlayerState());
-        tot_tiles = ps.nplayers.get(0).floor.getTotalTilesNumber();
-        tiles_to_discard = ps.nplayers.get(0).floor.getFloorTilesString();
-        ps.nplayers.get(0).score.clearFloorScore(tot_tiles);
-        ps.nplayers.get(0).floor.removeAllTiles();
-        //ss.discard.refillTilesDiscard(tiles_to_discard);
-        System.out.println(ss.getSharedState());
-        System.out.println(ps.getPlayerState());
-
-
-        // NextRound experiment
-        String[] gameState = new String[2];
-        gameState[0] = input_sharedState_2;
-        gameState[1] = input_playerState_1;
-
-        System.out.println(gameState[0]);
-        System.out.println(gameState[1]);
-
-        gameState = Azul.nextRound(gameState);
-
-        System.out.println("After all preparation for next round");
-        System.out.println(gameState[0]);
-        System.out.println(gameState[1]);
-
-        System.out.println(ps.getPlayerState());
-        System.out.println(ps.nplayers.get(0).storage.getStorageState());
-        System.out.println(ps.nplayers.get(0).storage.storage_rows.get(2).getTilesNumber());
-        ps.nplayers.get(0).storage.storage_rows.get(2).addTile('c');
-        System.out.println(ps.nplayers.get(0).storage.getStorageState());
-        System.out.println(ps.nplayers.get(0).mosaic.getMosaicState());
-
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getMosaic_rowState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(1).getMosaic_rowState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(2).getMosaic_rowState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(3).getMosaic_rowState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(4).getMosaic_rowState());
+        System.out.println( " SharedState : " + ss );
+        System.out.println( "   TurnState : " + ss.turnState );
+        System.out.println( "   FactoryState : " + ss.factories );
+        for(int i=0; i < DEFAULT_FACTORY_MAX_NUMBER; i++){
+            System.out.println( "     Factory " + i + " : " + ss.factories.getFactory(i));
+        }
+        System.out.println( "   CenterState : " + ss.center );
+        System.out.println( "   BagState : " + ss.bag );
+        System.out.println( "   DiscardState : " + ss.discard );
         System.out.println();
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(0).getMosaic_colState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(1).getMosaic_colState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(2).getMosaic_colState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(3).getMosaic_colState());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_cols.get(4).getMosaic_colState());
 
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
-        System.out.println(ps.nplayers.get(0).mosaic.mosaic_rows.get(0).getTotalTilesNumber());
 
-        String sharedState_String = input_sharedState_2;
-        String playerState_String = input_playerState_1;
-
-        SharedState sharedState_class = new SharedState(sharedState_String , MAX_PLAYER_NUMBER);
-        PlayerState playerState_class = new PlayerState(playerState_String , MAX_PLAYER_NUMBER);
-
-        String player_state_of_A = playerState_class.getPlayerState('A');
-        String player_state_of_B = playerState_class.getPlayerState('B');
-
-        System.out.println(player_state_of_A);
-        System.out.println(player_state_of_B);
-
-        System.out.println(sharedState_class.bag.getStateString());
+        System.out.println( " PLayerState : " + ps );
+        for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
+            System.out.println( " PLayerState " + ALL_PLAYERS[i] + " : " + ps.getPlayerState(ALL_PLAYERS[i]));
+            System.out.println( "   PLayer " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic);
+            for(int j=0; j < MAX_MOSAIC_ROW; j++){
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicRowState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
+            }
+            for(int j=0; j < MAX_MOSAIC_COL; j++){
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicColState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j));
+            }
+            System.out.println( "   PLayer " + ALL_PLAYERS[i] + " StorageState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage);
+            for(int j=0; j < MAX_STORAGE_ROW; j++){
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " StorageRowState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j));
+            }
+            System.out.println( "   PLayer " + ALL_PLAYERS[i] + " FloorState : " + ps.getnPlayer(ALL_PLAYERS[i]).floor);
+            System.out.println();
+        }
 
     }
 }
