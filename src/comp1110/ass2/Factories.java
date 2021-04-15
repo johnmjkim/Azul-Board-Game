@@ -65,11 +65,6 @@ public class Factories implements State {
         }
     }
 
-    public String getFactoriesState(){
-        updateState();
-        return this.factoriesState;
-    }
-
     public int getFactoryTilesNumber(char color) {
         int tot_tiles = 0;
         for( Factory f : this.factory){
@@ -85,19 +80,6 @@ public class Factories implements State {
         }
         return tot_tiles;
     }
-    /*
-    public void updatefactoriesState(){
-        StringBuilder SB = new StringBuilder();
-        for(int i=0; i < max_factories_number; i++){
-            if(!this.factory.get(i).isStateEmpty()){
-                SB.append(this.factory.get(i).number);
-                SB.append(this.factory.get(i).factoryState);
-            }
-        }
-        this.factoriesState = String.valueOf(SB);
-    }
-
-     */
 
     public boolean isFactoryFull() {
         return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());

@@ -4,7 +4,7 @@ import comp1110.ass2.State;
 
 import java.util.Arrays;
 
-public class Factory implements State {
+public class Factory implements OrderTyped {
 
     int number;
     int[] letters = new int[128];
@@ -13,9 +13,10 @@ public class Factory implements State {
     public Factory(String factoryState, int number) {
         this.factoryState = factoryState;
         this.number = number;
-        countFactoryTilesNumber();
+        //countFactoryTilesNumber();
+        countTilesNumber(factoryState);
     }
-
+    /*
     public void countFactoryTilesNumber() {
         int[] letters_array = new int[128];
         char[] eachFactoryState_char_array = factoryState.toCharArray();
@@ -30,21 +31,10 @@ public class Factory implements State {
         this.letters[RED] = letters_array[RED];
     }
 
-    /**
-     * Get number of specific color of tiles in EACH factory
-     *
-     * @param color
-     * @return
-     */
     public int getTilesNumber(char color) {
         return this.letters[color];
     }
 
-    /**
-     * Get number ALL of tiles in EACH factory
-     *
-     * @return
-     */
     public int getTotalTilesNumber() {
         int tot_tiles = 0;
         char color = BLUE;
@@ -54,6 +44,8 @@ public class Factory implements State {
         }
         return tot_tiles;
     }
+
+     */
 
     /**
      * Each factory refills with given factoryTiles
@@ -97,4 +89,60 @@ public class Factory implements State {
 
     }
 
+    @Override
+    public void refillTiles(char[] refill) {
+        StringBuilder SB = new StringBuilder();
+        Arrays.sort(refill);
+        for (char c : refill) {
+            SB.append(c);
+            this.letters[c]++;
+        }
+        this.factoryState = String.valueOf(SB);
+    }
+
+    @Override
+    public void countTilesNumber(String State) {
+        int[] letters_array = new int[128];
+        char[] eachFactoryState_char_array = State.toCharArray();
+        for (char c : eachFactoryState_char_array) {
+            letters_array[c]++;
+        }
+        // 'a'~'f'
+        this.letters[BLUE] = letters_array[BLUE];
+        this.letters[GREEN] = letters_array[GREEN];
+        this.letters[ORANGE] = letters_array[ORANGE];
+        this.letters[PURPLE] = letters_array[PURPLE];
+        this.letters[RED] = letters_array[RED];
+    }
+
+    @Override
+    public int getTilesNumber(char color) {
+        return this.letters[color];
+    }
+
+    @Override
+    public int getTotalTilesNumber() {
+        int tot_tiles = 0;
+        char color = BLUE;
+        for (int i = 0; i <= RED - BLUE; i++) {
+            tot_tiles += this.letters[color];
+            color++;
+        }
+        return tot_tiles;
+    }
+
+    @Override
+    public void removeTile(char color) {
+
+    }
+
+    @Override
+    public void removeAllTiles() {
+
+    }
+
+    @Override
+    public void addTile(char color) {
+
+    }
 }

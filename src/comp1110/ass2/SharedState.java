@@ -144,7 +144,8 @@ public class SharedState extends States {
     public void refillDiscardtoBag() {
         if(this.discard.getTotalTilesNumber() > 0){
             String discard_tiles = this.discard.getStateString();
-            this.bag.refillTilesBag(discard_tiles);
+            this.bag.refillTiles(discard_tiles);
+            //this.bag.refillTilesBag(discard_tiles);
             this.discard.removeAllTiles();
         }
     }

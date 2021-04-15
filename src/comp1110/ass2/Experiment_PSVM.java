@@ -26,15 +26,15 @@ public class Experiment_PSVM implements Constants{
         ss.center.removeTile('c');
         ss.center.removeTile('d');
         System.out.println(ss.getSharedState());
-        ss.bag.refillTilesBag("0304000000");
-        ss.discard.refillTilesDiscard("0204000405");
+        //ss.bag.refillTilesBag("0304000000");
+        //ss.discard.refillTilesDiscard("0204000405");
         System.out.println(ss.getSharedState());
         ss.center.addTile('c');
         ss.center.addTile('b');
         System.out.println(ss.getSharedState());
         ss.center.removeAllTiles();
         System.out.println(ss.getSharedState());
-        System.out.println(ss.factories.getFactoriesState());
+        System.out.println(ss.factories.getStateString());
         System.out.println(ss.factories.factory.get(1));
         System.out.println(ss.factories.getFactoryTotalTiles());
         System.out.println(ss.factories.getFactoryTilesNumber('c'));
@@ -63,7 +63,7 @@ public class Experiment_PSVM implements Constants{
         tiles_to_discard = ps.nplayers.get(0).floor.getFloorTilesString();
         ps.nplayers.get(0).score.clearFloorScore(tot_tiles);
         ps.nplayers.get(0).floor.removeAllTiles();
-        ss.discard.refillTilesDiscard(tiles_to_discard);
+        //ss.discard.refillTilesDiscard(tiles_to_discard);
         System.out.println(ss.getSharedState());
         System.out.println(ps.getPlayerState());
 

@@ -1049,7 +1049,8 @@ public class Azul implements Constants{
             // Adjust score, remove tiles from floor to discard for each player accordingly
             playerState.nplayers.get(i).score.clearFloorScore(tot_tiles);
             playerState.nplayers.get(i).floor.removeAllTiles();
-            sharedState.discard.refillTilesDiscard(tiles_to_discard);
+            //sharedState.discard.refillTilesDiscard(tiles_to_discard);
+            sharedState.discard.refillTiles(tiles_to_discard);
 
             System.out.println(" Player " + ALL_PLAYERS[i] + " Floor Cleared ");
             System.out.println(sharedState.getSharedState());
