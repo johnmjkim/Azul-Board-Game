@@ -109,7 +109,7 @@ public class Storage implements Tiles {
     boolean existsStorageRowTilesFull() {
         boolean existsRowTilesFull = false;
         for( StorageRow sr : this.storage_rows){
-            if(sr.isRowTilesFull()){
+            if(sr.isTilesFull()){
                 existsRowTilesFull = true;
             }
         }
@@ -117,7 +117,7 @@ public class Storage implements Tiles {
     }
 
     boolean isStorageRowTilesFull( int row ){
-        return this.storage_rows.get(row).isRowTilesFull();
+        return this.storage_rows.get(row).isTilesFull();
     }
 
     public StorageRow getStorageRow(int row){
@@ -289,7 +289,7 @@ public class Storage implements Tiles {
         }
 
         @Override
-        public boolean isRowTilesFull() {
+        public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
     }

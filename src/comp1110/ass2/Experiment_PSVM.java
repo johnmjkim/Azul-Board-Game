@@ -31,7 +31,7 @@ public class Experiment_PSVM implements Constants{
 
         System.out.println( " PLayerState : " + ps );
         for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
-            System.out.println( " PLayerState " + ALL_PLAYERS[i] + " : " + ps.getPlayerState(ALL_PLAYERS[i]));
+            System.out.println( " PLayerState " + ALL_PLAYERS[i] + " : " + ps.getUpdatedPlayerState(ALL_PLAYERS[i]));
             System.out.println( "   PLayer " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic);
             for(int j=0; j < MAX_MOSAIC_ROW; j++){
                 System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicRowState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));

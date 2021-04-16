@@ -221,7 +221,7 @@ public class Mosaic implements Tiles {
         }
 
         @Override
-        public boolean isRowTilesFull() {
+        public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
 
@@ -314,7 +314,7 @@ public class Mosaic implements Tiles {
         }
 
         @Override
-        public boolean isRowTilesFull() {
+        public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
 
