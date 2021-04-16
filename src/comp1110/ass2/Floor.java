@@ -29,6 +29,10 @@ public class Floor implements OrderTyped {
         return String.valueOf(SB);
     }
 
+    boolean hasOnlyOneFirstPlayerToken() {
+        return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
+    }
+
     boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
 
     @Override

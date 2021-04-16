@@ -72,7 +72,7 @@ public class nPlayer implements State {
     public boolean isEnder(){
         boolean isEnder = false;
         for(int i=0; i < MAX_MOSAIC_ROW; i++){
-            if(this.mosaic.mosaic_rows.get(i).isRowTilesFull()){
+            if(this.mosaic.mosaic_rows.get(i).isTilesFull()){
                 isEnder = true;
             }
         }

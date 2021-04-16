@@ -62,12 +62,12 @@ public class PlayerState extends States {
         return this.nplayers.get(nplayer_index);
     }
 
-    public String getPlayerState(){
+    public String getUpdatedPlayerState(){
         updatePlayerState();
         return super.playerState;
     }
 
-    public String getPlayerState( char player ){
+    public String getUpdatedPlayerState( char player ){
         updatePlayerState();
         int index = getPlayer_index( player );
         return this.playerStates[index];

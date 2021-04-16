@@ -50,7 +50,7 @@ public class SharedState extends States {
         updateSharedState();
     }
 
-    public String getSharedState(){
+    public String getUpdatedSharedState(){
         updateSharedState();
         return super.sharedState;
     }
