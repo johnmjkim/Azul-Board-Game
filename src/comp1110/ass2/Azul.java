@@ -109,7 +109,7 @@ public class Azul implements Constants{
 
         // Find capital letters valid
         if (sharedState_name_arr.size() != 5) {
-            System.out.println(sharedState_name_arr.size() == 5);
+            //System.out.println(sharedState_name_arr.size() == 5);
             return false;
         }
         // Player is valid
