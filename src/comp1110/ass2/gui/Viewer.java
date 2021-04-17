@@ -45,7 +45,6 @@ public class Viewer extends Application {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        //get the text in State
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
@@ -184,7 +183,6 @@ public class Viewer extends Application {
         }
 
         //FACTORIES
-
         {String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C")+1);
         String[] Factories = factories.split("");
         //0cdde1bbbe2abde3cdee4bcceC
@@ -299,10 +297,7 @@ public class Viewer extends Application {
             matrixBoard.getChildren().add(D);
         }}
 
-        //state[0]=AF1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
-
-        //floor Done
+        //floor
         String floor_A = player_state_of_A.substring(player_state_of_A.indexOf("F") + 1);
         String[] Floor_A = floor_A.split("");
         for (int i = 0; i < Floor_A.length; i++) {
@@ -331,8 +326,6 @@ public class Viewer extends Application {
 
 
         //STORAGE
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
         String storage_A = player_state_of_A.substring(player_state_of_A.indexOf("S") + 1, player_state_of_A.indexOf("F"));
         String[] Storage_A = storage_A.split("");
 
@@ -476,7 +469,6 @@ public class Viewer extends Application {
         }
 
         //SCORE
-
         String score_A = player_state_of_A.substring(player_state_of_A.indexOf("A") + 1, player_state_of_A.indexOf("M"));
         String[] Score_A = score_A.split("");
         int a = Integer.parseInt(Score_A[0])*10+Integer.parseInt(Score_A[1]);
@@ -511,7 +503,7 @@ public class Viewer extends Application {
         displayBoard();
     }
 
-    // setupViewer() is to set up the Viewer and execute all "1. Game Setup" phase
+    // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
     private void setupViewer() {
         Label playerLabel = new Label("Player State:");
         playerTextField = new TextField();
