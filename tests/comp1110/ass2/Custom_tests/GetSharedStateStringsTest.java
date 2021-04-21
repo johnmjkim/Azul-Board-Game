@@ -1,4 +1,4 @@
-package comp1110.ass2.MinJaeKim_tests;
+package comp1110.ass2.Custom_tests;
 
 import comp1110.ass2.SharedState;
 import org.junit.jupiter.api.Test;
