@@ -34,14 +34,14 @@ public class Experiment_PSVM implements Constants{
             System.out.println( " PLayerState " + ALL_PLAYERS[i] + " : " + ps.getUpdatedPlayerState(ALL_PLAYERS[i]));
             System.out.println( "   PLayer " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic);
             for(int j=0; j < MAX_MOSAIC_ROW; j++){
-                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicRowState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
             }
             for(int j=0; j < MAX_MOSAIC_COL; j++){
-                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicColState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j));
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " MosaicColState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j));
             }
             System.out.println( "   PLayer " + ALL_PLAYERS[i] + " StorageState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage);
             for(int j=0; j < MAX_STORAGE_ROW; j++){
-                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " StorageRowState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j));
+                System.out.println( "     PLayer " + ALL_PLAYERS[i] + " StorageRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j));
             }
             System.out.println( "   PLayer " + ALL_PLAYERS[i] + " FloorState : " + ps.getnPlayer(ALL_PLAYERS[i]).floor);
             System.out.println();

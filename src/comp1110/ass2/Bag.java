@@ -16,91 +16,6 @@ public class Bag implements BagTyped {
         countTilesNumber(bagState);
     }
 
-    /*
-    public void countBagTilesNumber(String bagState){
-        ArrayList<Integer> bags_counts = new ArrayList<Integer>();
-        char[] bagState_char_array = bagState.toCharArray();
-        StringBuilder SB = new StringBuilder();
-        int len = 0;
-        for(char c : bagState_char_array){
-            if( len % 2 == 0 && len != 0){
-                bags_counts.add(Integer.valueOf(String.valueOf(SB)));
-                SB.delete(0,SB.length());
-            }
-            SB.append(c);
-            len++;
-        }
-        bags_counts.add(Integer.valueOf(String.valueOf(SB)));
-        SB.delete(0,SB.length());
-        // 'a'~'r'
-        this.letters[BLUE] = bags_counts.get(0);
-        this.letters[GREEN] = bags_counts.get(1);
-        this.letters[ORANGE] = bags_counts.get(2);
-        this.letters[PURPLE] = bags_counts.get(3);
-        this.letters[RED] = bags_counts.get(4);
-    }
-
-    public int getTilesNumber(char color){
-        return this.letters[color];
-    }
-
-    public int getTotalTilesNumber(){
-        int tot_tiles = 0;
-        char color = BLUE;
-        for(int i=0; i <= RED - BLUE; i++){
-            tot_tiles += this.letters[color];
-            color++;
-        }
-        return tot_tiles;
-    }
-
-    public void removeTile(char color){
-        this.letters[color]--;
-        updateState();
-    }
-
-    public void removeAllTiles(){
-        char color = BLUE;
-        for(int i=0; i <= RED - BLUE; i++){
-            while(this.letters[color] > 0){
-                this.letters[color]--;
-            }
-            color++;
-        }
-        updateState();
-    }
-
-    public void addTile(char color){
-        this.letters[color]++;
-        updateState();
-    }
-
-    public void refillTilesBag(String refill){
-        ArrayList<Integer> bags_counts = new ArrayList<Integer>();
-        char[] refill_char_array = refill.toCharArray();
-        StringBuilder SB = new StringBuilder();
-        int len = 0;
-        for(char c : refill_char_array){
-            if( len % 2 == 0 && len != 0){
-                bags_counts.add(Integer.valueOf(String.valueOf(SB)));
-                SB.delete(0,SB.length());
-            }
-            SB.append(c);
-            len++;
-        }
-        bags_counts.add(Integer.valueOf(String.valueOf(SB)));
-        SB.delete(0,SB.length());
-        // 'a'~'f'
-        this.letters[BLUE] += bags_counts.get(0);
-        this.letters[GREEN] += bags_counts.get(1);
-        this.letters[ORANGE] += bags_counts.get(2);
-        this.letters[PURPLE] += bags_counts.get(3);
-        this.letters[RED] += bags_counts.get(4);
-        updateState();
-    }
-
-     */
-
     /**
      * Get random tiles based on number of tiles in bag
      * r_output range is 1 (inclusive) ~ getTotalTilesNumber() (inclusive)
@@ -159,6 +74,11 @@ public class Bag implements BagTyped {
     public String getStateString() {
         updateState();
         return this.bagState;
+    }
+
+    @Override
+    public String toString(){
+        return getStateString();
     }
 
     @Override

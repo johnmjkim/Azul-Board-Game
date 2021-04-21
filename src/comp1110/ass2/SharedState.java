@@ -77,6 +77,10 @@ public class SharedState extends States {
         super.sharedState = String.valueOf(SB);
     }
 
+    public String getTurnState(){
+        return this.turnState;
+    }
+
     public void changeTurn(){
         char now_turn = this.turnState.charAt(0);
         int player_idx = 0;

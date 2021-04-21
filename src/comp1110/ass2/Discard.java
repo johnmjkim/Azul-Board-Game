@@ -15,92 +15,6 @@ public class Discard implements BagTyped {
         countTilesNumber(discardState);
     }
 
-    /*
-
-    public void countDiscardTilesNumber(String discardState){
-        ArrayList<Integer> discards_counts = new ArrayList<Integer>();
-        char[] discardState_char_array = discardState.toCharArray();
-        StringBuilder SB = new StringBuilder();
-        int len = 0;
-        for(char c : discardState_char_array){
-            if( len % 2 == 0 && len != 0){
-                discards_counts.add(Integer.valueOf(String.valueOf(SB)));
-                SB.delete(0,SB.length());
-            }
-            SB.append(c);
-            len++;
-        }
-        discards_counts.add(Integer.valueOf(String.valueOf(SB)));
-        SB.delete(0,SB.length());
-        // 'a'~'f'
-        this.letters[BLUE] = discards_counts.get(0);
-        this.letters[GREEN] = discards_counts.get(1);
-        this.letters[ORANGE] = discards_counts.get(2);
-        this.letters[PURPLE] = discards_counts.get(3);
-        this.letters[RED] = discards_counts.get(4);
-    }
-
-    public int getTilesNumber(char color){
-        return this.letters[color];
-    }
-
-    public int getTotalTilesNumber(){
-        int tot_tiles = 0;
-        char color = BLUE;
-        for(int i=0; i <= RED - BLUE; i++){
-            tot_tiles += this.letters[color];
-            color++;
-        }
-        return tot_tiles;
-    }
-
-    public void removeTile(char color){
-        this.letters[color]--;
-        updateState();
-    }
-
-    public void removeAllTiles(){
-        char color = BLUE;
-        for(int i=0; i <= RED - BLUE; i++){
-            while(this.letters[color] > 0){
-                this.letters[color]--;
-            }
-            color++;
-        }
-        updateState();
-    }
-
-    public void addTile(char color){
-        this.letters[color]++;
-        updateState();
-    }
-
-    public void refillTilesDiscard(String refill){
-        ArrayList<Integer> discards_counts = new ArrayList<Integer>();
-        char[] refill_char_array = refill.toCharArray();
-        StringBuilder SB = new StringBuilder();
-        int len = 0;
-        for(char c : refill_char_array){
-            if( len % 2 == 0 && len != 0){
-                discards_counts.add(Integer.valueOf(String.valueOf(SB)));
-                SB.delete(0,SB.length());
-            }
-            SB.append(c);
-            len++;
-        }
-        discards_counts.add(Integer.valueOf(String.valueOf(SB)));
-        SB.delete(0,SB.length());
-        // 'a'~'f'
-        this.letters[BLUE] += discards_counts.get(0);
-        this.letters[GREEN] += discards_counts.get(1);
-        this.letters[ORANGE] += discards_counts.get(2);
-        this.letters[PURPLE] += discards_counts.get(3);
-        this.letters[RED] += discards_counts.get(4);
-        updateState();
-    }
-
-     */
-
     @Override
     public boolean isStateEmpty() {
         updateState();
@@ -111,6 +25,11 @@ public class Discard implements BagTyped {
     public String getStateString() {
         updateState();
         return this.discardState;
+    }
+
+    @Override
+    public String toString(){
+        return getStateString();
     }
 
     @Override
