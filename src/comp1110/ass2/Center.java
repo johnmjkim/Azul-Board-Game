@@ -34,6 +34,11 @@ public class Center implements OrderTyped {
     }
 
     @Override
+    public String toString(){
+        return getStateString();
+    }
+
+    @Override
     public void updateState() {
         StringBuilder SB = new StringBuilder();
         SB.append(EMPTY_STATE);
