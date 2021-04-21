@@ -40,6 +40,9 @@ public interface TestCases extends Constants {
 
     };
 
+    /**
+     * Valid States Turn
+     */
     public static final String[][] VALID_STATES_TURNS = {
             // full game, automatic scoring
             // ROUND 1
@@ -70,6 +73,9 @@ public interface TestCases extends Constants {
             new String[]{"B", "A", "B"}
     };
 
+    /**
+     * Valid States Factories and Factory
+     */
     public static final String[][] VALID_STATES_FACTORIES = {
             // full game, automatic scoring
             // ROUND 1
@@ -101,6 +107,43 @@ public interface TestCases extends Constants {
 
     };
 
+    /**
+     * Valid Player States
+     */
+    public static final String[][] VALID_PLAYER_STATES = {
+            // full game, automatic scoring
+            // ROUND 1
+            new String[]{"0MSF", "0MSF"},
+            new String[]{"0MS0d11c22b33e44e1Fef", "0MS0a11b22d33c2F"},
+            new String[]{"7Md03c13b23e32S4e1Fef", "3Ma00b12d20S3c2F"},
+            // ROUND 2
+            new String[]{"5Md03c13b23e32S4e1F", "3Ma00b12d20S3c2F"},
+            new String[]{"5Md03c13b23e32S2d33b44e5Ff", "3Ma00b12d20S0b11d23c24a5Fb"},
+            new String[]{"8Md03c13d20b23e32b34e43SFf", "7Ma00b01b12d14d20a44S3c2Fb"},
+            // ROUND 3
+            new String[]{"7Md03c13d20b23e32b34e43SF", "6Ma00b01b12d14d20a44S3c2F"},
+            new String[]{"7Md03c13d20b23e32b34e43S0b11d22a33a14d2F", "6Ma00b01b12d14d20a44S2e33c44c4Fbbf"},
+            new String[]{"14Mb01d03c13d14d20a22b23e32b34e43S3a14d2F", "10Ma00b01b12d14d20e21c30a44S4c4Fbbf"},
+            // ROUND 4
+            new String[]{"14Mb01d03c13d14d20a22b23e32b34e43S3a14d2F", "6Ma00b01b12d14d20e21c30a44S4c4F"},
+            new String[]{"14Mb01d03c13d14d20a22b23e32b34e43S0e11e22c33a44d2Faab", "6Ma00b01b12d14d20e21c30a44S1e22c23d34c5Ff"},
+            new String[]{"35Mb01d03e04e10c13d14d20a22b23c24e32a33b34e43S4d2Faab", "11Ma00b01e10b12d14d20e21c30c41a44S2c23d3Ff"},
+            // ROUND 5
+            new String[]{"31Mb01d03e04e10c13d14d20a22b23c24e32a33b34e43S4d2F", "10Ma00b01e10b12d14d20e21c30c41a44S2c23d3F"},
+            new String[]{"31Mb01d03e04e10c13d14d20a22b23c24e32a33b34e43S1a22e23c34d5Fadf", "10Ma00b01e10b12d14d20e21c30c41a44S1a22c33d34b5F"},
+            new String[]{"40Mb01d03e04e10a11c13d14d20a22b23c24e32a33b34d42e43S2e23c3Fadf", "25Ma00b01e10a11b12d14d20e21c24c30b40c41a44S3d3F"},
+            // ROUND 6
+            new String[]{"36Mb01d03e04e10a11c13d14d20a22b23c24e32a33b34d42e43S2e23c3F", "25Ma00b01e10a11b12d14d20e21c24c30b40c41a44S3d3F"},
+            new String[]{"36Mb01d03e04e10a11c13d14d20a22b23c24e32a33b34d42e43S0a11b22e33c3Feee", "25Ma00b01e10a11b12d14d20e21c24c30b40c41a44S0c11c22a33d4Faaadddf"},
+            new String[]{"58Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3Feee", "48Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SFaaadddf"},
+            // BONUS SCORING
+            new String[]{"75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3F", "60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF"}
+
+    };
+
+    /**
+     * Full Game Moves
+     */
     public static final String[][] FULL_GAME_WITH_MOVES = {
             new String[]{"AF0cdee1bdde2abbe3bcde4aaaeCfB1616181614D0000000000", "A0MSFB0MSF", "A2a4"},
             new String[]{"BF0cdee1bdde3bcde4aaaeCbbefB1616181614D0000000000", "A0MS4a1FB0MSF", "BCe2"},

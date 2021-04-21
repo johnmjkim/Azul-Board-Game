@@ -25,8 +25,10 @@ public class GetSharedStateStringsTest implements TestCases {
     private void SharedFactorytest(String in, String expected, int i) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         String out = ss.factories.getFactory(i).getStateString();
-        assertEquals(expected, out, "Input state in SharedFactorytest, Factroy " + i + " : \"" + in + "\"");
+        assertEquals(expected, out, "Input state in SharedFactorytest, Factory " + i + " : \"" + in + "\"");
     }
+
+    // TODO Complete Test for Center, Bag, Discard
 
     @Test
     public void testTurnState(){
