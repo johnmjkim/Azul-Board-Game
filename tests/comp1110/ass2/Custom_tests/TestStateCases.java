@@ -2,7 +2,7 @@ package comp1110.ass2.Custom_tests;
 
 import comp1110.ass2.Constants;
 
-public interface TestCases extends Constants {
+public interface TestStateCases extends Constants {
 
     public static final String EMPTY_PLAYER_STATE = "A0MSFB0MSF";
 
@@ -42,6 +42,7 @@ public interface TestCases extends Constants {
 
     /**
      * Valid States Turn
+     * Include 3 columns : Turn of SharedState, Turn of Player A, Turn of Player B State
      */
     public static final String[][] VALID_STATES_TURNS = {
             // full game, automatic scoring
@@ -75,6 +76,7 @@ public interface TestCases extends Constants {
 
     /**
      * Valid States Factories and Factory
+     * Include 6 columns : Factories, Factory 0, Factory 1, ... ,Factory 4
      */
     public static final String[][] VALID_STATES_FACTORIES = {
             // full game, automatic scoring
@@ -108,7 +110,32 @@ public interface TestCases extends Constants {
     };
 
     /**
+     * Valid States Center
+     * Include : Center
+     */
+    public static final String[] VALID_STATES_CENTER = {
+            // TODO Valid States Center Test Cases
+    };
+
+    /**
+     * Valid States Bag
+     * Include : Bag
+     */
+    public static final String[] VALID_STATES_BAG = {
+            // TODO Valid States Bag Test Cases
+    };
+
+    /**
+     * Valid States Discard
+     * Include : Discard
+     */
+    public static final String[] VALID_STATES_DISCARD = {
+            // TODO Valid States Discard Test Cases
+    };
+
+    /**
      * Valid Player States
+     * Include 2 columns : Player A's state, Player B's state
      */
     public static final String[][] VALID_PLAYER_STATES = {
             // full game, automatic scoring
@@ -139,6 +166,54 @@ public interface TestCases extends Constants {
             // BONUS SCORING
             new String[]{"75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3F", "60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF"}
 
+    };
+
+    /**
+     * Valid Player Mosaic States
+     * Include 2 columns: PLayer A Mosaic, Player B Mosaic
+     */
+    public static final String[][] VALID_STATES_MOSAIC = {
+            // TODO Valid States Mosaic Test Cases
+    };
+
+    /**
+     * Valid Player Mosaic Row States
+     * Include 10 columns: Player A Mosaic Row 1, 2, 3, 4, 5 and Player B Mosaic Row 1, 2, 3, 4, 5
+     */
+    public static final String[][] VALID_STATES_MOSAIC_ROW = {
+            // TODO Valid States Mosaic Row Test Cases
+    };
+
+    /**
+     * Valid Player Mosaic Col States
+     * Include 10 columns: Player A Mosaic Col 1, 2, 3, 4, 5 and Player B Mosaic Row 1, 2, 3, 4, 5
+     */
+    public static final String[][] VALID_STATES_MOSAIC_COL = {
+            // TODO Valid States Mosaic Col Test Cases
+    };
+
+    /**
+     * Valid Player Storage States
+     * Include 2 columns: PLayer A Storage, Player B Storage
+     */
+    public static final String[][] VALID_STATES_STORAGE = {
+            // TODO Valid States Storage Test Cases
+    };
+
+    /**
+     * Valid Player Storage Row States
+     * Include 10 columns: Player A Storage Row 1, 2, 3, 4, 5 and Player B Storage Row 1, 2, 3, 4, 5
+     */
+    public static final String[][] VALID_STATES_STORAGE_ROW = {
+            // TODO Valid States STORAGE Row Test Cases
+    };
+
+    /**
+     * Valid Player Floor States
+     * Include 2 columns: PLayer A Floor, Player B Floor
+     */
+    public static final String[][] VALID_STATES_FLOOR = {
+            // TODO Valid States FLOOR Test Cases
     };
 
     /**
