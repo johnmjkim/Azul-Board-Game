@@ -16,9 +16,13 @@ public class CountTilesTest implements TestCountCases{
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         int out = ss.factories.getFactoryTotalTiles();
         assertEquals(expected[0], out, "Input state in Factoriestest: \"" + in + "\"");
+    }
+
+    private void CountFactoriesByTilestest(String in, int[] expected) {
+        SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         char color = BLUE;
         for(int j=0; j <= RED - BLUE; j++){
-            out = ss.factories.getFactoryTilesNumber(color);
+            int out = ss.factories.getFactoryTilesNumber(color);
             assertEquals(expected[j+1], out, "Input state in Factoriestest: \"" + in + "\"");
             color++;
         }
@@ -28,14 +32,21 @@ public class CountTilesTest implements TestCountCases{
     }
 
     @Test
-    public void testFactoriesState(){
+    public void testFactoriesCount(){
         for (int i = 0; i < VALID_STATES.length; i++) {
             CountFactoriestest(VALID_STATES[i][0], TILES_FACTORIES[i]);
         }
     }
 
     @Test
-    public void testCenterState(){
+    public void testFactoriesCountByTiles(){
+        for (int i = 0; i < VALID_STATES.length; i++) {
+            CountFactoriesByTilestest(VALID_STATES[i][0], TILES_FACTORIES[i]);
+        }
+    }
+
+    @Test
+    public void testCenterCount(){
 
     }
 
