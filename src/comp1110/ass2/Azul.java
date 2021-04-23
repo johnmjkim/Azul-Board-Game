@@ -233,7 +233,10 @@ public class Azul implements Constants{
             if (!(c >= BLUE && c <= FIRST_PLAYER)) {
                 center_content_format = false;
             }
-            len++;
+            else if(!(c == FIRST_PLAYER)){
+                // Exclude first player token count
+                len++;
+            }
         }
         if (len > 3 * FACTORY_MAX_NUMBER) {
             center_content_format = false;
@@ -889,14 +892,15 @@ public class Azul implements Constants{
         boolean valid_SharedState = isSharedStateWellFormed(gameState[0]);
         boolean valid_PlayerState = isPlayerStateWellFormed(gameState[1]);
 
+        System.out.println(" Shared : " + gameState[0] + " Result : " + valid_SharedState);
+        System.out.println(" Player : " + gameState[1] + " Result : " + valid_PlayerState);
+
         if(valid_SharedState && valid_PlayerState){
-            System.out.println(" Shared : " + gameState[0]);
-            System.out.println(" Player : " + gameState[1]);
-            //sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-            //playerState = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+            System.out.println( " Both well formed " );
             return valid_SharedState && valid_PlayerState;
         }
         else{
+            System.out.println( " Not well formed ");
             return false;
         }
     }
