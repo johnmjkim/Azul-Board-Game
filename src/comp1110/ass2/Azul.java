@@ -189,7 +189,7 @@ public class Azul implements Constants{
                 if(!(factoryState_content_arr.get(i).length() == FACTORY_SIZE)){
                     factory_tilesnumber = false;
                 }
-                if(Character.getNumericValue(factoryState_name_arr.get(i)) < Character.getNumericValue(factoryState_name_arr.get(i-1))){
+                if(Character.getNumericValue(factoryState_name_arr.get(i)) <= Character.getNumericValue(factoryState_name_arr.get(i-1))){
                     factory_numerical_order = false;
                 }
             }
@@ -892,16 +892,73 @@ public class Azul implements Constants{
         boolean valid_SharedState = isSharedStateWellFormed(gameState[0]);
         boolean valid_PlayerState = isPlayerStateWellFormed(gameState[1]);
 
-        System.out.println(" Shared : " + gameState[0] + " Result : " + valid_SharedState);
-        System.out.println(" Player : " + gameState[1] + " Result : " + valid_PlayerState);
+        System.out.println(" Shared : " + gameState[0]);
+        System.out.println(" Player : " + gameState[1]);
 
-        if(valid_SharedState && valid_PlayerState){
-            System.out.println( " Both well formed " );
-            return valid_SharedState && valid_PlayerState;
-        }
-        else{
+        if(!(valid_SharedState && valid_PlayerState)){
             System.out.println( " Not well formed ");
             return false;
+        }
+        else{
+            System.out.println( " Both well formed " );
+            SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
+            PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
+            // Examine that
+            // storage row do not exceed tiles
+            // mosaic-storage do not have same color
+            // mosaic have valid positioning
+            for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
+                for(int j=0; j < MAX_MOSAIC_ROW; j++){
+                    char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
+                    boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
+                    boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
+                    boolean valid_mosaic_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid();
+
+                    if(!(valid_mosiac_storage_row && valid_storage_row)){
+                        return false;
+                    }
+                }
+            }
+            // Find total number of tiles of each color
+            char color = BLUE;
+            int total_tiles = 0;
+            for(int i=0; i <= FIRST_PLAYER - BLUE; i++) {
+                // Add tiles of shared states
+                int factory_tiles = ss.factories.getFactoryTilesNumber(color);
+                int center_tiles = ss.center.getTilesNumber(color);
+                int bag_tiles = ss.bag.getTilesNumber(color);
+                int discard_tiles = ss.discard.getTilesNumber(color);
+                total_tiles = factory_tiles + center_tiles + bag_tiles + discard_tiles;
+                //System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
+                // Add tiles of player state
+                for (int j = 0; j < DEFAULT_MAX_PLAYER; j++) {
+                    int mosaic_tiles = ps.getnPlayer(ALL_PLAYERS[j]).mosaic.getTilesNumber(color);
+                    int storage_tiles = ps.getnPlayer(ALL_PLAYERS[j]).storage.getTilesNumber(color);
+                    int floor_tiles = ps.getnPlayer(ALL_PLAYERS[j]).floor.getTilesNumber(color);
+                    total_tiles += mosaic_tiles + storage_tiles + floor_tiles;
+                    //System.out.println(" Color (" + color + ") of player " + ALL_PLAYERS[j] + " mosaic : " + mosaic_tiles + ", storage : " + storage_tiles + ", floor : " + floor_tiles);
+                }
+                //System.out.println(" Total tile of color (" + color + ") is : " + total_tiles);
+                if(color == FIRST_PLAYER){
+                    if (!(total_tiles == 1)) {
+                        //System.out.println(" First player token (" + color + ") is not 1 : " + total_tiles);
+                        return false;
+                    }
+                }
+                else{
+                    if (!(total_tiles == 20)) {
+                        if (total_tiles > 20) {
+                            //System.out.println(" Color (" + color + ") exceeds 20 : " + total_tiles);
+                            return false;
+                        } else if (total_tiles < 20) {
+                            //System.out.println(" Color (" + color + ") less than 20 : " + total_tiles);
+                            return false;
+                        }
+                    }
+                }
+                color++;
+            }
+            return true;
         }
     }
 

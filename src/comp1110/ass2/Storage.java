@@ -12,83 +12,58 @@ public class Storage implements Tiles {
 
     int[] letters = new int[128];
 
+    boolean storagevalid = true;
+
     public Storage(String storageState){
         this.storage_rows.clear();
         this.storageState = storageState;
         addStorageRow(storageState);
         countTilesNumber(storageState);
+        this.storagevalid = isStorageStateValid();
     }
 
     public void addStorageRow(String storageState){
-        ArrayList<String> storage_row = new ArrayList<String>();
-        int max_number = 5;
+        ArrayList<Character> tile_color = new ArrayList<Character>();
+        ArrayList<Integer> storage_row_idx = new ArrayList<Integer>();
+        ArrayList<Integer> storage_row_tiles = new ArrayList<Integer>();
+
+        char[] storageState_char_array = storageState.toCharArray();
         int len = 0;
-        int str_row_num = 0;
+        int div = 3;
+        int i = 0;
+        for( char c : storageState_char_array ){
+            if(i % div == 0){
+                storage_row_idx.add(Character.getNumericValue(c));
+                len++;
+            }
+            else if(i % div == 1){
+                tile_color.add(c);
+            }
+            else {
+                storage_row_tiles.add(Character.getNumericValue(c));
+            }
+            i++;
+        }
+
         StringBuilder SB = new StringBuilder();
-        for(char c : storageState.toCharArray()){
-            if( len % 3 == 0){
-                if(str_row_num == Character.getNumericValue(c)){
-                    storage_row.add(String.valueOf(SB));
+        SB.append("");
+        this.storage_rows.clear();
+        for(int row=0; row < MAX_STORAGE_ROW; row++){
+            for(int j=0; j < len; j++){
+                if(storage_row_idx.get(j) == row){
+                    SB.append(tile_color.get(j));
+                    SB.append(storage_row_tiles.get(j));
                 }
-                else{
-                    storage_row.add(String.valueOf(SB));
-                    while(str_row_num != Character.getNumericValue(c)){
-                        storage_row.add(EMPTY_STATE);
-                        str_row_num++;
-                    }
-                }
-                SB.delete(0,SB.length());
-                str_row_num++;
             }
-            else{
-                SB.append(c);
+            if(SB.length() > 0){
+                this.storage_rows.add(new StorageRow(String.valueOf(SB), row));
             }
-            len++;
-        }
-        storage_row.add(String.valueOf(SB));
-        while(str_row_num < max_number){
-            storage_row.add(EMPTY_STATE);
-            str_row_num++;
-        }
-        SB.delete(0,SB.length());
-        /*
-        for (String s : storage_row) {
-            System.out.println(" -> " + s);
-        }
-
-         */
-
-        for(int i=0; i < max_number; i++){
-            this.storage_rows.add(new StorageRow(storage_row.get(i+1),i));
-        }
-        Collections.sort(this.storage_rows);
-
-    }
-
-    @Override
-    public void countTilesNumber(String storageState){
-        for( StorageRow sr : this.storage_rows){
-            if(!sr.isStateEmpty()){
-                //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
-                this.letters[sr.getTilesColor()] += sr.getTotalTilesNumber();
+            else {
+                SB.append("");
+                this.storage_rows.add(new StorageRow(String.valueOf(SB), row));
             }
+            SB.delete(0,SB.length());
         }
-    }
-
-    @Override
-    public int getTilesNumber(char color) {
-        return this.letters[color];
-    }
-
-    @Override
-    public int getTotalTilesNumber(){
-        int tot_tiles = 0;
-        char color = BLUE;
-        for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
-            tot_tiles += this.letters[color];
-            color++;
-        }
-        return tot_tiles;
     }
 
     boolean isStorageTilesValid(){
@@ -124,6 +99,50 @@ public class Storage implements Tiles {
         return this.storage_rows.get(row);
     }
 
+    public boolean isStorageStateValid(){
+        StringBuilder SB = new StringBuilder();
+        int i=0;
+        for( StorageRow sr : storage_rows ){
+            if(!sr.isStateEmpty()){
+                SB.append(i);
+                SB.append(sr.getStateString());
+            }
+            i++;
+        }
+        /*
+        System.out.println(this.storageState);
+        System.out.println(String.valueOf(SB));
+
+         */
+        return (this.storageState.equals(String.valueOf(SB)));
+    }
+
+    @Override
+    public void countTilesNumber(String storageState){
+        for( StorageRow sr : this.storage_rows){
+            if(!sr.isStateEmpty()){
+                //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
+                this.letters[sr.getTilesColor()] += sr.getTotalTilesNumber();
+            }
+        }
+    }
+
+    @Override
+    public int getTilesNumber(char color) {
+        return this.letters[color];
+    }
+
+    @Override
+    public int getTotalTilesNumber(){
+        int tot_tiles = 0;
+        char color = BLUE;
+        for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+            tot_tiles += this.letters[color];
+            color++;
+        }
+        return tot_tiles;
+    }
+
     @Override
     public boolean isStateEmpty() {
         return this.storageState.isEmpty();
@@ -157,7 +176,7 @@ public class Storage implements Tiles {
      * Inner class eachStorageRow of Storage class
      * Each player has eachStorageRow state stored here
      */
-    public class StorageRow implements CoordinateTyped, Comparable<StorageRow>{
+    public class StorageRow implements CoordinateTyped{
         String storage_rowState = EMPTY_STATE;
         char storage_row_color;
         int row;
@@ -221,25 +240,13 @@ public class Storage implements Tiles {
         }
 
         @Override
-        public int compareTo(StorageRow storage_row) {
-            if(row == storage_row.row){
-                return 0;
-            }
-            else if(row > storage_row.row){
-                return 1;
-            }
-            else{
-                return -1;
-            }
-        }
-
-        @Override
         public boolean isStateEmpty() {
             return this.storage_rowState.isEmpty();
         }
 
         @Override
         public String getStateString() {
+            updateState();
             return this.storage_rowState;
         }
 

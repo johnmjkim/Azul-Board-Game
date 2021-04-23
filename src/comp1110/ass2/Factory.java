@@ -24,27 +24,34 @@ public class Factory implements OrderTyped {
 
     @Override
     public String getStateString() {
+        updateState();
         return this.factoryState;
     }
 
     @Override
     public String toString() {
-        /*
-        String each_factory_str = " Number : " + this.number + " Factory : " + this.factoryState + "\n";
-        char color = BLUE;
-        for (int i = 0; i <= RED - BLUE; i++) {
-            each_factory_str += " " + color + " : " + this.getTilesNumber(color);
-            color++;
-        }
-        return each_factory_str;
-
-         */
         return getStateString();
     }
 
-    // TODO update factory state
     @Override
     public void updateState() {
+        StringBuilder SB = new StringBuilder();
+        SB.append(EMPTY_STATE);
+        int[] factory_letters = new int[128];
+        char color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
+            factory_letters[color] = this.letters[color];
+            color++;
+        }
+        color = BLUE;
+        for(int i=0; i <= RED - BLUE; i++){
+            while(factory_letters[color] > 0){
+                SB.append(color);
+                factory_letters[color]--;
+            }
+            color++;
+        }
+        this.factoryState = String.valueOf(SB);
 
     }
 

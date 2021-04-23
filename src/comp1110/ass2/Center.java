@@ -11,7 +11,6 @@ public class Center implements OrderTyped {
 
     public Center(String centerState){
         this.centerState = centerState;
-        //countCenterTilesNumber(centerState);
         countTilesNumber(centerState);
     }
 

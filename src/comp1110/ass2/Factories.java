@@ -23,10 +23,11 @@ public class Factories implements State {
         // Add factories based on maximum number of players
         int max_number = this.max_factories_number;
         int len = 0;
+        int div = 5;
         int fac_num = 0;
         StringBuilder SB = new StringBuilder();
         for(char c : factoriesState.toCharArray()){
-            if( len % 5 == 0){
+            if( len % div == 0){
                 if(fac_num == Character.getNumericValue(c)){
                     eachfactory.add(String.valueOf(SB));
                 }
@@ -53,12 +54,6 @@ public class Factories implements State {
             fac_num++;
         }
         SB.delete(0,SB.length());
-        /*
-        for(String s : factory){
-            System.out.println(" -> " + s);
-        }
-
-         */
         this.factory.clear();
         for(int i=0; i < max_number; i++){
             this.factory.add(new Factory(eachfactory.get(i+1),i));
@@ -87,6 +82,47 @@ public class Factories implements State {
 
     public Factory getFactory(int factory_number){
         return this.factory.get(factory_number);
+    }
+
+    public boolean isFactoriesNumberValid(){
+        ArrayList<Integer> factories_number = new ArrayList<Integer>();
+
+        char[] factoriesState_char_array = factoriesState.toCharArray();
+        int len = 0;
+        int div = 5;
+        int i = 0;
+        for( char c : factoriesState_char_array ){
+            if(i % div == 0){
+                factories_number.add(Character.getNumericValue(c));
+                len++;
+            }
+            i++;
+        }
+        if(len > max_factories_number){
+            return false;
+        }
+        else if(len > 1){
+            for(int j=1; j < len; j++){
+                if(factories_number.get(j) <= factories_number.get(j-1)){
+                    return false;
+                }
+                else if(factories_number.get(j) > max_factories_number - 1){
+                    return false;
+                }
+            }
+            return true;
+        }
+        else if(len == 1){
+            if(factories_number.get(0) > max_factories_number - 1){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return true;
+        }
     }
 
     @Override

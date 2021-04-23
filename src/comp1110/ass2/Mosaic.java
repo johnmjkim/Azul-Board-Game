@@ -13,10 +13,13 @@ public class Mosaic implements Tiles {
 
     int[] letters = new int[128];
 
+    boolean mosaicvalid = true;
+
     public Mosaic(String mosaicState){
         this.mosaicState = mosaicState;
         addMosaicRowCol(mosaicState);
         countTilesNumber(mosaicState);
+        this.mosaicvalid = isMosaicStateValid();
     }
 
     public void addMosaicRowCol(String mosaicState){
@@ -85,6 +88,19 @@ public class Mosaic implements Tiles {
 
     }
 
+    public boolean isMosaicStateValid(){
+        StringBuilder SB = new StringBuilder();
+        for( MosaicRow mr : this.mosaic_rows ){
+            SB.append(mr.getStateString());
+        }
+        /*
+        System.out.println(this.mosaicState);
+        System.out.println(String.valueOf(SB));
+
+         */
+        return (this.mosaicState.equals(String.valueOf(SB)));
+    }
+
     public MosaicRow getMosaicRow(int row){
         return this.mosaic_rows.get(row);
     }
@@ -132,6 +148,7 @@ public class Mosaic implements Tiles {
 
     @Override
     public String getStateString() {
+        updateState();
         return this.mosaicState;
     }
 
@@ -153,13 +170,15 @@ public class Mosaic implements Tiles {
      * Inner class eachMosaicRow of Mosaic class
      * Each player has eachMosaicRow state stored here
      */
-    public class MosaicRow implements CoordinateTyped, Comparable<MosaicRow>{
-        // TODO finish eachMosaicRow and eachMosaicCol
+    public class MosaicRow implements CoordinateTyped{
         String mosaic_rowState = EMPTY_STATE;
-        char[] MOSAIC_MASK = new char[MAX_MOSAIC_ROW];
+        char[] MOSAIC_MASK_ROW = new char[MAX_MOSAIC_ROW];
         int[] letters = new int[128];
         int MAX_TILES_LIMIT = MAX_MOSAIC_ROW;
         int row;
+
+        boolean[] mosaicrow_tiles_occupy = new boolean[MAX_MOSAIC_ROW];
+        boolean tilespositionvalid = true;
 
         public MosaicRow (String mosaic_rowState, int row){
             //System.out.println(" row " + row + " : " + mosaic_rowState);
@@ -167,12 +186,109 @@ public class Mosaic implements Tiles {
             this.row = row;
             generateMosaicMask(row);
             countTilesNumber(mosaic_rowState);
+            this.tilespositionvalid = isMosaicRowTilePositionsValid();
+            if(isMosaicRowTilePositionsValid()){
+                storeMosaicPosition(mosaic_rowState);
+            }
         }
 
         private void generateMosaicMask(int row){
             for(int i=0; i < MAX_MOSAIC_ROW; i++) {
-                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_ROW - row) % MAX_MOSAIC_ROW];
+                MOSAIC_MASK_ROW[i] = TILES_MASK[(i + MAX_MOSAIC_ROW - row) % MAX_MOSAIC_ROW];
             }
+            /*
+            for(int i=0; i < MAX_MOSAIC_ROW; i++){
+                System.out.print(MOSAIC_MASK[i]);
+                System.out.print(", ");
+            }
+            System.out.println();
+
+             */
+        }
+
+        public void storeMosaicPosition(String mosaic_rowState){
+            ArrayList<Character> tile_color = new ArrayList<Character>();
+            ArrayList<Integer> mosaic_col_idx = new ArrayList<Integer>();
+
+            char[] mosaic_rowState_char_array = mosaic_rowState.toCharArray();
+            int len = 0;
+            int div = 3;
+            int i = 0;
+            for( char c : mosaic_rowState_char_array ){
+                if(i % div == 0){
+                    tile_color.add(c);
+                    len++;
+                }
+                else if(i % div == 2){
+                    mosaic_col_idx.add(Character.getNumericValue(c));
+                }
+                i++;
+            }
+            for(int j=0; j < len; j++){
+                mosaicrow_tiles_occupy[mosaic_col_idx.get(j)] = true;
+            }
+            /*
+            for(int j=0; j < mosaicrow_tiles_occupy.length; j++){
+                System.out.print(mosaicrow_tiles_occupy[j]);
+                System.out.print(",");
+            }
+            System.out.println();
+
+             */
+        }
+
+        public boolean isMosaicRowTilePositionsValid(){
+            ArrayList<Character> tile_color = new ArrayList<Character>();
+            ArrayList<Integer> mosaic_col_idx = new ArrayList<Integer>();
+
+            char[] mosaic_rowState_char_array = mosaic_rowState.toCharArray();
+            int len = 0;
+            int div = 3;
+            int i = 0;
+            for( char c : mosaic_rowState_char_array ){
+                if(i % div == 0){
+                    tile_color.add(c);
+                    len++;
+                }
+                else if(i % div == 2){
+                    mosaic_col_idx.add(Character.getNumericValue(c));
+                }
+                i++;
+            }
+            if(len > 5){
+                return false;
+            }
+            else if(len > 1){
+                for(int j=1; j < len; j++){
+                    if(mosaic_col_idx.get(j) <= mosaic_col_idx.get(j-1)){
+                        return false;
+                    }
+                    else if(mosaic_col_idx.get(j) > 4){
+                        return false;
+                    }
+                }
+                for(int j=0; j < len; j++){
+                    if(!tile_color.get(j).equals(MOSAIC_MASK_ROW[mosaic_col_idx.get(j)])){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if(len == 1){
+                if(mosaic_col_idx.get(0) > 4){
+                    return false;
+                }
+                else{
+                    return tile_color.get(0).equals(MOSAIC_MASK_ROW[mosaic_col_idx.get(0)]);
+                }
+            }
+            else{
+                return true;
+            }
+        }
+
+        public boolean existsTileColor(char color){
+            return (getTilesNumber(color) > 0);
         }
 
         @Override
@@ -208,19 +324,6 @@ public class Mosaic implements Tiles {
         }
 
         @Override
-        public int compareTo(MosaicRow mosaic_row) {
-            if(row == mosaic_row.row){
-                return 0;
-            }
-            else if(row > mosaic_row.row){
-                return 1;
-            }
-            else{
-                return -1;
-            }
-        }
-
-        @Override
         public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
@@ -232,6 +335,9 @@ public class Mosaic implements Tiles {
 
         @Override
         public String getStateString() {
+            if(isMosaicRowTilePositionsValid()){
+                updateState();
+            }
             return this.mosaic_rowState;
         }
 
@@ -242,15 +348,26 @@ public class Mosaic implements Tiles {
 
         @Override
         public void updateState() {
-
+            StringBuilder SB = new StringBuilder();
+            for(int i=0; i < MAX_MOSAIC_COL; i++){
+                if(mosaicrow_tiles_occupy[i]){
+                    SB.append(MOSAIC_MASK_ROW[i]);
+                    SB.append(this.row);
+                    SB.append(i);
+                }
+                else{
+                    SB.append("");
+                }
+            }
+            this.mosaic_rowState = String.valueOf(SB);
+            countTilesNumber(this.mosaic_rowState);
         }
     }
 
 
-    public class MosaicCol implements CoordinateTyped, Comparable<MosaicCol> {
-        // TODO finish eachMosaicRow and eachMosaicCol
+    public class MosaicCol implements CoordinateTyped {
         String mosaic_colState = EMPTY_STATE;
-        char[] MOSAIC_MASK = new char[MAX_MOSAIC_COL];
+        char[] MOSAIC_MASK_COL = new char[MAX_MOSAIC_COL];
         int[] letters = new int[128];
         int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int col;
@@ -265,8 +382,16 @@ public class Mosaic implements Tiles {
 
         private void generateMosaicMask(int col) {
             for (int i = 0; i < MAX_MOSAIC_COL; i++) {
-                MOSAIC_MASK[i] = TILES_MASK[(i + MAX_MOSAIC_COL - col) % MAX_MOSAIC_ROW];
+                MOSAIC_MASK_COL[i] = TILES_MASK_REVERSE[(i + MAX_MOSAIC_COL - col - 1) % MAX_MOSAIC_ROW];
             }
+            /*
+            for(int i=0; i < MAX_MOSAIC_COL; i++){
+                System.out.print(MOSAIC_MASK_COL[i]);
+                System.out.print(", ");
+            }
+            System.out.println();
+
+             */
         }
 
         @Override
@@ -298,19 +423,6 @@ public class Mosaic implements Tiles {
                 color++;
             }
             return tot_tiles;
-        }
-
-        @Override
-        public int compareTo(MosaicCol mosaic_col) {
-            if(col == mosaic_col.col){
-                return 0;
-            }
-            else if(col > mosaic_col.col){
-                return 1;
-            }
-            else{
-                return -1;
-            }
         }
 
         @Override
