@@ -124,6 +124,14 @@ public class Floor implements OrderTyped {
     }
 
     @Override
+    public void removeTiles(char color, int n){
+        for(int i=0; i < n; i++){
+            this.letters[color]--;
+        }
+        updateState();
+    }
+
+    @Override
     public void removeAllTiles() {
         char color = BLUE;
         for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
@@ -138,6 +146,14 @@ public class Floor implements OrderTyped {
     @Override
     public void addTile(char color) {
         this.letters[color]++;
+        updateState();
+    }
+
+    @Override
+    public void addTiles(char color, int n){
+        for(int i=0; i < n; i++){
+            this.letters[color]++;
+        }
         updateState();
     }
 }

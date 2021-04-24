@@ -109,6 +109,26 @@ public class Mosaic implements Tiles {
         return this.mosaic_cols.get(col);
     }
 
+    public int scoreTotalMosaic(){
+        int adjacent_score = 0;
+        for(int row=0; row < MAX_MOSAIC_ROW; row++){
+            adjacent_score += this.getMosaicRow(row).scoreTotalMosaicRow();
+        }
+        for(int col=0; col < MAX_MOSAIC_COL; col++){
+            adjacent_score += this.getMosaicCol(col).scoreTotalMosaicCol();
+        }
+        return adjacent_score;
+    }
+
+    public int scoreMosaic(int row, int col){
+        int adjacent_score = 0;
+
+        adjacent_score += this.getMosaicRow(row).scoreMosaicRow(col);
+        adjacent_score += this.getMosaicCol(col).scoreMosaicCol(row);
+
+        return adjacent_score;
+    }
+
     @Override
     public void countTilesNumber(String mosaicState){
 
@@ -261,6 +281,55 @@ public class Mosaic implements Tiles {
             return this.mosaicrow_tiles_occupy[column];
         }
 
+        public void addTile(char color, int column) {
+            mosaicrow_tiles_occupy[column] = true;
+            mosaicrow_tiles_color[column] = color;
+            updateState();
+        }
+
+        public int scoreTotalMosaicRow(){
+            int adjacent_score = 0;
+            for(int i=1; i < MAX_MOSAIC_COL; i++){
+                if(mosaicrow_tiles_occupy[i] && mosaicrow_tiles_occupy[i-1]){
+                    adjacent_score++;
+                }
+            }
+            if(adjacent_score > 0){
+                adjacent_score += 1;
+            }
+            return adjacent_score;
+        }
+
+        public int scoreMosaicRow(int col){
+            int adjacent_score = 0;
+            boolean right_end = true;
+            boolean left_end = true;
+            for(int left=col; left > 0; left--){
+                if(!(mosaicrow_tiles_occupy[left] && mosaicrow_tiles_occupy[left-1])){
+                    left_end = false;
+                }
+                else{
+                    if(left_end){
+                        adjacent_score++;
+                    }
+                }
+            }
+            for(int right=col; right < MAX_MOSAIC_COL - 1; right++){
+                if(!(mosaicrow_tiles_occupy[right] && mosaicrow_tiles_occupy[right+1])){
+                    right_end = false;
+                }
+                else{
+                    if(right_end){
+                        adjacent_score++;
+                    }
+                }
+            }
+            if(adjacent_score > 0){
+                adjacent_score += 1;
+            }
+            return adjacent_score;
+        }
+
         @Override
         public void countTilesNumber(String State) {
             int[] letters_array = new int[128];
@@ -328,6 +397,7 @@ public class Mosaic implements Tiles {
                     SB.append("");
                 }
             }
+            countTilesNumber(String.valueOf(SB));
             this.mosaic_rowState = String.valueOf(SB);
         }
     }
@@ -425,6 +495,49 @@ public class Mosaic implements Tiles {
             return this.mosaiccol_tiles_occupy[row];
         }
 
+        public int scoreTotalMosaicCol(){
+            int adjacent_score = 0;
+            for(int i=1; i < MAX_MOSAIC_ROW; i++){
+                if(mosaiccol_tiles_occupy[i] && mosaiccol_tiles_occupy[i-1]){
+                    adjacent_score++;
+                }
+            }
+            if(adjacent_score > 0){
+                adjacent_score += 1;
+            }
+            return adjacent_score;
+        }
+
+        public int scoreMosaicCol(int row){
+            int adjacent_score = 0;
+            boolean top_end = true;
+            boolean bottom_end = true;
+            for(int top=row; top > 0; top--){
+                if(!(mosaiccol_tiles_occupy[top] && mosaiccol_tiles_occupy[top-1])){
+                    top_end = false;
+                }
+                else{
+                    if(top_end){
+                        adjacent_score++;
+                    }
+                }
+            }
+            for(int bottom=row; bottom < MAX_MOSAIC_ROW - 1; bottom++){
+                if(!(mosaiccol_tiles_occupy[bottom] && mosaiccol_tiles_occupy[bottom+1])){
+                    bottom_end = false;
+                }
+                else{
+                    if(bottom_end){
+                        adjacent_score++;
+                    }
+                }
+            }
+            if(adjacent_score > 0){
+                adjacent_score += 1;
+            }
+            return adjacent_score;
+        }
+
         @Override
         public void countTilesNumber(String mosaic_colState){
             int[] letters_array = new int[128];
@@ -492,6 +605,7 @@ public class Mosaic implements Tiles {
                     SB.append("");
                 }
             }
+            countTilesNumber(String.valueOf(SB));
             this.mosaic_colState = String.valueOf(SB);
         }
     }

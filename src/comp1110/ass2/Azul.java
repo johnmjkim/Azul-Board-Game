@@ -1193,7 +1193,192 @@ public class Azul implements Constants{
     // This is “3. Drafting” and “4. Mosaic-tiling/Scoring”.
     public static String[] applyMove(String[] gameState, String move) {
         // FIXME Task 11
-        return null;
+        String[] output_gameState = new String[2];
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
+        System.out.println(move);
+
+
+        char player_turn = move.charAt(0);
+        if(move.length() == 3){
+            System.out.println("Tiling Move");
+            char storage_mosaic_row = move.charAt(1);
+            char mosaic_column_or_floor = move.charAt(2);
+            int storage_row = Character.getNumericValue(storage_mosaic_row);
+            int mosaic_row = storage_row;
+            char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+            int storage_row_tiles = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTotalTilesNumber();
+            if(storage_row_tiles > 1){
+                ss.discard.addTiles(storage_row_color, storage_row_tiles - 1);
+            }
+            ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).removeAllTiles();
+            output_gameState[0] = ss.getUpdatedSharedState();
+            output_gameState[1] = ps.getUpdatedPlayerState();
+            ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+            ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+            System.out.println("Remove all storage of player " + player_turn + " at row " + storage_row);
+            System.out.println(ss);
+            System.out.println(ps);
+            if(mosaic_column_or_floor == FLOOR){
+                ps.getnPlayer(player_turn).floor.addTiles(storage_row_color, storage_row_tiles);
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+                System.out.println("Go to floor");
+                System.out.println(ps);
+            }
+            else{
+                int mosaic_col = Character.getNumericValue(mosaic_column_or_floor);
+                int mosaic_adjacent_score = ps.getnPlayer(player_turn).mosaic.scoreTotalMosaic();
+                ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).addTile(storage_row_color, mosaic_col);
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+                int storage_clear_score = 1;
+                int mosaic_adjacent_score_increment = ps.getnPlayer(player_turn).mosaic.scoreTotalMosaic() - mosaic_adjacent_score;
+                if(mosaic_adjacent_score_increment > 0){
+                    ps.getnPlayer(player_turn).score.addScore(ps.getnPlayer(player_turn).mosaic.scoreMosaic(mosaic_row, mosaic_col));
+                }
+                else{
+                    ps.getnPlayer(player_turn).score.addScore(storage_clear_score);
+                }
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+                System.out.println(" Score added, one tile : " + storage_clear_score + " , adjacent : " + ps.getnPlayer(player_turn).mosaic.scoreMosaic(mosaic_row, mosaic_col));
+                if(!ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()){
+                    ss.changeTurn();
+                }
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+                System.out.println("Add mosaic at row : " + mosaic_row + " col : " + mosaic_col);
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+        }
+        else if(move.length() == 4){
+            System.out.println("Drafting Move");
+            char factory_or_center = move.charAt(1);
+            char color_of_tile = move.charAt(2);
+            char storage_row_or_floor = move.charAt(3);
+            int selected_tiles = 0;
+            if(factory_or_center == CENTER){
+                System.out.println("Draft from center");
+                selected_tiles = ss.center.getTilesNumber(color_of_tile);
+                ss.center.removeTiles(color_of_tile, selected_tiles);
+                if(ss.center.hasFirstPlayerToken()){
+                    ss.center.removeTile(FIRST_PLAYER);
+                    ps.getnPlayer(player_turn).floor.addTile(FIRST_PLAYER);
+                }
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
+                System.out.println("Cleared center ");
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+            else{
+                System.out.println("Draft from factory " + factory_or_center);
+                int factory_num = Character.getNumericValue(factory_or_center);
+                selected_tiles = ss.factories.getFactory(factory_num).getTilesNumber(color_of_tile);
+                char color = BLUE;
+                for(int i=0; i <= RED - BLUE; i++){
+                    int rest_tiles = ss.factories.getFactory(factory_num).getTilesNumber(color);
+                    if(!(color == color_of_tile)){
+                        ss.center.addTiles(color,rest_tiles);
+                    }
+                    color++;
+                }
+                ss.factories.getFactory(factory_num).removeAllTiles();
+                output_gameState[0] = ss.getUpdatedSharedState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+
+                System.out.println("Cleared factory " + factory_num);
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+
+            if(storage_row_or_floor == FLOOR){
+                ps.getnPlayer(player_turn).floor.addTiles(color_of_tile, selected_tiles);
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+                System.out.println("Go to the floor");
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+            else{
+                int storage_row = Character.getNumericValue(storage_row_or_floor);
+                int storage_row_tiles_max = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getMaxTilesLimit();
+                int storage_row_tiles_current = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTotalTilesNumber();
+                int tiles_to_storage = selected_tiles;
+                int tiles_to_floor = 0;
+                if(storage_row_tiles_max < selected_tiles + storage_row_tiles_current){
+                    tiles_to_storage = storage_row_tiles_max - storage_row_tiles_current;
+                    tiles_to_floor = selected_tiles - tiles_to_storage;
+                }
+                ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).addTiles(color_of_tile, tiles_to_storage);
+                ps.getnPlayer(player_turn).floor.addTiles(color_of_tile, tiles_to_floor);
+
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
+                System.out.println("Filled storage " + storage_row);
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+
+            boolean isFactoryEmpty = ss.factories.isStateEmpty();
+            boolean isCenterEmpty = ss.center.isStateEmpty();
+            if(!(isFactoryEmpty && isCenterEmpty)){
+                ss.changeTurn();
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+                ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
+                System.out.println("Changed Turn ");
+                System.out.println(ss);
+                System.out.println(ps);
+            }
+        }
+
+        boolean floor_max_exceed = ps.getnPlayer(player_turn).floor.getTotalTilesNumber() > 7;
+        if(floor_max_exceed){
+            System.out.println("Floor max exceeded");
+            int tiles_to_discard = ps.getnPlayer(player_turn).floor.getTotalTilesNumber() - 7;
+            char color = RED;
+            while(tiles_to_discard > 0){
+                if(ps.getnPlayer(player_turn).floor.getTilesNumber(color) > 0){
+                    ps.getnPlayer(player_turn).floor.removeTile(color);
+                    ss.discard.addTile(color);
+                    output_gameState[0] = ss.getUpdatedSharedState();
+                    output_gameState[1] = ps.getUpdatedPlayerState();
+                    System.out.println("Move tile to discard");
+                    System.out.println(ss);
+                    System.out.println(ps);
+                    tiles_to_discard--;
+                }
+                else{
+                    color--;
+                }
+            }
+
+        }
+
+        output_gameState[0] = ss.getStateString();
+        output_gameState[1] = ps.getStateString();
+        System.out.println(ss);
+        System.out.println(ps);
+        System.out.println();
+        return output_gameState;
     }
 
     /**

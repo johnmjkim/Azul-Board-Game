@@ -113,6 +113,14 @@ public class Discard implements BagTyped {
     }
 
     @Override
+    public void addTiles(char color, int n) {
+        for(int i=0; i < n; i++){
+            this.letters[color]++;
+        }
+        updateState();
+    }
+
+    @Override
     public void refillTiles(String refill) {
         ArrayList<Integer> discards_counts = new ArrayList<Integer>();
         char[] refill_char_array = refill.toCharArray();

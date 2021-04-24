@@ -12,4 +12,6 @@ public interface BagTyped extends Tiles{
     public void removeAllTiles();
 
     public void addTile(char color);
+
+    public void addTiles(char color, int n);
 }

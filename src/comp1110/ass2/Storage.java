@@ -150,6 +150,7 @@ public class Storage implements Tiles {
 
     @Override
     public String getStateString() {
+        updateState();
         return this.storageState;
     }
 
@@ -166,6 +167,7 @@ public class Storage implements Tiles {
             if(!sr.isStateEmpty()){
                 SB.append(i);
                 SB.append(sr.getStateString());
+                //System.out.println(SB);
             }
             i++;
         }
@@ -178,7 +180,7 @@ public class Storage implements Tiles {
      */
     public class StorageRow implements CoordinateTyped{
         String storage_rowState = EMPTY_STATE;
-        char storage_row_color;
+        char storage_row_color = ' ';
         int row;
         int MAX_TILES_LIMIT;
         int[] letters = new int[128];
@@ -187,6 +189,7 @@ public class Storage implements Tiles {
             this.storage_rowState = storage_rowState;
             this.row = row;
             this.MAX_TILES_LIMIT = row + 1;
+            this.storage_row_color = getTilesColor();
             countTilesNumber(storage_rowState);
         }
 
@@ -218,25 +221,33 @@ public class Storage implements Tiles {
         public void removeAllTiles() {
             char color = BLUE;
             for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
+                //System.out.print(" Color : " + color + " Before : " + this.letters[color] + " After : ");
                 while(this.letters[color] > 0){
                     this.letters[color]--;
                 }
+                //System.out.println(this.letters[color]);
                 color++;
             }
+            this.storage_rowState = EMPTY_STATE;
+            updateState();
+        }
+
+        public void addTiles(char color, int n) {
+            for(int i=0; i < n; i++){
+                this.letters[color]++;
+            }
+            this.storage_row_color = color;
             updateState();
         }
 
         public void addTile(char color) {
-            if (isStorageRowTileColorValid(color) || (getTilesNumber(color) == 0)) {
-                if (this.MAX_TILES_LIMIT > getTilesNumber(color)) {
-                    this.letters[color]++;
-                    updateState();
-                } else {
-                    System.out.println("Max storage row tiles reached");
-                }
-            } else {
-                System.out.println("Max incompatible tile adding");
-            }
+            this.letters[color]++;
+            this.storage_row_color = color;
+            updateState();
+        }
+
+        public int getMaxTilesLimit() {
+            return this.MAX_TILES_LIMIT;
         }
 
         @Override
@@ -258,6 +269,21 @@ public class Storage implements Tiles {
         @Override
         public void updateState() {
             StringBuilder SB = new StringBuilder();
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                if(this.letters[color] > 0){
+                    this.storage_row_color = color;
+                    SB.append(this.storage_row_color);
+                    SB.append(this.letters[this.storage_row_color]);
+                }
+                else{
+                    SB.append("");
+                }
+                color++;
+            }
+            this.storage_rowState = String.valueOf(SB);
+            /*
+            StringBuilder SB = new StringBuilder();
             if(getTilesColor() >= BLUE && getTilesColor() <= RED){
                 SB.append(getTilesColor());
                 SB.append(this.letters[getTilesColor()]);
@@ -265,7 +291,9 @@ public class Storage implements Tiles {
             else{
                 SB.append("");
             }
+            //System.out.println(" Update with : " + SB);
             this.storage_rowState = String.valueOf(SB);
+             */
         }
 
         @Override
