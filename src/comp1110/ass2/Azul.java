@@ -903,83 +903,103 @@ public class Azul implements Constants{
             System.out.println( " Both well formed " );
             SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
             PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
+
             // Examine that
             // storage row do not exceed tiles
             // mosaic-storage do not have same color
-            for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
-                for(int j=0; j < MAX_MOSAIC_ROW; j++){
-                    char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
-                    boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
-                    boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
-
-                    //System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
-                    //System.out.print(", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
-                    //System.out.println();
-                    if(!(valid_mosiac_storage_row && valid_storage_row)){
-                        System.out.println( " mosaic storage validity : " + valid_mosiac_storage_row + " valid storage row tiles not exceed : " + valid_storage_row);
-                        return false;
-                    }
-
-                }
-            }
             // mosaic rows, columns have valid positioning
-            for(int i=0; i < DEFAULT_MAX_PLAYER; i++) {
-                for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
-                    boolean valid_position_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid;
-                    if(!valid_position_row){
-                        System.out.println(" mosaic row " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).getStateString());
-                        return false;
-                    }
-                }
-                for (int j = 0; j < MAX_MOSAIC_COL; j++) {
-                    boolean valid_position_col = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).tiles_col_position_valid;
-                    if(!valid_position_col){
-                        System.out.println(" mosaic col " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).getStateString());
-                        return false;
-                    }
-                }
+            if(!check_mosaic_storage_valid(ss, ps)){
+                return false;
             }
             // Find total number of tiles of each color
-            char color = BLUE;
-            int total_tiles = 0;
-            for(int i=0; i <= FIRST_PLAYER - BLUE; i++) {
-                // Add tiles of shared states
-                int factory_tiles = ss.factories.getFactoryTilesNumber(color);
-                int center_tiles = ss.center.getTilesNumber(color);
-                int bag_tiles = ss.bag.getTilesNumber(color);
-                int discard_tiles = ss.discard.getTilesNumber(color);
-                total_tiles = factory_tiles + center_tiles + bag_tiles + discard_tiles;
-                System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
-                // Add tiles of player state
-                for (int j = 0; j < DEFAULT_MAX_PLAYER; j++) {
-                    int mosaic_tiles = ps.getnPlayer(ALL_PLAYERS[j]).mosaic.getTilesNumber(color);
-                    int storage_tiles = ps.getnPlayer(ALL_PLAYERS[j]).storage.getTilesNumber(color);
-                    int floor_tiles = ps.getnPlayer(ALL_PLAYERS[j]).floor.getTilesNumber(color);
-                    total_tiles += mosaic_tiles + storage_tiles + floor_tiles;
-                    System.out.println(" Color (" + color + ") of player " + ALL_PLAYERS[j] + " mosaic : " + mosaic_tiles + ", storage : " + storage_tiles + ", floor : " + floor_tiles);
-                }
-                System.out.println(" Total tile of color (" + color + ") is : " + total_tiles);
-                if(color == FIRST_PLAYER){
-                    if (!(total_tiles == 1)) {
-                        System.out.println(" First player token (" + color + ") is not 1 : " + total_tiles);
-                        return false;
-                    }
-                }
-                else{
-                    if (!(total_tiles == 20)) {
-                        if (total_tiles > 20) {
-                            System.out.println(" Color (" + color + ") exceeds 20 : " + total_tiles);
-                            return false;
-                        } else if (total_tiles < 20) {
-                            System.out.println(" Color (" + color + ") less than 20 : " + total_tiles);
-                            return false;
-                        }
-                    }
-                }
-                color++;
+            // First player token : 1, Others : 20
+            if(!check_tiles_number_valid(ss, ps)){
+                return false;
             }
             return true;
         }
+    }
+
+    public static boolean check_mosaic_storage_valid(SharedState ss, PlayerState ps){
+        // Examine that
+        // storage row do not exceed tiles
+        // mosaic-storage do not have same color
+        for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
+            for(int j=0; j < MAX_MOSAIC_ROW; j++){
+                char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
+                boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
+                boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
+
+                //System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
+                //System.out.print(", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
+                //System.out.println();
+                if(!(valid_mosiac_storage_row && valid_storage_row)){
+                    System.out.println( " mosaic storage validity : " + valid_mosiac_storage_row + " valid storage row tiles not exceed : " + valid_storage_row);
+                    return false;
+                }
+
+            }
+        }
+        // mosaic rows, columns have valid positioning
+        for(int i=0; i < DEFAULT_MAX_PLAYER; i++) {
+            for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
+                boolean valid_position_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid;
+                if(!valid_position_row){
+                    System.out.println(" mosaic row " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).getStateString());
+                    return false;
+                }
+            }
+            for (int j = 0; j < MAX_MOSAIC_COL; j++) {
+                boolean valid_position_col = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).tiles_col_position_valid;
+                if(!valid_position_col){
+                    System.out.println(" mosaic col " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).getStateString());
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean check_tiles_number_valid(SharedState ss, PlayerState ps){
+        // Find total number of tiles of each color
+        char color = BLUE;
+        int total_tiles = 0;
+        for(int i=0; i <= FIRST_PLAYER - BLUE; i++) {
+            // Add tiles of shared states
+            int factory_tiles = ss.factories.getFactoryTilesNumber(color);
+            int center_tiles = ss.center.getTilesNumber(color);
+            int bag_tiles = ss.bag.getTilesNumber(color);
+            int discard_tiles = ss.discard.getTilesNumber(color);
+            total_tiles = factory_tiles + center_tiles + bag_tiles + discard_tiles;
+            System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
+            // Add tiles of player state
+            for (int j = 0; j < DEFAULT_MAX_PLAYER; j++) {
+                int mosaic_tiles = ps.getnPlayer(ALL_PLAYERS[j]).mosaic.getTilesNumber(color);
+                int storage_tiles = ps.getnPlayer(ALL_PLAYERS[j]).storage.getTilesNumber(color);
+                int floor_tiles = ps.getnPlayer(ALL_PLAYERS[j]).floor.getTilesNumber(color);
+                total_tiles += mosaic_tiles + storage_tiles + floor_tiles;
+                System.out.println(" Color (" + color + ") of player " + ALL_PLAYERS[j] + " mosaic : " + mosaic_tiles + ", storage : " + storage_tiles + ", floor : " + floor_tiles);
+            }
+            System.out.println(" Total tile of color (" + color + ") is : " + total_tiles);
+            if (color == FIRST_PLAYER) {
+                if (!(total_tiles == 1)) {
+                    System.out.println(" First player token (" + color + ") is not 1 : " + total_tiles);
+                    return false;
+                }
+            } else {
+                if (!(total_tiles == 20)) {
+                    if (total_tiles > 20) {
+                        System.out.println(" Color (" + color + ") exceeds 20 : " + total_tiles);
+                        return false;
+                    } else if (total_tiles < 20) {
+                        System.out.println(" Color (" + color + ") less than 20 : " + total_tiles);
+                        return false;
+                    }
+                }
+            }
+            color++;
+        }
+        return true;
     }
 
     /**
