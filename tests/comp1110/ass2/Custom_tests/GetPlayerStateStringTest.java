@@ -1,7 +1,7 @@
 package comp1110.ass2.Custom_tests;
 
 import comp1110.ass2.PlayerState;
-import comp1110.ass2.SharedState;
+import comp1110.ass2.TestStateCases;
 import org.junit.jupiter.api.Test;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
-public class GetPlayerStateStringTest implements TestStateCases{
+public class GetPlayerStateStringTest implements TestStateCases {
 
     // TODO Complete Test for Mosaic, MosaicRow, MosaicCol, Storage, StorageRow, Floor
 

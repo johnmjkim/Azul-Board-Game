@@ -1,4 +1,4 @@
-package comp1110.ass2.Custom_tests;
+package comp1110.ass2;
 
 import comp1110.ass2.Constants;
 
@@ -178,7 +178,7 @@ public interface TestStateCases extends Constants {
 
     /**
      * Valid Player Mosaic Row States
-     * Include 10 columns: Player A Mosaic Row 1, 2, 3, 4, 5 and Player B Mosaic Row 1, 2, 3, 4, 5
+     * Include 10 columns: Player A Mosaic Row 0, 1, 2, 3, 4 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_MOSAIC_ROW = {
             // TODO Valid States Mosaic Row Test Cases
@@ -186,7 +186,7 @@ public interface TestStateCases extends Constants {
 
     /**
      * Valid Player Mosaic Col States
-     * Include 10 columns: Player A Mosaic Col 1, 2, 3, 4, 5 and Player B Mosaic Row 1, 2, 3, 4, 5
+     * Include 10 columns: Player A Mosaic Col 0, 1, 2, 3, 4, 5 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_MOSAIC_COL = {
             // TODO Valid States Mosaic Col Test Cases
@@ -202,7 +202,7 @@ public interface TestStateCases extends Constants {
 
     /**
      * Valid Player Storage Row States
-     * Include 10 columns: Player A Storage Row 1, 2, 3, 4, 5 and Player B Storage Row 1, 2, 3, 4, 5
+     * Include 10 columns: Player A Storage Row 0, 1, 2, 3, 4 and Player B Storage Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_STORAGE_ROW = {
             // TODO Valid States STORAGE Row Test Cases

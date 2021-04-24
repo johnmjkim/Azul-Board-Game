@@ -892,15 +892,15 @@ public class Azul implements Constants{
         boolean valid_SharedState = isSharedStateWellFormed(gameState[0]);
         boolean valid_PlayerState = isPlayerStateWellFormed(gameState[1]);
 
-        System.out.println(" Shared : " + gameState[0]);
-        System.out.println(" Player : " + gameState[1]);
+        //System.out.println(" Shared : " + gameState[0]);
+        //System.out.println(" Player : " + gameState[1]);
 
         if(!(valid_SharedState && valid_PlayerState)){
-            System.out.println( " Not well formed ");
+            //System.out.println( " Not well formed ");
             return false;
         }
         else{
-            System.out.println( " Both well formed " );
+            //System.out.println( " Both well formed " );
             SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
             PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
             // Examine that
@@ -917,6 +917,14 @@ public class Azul implements Constants{
                     if(!(valid_mosiac_storage_row && valid_storage_row)){
                         return false;
                     }
+                    /*
+                    System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j) + ", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
+                    System.out.println();
+                    if(!(valid_mosiac_storage_row && valid_storage_row && valid_mosaic_row)){
+                        return false;
+                    }
+
+                     */
                 }
             }
             // Find total number of tiles of each color
@@ -991,7 +999,19 @@ public class Azul implements Constants{
     // This is “3. Drafting” and “4. Mosaic-tiling/Scoring”.
     public static boolean isMoveValid(String[] gameState, String move) {
         // FIXME Task 10
-        return false;
+        boolean valid_State = isStateValid(gameState);
+        if(!valid_State){
+            return false;
+        }
+        else{
+            SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
+            PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
+
+            System.out.println(ss);
+            System.out.println(ps);
+            System.out.println(move);
+            return true;
+        }
     }
 
     /**

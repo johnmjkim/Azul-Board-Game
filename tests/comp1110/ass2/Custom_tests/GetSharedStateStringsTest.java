@@ -1,6 +1,7 @@
 package comp1110.ass2.Custom_tests;
 
 import comp1110.ass2.SharedState;
+import comp1110.ass2.TestStateCases;
 import org.junit.jupiter.api.Test;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
