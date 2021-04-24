@@ -172,38 +172,23 @@ public class Mosaic implements Tiles {
      */
     public class MosaicRow implements CoordinateTyped{
         String mosaic_rowState = EMPTY_STATE;
-        char[] MOSAIC_MASK_ROW = new char[MAX_MOSAIC_ROW];
         int[] letters = new int[128];
-        int MAX_TILES_LIMIT = MAX_MOSAIC_ROW;
+        int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int row;
 
-        boolean[] mosaicrow_tiles_occupy = new boolean[MAX_MOSAIC_ROW];
-        boolean tilespositionvalid = true;
+        boolean[] mosaicrow_tiles_occupy = new boolean[MAX_MOSAIC_COL];
+        char[] mosaicrow_tiles_color = new char[MAX_MOSAIC_COL];
+        boolean tiles_row_position_valid = true;
 
         public MosaicRow (String mosaic_rowState, int row){
             //System.out.println(" row " + row + " : " + mosaic_rowState);
             this.mosaic_rowState = mosaic_rowState;
             this.row = row;
-            generateMosaicMask(row);
             countTilesNumber(mosaic_rowState);
-            this.tilespositionvalid = isMosaicRowTilePositionsValid();
-            if(isMosaicRowTilePositionsValid()){
-                storeMosaicPosition(mosaic_rowState);
-            }
-        }
-
-        private void generateMosaicMask(int row){
-            for(int i=0; i < MAX_MOSAIC_ROW; i++) {
-                MOSAIC_MASK_ROW[i] = TILES_MASK[(i + MAX_MOSAIC_ROW - row) % MAX_MOSAIC_ROW];
-            }
-            /*
-            for(int i=0; i < MAX_MOSAIC_ROW; i++){
-                System.out.print(MOSAIC_MASK[i]);
-                System.out.print(", ");
-            }
-            System.out.println();
-
-             */
+            storeMosaicPosition(mosaic_rowState);
+            boolean valid_mosaic_position = checkTilesPosition();
+            boolean valid_mosaic_color = checkTilesColor();
+            this.tiles_row_position_valid = valid_mosaic_position && valid_mosaic_color;
         }
 
         public void storeMosaicPosition(String mosaic_rowState){
@@ -226,69 +211,54 @@ public class Mosaic implements Tiles {
             }
             for(int j=0; j < len; j++){
                 mosaicrow_tiles_occupy[mosaic_col_idx.get(j)] = true;
+                mosaicrow_tiles_color[mosaic_col_idx.get(j)] = tile_color.get(j);
             }
             /*
             for(int j=0; j < mosaicrow_tiles_occupy.length; j++){
                 System.out.print(mosaicrow_tiles_occupy[j]);
                 System.out.print(",");
+                System.out.print(mosaicrow_tiles_color[j]);
+                System.out.print(" ");
             }
+            System.out.print(" ");
             System.out.println();
 
              */
         }
 
-        public boolean isMosaicRowTilePositionsValid(){
-            ArrayList<Character> tile_color = new ArrayList<Character>();
-            ArrayList<Integer> mosaic_col_idx = new ArrayList<Integer>();
-
-            char[] mosaic_rowState_char_array = mosaic_rowState.toCharArray();
-            int len = 0;
-            int div = 3;
-            int i = 0;
-            for( char c : mosaic_rowState_char_array ){
-                if(i % div == 0){
-                    tile_color.add(c);
-                    len++;
-                }
-                else if(i % div == 2){
-                    mosaic_col_idx.add(Character.getNumericValue(c));
-                }
-                i++;
-            }
-            if(len > 5){
-                return false;
-            }
-            else if(len > 1){
-                for(int j=1; j < len; j++){
-                    if(mosaic_col_idx.get(j) <= mosaic_col_idx.get(j-1)){
-                        return false;
-                    }
-                    else if(mosaic_col_idx.get(j) > 4){
-                        return false;
-                    }
-                }
-                for(int j=0; j < len; j++){
-                    if(!tile_color.get(j).equals(MOSAIC_MASK_ROW[mosaic_col_idx.get(j)])){
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else if(len == 1){
-                if(mosaic_col_idx.get(0) > 4){
-                    return false;
+        public boolean checkTilesPosition(){
+            StringBuilder SB = new StringBuilder();
+            for(int i=0; i < MAX_MOSAIC_COL; i++){
+                if(mosaicrow_tiles_occupy[i]){
+                    SB.append(mosaicrow_tiles_color[i]);
+                    SB.append(row);
+                    SB.append(i);
                 }
                 else{
-                    return tile_color.get(0).equals(MOSAIC_MASK_ROW[mosaic_col_idx.get(0)]);
+                    SB.append("");
                 }
             }
-            else{
-                return true;
+            return this.mosaic_rowState.equals(String.valueOf(SB));
+        }
+
+        public boolean checkTilesColor(){
+            StringBuilder SB = new StringBuilder();
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                if(getTilesNumber(color) > 1){
+                    return false;
+                }
+                color++;
             }
+            return true;
         }
 
         public boolean existsTileColor(char color){
             return (getTilesNumber(color) > 0);
+        }
+
+        public boolean existsTile(int column){
+            return this.mosaicrow_tiles_occupy[column];
         }
 
         @Override
@@ -304,7 +274,6 @@ public class Mosaic implements Tiles {
             this.letters[ORANGE] = letters_array[ORANGE];
             this.letters[PURPLE] = letters_array[PURPLE];
             this.letters[RED] = letters_array[RED];
-
         }
 
         @Override
@@ -335,7 +304,7 @@ public class Mosaic implements Tiles {
 
         @Override
         public String getStateString() {
-            if(isMosaicRowTilePositionsValid()){
+            if(checkTilesPosition()){
                 updateState();
             }
             return this.mosaic_rowState;
@@ -351,8 +320,8 @@ public class Mosaic implements Tiles {
             StringBuilder SB = new StringBuilder();
             for(int i=0; i < MAX_MOSAIC_COL; i++){
                 if(mosaicrow_tiles_occupy[i]){
-                    SB.append(MOSAIC_MASK_ROW[i]);
-                    SB.append(this.row);
+                    SB.append(mosaicrow_tiles_color[i]);
+                    SB.append(row);
                     SB.append(i);
                 }
                 else{
@@ -360,7 +329,6 @@ public class Mosaic implements Tiles {
                 }
             }
             this.mosaic_rowState = String.valueOf(SB);
-            countTilesNumber(this.mosaic_rowState);
         }
     }
 
@@ -372,26 +340,89 @@ public class Mosaic implements Tiles {
         int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int col;
 
+        boolean[] mosaiccol_tiles_occupy = new boolean[MAX_MOSAIC_ROW];
+        char[] mosaiccol_tiles_color = new char[MAX_MOSAIC_ROW];
+        boolean tiles_col_position_valid = true;
+
         public MosaicCol(String mosaic_colState, int col) {
             //System.out.println(" col " + col + " : " + mosaic_colState);
             this.mosaic_colState = mosaic_colState;
             this.col = col;
-            generateMosaicMask(col);
             countTilesNumber(mosaic_colState);
+            storeMosaicPosition(mosaic_colState);
+            boolean valid_mosaic_position = checkTilesPosition();
+            boolean valid_mosaic_color = checkTilesColor();
+            this.tiles_col_position_valid = valid_mosaic_position && valid_mosaic_color;
         }
 
-        private void generateMosaicMask(int col) {
-            for (int i = 0; i < MAX_MOSAIC_COL; i++) {
-                MOSAIC_MASK_COL[i] = TILES_MASK_REVERSE[(i + MAX_MOSAIC_COL - col - 1) % MAX_MOSAIC_ROW];
+        public void storeMosaicPosition(String mosaic_colState){
+            ArrayList<Character> tile_color = new ArrayList<Character>();
+            ArrayList<Integer> mosaic_row_idx = new ArrayList<Integer>();
+
+            char[] mosaic_colState_char_array = mosaic_colState.toCharArray();
+            int len = 0;
+            int div = 3;
+            int i = 0;
+            for( char c : mosaic_colState_char_array ){
+                if(i % div == 0){
+                    tile_color.add(c);
+                    len++;
+                }
+                else if(i % div == 1){
+                    mosaic_row_idx.add(Character.getNumericValue(c));
+                }
+                i++;
+            }
+            for(int j=0; j < len; j++){
+                mosaiccol_tiles_occupy[mosaic_row_idx.get(j)] = true;
+                mosaiccol_tiles_color[mosaic_row_idx.get(j)] = tile_color.get(j);
             }
             /*
-            for(int i=0; i < MAX_MOSAIC_COL; i++){
-                System.out.print(MOSAIC_MASK_COL[i]);
-                System.out.print(", ");
+            for(int j=0; j < mosaiccol_tiles_occupy.length; j++){
+                System.out.print(mosaiccol_tiles_occupy[j]);
+                System.out.print(",");
+                System.out.print(mosaiccol_tiles_color[j]);
+                System.out.print(" ");
             }
+            System.out.print(" ");
             System.out.println();
 
              */
+        }
+
+        public boolean checkTilesPosition(){
+            StringBuilder SB = new StringBuilder();
+            for(int i=0; i < MAX_MOSAIC_ROW; i++){
+                if(mosaiccol_tiles_occupy[i]){
+                    SB.append(mosaiccol_tiles_color[i]);
+                    SB.append(i);
+                    SB.append(col);
+                }
+                else{
+                    SB.append("");
+                }
+            }
+            return this.mosaic_colState.equals(String.valueOf(SB));
+        }
+
+        public boolean checkTilesColor(){
+            StringBuilder SB = new StringBuilder();
+            char color = BLUE;
+            for(int i=0; i <= RED - BLUE; i++){
+                if(getTilesNumber(color) > 1){
+                    return false;
+                }
+                color++;
+            }
+            return true;
+        }
+
+        public boolean existsTileColor(char color){
+            return (getTilesNumber(color) > 0);
+        }
+
+        public boolean existsTile(int row){
+            return this.mosaiccol_tiles_occupy[row];
         }
 
         @Override
@@ -437,6 +468,9 @@ public class Mosaic implements Tiles {
 
         @Override
         public String getStateString() {
+            if(checkTilesPosition()){
+                updateState();
+            }
             return this.mosaic_colState;
         }
 
@@ -447,7 +481,18 @@ public class Mosaic implements Tiles {
 
         @Override
         public void updateState() {
-
+            StringBuilder SB = new StringBuilder();
+            for(int i=0; i < MAX_MOSAIC_ROW; i++){
+                if(mosaiccol_tiles_occupy[i]){
+                    SB.append(mosaiccol_tiles_color[i]);
+                    SB.append(i);
+                    SB.append(col);
+                }
+                else{
+                    SB.append("");
+                }
+            }
+            this.mosaic_colState = String.valueOf(SB);
         }
     }
 

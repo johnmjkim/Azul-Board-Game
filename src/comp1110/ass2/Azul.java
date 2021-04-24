@@ -906,13 +906,12 @@ public class Azul implements Constants{
             // Examine that
             // storage row do not exceed tiles
             // mosaic-storage do not have same color
-            // mosaic have valid positioning
             for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
                 for(int j=0; j < MAX_MOSAIC_ROW; j++){
                     char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
                     boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
                     boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
-                    boolean valid_mosaic_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid();
+
                     //System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
                     //System.out.print(", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
                     //System.out.println();
@@ -920,12 +919,24 @@ public class Azul implements Constants{
                         System.out.println( " mosaic storage validity : " + valid_mosiac_storage_row + " valid storage row tiles not exceed : " + valid_storage_row);
                         return false;
                     }
-                    /*
 
-                    if(!(valid_mosiac_storage_row && valid_storage_row && valid_mosaic_row)){
+                }
+            }
+            // mosaic rows, columns have valid positioning
+            for(int i=0; i < DEFAULT_MAX_PLAYER; i++) {
+                for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
+                    boolean valid_position_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid;
+                    if(!valid_position_row){
+                        System.out.println(" mosaic row " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).getStateString());
                         return false;
                     }
-                     */
+                }
+                for (int j = 0; j < MAX_MOSAIC_COL; j++) {
+                    boolean valid_position_col = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).tiles_col_position_valid;
+                    if(!valid_position_col){
+                        System.out.println(" mosaic col " + j + " not valid : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).getStateString());
+                        return false;
+                    }
                 }
             }
             // Find total number of tiles of each color
@@ -1080,18 +1091,28 @@ public class Azul implements Constants{
                     System.out.println("Tiling move");
                     char storage_mosaic_row = move.charAt(1);
                     char mosaic_column_or_floor = move.charAt(2);
-                    // Check picking tiles from factory or center
                     int storage_row = Character.getNumericValue(storage_mosaic_row);
 
-                    char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
-                    boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
-                    boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(storage_row).getTilesNumber(storage_row_color) > 0;
-                    if(!storage_row_full || mosaic_row_color_exists){
-                        System.out.println("Storage row not full : " + !storage_row_full + "Mosaic row color exists : " + mosaic_row_color_exists);
-                        return false;
+                    if(!(mosaic_column_or_floor == FLOOR)){
+                        int mosaic_row = storage_row;
+                        int mosaic_col = Character.getNumericValue(mosaic_column_or_floor);
+                        // Check picking tiles from factory or center
+                        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+                        boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
+                        boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).existsTileColor(storage_row_color);
+                        boolean mosaic_col_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicCol(mosaic_col).existsTileColor(storage_row_color);
+                        boolean mosaic_row_tile_occupied = ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).existsTile(mosaic_col);
+
+                        if(!storage_row_full || mosaic_row_color_exists || mosaic_col_color_exists || mosaic_row_tile_occupied){
+                            System.out.println("Storage row not full : " + !storage_row_full + " Mosaic row color exists : " + mosaic_row_color_exists + " Mosaic col color exists : " + mosaic_col_color_exists + " Mosaic position occupied : " + mosaic_row_tile_occupied);
+                            return false;
+                        }
+                        else{
+                            System.out.println("Storage row is full and mosaic position is valid");
+                            return true;
+                        }
                     }
                     else{
-                        System.out.println("Storage row is full");
                         return true;
                     }
                 }

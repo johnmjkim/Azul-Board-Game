@@ -26,8 +26,6 @@ public interface Constants {
     public final char PURPLE = 'd';
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
-    public final char[] TILES_MASK = {BLUE, GREEN, ORANGE, PURPLE, RED};
-    public final char[] TILES_MASK_REVERSE = {RED, PURPLE, ORANGE, GREEN, BLUE};
 
     // Number in characters
     public static final char ZERO = '0';
