@@ -896,11 +896,11 @@ public class Azul implements Constants{
         //System.out.println(" Player : " + gameState[1]);
 
         if(!(valid_SharedState && valid_PlayerState)){
-            //System.out.println( " Not well formed ");
+            System.out.println( " Not well formed ");
             return false;
         }
         else{
-            //System.out.println( " Both well formed " );
+            System.out.println( " Both well formed " );
             SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
             PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
             // Examine that
@@ -913,17 +913,18 @@ public class Azul implements Constants{
                     boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
                     boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
                     boolean valid_mosaic_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid();
-
+                    //System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j));
+                    //System.out.print(", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
+                    //System.out.println();
                     if(!(valid_mosiac_storage_row && valid_storage_row)){
+                        System.out.println( " mosaic storage validity : " + valid_mosiac_storage_row + " valid storage row tiles not exceed : " + valid_storage_row);
                         return false;
                     }
                     /*
-                    System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j) + ", Position Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).isMosaicRowTilePositionsValid());
-                    System.out.println();
+
                     if(!(valid_mosiac_storage_row && valid_storage_row && valid_mosaic_row)){
                         return false;
                     }
-
                      */
                 }
             }
@@ -937,29 +938,29 @@ public class Azul implements Constants{
                 int bag_tiles = ss.bag.getTilesNumber(color);
                 int discard_tiles = ss.discard.getTilesNumber(color);
                 total_tiles = factory_tiles + center_tiles + bag_tiles + discard_tiles;
-                //System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
+                System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
                 // Add tiles of player state
                 for (int j = 0; j < DEFAULT_MAX_PLAYER; j++) {
                     int mosaic_tiles = ps.getnPlayer(ALL_PLAYERS[j]).mosaic.getTilesNumber(color);
                     int storage_tiles = ps.getnPlayer(ALL_PLAYERS[j]).storage.getTilesNumber(color);
                     int floor_tiles = ps.getnPlayer(ALL_PLAYERS[j]).floor.getTilesNumber(color);
                     total_tiles += mosaic_tiles + storage_tiles + floor_tiles;
-                    //System.out.println(" Color (" + color + ") of player " + ALL_PLAYERS[j] + " mosaic : " + mosaic_tiles + ", storage : " + storage_tiles + ", floor : " + floor_tiles);
+                    System.out.println(" Color (" + color + ") of player " + ALL_PLAYERS[j] + " mosaic : " + mosaic_tiles + ", storage : " + storage_tiles + ", floor : " + floor_tiles);
                 }
-                //System.out.println(" Total tile of color (" + color + ") is : " + total_tiles);
+                System.out.println(" Total tile of color (" + color + ") is : " + total_tiles);
                 if(color == FIRST_PLAYER){
                     if (!(total_tiles == 1)) {
-                        //System.out.println(" First player token (" + color + ") is not 1 : " + total_tiles);
+                        System.out.println(" First player token (" + color + ") is not 1 : " + total_tiles);
                         return false;
                     }
                 }
                 else{
                     if (!(total_tiles == 20)) {
                         if (total_tiles > 20) {
-                            //System.out.println(" Color (" + color + ") exceeds 20 : " + total_tiles);
+                            System.out.println(" Color (" + color + ") exceeds 20 : " + total_tiles);
                             return false;
                         } else if (total_tiles < 20) {
-                            //System.out.println(" Color (" + color + ") less than 20 : " + total_tiles);
+                            System.out.println(" Color (" + color + ") less than 20 : " + total_tiles);
                             return false;
                         }
                     }
@@ -1000,17 +1001,130 @@ public class Azul implements Constants{
     public static boolean isMoveValid(String[] gameState, String move) {
         // FIXME Task 10
         boolean valid_State = isStateValid(gameState);
-        if(!valid_State){
+        boolean wellFormed_move = check_move_format(move);
+        boolean isDrafting_move = (move.length() == 4);
+        boolean isTiling_move = (move.length() == 3);
+
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
+        System.out.println(move);
+
+        if(!(valid_State && wellFormed_move)){
+            System.out.println(" valid state : " + valid_State + " well formed move : " + wellFormed_move);
             return false;
         }
         else{
             SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
             PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
 
-            System.out.println(ss);
-            System.out.println(ps);
-            System.out.println(move);
-            return true;
+            char player_turn = move.charAt(0);
+            boolean right_player_turn = ss.turnState.equals(String.valueOf(player_turn));
+
+            if(!right_player_turn){
+                return false;
+            }
+            else{
+                if(isDrafting_move){
+                    System.out.println("Drafting move");
+                    char factory_or_center = move.charAt(1);
+                    char color_of_tile = move.charAt(2);
+                    char storage_row_or_floor = move.charAt(3);
+
+                    // Check picking tiles from factory or center
+                    if(!(factory_or_center == CENTER)){
+                        int factory_num = Character.getNumericValue(factory_or_center);
+                        boolean factory_has_tile = ss.factories.getFactory(factory_num).getTilesNumber(color_of_tile) > 0;
+                        if(!factory_has_tile){
+                            System.out.println("Factory " + factory_or_center + " does not have tile : " + color_of_tile);
+                            return false;
+                        }
+                        else{
+                            System.out.println("Factory " + factory_or_center + " has tile : " + color_of_tile);
+                        }
+                    }
+                    else{
+                        boolean center_has_tile = ss.center.getTilesNumber(color_of_tile) > 0;
+                        if(!center_has_tile){
+                            System.out.println("Center does not have tile : " + color_of_tile);
+                            return false;
+                        }
+                        else{
+                            System.out.println("Center has tile : " + color_of_tile);
+                        }
+                    }
+                    // Check placing tiles to storage row or floor
+                    if(storage_row_or_floor == FLOOR){
+                        System.out.println("Place tiles to floor");
+                        return true;
+                    }
+                    else{
+                        int storage_row = Character.getNumericValue(storage_row_or_floor);
+                        boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
+                        boolean storage_row_same_color = (color_of_tile == ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor());
+                        boolean storage_row_empty = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isStateEmpty();
+                        boolean storage_row_color_valid = storage_row_same_color || storage_row_empty;
+                        boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(storage_row).existsTileColor(color_of_tile);
+                        System.out.println("Place tiles to Storage");
+
+                        if(storage_row_full || mosaic_row_color_exists || !storage_row_color_valid){
+                            System.out.println(" Storage full : " + storage_row_full + " Same color of mosaic row exist " + mosaic_row_color_exists + " Invalid storage row color" + !storage_row_color_valid);
+                            return false;
+                        }
+                        else{
+                            System.out.println("Storage row placement is valid");
+                            return true;
+                        }
+                    }
+                }
+                else if(isTiling_move){
+                    System.out.println("Tiling move");
+                    char storage_mosaic_row = move.charAt(1);
+                    char mosaic_column_or_floor = move.charAt(2);
+                    // Check picking tiles from factory or center
+                    int storage_row = Character.getNumericValue(storage_mosaic_row);
+
+                    char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+                    boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
+                    boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(storage_row).getTilesNumber(storage_row_color) > 0;
+                    if(!storage_row_full || mosaic_row_color_exists){
+                        System.out.println("Storage row not full : " + !storage_row_full + "Mosaic row color exists : " + mosaic_row_color_exists);
+                        return false;
+                    }
+                    else{
+                        System.out.println("Storage row is full");
+                        return true;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    public static boolean check_move_format( String move ){
+        if(move.length() == 3){
+            char player_turn = move.charAt(0);
+            char storage_mosaic_row = move.charAt(1);
+            char mosaic_column_or_floor = move.charAt(2);
+            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn < ALL_PLAYERS[MAX_PLAYER_NUMBER]);
+            boolean storage_mosaic_row_valid = (storage_mosaic_row >= ZERO) && (storage_mosaic_row <= FOUR);
+            boolean mosaic_column_or_floor_valid = ((mosaic_column_or_floor >= ZERO) && (mosaic_column_or_floor <= FOUR)) || mosaic_column_or_floor == FLOOR;
+            return player_turn_valid && storage_mosaic_row_valid && mosaic_column_or_floor_valid;
+        }
+        else if(move.length() == 4){
+            char player_turn = move.charAt(0);
+            char factory_or_center = move.charAt(1);
+            char color_of_tile = move.charAt(2);
+            char storage_row_or_floor = move.charAt(3);
+            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn < ALL_PLAYERS[MAX_PLAYER_NUMBER]);
+            boolean factory_or_center_valid = ((factory_or_center >= ZERO) && (factory_or_center <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER-DEFAULT_MAX_PLAYER])) || factory_or_center == CENTER;
+            boolean color_of_tile_valid = (color_of_tile >= BLUE) && (color_of_tile <= RED);
+            boolean storage_row_or_floor_valid = ((storage_row_or_floor >= ZERO) && (storage_row_or_floor <= FOUR)) || storage_row_or_floor == FLOOR;
+            return player_turn_valid && factory_or_center_valid && color_of_tile_valid && storage_row_or_floor_valid;
+        }
+        else{
+            return false;
         }
     }
 

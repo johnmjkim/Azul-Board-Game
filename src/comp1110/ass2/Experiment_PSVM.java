@@ -13,7 +13,6 @@ public class Experiment_PSVM implements TestCountCases {
         //String input_playerState_2 = "A75Ma00b01d03e04e10a11b12c13d14d20e21a22b23c24e32a33b34d42e43S3c3FB60Ma00b01c02e10a11b12c13d14d20e21a22c24c30d31b40c41a44SF";
         String input_playerState_4 = "A3Ma00a11b12e00c13e21c24a31c42S1a20e52d13d34a3FB5Mb00c01a03d04d21b31e41S0d11e52b14b1Fbccccdf";
 
-        /*
         // Shared State Experiment
         SharedState ss = new SharedState(input_sharedState_4, DEFAULT_MAX_PLAYER);
         PlayerState ps = new PlayerState(input_playerState_1, DEFAULT_MAX_PLAYER);
@@ -50,8 +49,7 @@ public class Experiment_PSVM implements TestCountCases {
             System.out.println();
         }
 
-         */
-
+        /*
         int len = 0;
         System.out.println("Factories Tile Numbers ");
         System.out.println("Factories Test Valid States");
@@ -281,6 +279,8 @@ public class Experiment_PSVM implements TestCountCases {
         for (int i = 0; i < FULL_GAME_WITH_MOVES.length; i++) {
             makefloorints(FULL_GAME_WITH_MOVES[i][1]);
         }
+
+         */
 
     }
 
