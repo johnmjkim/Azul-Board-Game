@@ -101,7 +101,7 @@ public class GetPlayerStateStringTest implements TestStateCases {
         for (int i = 0; i < VALID_STATES.length; i++) {
             for(int j = 0; j < DEFAULT_MAX_PLAYER; j++){
                 for(int row = 0; row < MAX_MOSAIC_ROW; row++){
-                    MosaicRowtest(VALID_STATES[i][1], VALID_STATES_MOSAIC_ROW[i][j], j, row);
+                    MosaicRowtest(VALID_STATES[i][1], VALID_STATES_MOSAIC_ROW[i][j*5+row], j, row);
                 }
 
             }
@@ -114,7 +114,7 @@ public class GetPlayerStateStringTest implements TestStateCases {
         for (int i = 0; i < VALID_STATES.length; i++) {
             for(int j = 0; j < DEFAULT_MAX_PLAYER; j++){
                 for(int col = 0; col < MAX_MOSAIC_COL; col++){
-                    MosaicColtest(VALID_STATES[i][1], VALID_STATES_MOSAIC_COL[i][j], j, col);;
+                    MosaicColtest(VALID_STATES[i][1], VALID_STATES_MOSAIC_COL[i][j*5+col], j, col);;
                 }
             }
         }
@@ -136,7 +136,7 @@ public class GetPlayerStateStringTest implements TestStateCases {
         for (int i = 0; i < VALID_STATES.length; i++) {
             for(int j = 0; j < DEFAULT_MAX_PLAYER; j++){
                 for(int row = 0; row < MAX_STORAGE_ROW; row++){
-                StorageRowtest(VALID_STATES[i][1], VALID_STATES_STORAGE_ROW[i][j], j, row);
+                StorageRowtest(VALID_STATES[i][1], VALID_STATES_STORAGE_ROW[i][j*5+row], j, row);
                 }
             }
         }

@@ -151,31 +151,31 @@ public interface TestStateCases extends Constants {
     public static final String[] VALID_STATES_BAG = {
             // TODO Valid States Bag Test Cases
             // ROUND 1
-            "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000",
-            "AFCB1915161614D0000000000",
-            "AFCB1915161614D0003010203",
+            "1915161614",
+            "1915161614",
+            "1915161614",
             // ROUND 2
-            "AF0abbd1abbe2adde3aabe4bddeCfB1409161110D0003010204",
-            "AFCB1409161110D0003010204",
-            "AFCB1409161110D0406010508",
+            "1409161110",
+            "1409161110",
+            "1409161110",
             // ROUND 3
-            "AF0bdde1bcde2aaac3acce4bccdCfB1006100707D0407010508",
-            "AFCB1006100707D0407010508",
-            "AFCB1006100707D0607040610",
+            "1006100707",
+            "1006100707",
+            "1006100707",
             // ROUND 4
-            "BF0ccce1aace2aade3abde4ccdeCfB0505040402D0609040610",
-            "BFCB0505040402D0609040610",
-            "BFCB0505040402D0909100612",
+            "0505040402",
+            "0505040402",
+            "0505040402",
             // ROUND 5
-            "BF0bcdd1bbbc2aaad3acde4abceCfB0000000000D1110100612",
-            "BFCB0000000000D1110100612",
-            "BFCB0000000000D1314121012",
+            "0000000000",
+            "0000000000",
+            "0000000000",
             // ROUND 6
-            "AF0bdde1aaae2aaad3ccde4abceCfB0712090708D0000000000",
-            "AFCB0712090708D0000000000",
-            "AFCB0712090708D0201010302",
+            "0712090708",
+            "0712090708",
+            "0712090708",
             // BONUS SCORING
-            "BFCfB0712090708D0501010605"
+            "0712090708"
     };
 
     /**
@@ -185,31 +185,31 @@ public interface TestStateCases extends Constants {
     public static final String[] VALID_STATES_DISCARD = {
             // TODO Valid States Discard Test Cases
             // ROUND 1
-            "AF0cdde1bbbe2abde3cdee4bcceCfB1915161614D0000000000",
-            "AFCB1915161614D0000000000",
-            "AFCB1915161614D0003010203",
+            "0000000000",
+            "0000000000",
+            "0003010203",
             // ROUND 2
-            "AF0abbd1abbe2adde3aabe4bddeCfB1409161110D0003010204",
-            "AFCB1409161110D0003010204",
-            "AFCB1409161110D0406010508",
+            "0003010204",
+            "0003010204",
+            "0406010508",
             // ROUND 3
-            "AF0bdde1bcde2aaac3acce4bccdCfB1006100707D0407010508",
-            "AFCB1006100707D0407010508",
-            "AFCB1006100707D0607040610",
+            "0407010508",
+            "0407010508",
+            "0607040610",
             // ROUND 4
-            "BF0ccce1aace2aade3abde4ccdeCfB0505040402D0609040610",
-            "BFCB0505040402D0609040610",
-            "BFCB0505040402D0909100612",
+            "0609040610",
+            "0609040610",
+            "0909100612",
             // ROUND 5
-            "BF0bcdd1bbbc2aaad3acde4abceCfB0000000000D1110100612",
-            "BFCB0000000000D1110100612",
-            "BFCB0000000000D1314121012",
+            "1110100612",
+            "1110100612",
+            "1314121012",
             // ROUND 6
-            "AF0bdde1aaae2aaad3ccde4abceCfB0712090708D0000000000",
-            "AFCB0712090708D0000000000",
-            "AFCB0712090708D0201010302",
+            "0000000000",
+            "0000000000",
+            "0201010302",
             // BONUS SCORING
-            "BFCfB0712090708D0501010605"
+            "0501010605"
     };
 
     /**
@@ -287,6 +287,32 @@ public interface TestStateCases extends Constants {
      */
     public static final String[][] VALID_STATES_MOSAIC_ROW = {
             // TODO Valid States Mosaic Row Test Cases
+            // ROUND 1
+            new String[]{"","","","","","","","","",""},
+            new String[]{"","","","","","","","","",""},
+            new String[]{"d03","c13","b23","e32","", "a00","b12","d20","",""},
+            // ROUND 2
+            new String[]{"d03","c13","b23","e32","","a00","b12","d20","",""},
+            new String[]{"d03","c13","b23","e32","","a00","b12","d20","",""},
+            new String[]{"d03","c13","d20b23","e32b34","e43","a00b01","b12d14","d20","","a44"},
+            // ROUND 3
+            new String[]{"d03","c13","d20b23","e32b34","e43","a00b01","b12d14","d20","","a44"},
+            new String[]{"d03","c13","d20b23","e32b34","e43","a00b01","b12d14","d20","","a44"},
+            new String[]{"b01d03","c13d14","d20a22b23","e32b34","e43","a00b01","b12d14","d20e21","c30","a44"},
+            // ROUND 4
+            new String[]{"b01d03","c13d14","d20a22b23","e32b34","e43","a00b01","b12d14","d20e21","c30","a44"},
+            new String[]{"b01d03","c13d14","d20a22b23","e32b34","e43","a00b01","b12d14","d20e21","c30","a44"},
+            new String[]{"b01d03e04","e10c13d14","d20a22b23c24","e32a33b34","e43","a00b01","e10b12d14","d20e21","c30","c41a44"},
+            // ROUND 5
+            new String[]{"b01d03e04","e10c13d14","d20a22b23c24","e32a33b34","e43","a00b01","e10b12d14","d20e21","c30","c41a44"},
+            new String[]{"b01d03e04","e10c13d14","d20a22b23c24","e32a33b34","e43","a00b01","e10b12d14","d20e21","c30","c41a44"},
+            new String[]{"b01d03e04","e10a11c13d14","d20a22b23c24","e32a33b34","d42e43","a00b01","e10a11b12d14","d20e21c24","c30","b40c41a44"},
+            // ROUND 6
+            new String[]{"b01d03e04","e10a11c13d14","d20a22b23c24","e32a33b34","d42e43","a00b01","e10a11b12d14","d20e21c24","c30","b40c41a44"},
+            new String[]{"b01d03e04","e10a11c13d14","d20a22b23c24","e32a33b34","d42e43","a00b01","e10a11b12d14","d20e21c24","c30","b40c41a44"},
+            new String[]{"a00b01d03e04","e10a11b12c13d14","d20e21a22b23c24","e32a33b34","d42e43","a00b01c02","e10a11b12c13d14","d20e21a22c24","c30d31","b40c41a44"},
+            // BONUS SCORING
+            new String[]{"a00b01d03e04","e10a11b12c13d14","d20e21a22b23c24","e32a33b34","d42e43","a00b01c02","e10a11b12c13d14","d20e21a22c24","c30d31","b40c41a44"}
 
     };
 
@@ -296,6 +322,32 @@ public interface TestStateCases extends Constants {
      */
     public static final String[][] VALID_STATES_MOSAIC_COL = {
             // TODO Valid States Mosaic Col Test Cases
+            // ROUND 1
+            new String[]{"","","","","","","","","",""},
+            new String[]{"","","","","","","","","",""},
+            new String[]{"","","e32","d03c13b23","","a00d20","","b12","",""},
+            // ROUND 2
+            new String[]{"","","e32","d03c13b23","","a00d20","","b12","",""},
+            new String[]{"","","e32","d03c13b23","","a00d20","","b12","",""},
+            new String[]{"d20","","e32","d03c13b23e43","b34","a00d20","b01","b12","","d14a44"},
+            // ROUND 3
+            new String[]{"d20","","e32","d03c13b23e43","b34","a00d20","b01","b12","","d14a44"},
+            new String[]{"d20","","e32","d03c13b23e43","b34","a00d20","b01","b12","","d14a44"},
+            new String[]{"d20","b01","a22e32","d03c13b23e43","d14b34","a00d20c30","b01e21","b12","","d14a44"},
+            // ROUND 4
+            new String[]{"d20","b01","a22e32","d03c13b23e43","d14b34","a00d20c30","b01e21","b12","","d14a44"},
+            new String[]{"d20","b01","a22e32","d03c13b23e43","d14b34","a00d20c30","b01e21","b12","","d14a44"},
+            new String[]{"e10d20","b01","a22e32","d03c13b23a33e43","e04d14c24b34","a00e10d20c30","b01e21c41","b12","","d14a44"},
+            // ROUND 5
+            new String[]{"e10d20","b01","a22e32","d03c13b23a33e43","e04d14c24b34","a00e10d20c30","b01e21c41","b12","","d14a44"},
+            new String[]{"e10d20","b01","a22e32","d03c13b23a33e43","e04d14c24b34","a00e10d20c30","b01e21c41","b12","","d14a44"},
+            new String[]{"e10d20","b01a11","a22e32d42","d03c13b23a33e43","e04d14c24b34","a00e10d20c30b40","b01a11e21c41","b12","","d14c24a44"},
+            // ROUND 6
+            new String[]{"e10d20","b01a11","a22e32d42","d03c13b23a33e43","e04d14c24b34","a00e10d20c30b40","b01a11e21c41","b12","","d14c24a44"},
+            new String[]{"e10d20","b01a11","a22e32d42","d03c13b23a33e43","e04d14c24b34","a00e10d20c30b40","b01a11e21c41","b12","","d14c24a44"},
+            new String[]{"a00e10d20","b01a11e21","b12a22e32d42","d03c13b23a33e43","e04d14c24b34","a00e10d20c30b40","b01a11e21d31c41","c02b12a22","c13","d14c24a44"},
+            // BONUS SCORING
+            new String[]{"a00e10d20","b01a11e21","b12a22e32d42","d03c13b23a33e43","e04d14c24b34","a00e10d20c30b40","b01a11e21d31c41","c02b12a22","c13","d14c24a44"}
     };
 
     /**
@@ -304,6 +356,33 @@ public interface TestStateCases extends Constants {
      */
     public static final String[][] VALID_STATES_STORAGE = {
             // TODO Valid States Storage Test Cases
+            // ROUND 1
+            new String[]{"",""},
+            new String[]{"0d11c22b33e44e1","0a11b22d33c2"},
+            new String[]{"4e1","3c2"},
+            // ROUND 2
+            new String[]{"4e1","3c2"},
+            new String[]{"2d33b44e5","0b11d23c24a5"},
+            new String[]{"","3c2"},
+            // ROUND 3
+            new String[]{"","3c2"},
+            new String[]{"0b11d22a33a14d2","2e33c44c4"},
+            new String[]{"3a14d2","4c4"},
+            // ROUND 4
+            new String[]{"3a14d2","4c4"},
+            new String[]{"0e11e22c33a44d2","1e22c23d34c5"},
+            new String[]{"4d2","2c23d3"},
+            // ROUND 5
+            new String[]{"4d2","2c23d3"},
+            new String[]{"1a22e23c34d5","1a22c33d34b5"},
+            new String[]{"2e23c3","3d3"},
+            // ROUND 6
+            new String[]{"2e23c3","3d3"},
+            new String[]{"0a11b22e33c3","0c11c22a33d4"},
+            new String[]{"3c3",""},
+            // BONUS SCORING
+            new String[]{"3c3",""}
+
     };
 
     /**
@@ -312,6 +391,32 @@ public interface TestStateCases extends Constants {
      */
     public static final String[][] VALID_STATES_STORAGE_ROW = {
             // TODO Valid States STORAGE Row Test Cases
+            // ROUND 1
+            new String[]{"","","","","","","","","",""},
+            new String[]{"d1","c2","b3","e4","e1","a1","b2","d3","c2",""},
+            new String[]{"","","","","e1","","","","c2",""},
+            // ROUND 2
+            new String[]{"","","","","e1","","","","c2",""},
+            new String[]{"","","d3","b4","e5","b1","d2","","c2","a5"},
+            new String[]{"","","","","","","","","c2",""},
+            // ROUND 3
+            new String[]{"","","","","","","","","c2",""},
+            new String[]{"b1","d2","a3","a1","d2","","","e3","c4","c4"},
+            new String[]{"","","","a1","d2","","","","","c4"},
+            // ROUND 4
+            new String[]{"","","","a1","d2","","","","","c4"},
+            new String[]{"e1","e2","c3","a4","d2","","e2","c2","d3","c5"},
+            new String[]{"","","","","d2","","","c2","d3",""},
+            // ROUND 5
+            new String[]{"","","","","d2","","","c2","d3",""},
+            new String[]{"","a2","e2","c3","d5","","a2","c3","d3","b5"},
+            new String[]{"","","e2","c3","","","","","d3",""},
+            // ROUND 6
+            new String[]{"","","e2","c3","","","","","d3",""},
+            new String[]{"a1","b2","e3","c3","","c1","c2","a3","d4",""},
+            new String[]{"","","","c3","","","","","",""},
+            // BONUS SCORING
+            new String[]{"","","","c3","","","","","",""},
     };
 
     /**
@@ -320,6 +425,33 @@ public interface TestStateCases extends Constants {
      */
     public static final String[][] VALID_STATES_FLOOR = {
             // TODO Valid States FLOOR Test Cases
+            // ROUND 1
+            new String[]{"",""},
+            new String[]{"ef",""},
+            new String[]{"ef",""},
+            // ROUND 2
+            new String[]{"",""},
+            new String[]{"f","b"},
+            new String[]{"f","b"},
+            // ROUND 3
+            new String[]{"",""},
+            new String[]{"","bbf"},
+            new String[]{"","bbf"},
+            // ROUND 4
+            new String[]{"",""},
+            new String[]{"aab","f"},
+            new String[]{"aab","f"},
+            // ROUND 5
+            new String[]{"",""},
+            new String[]{"adf",""},
+            new String[]{"adf",""},
+            // ROUND 6
+            new String[]{"",""},
+            new String[]{"eee","aaadddf"},
+            new String[]{"eee","aaadddf"},
+            // BONUS SCORING
+            new String[]{"",""}
+
     };
 
     /**
