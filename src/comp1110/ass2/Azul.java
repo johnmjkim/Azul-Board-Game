@@ -1567,6 +1567,9 @@ public class Azul implements Constants{
                     ss.discard.addTile(color);
                     output_gameState[0] = ss.getUpdatedSharedState();
                     output_gameState[1] = ps.getUpdatedPlayerState();
+                    ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+                    ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
                     System.out.println("Move tile to discard");
                     System.out.println(ss);
                     System.out.println(ps);
