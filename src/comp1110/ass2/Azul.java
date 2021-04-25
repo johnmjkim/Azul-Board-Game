@@ -560,10 +560,11 @@ public class Azul implements Constants{
     //This is “2. Starting the round”.
     public static char drawTileFromBag(String[] gameState) {
         // FIXME Task 5
-        sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-        return sharedState.bag.getRandomTile();
-        //SharedState ss = new SharedState(gameState[0], 2);
-        //return ss.bag.getRandomTile();
+
+        //sharedState = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        //return sharedState.bag.getRandomTile();
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        return ss.bag.getRandomTile();
 
     }
 
@@ -581,6 +582,40 @@ public class Azul implements Constants{
     //This is “2. Starting the round”
     public static String[] refillFactories(String[] gameState) {
         // FIXME Task 6
+
+        String[] output_gameState = new String[2];
+        output_gameState[0] = gameState[0];
+        output_gameState[1] = gameState[1];
+        SharedState ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+
+        boolean isFactoryFull = ss.factories.isFactoryFull();
+        boolean isCenterEmpty = ss.center.isStateEmpty();
+        boolean existsOneFirstPlayerTokenCenter = ss.center.hasOnlyOneFirstPlayerToken();
+
+        //System.out.println("Initial shared state : " + sharedState);
+        if(isFactoryFull){
+            //System.out.println("Factory Full");
+            output_gameState[0] = ss.getStateString();
+        }
+        else{
+            if(isCenterEmpty || existsOneFirstPlayerTokenCenter){
+                //System.out.println("Factory Not Full and (Center is Empty or has Only one First Player Token)");
+                ss.refillFactory();
+                //System.out.println("Factory filled");
+                output_gameState[0] = ss.getUpdatedSharedState();
+                //System.out.println("Output shared state : " + output_gameState[0]);
+                return output_gameState;
+            }
+            else{
+                //System.out.println("Center is not Empty and does not have Only one First Player Token");
+                output_gameState[0] = ss.getStateString();
+            }
+        }
+
+        //System.out.println("Output shared state : " + output_gameState[0]);
+        return output_gameState;
+
+        /*
         String[] output_gameState = new String[2];
         output_gameState[0] = gameState[0];
         output_gameState[1] = gameState[1];
@@ -612,6 +647,8 @@ public class Azul implements Constants{
 
         //System.out.println("Output shared state : " + output_gameState[0]);
         return output_gameState;
+
+         */
     }
 
     /**
@@ -628,6 +665,48 @@ public class Azul implements Constants{
     // This is “7. End of the Game”
     public static int getBonusPoints(String[] gameState, char player) {
         // FIXME Task 7
+        int color_tiles;
+        int player_turn;
+        int bonus_points = 0;
+        boolean row_tiles_full, col_tiles_full;
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+
+        for(int i=0; i < MAX_MOSAIC_ROW; i++){
+            row_tiles_full = ps.getnPlayer(player).mosaic.getMosaicRow(i).isTilesFull();
+            //System.out.print(player + " row " + i + " : " + playerState.getnPlayer(player).mosaic.getMosaicRow(i).getTotalTilesNumber() + " " + row_tiles_full);
+            if(row_tiles_full){
+                bonus_points += ROW_BONUS_POINT;
+                //System.out.print(", bonus points : " + bonus_points);
+            }
+            //System.out.println();
+        }
+
+        for(int i=0; i < MAX_MOSAIC_COL; i++){
+            col_tiles_full = ps.getnPlayer(player).mosaic.getMosaicCol(i).isTilesFull();
+            //System.out.print(player + " col " + i + " : " + playerState.getnPlayer(player).mosaic.getMosaicCol(i).getTotalTilesNumber() + " " + col_tiles_full);
+            if(col_tiles_full){
+                bonus_points += COL_BONUS_POINT;
+                //System.out.print(", bonus points : " + bonus_points);
+            }
+            //System.out.println();
+        }
+
+        char color = BLUE;
+        for(int i=0; i < RED - BLUE; i++){
+            color_tiles = ps.getnPlayer(player).mosaic.getTilesNumber(color);
+            //System.out.print(player + " color : " + color_tiles);
+            if(color_tiles == MAX_MOSAIC_COLOR){
+                bonus_points += COLOR_BONUS_POINT;
+                //System.out.print(", bonus points : " + bonus_points);
+            }
+            color++;
+            //System.out.println();
+        }
+
+        return bonus_points;
+
+        /*
         int color_tiles;
         int player_turn;
         int bonus_points = 0;
@@ -668,6 +747,8 @@ public class Azul implements Constants{
         }
 
         return bonus_points;
+
+         */
     }
 
     /**
@@ -692,6 +773,132 @@ public class Azul implements Constants{
     // This is “5. Preparing for next round”
     public static String[] nextRound(String[] gameState) {
         // FIXME TASK 8
+        /*
+        // Store gameState information
+        String[] output_gameState = new String[2];
+        output_gameState[0] = gameState[0];
+        output_gameState[1] = gameState[1];
+        SharedState ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
+        PlayerState ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+
+        // Find if it is time to progress next round
+        String current_player = ss.turnState;
+        int current_player_idx = 0;
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+            if(ALL_PLAYERS[i] == current_player.charAt(0)){
+                current_player_idx = i;
+            }
+        }
+
+        boolean isFactoryEmpty = ss.factories.isStateEmpty();
+        boolean isCenterEmpty = ss.center.isStateEmpty();
+        boolean existsFullStorageRow = ps.existsPlayerFullStorageRow();
+        boolean isNextRound = isFactoryEmpty && isCenterEmpty && !existsFullStorageRow;
+
+        // Find if current player is first player
+        boolean isCurrentFirstPlayer = ps.nplayers.get(current_player_idx).floor.hasFirstPlayerToken();
+
+        // Find if game is end
+        boolean isEndofGame = ps.isEndofGame();
+
+        // Print shared and player state
+        System.out.println(" Before next round ");
+        System.out.println(ss);
+        System.out.println(ps);
+        System.out.println();
+
+        if(!isNextRound){
+            // Return current state if it is not the time to progress next round
+            System.out.println(" It is not next round ");
+            System.out.println(ss);
+            System.out.println(ps);
+            System.out.println();
+
+            output_gameState[0] = ss.getUpdatedSharedState();
+            output_gameState[1] = ps.getUpdatedPlayerState();
+
+            return output_gameState;
+        }
+        else{
+            // Time to progress next round
+            System.out.println(" It is next round ");
+            System.out.println(ss);
+            System.out.println(ps);
+            System.out.println();
+
+            output_gameState[0] = ss.getUpdatedSharedState();
+            output_gameState[1] = ps.getUpdatedPlayerState();
+
+            output_gameState = clearFloor(output_gameState);
+
+            // Check if it is end of the game
+            if(isEndofGame){
+                char ender = ps.getEnder();
+                int ender_idx = 0;
+                for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+                    if(ALL_PLAYERS[i] == current_player.charAt(0)){
+                        ender_idx = i;
+                    }
+                }
+                // Game ended and add bonus point to one who ended
+                for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+                    int bonus_points = getBonusPoints(output_gameState, ALL_PLAYERS[i]);
+                    ps.getnPlayer(ALL_PLAYERS[i]).score.addScore(bonus_points);
+                    System.out.println(" It is end of game : " + ALL_PLAYERS[i] + " , bonus points are : " + bonus_points);
+                    output_gameState[1] = ps.getUpdatedPlayerState();
+                }
+                //playerState.nplayers.get(ender_idx).score.addScore(bonus_points);
+                //System.out.println(" It is end of game, ender is : " + ender + " , bonus points are : " + bonus_points);
+
+                // Set First Player token at that center and end the game
+                ss.center.addTile(FIRST_PLAYER);
+
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+
+                ss.setSharedState(output_gameState[0],MAX_PLAYER_NUMBER);
+                ps.setPlayerState(output_gameState[1],MAX_PLAYER_NUMBER);
+
+                System.out.println(ss);
+                System.out.println(ps);
+                System.out.println();
+            }
+            else {
+                System.out.println(" It is not end of game ");
+
+                // Game is not end and refill factories
+                output_gameState = refillFactories(output_gameState);
+
+                ss.setSharedState(output_gameState[0],MAX_PLAYER_NUMBER);
+                ps.setPlayerState(output_gameState[1],MAX_PLAYER_NUMBER);
+
+                System.out.println(ss);
+                System.out.println(ps);
+                System.out.println();
+
+                // Start the turn to first player for the next round
+                if(!isCurrentFirstPlayer){
+                    ss.changeTurn();
+                }
+
+                System.out.println(ss);
+                System.out.println(ps);
+                System.out.println();
+
+                output_gameState[0] = ss.getUpdatedSharedState();
+                output_gameState[1] = ps.getUpdatedPlayerState();
+            }
+
+            System.out.println(" Next round ready ");
+            System.out.println(output_gameState[0]);
+            System.out.println(output_gameState[1]);
+            System.out.println();
+
+            return output_gameState;
+        }
+
+         */
+
         // Store gameState information
         String[] output_gameState = new String[2];
         output_gameState[0] = gameState[0];
@@ -814,7 +1021,6 @@ public class Azul implements Constants{
 
             return output_gameState;
         }
-
     }
 
     public static String[] clearFloor(String[] gameState) {
