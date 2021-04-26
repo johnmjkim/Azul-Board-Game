@@ -1124,7 +1124,7 @@ public class Azul implements Constants{
             //System.out.println("Place tiles to Storage");
 
             if(storage_row_full || mosaic_row_color_exists || !storage_row_color_valid){
-                System.out.println(" Storage full : " + storage_row_full + ", Same color of mosaic row exist : " + mosaic_row_color_exists + ", Invalid storage row color : " + !storage_row_color_valid);
+                //System.out.println(" Storage full : " + storage_row_full + ", Same color of mosaic row exist : " + mosaic_row_color_exists + ", Invalid storage row color : " + !storage_row_color_valid);
                 return false;
             }
             else{
@@ -1161,7 +1161,13 @@ public class Azul implements Constants{
             }
         }
         else{
-            return true;
+            boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
+            if(!storage_row_full){
+                return false;
+            }
+            else{
+                return true;
+            }
         }
     }
 
@@ -1429,9 +1435,8 @@ public class Azul implements Constants{
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
-
-        //System.out.println(gameState[0]);
-        //System.out.println(gameState[1]);
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
 
         char player_turn = ss.getTurnState().charAt(0);
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
@@ -1440,15 +1445,43 @@ public class Azul implements Constants{
         StringBuilder SB = new StringBuilder();
 
         // Generate Drafting Moves
-        char[] second_drafting_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, CENTER};
-        char[] third_drafting_chars = new char[]{BLUE, GREEN, ORANGE, PURPLE, RED};
+
+        ArrayList<Character> second_drafting_chars = new ArrayList<Character>();
+        ArrayList<Character> third_drafting_chars = new ArrayList<Character>();
         char[] fourth_drafting_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
 
+        boolean factories_has_tile = !ss.factories.isStateEmpty();
+        boolean center_has_tile = !ss.center.isStateEmpty();
+
+        if(factories_has_tile){
+            for(int i=0; i < FACTORY_MAX_NUMBER; i++){
+                boolean factory_has_tile = !ss.factories.getFactory(i).getStateString().isEmpty();
+                if(factory_has_tile){
+                    second_drafting_chars.add(NUMBERS[i]);
+                    for( char color : COLORS ){
+                        boolean factory_has_color = ss.factories.getFactory(i).getTilesNumber(color) > 0;
+                        if(factory_has_color){
+                            third_drafting_chars.add(color);
+                        }
+                    }
+                }
+            }
+        }
+        if(center_has_tile){
+            second_drafting_chars.add(CENTER);
+            for( char color : COLORS ){
+                boolean center_has_color = ss.center.getTilesNumber(color) > 0;
+                if(center_has_color){
+                    third_drafting_chars.add(color);
+                }
+            }
+        }
+
         SB.append(player_turn);
-        for( char second_char : second_drafting_chars){
+        for( Character second_char : second_drafting_chars){
             SB.delete(1,SB.length());
             SB.append(second_char);
-            for( char third_char : third_drafting_chars){
+            for( Character third_char : third_drafting_chars){
                 SB.delete(2,SB.length());
                 SB.append(third_char);
                 for( char fourth_char : fourth_drafting_chars){
@@ -1462,20 +1495,26 @@ public class Azul implements Constants{
                 }
             }
         }
-        /*
+        System.out.println(" Valid Drafting Moves : ");
         for( String str : valid_drafting_moves){
             System.out.print(str);
             System.out.print(", ");
         }
         System.out.println();
 
-         */
-
         // Generate Tiling Moves
         if(valid_drafting_moves.isEmpty()){
-            char[] second_tiling_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR};
+            ArrayList<Character> second_tiling_chars = new ArrayList<Character>();
             char[] third_tiling_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
-            for( char second_char : second_tiling_chars){
+
+            for(int i=0; i < MAX_STORAGE_ROW; i++){
+                boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(i).isTilesFull();
+                if(storage_row_full){
+                    second_tiling_chars.add(NUMBERS[i]);
+                }
+            }
+
+            for( Character second_char : second_tiling_chars){
                 SB.delete(1,SB.length());
                 SB.append(second_char);
                 for( char third_char : third_tiling_chars){
@@ -1488,6 +1527,13 @@ public class Azul implements Constants{
                     }
                 }
             }
+            System.out.println(" Valid Tiling Moves : ");
+            for( String str : valid_tiling_moves){
+                System.out.print(str);
+                System.out.print(", ");
+            }
+            System.out.println();
+
             return valid_tiling_moves.get(0);
         }
         else{
