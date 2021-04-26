@@ -1435,8 +1435,8 @@ public class Azul implements Constants{
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
-        System.out.println(gameState[0]);
-        System.out.println(gameState[1]);
+        //System.out.println(gameState[0]);
+        //System.out.println(gameState[1]);
 
         char player_turn = ss.getTurnState().charAt(0);
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
@@ -1495,12 +1495,15 @@ public class Azul implements Constants{
                 }
             }
         }
+        /*
         System.out.println(" Valid Drafting Moves : ");
         for( String str : valid_drafting_moves){
             System.out.print(str);
             System.out.print(", ");
         }
         System.out.println();
+
+         */
 
         // Generate Tiling Moves
         if(valid_drafting_moves.isEmpty()){
@@ -1527,12 +1530,15 @@ public class Azul implements Constants{
                     }
                 }
             }
+            /*
             System.out.println(" Valid Tiling Moves : ");
             for( String str : valid_tiling_moves){
                 System.out.print(str);
                 System.out.print(", ");
             }
             System.out.println();
+
+             */
 
             return valid_tiling_moves.get(0);
         }
