@@ -26,6 +26,8 @@ public interface Constants {
     public final char PURPLE = 'd';
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
+    public final char[] COLORS = {BLUE, GREEN, ORANGE, PURPLE, RED};
+    public final char[] COLORS_WITH_FIRST_PLAYER = {BLUE, GREEN, ORANGE, PURPLE, RED, FIRST_PLAYER};
 
     // Number in characters
     public static final char ZERO = '0';
@@ -38,6 +40,7 @@ public interface Constants {
     public static final char SEVEN = '7';
     public static final char EIGHT = '8';
     public static final char NINE = '9';
+    public static final char[] NUMBERS = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
 
     // Size, Numbers of all components
     public static final int DEFAULT_MAX_PLAYER = 2;

@@ -24,71 +24,70 @@ public class Experiment_PSVM implements TestCountCases {
         SharedState ss = new SharedState(input_sharedState_4, DEFAULT_MAX_PLAYER);
         PlayerState ps = new PlayerState(input_playerState_6, DEFAULT_MAX_PLAYER);
 
-        System.out.println( " SharedState : " + ss );
-        System.out.println( "   TurnState : " + ss.turnState );
-        System.out.println( "   FactoryState : " + ss.factories);
-        for(int i=0; i < DEFAULT_FACTORY_MAX_NUMBER; i++){
-            System.out.println( "     Factory " + i + " : " + ss.factories.getFactory(i));
+        System.out.println(" SharedState : " + ss);
+        System.out.println("   TurnState : " + ss.turnState);
+        System.out.println("   FactoryState : " + ss.factories);
+        for (int i = 0; i < DEFAULT_FACTORY_MAX_NUMBER; i++) {
+            System.out.println("     Factory " + i + " : " + ss.factories.getFactory(i));
         }
-        System.out.println( "   CenterState : " + ss.center );
-        System.out.println( "   BagState : " + ss.bag );
-        System.out.println( "   DiscardState : " + ss.discard );
+        System.out.println("   CenterState : " + ss.center);
+        System.out.println("   BagState : " + ss.bag);
+        System.out.println("   DiscardState : " + ss.discard);
         System.out.println();
 
 
-        System.out.println( " PlayerState : " + ps );
-        for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
-            System.out.println( " PlayerState " + ALL_PLAYERS[i] + " : " + ps.getUpdatedPlayerState(ALL_PLAYERS[i]));
-            System.out.println( "   Player " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic + ", Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.mosaicvalid);
-            for(int j=0; j < MAX_MOSAIC_ROW; j++){
-                System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j) + ", Row Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid);
+        System.out.println(" PlayerState : " + ps);
+        for (int i = 0; i < DEFAULT_MAX_PLAYER; i++) {
+            System.out.println(" PlayerState " + ALL_PLAYERS[i] + " : " + ps.getUpdatedPlayerState(ALL_PLAYERS[i]));
+            System.out.println("   Player " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic + ", Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.mosaicvalid);
+            for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
+                System.out.print("     Player " + ALL_PLAYERS[i] + " MosaicRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j) + ", Row Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid);
                 System.out.println();
             }
-            for(int j=0; j < MAX_MOSAIC_COL; j++){
-                System.out.print( "     Player " + ALL_PLAYERS[i] + " MosaicColState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j) + ", Col Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).tiles_col_position_valid);
+            for (int j = 0; j < MAX_MOSAIC_COL; j++) {
+                System.out.print("     Player " + ALL_PLAYERS[i] + " MosaicColState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j) + ", Col Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).tiles_col_position_valid);
                 System.out.println();
             }
-            System.out.println( "   Player " + ALL_PLAYERS[i] + " StorageState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage + ", Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.storagevalid);
-            for(int j=0; j < MAX_STORAGE_ROW; j++){
-                System.out.print( "     Player " + ALL_PLAYERS[i] + " StorageRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j)+ ", Max Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid());
+            System.out.println("   Player " + ALL_PLAYERS[i] + " StorageState : " + ps.getnPlayer(ALL_PLAYERS[i]).storage + ", Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.storagevalid);
+            for (int j = 0; j < MAX_STORAGE_ROW; j++) {
+                System.out.print("     Player " + ALL_PLAYERS[i] + " StorageRowState " + j + " : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j) + ", Max Validity : " + ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid());
                 System.out.println();
             }
-            System.out.println( "   Player " + ALL_PLAYERS[i] + " FloorState : " + ps.getnPlayer(ALL_PLAYERS[i]).floor);
+            System.out.println("   Player " + ALL_PLAYERS[i] + " FloorState : " + ps.getnPlayer(ALL_PLAYERS[i]).floor);
             System.out.println();
         }
 
-        for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
-            System.out.println( "Player " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic);
-            System.out.println( " Adjacent Total Score : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.scoreTotalMosaic() + ", Adjacent New Score at (" + input_row + ", " + input_col + ") : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.scoreMosaic(input_row, input_col));
-            for(int j=0; j < MAX_MOSAIC_ROW; j++){
-                for(int k=0; k < MAX_MOSAIC_COL; k++){
+        for (int i = 0; i < DEFAULT_MAX_PLAYER; i++) {
+            System.out.println("Player " + ALL_PLAYERS[i] + " MosaicState : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic);
+            System.out.println(" Adjacent Total Score : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.scoreTotalMosaic() + ", Adjacent New Score at (" + input_row + ", " + input_col + ") : " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.scoreMosaic(input_row, input_col));
+            for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
+                for (int k = 0; k < MAX_MOSAIC_COL; k++) {
                     char color = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).mosaicrow_tiles_color[k];
-                    if(!(color >= BLUE && color <= RED)){
+                    if (!(color >= BLUE && color <= RED)) {
                         color = '-';
                     }
                     System.out.print(color);
-                    if(k < MAX_MOSAIC_COL - 1){
+                    if (k < MAX_MOSAIC_COL - 1) {
                         System.out.print(" | ");
                     }
                 }
                 System.out.print(" " + ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).scoreTotalMosaicRow());
                 System.out.println();
             }
-            for(int j=0; j < MAX_MOSAIC_COL; j++){
+            for (int j = 0; j < MAX_MOSAIC_COL; j++) {
                 System.out.print(ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).scoreTotalMosaicCol());
-                if(j < MAX_MOSAIC_COL - 1){
-                    if(ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).scoreTotalMosaicCol() < 10){
+                if (j < MAX_MOSAIC_COL - 1) {
+                    if (ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicCol(j).scoreTotalMosaicCol() < 10) {
                         System.out.print("   ");
-                    }
-                    else{
+                    } else {
                         System.out.print("  ");
                     }
                 }
             }
             System.out.println();
         }
+/*
 
-        /*
         int len = 0;
         System.out.println("Factories Tile Numbers ");
         System.out.println("Factories Test Valid States");
@@ -319,99 +318,122 @@ public class Experiment_PSVM implements TestCountCases {
             makefloorints(FULL_GAME_WITH_MOVES[i][1]);
         }
 
-         */
+ */
+        int len = 0;
+        System.out.println("Mosaic Tile Numbers ");
+        System.out.println("Mosaic Test Valid States");
+        for (int i = 0; i < VALID_STATES.length; i++) {
+            if (i % 3 == 0) {
+                if (len < 6) {
+                    if (len == 0) {
+                        System.out.println("// full game, automatic scoring");
+                    }
+                    System.out.println("// ROUND " + (len + 1));
+                    len++;
+                } else {
+                    System.out.println("// BONUS SCORING");
+                }
+            }
+            makemosaicstrings(VALID_STATES[i][1]);
+        }
 
     }
 
-    public static void makefactoriesints(String in){
+    public static void makemosaicstrings(String in) {
+        PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
+        System.out.print("new String[]{");
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
+            String out = ps.getnPlayer(ALL_PLAYERS[player]).mosaic.getStateString();
+            if(player==0){System.out.print("\""+out+"\""+", ");}
+            if(player==1){System.out.print("\""+out+"\"");}
+        }
+        System.out.println("},");
+    }
+
+
+    public static void makefactoriesints(String in) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         int out = ss.factories.getFactoryTotalTiles();
         System.out.print("new int[]{");
         System.out.print(out + ", ");
         char color = BLUE;
-        for(int j=0; j <= RED - BLUE; j++){
+        for (int j = 0; j <= RED - BLUE; j++) {
             out = ss.factories.getFactoryTilesNumber(color);
-            if(j < RED - BLUE){
+            if (j < RED - BLUE) {
                 System.out.print(out + ", ");
-            }
-            else{
+            } else {
                 System.out.println(out + "},");
             }
             color++;
         }
     }
 
-    public static void makecenterints(String in){
+    public static void makecenterints(String in) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         int out = ss.center.getTotalTilesNumber();
         System.out.print("new int[]{");
         System.out.print(out + ", ");
         char color = BLUE;
-        for(int j=0; j <= FIRST_PLAYER - BLUE; j++){
+        for (int j = 0; j <= FIRST_PLAYER - BLUE; j++) {
             out = ss.center.getTilesNumber(color);
-            if(j < FIRST_PLAYER - BLUE){
+            if (j < FIRST_PLAYER - BLUE) {
                 System.out.print(out + ", ");
-            }
-            else{
+            } else {
                 System.out.println(out + "},");
             }
             color++;
         }
     }
 
-    public static void makebagints(String in){
+    public static void makebagints(String in) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         int out = ss.bag.getTotalTilesNumber();
         System.out.print("new int[]{");
         System.out.print(out + ", ");
         char color = BLUE;
-        for(int j=0; j <= RED - BLUE; j++){
+        for (int j = 0; j <= RED - BLUE; j++) {
             out = ss.bag.getTilesNumber(color);
-            if(j < RED - BLUE){
+            if (j < RED - BLUE) {
                 System.out.print(out + ", ");
-            }
-            else{
+            } else {
                 System.out.println(out + "},");
             }
             color++;
         }
     }
 
-    public static void makediscardints(String in){
+    public static void makediscardints(String in) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         int out = ss.discard.getTotalTilesNumber();
         System.out.print("new int[]{");
         System.out.print(out + ", ");
         char color = BLUE;
-        for(int j=0; j <= RED - BLUE; j++){
+        for (int j = 0; j <= RED - BLUE; j++) {
             out = ss.discard.getTilesNumber(color);
-            if(j < RED - BLUE){
+            if (j < RED - BLUE) {
                 System.out.print(out + ", ");
-            }
-            else{
+            } else {
                 System.out.println(out + "},");
             }
             color++;
         }
     }
 
-    public static void makemosaicints(String in){
+    public static void makemosaicints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
             int out = ps.getnPlayer(ALL_PLAYERS[player]).mosaic.getTotalTilesNumber();
             System.out.print(out + ", ");
             char color = BLUE;
-            for(int j=0; j <= RED - BLUE; j++){
+            for (int j = 0; j <= RED - BLUE; j++) {
                 out = ps.getnPlayer(ALL_PLAYERS[player]).mosaic.getTilesNumber(color);
-                if(j < RED - BLUE){
+                if (j < RED - BLUE) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
@@ -420,20 +442,18 @@ public class Experiment_PSVM implements TestCountCases {
         }
     }
 
-    public static void makemosaicrowints(String in){
+    public static void makemosaicrowints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
-            for(int row=0; row < MAX_MOSAIC_ROW; row++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
+            for (int row = 0; row < MAX_MOSAIC_ROW; row++) {
                 int out = ps.getnPlayer(ALL_PLAYERS[player]).mosaic.getMosaicRow(row).getTotalTilesNumber();
-                if(row < MAX_MOSAIC_ROW - 1){
+                if (row < MAX_MOSAIC_ROW - 1) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
@@ -441,20 +461,18 @@ public class Experiment_PSVM implements TestCountCases {
         }
     }
 
-    public static void makemosaiccolints(String in){
+    public static void makemosaiccolints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
-            for(int col=0; col < MAX_MOSAIC_COL; col++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
+            for (int col = 0; col < MAX_MOSAIC_COL; col++) {
                 int out = ps.getnPlayer(ALL_PLAYERS[player]).mosaic.getMosaicCol(col).getTotalTilesNumber();
-                if(col < MAX_MOSAIC_COL - 1){
+                if (col < MAX_MOSAIC_COL - 1) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
@@ -462,23 +480,21 @@ public class Experiment_PSVM implements TestCountCases {
         }
     }
 
-    public static void makestorageints(String in){
+    public static void makestorageints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
             int out = ps.getnPlayer(ALL_PLAYERS[player]).storage.getTotalTilesNumber();
             System.out.print(out + ", ");
             char color = BLUE;
-            for(int j=0; j <= RED - BLUE; j++){
+            for (int j = 0; j <= RED - BLUE; j++) {
                 out = ps.getnPlayer(ALL_PLAYERS[player]).storage.getTilesNumber(color);
-                if(j < RED - BLUE){
+                if (j < RED - BLUE) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
@@ -487,20 +503,18 @@ public class Experiment_PSVM implements TestCountCases {
         }
     }
 
-    public static void makestoragerowints(String in){
+    public static void makestoragerowints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
-            for(int row=0; row < MAX_MOSAIC_ROW; row++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
+            for (int row = 0; row < MAX_MOSAIC_ROW; row++) {
                 int out = ps.getnPlayer(ALL_PLAYERS[player]).storage.getStorageRow(row).getTotalTilesNumber();
-                if(row < MAX_MOSAIC_ROW - 1){
+                if (row < MAX_MOSAIC_ROW - 1) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
@@ -508,23 +522,21 @@ public class Experiment_PSVM implements TestCountCases {
         }
     }
 
-    public static void makefloorints(String in){
+    public static void makefloorints(String in) {
         PlayerState ps = new PlayerState(in, DEFAULT_MAX_PLAYER);
         System.out.print("new int[]{");
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++){
+        for (int player = 0; player < DEFAULT_MAX_PLAYER; player++) {
             int out = ps.getnPlayer(ALL_PLAYERS[player]).floor.getTotalTilesNumber();
             System.out.print(out + ", ");
             char color = BLUE;
-            for(int j=0; j <= FIRST_PLAYER - BLUE; j++){
+            for (int j = 0; j <= FIRST_PLAYER - BLUE; j++) {
                 out = ps.getnPlayer(ALL_PLAYERS[player]).floor.getTilesNumber(color);
-                if(j < FIRST_PLAYER - BLUE){
+                if (j < FIRST_PLAYER - BLUE) {
                     System.out.print(out + ", ");
-                }
-                else{
-                    if(player == DEFAULT_MAX_PLAYER - 1){
+                } else {
+                    if (player == DEFAULT_MAX_PLAYER - 1) {
                         System.out.println(out + "},");
-                    }
-                    else{
+                    } else {
                         System.out.print(out + ", ");
                     }
                 }
