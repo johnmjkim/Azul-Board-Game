@@ -1435,8 +1435,8 @@ public class Azul implements Constants{
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
-        //System.out.println(gameState[0]);
-        //System.out.println(gameState[1]);
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
 
         char player_turn = ss.getTurnState().charAt(0);
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
@@ -1491,11 +1491,12 @@ public class Azul implements Constants{
                     //System.out.println(input_move);
                     if(isMoveValid(output_gameState, input_move)){
                         valid_drafting_moves.add(input_move);
+                        return input_move;
                     }
                 }
             }
         }
-        /*
+
         System.out.println(" Valid Drafting Moves : ");
         for( String str : valid_drafting_moves){
             System.out.print(str);
@@ -1503,17 +1504,17 @@ public class Azul implements Constants{
         }
         System.out.println();
 
-         */
-
         // Generate Tiling Moves
         if(valid_drafting_moves.isEmpty()){
             ArrayList<Character> second_tiling_chars = new ArrayList<Character>();
             char[] third_tiling_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
 
             for(int i=0; i < MAX_STORAGE_ROW; i++){
-                boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(i).isTilesFull();
-                if(storage_row_full){
-                    second_tiling_chars.add(NUMBERS[i]);
+                if(second_tiling_chars.isEmpty()){
+                    boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(i).isTilesFull();
+                    if(storage_row_full){
+                        second_tiling_chars.add(NUMBERS[i]);
+                    }
                 }
             }
 
@@ -1527,18 +1528,17 @@ public class Azul implements Constants{
                     //System.out.println(input_move);
                     if(isMoveValid(output_gameState, input_move)){
                         valid_tiling_moves.add(input_move);
+                        return input_move;
                     }
                 }
             }
-            /*
+
             System.out.println(" Valid Tiling Moves : ");
             for( String str : valid_tiling_moves){
                 System.out.print(str);
                 System.out.print(", ");
             }
             System.out.println();
-
-             */
 
             return valid_tiling_moves.get(0);
         }
