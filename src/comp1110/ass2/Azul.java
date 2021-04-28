@@ -1021,10 +1021,12 @@ public class Azul implements Constants{
         boolean wellFormed_move = check_move_format(move);
         boolean isDrafting_move = (move.length() == 4);
         boolean isTiling_move = (move.length() == 3);
+        /*
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
+        System.out.println(move);
 
-        //System.out.println(gameState[0]);
-        //System.out.println(gameState[1]);
-        //System.out.println(move);
+         */
 
         if(!(valid_State && wellFormed_move)){
             //System.out.println(" valid state : " + valid_State + " well formed move : " + wellFormed_move);
@@ -1140,19 +1142,21 @@ public class Azul implements Constants{
         char storage_mosaic_row = move.charAt(1);
         char mosaic_column_or_floor = move.charAt(2);
         int storage_row = Character.getNumericValue(storage_mosaic_row);
+        int mosaic_row = storage_row;
+
+        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+        boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
 
         if(!(mosaic_column_or_floor == FLOOR)){
-            int mosaic_row = storage_row;
             int mosaic_col = Character.getNumericValue(mosaic_column_or_floor);
             // Check picking tiles from factory or center
-            char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
-            boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
-            boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).existsTileColor(storage_row_color);
+
+            //boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).existsTileColor(storage_row_color);
             boolean mosaic_col_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicCol(mosaic_col).existsTileColor(storage_row_color);
             boolean mosaic_row_tile_occupied = ps.getnPlayer(player_turn).mosaic.getMosaicRow(mosaic_row).existsTile(mosaic_col);
 
-            if(!storage_row_full || mosaic_row_color_exists || mosaic_col_color_exists || mosaic_row_tile_occupied){
-                //System.out.println("Storage row not full : " + !storage_row_full + " Mosaic row color exists : " + mosaic_row_color_exists + " Mosaic col color exists : " + mosaic_col_color_exists + " Mosaic position occupied : " + mosaic_row_tile_occupied);
+            if(!storage_row_full || mosaic_col_color_exists || mosaic_row_tile_occupied){
+                //System.out.println("Storage row not full : " + !storage_row_full + " Mosaic col color exists : " + mosaic_col_color_exists + " Mosaic position occupied : " + mosaic_row_tile_occupied);
                 return false;
             }
             else{
@@ -1161,11 +1165,19 @@ public class Azul implements Constants{
             }
         }
         else{
-            boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
             if(!storage_row_full){
+                //System.out.println("Storage is not full, cannot do tiling move");
                 return false;
             }
             else{
+                for(int col = 0; col < MAX_MOSAIC_COL; col++){
+                    boolean mosaic_col_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicCol(col).existsTileColor(storage_row_color);
+                    boolean mosaic_row_tile_occupied = ps.getnPlayer(player_turn).mosaic.getMosaicRow(storage_row).existsTile(col);
+                    if(!mosaic_col_color_exists && !mosaic_row_tile_occupied){
+                        //System.out.println("Storage to mosaic valid move exists, Storage row full : " + storage_row_full + " Mosaic col color not exists : " + !mosaic_col_color_exists + " Mosaic position not occupied : " + !mosaic_row_tile_occupied);
+                        return false;
+                    }
+                }
                 return true;
             }
         }
@@ -1198,10 +1210,12 @@ public class Azul implements Constants{
         String[] output_gameState = new String[2];
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
-
+        /*
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
         System.out.println(move);
+
+         */
 
         char player_turn = move.charAt(0);
         if(move.length() == 3){
@@ -1224,16 +1238,19 @@ public class Azul implements Constants{
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
+        /*
         System.out.println(ss);
         System.out.println(ps);
         System.out.println();
+
+         */
         return output_gameState;
     }
 
     public static String[] applyTilingMove(SharedState ss, PlayerState ps, String move){
         String[] output_gameState = new String[2];
         char player_turn = move.charAt(0);
-        System.out.println("Tiling Move");
+        //System.out.println("Tiling Move");
         char storage_mosaic_row = move.charAt(1);
         char mosaic_column_or_floor = move.charAt(2);
         int storage_row = Character.getNumericValue(storage_mosaic_row);
@@ -1250,15 +1267,21 @@ public class Azul implements Constants{
         ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
         ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
 
+        /*
         System.out.println("Remove all storage of player " + player_turn + " at row " + storage_row);
         System.out.println(ss);
         System.out.println(ps);
+
+         */
         if(mosaic_column_or_floor == FLOOR){
             ps.getnPlayer(player_turn).floor.addTiles(storage_row_color, storage_row_tiles);
             output_gameState[1] = ps.getUpdatedPlayerState();
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+            /*
             System.out.println("Go to floor");
             System.out.println(ps);
+
+             */
         }
         else{
             int mosaic_col = Character.getNumericValue(mosaic_column_or_floor);
@@ -1276,7 +1299,7 @@ public class Azul implements Constants{
             }
             output_gameState[1] = ps.getUpdatedPlayerState();
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
-            System.out.println(" Score added, one tile : " + storage_clear_score + " , adjacent : " + ps.getnPlayer(player_turn).mosaic.scoreMosaic(mosaic_row, mosaic_col));
+            //System.out.println(" Score added, one tile : " + storage_clear_score + " , adjacent : " + ps.getnPlayer(player_turn).mosaic.scoreMosaic(mosaic_row, mosaic_col));
             if(!ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()){
                 ss.changeTurn();
             }
@@ -1284,9 +1307,12 @@ public class Azul implements Constants{
             output_gameState[1] = ps.getUpdatedPlayerState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+            /*
             System.out.println("Add mosaic at row : " + mosaic_row + " col : " + mosaic_col);
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
@@ -1296,13 +1322,13 @@ public class Azul implements Constants{
     public static String[] applyDraftingMove(SharedState ss, PlayerState ps, String move){
         String[] output_gameState = new String[2];
         char player_turn = move.charAt(0);
-        System.out.println("Drafting Move");
+        //System.out.println("Drafting Move");
         char factory_or_center = move.charAt(1);
         char color_of_tile = move.charAt(2);
         char storage_row_or_floor = move.charAt(3);
         int selected_tiles = 0;
         if(factory_or_center == CENTER){
-            System.out.println("Draft from center");
+            //System.out.println("Draft from center");
             selected_tiles = ss.center.getTilesNumber(color_of_tile);
             ss.center.removeTiles(color_of_tile, selected_tiles);
             if(ss.center.hasFirstPlayerToken()){
@@ -1313,13 +1339,15 @@ public class Azul implements Constants{
             output_gameState[1] = ps.getUpdatedPlayerState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
-
+            /*
             System.out.println("Cleared center ");
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
         else{
-            System.out.println("Draft from factory " + factory_or_center);
+            //System.out.println("Draft from factory " + factory_or_center);
             int factory_num = Character.getNumericValue(factory_or_center);
             selected_tiles = ss.factories.getFactory(factory_num).getTilesNumber(color_of_tile);
             char color = BLUE;
@@ -1334,9 +1362,12 @@ public class Azul implements Constants{
             output_gameState[0] = ss.getUpdatedSharedState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
 
+            /*
             System.out.println("Cleared factory " + factory_num);
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
 
         if(storage_row_or_floor == FLOOR){
@@ -1345,9 +1376,12 @@ public class Azul implements Constants{
             output_gameState[1] = ps.getUpdatedPlayerState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
+            /*
             System.out.println("Go to the floor");
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
         else{
             int storage_row = Character.getNumericValue(storage_row_or_floor);
@@ -1366,10 +1400,12 @@ public class Azul implements Constants{
             output_gameState[1] = ps.getUpdatedPlayerState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
-
+            /*
             System.out.println("Filled storage " + storage_row);
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
 
         boolean isFactoryEmpty = ss.factories.isStateEmpty();
@@ -1380,10 +1416,12 @@ public class Azul implements Constants{
             output_gameState[1] = ps.getUpdatedPlayerState();
             ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
             ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
-
+            /*
             System.out.println("Changed Turn ");
             System.out.println(ss);
             System.out.println(ps);
+
+             */
         }
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
@@ -1393,7 +1431,7 @@ public class Azul implements Constants{
     public static String[] applyMoveFloorAdjusting ( SharedState ss, PlayerState ps, String move){
         String[] output_gameState = new String[2];
         char player_turn = move.charAt(0);
-        System.out.println("Floor max exceeded");
+        //System.out.println("Floor max exceeded");
         int tiles_to_discard = ps.getnPlayer(player_turn).floor.getTotalTilesNumber() - 7;
         char color = RED;
         while(tiles_to_discard > 0){
@@ -1404,10 +1442,12 @@ public class Azul implements Constants{
                 output_gameState[1] = ps.getUpdatedPlayerState();
                 ss = new SharedState(output_gameState[0], MAX_PLAYER_NUMBER);
                 ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
-
+                /*
                 System.out.println("Move tile to discard");
                 System.out.println(ss);
                 System.out.println(ps);
+
+                 */
                 tiles_to_discard--;
             }
             else{
@@ -1435,8 +1475,11 @@ public class Azul implements Constants{
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
+        /*
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
+
+         */
 
         char player_turn = ss.getTurnState().charAt(0);
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
@@ -1496,13 +1539,15 @@ public class Azul implements Constants{
                 }
             }
         }
-
+        /*
         System.out.println(" Valid Drafting Moves : ");
         for( String str : valid_drafting_moves){
             System.out.print(str);
             System.out.print(", ");
         }
         System.out.println();
+
+         */
 
         // Generate Tiling Moves
         if(valid_drafting_moves.isEmpty()){
@@ -1532,13 +1577,15 @@ public class Azul implements Constants{
                     }
                 }
             }
-
+            /*
             System.out.println(" Valid Tiling Moves : ");
             for( String str : valid_tiling_moves){
                 System.out.print(str);
                 System.out.print(", ");
             }
             System.out.println();
+
+             */
 
             return valid_tiling_moves.get(0);
         }

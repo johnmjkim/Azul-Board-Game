@@ -14,8 +14,8 @@ public class Experiment_PSVM implements TestCountCases {
         String input_playerState_4 = "A3Ma00a11b12e00c13e21c24a31c42c43S1a20e52d13d34a3FB5Mb00c01a03d04d21b31e41S0d11e52b14b1Fbccccdf";
 
         String input_playerState_5 = "A2Mb00d03e04d10b11c21a32S1a22a23b24a5FdddfB8Mb00c02e03d04d12b14c21e24b31d33S3c14a1Fccceee";
-        String input_playerState_6 = "A4Mb00d03e04d10b11a14c21a32S2a23b24a5FdddfB8Mb00c02e03d04d12b14c21e24b31d33S3c14a1Fccceee";
-        String input_move = "A14";
+        String input_playerState_6 = "A4Mc02c13b23d31a34c40S0a11b22e33c44e5FfB1Mb01e10c24d31e43S1a22b33a44d5F";
+        String input_move = "A30";
 
         int input_row = Character.getNumericValue(input_move.charAt(1));
         int input_col = Character.getNumericValue(input_move.charAt(2));
