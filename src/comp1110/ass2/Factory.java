@@ -4,6 +4,16 @@ import comp1110.ass2.State;
 
 import java.util.Arrays;
 
+public class Factory extends OrderTypedObject{
+    int number;
+
+    public Factory(String orderTypedObjectState, int number ) {
+        super(orderTypedObjectState);
+        this.number = number;
+    }
+}
+
+/*
 public class Factory implements OrderTyped {
 
     int number;
@@ -137,3 +147,5 @@ public class Factory implements OrderTyped {
         updateState();
     }
 }
+
+ */

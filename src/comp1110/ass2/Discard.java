@@ -4,6 +4,12 @@ import comp1110.ass2.State;
 
 import java.util.ArrayList;
 
+public class Discard extends BagTypedObject{
+    public Discard(String bagTypedObjectState) {
+        super(bagTypedObjectState);
+    }
+}
+/*
 public class Discard implements BagTyped {
 
     String discardState = EMPTY_STATE;
@@ -145,3 +151,5 @@ public class Discard implements BagTyped {
         updateState();
     }
 }
+
+ */

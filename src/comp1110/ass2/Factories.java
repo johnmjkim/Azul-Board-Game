@@ -147,7 +147,7 @@ public class Factories implements State {
         for(int i=0; i < max_factories_number; i++){
             if(!this.factory.get(i).isStateEmpty()){
                 SB.append(this.factory.get(i).number);
-                SB.append(this.factory.get(i).factoryState);
+                SB.append(this.factory.get(i).getStateString());
             }
         }
         this.factoriesState = String.valueOf(SB);

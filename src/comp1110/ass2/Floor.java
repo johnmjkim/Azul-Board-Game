@@ -4,6 +4,33 @@ import comp1110.ass2.State;
 
 import java.util.Arrays;
 
+public class Floor extends OrderTypedObject{
+    public Floor(String orderTypedObjectState) {
+        super(orderTypedObjectState);
+    }
+
+    // Discard
+    public String getFloorTilesString(){
+        StringBuilder SB = new StringBuilder();
+        char color = BLUE;
+        for (int i = 0; i <= FIRST_PLAYER - BLUE; i++) {
+            if(this.letters[color] < 10){
+                SB.append("0");
+            }
+            SB.append(this.letters[color]);
+            color++;
+        }
+        return String.valueOf(SB);
+    }
+
+    boolean hasOnlyOneFirstPlayerToken() {
+        return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
+    }
+
+    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+}
+
+/*
 public class Floor implements OrderTyped {
 
     String floorState = EMPTY_STATE;
@@ -157,3 +184,5 @@ public class Floor implements OrderTyped {
         updateState();
     }
 }
+
+ */
