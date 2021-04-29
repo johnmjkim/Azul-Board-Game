@@ -4,6 +4,19 @@ import comp1110.ass2.State;
 
 import java.util.Arrays;
 
+public class Center extends OrderTypedObject{
+    public Center(String orderTypedObjectState) {
+        super(orderTypedObjectState);
+    }
+
+    boolean hasOnlyOneFirstPlayerToken() {
+        return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
+    }
+
+    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+}
+
+/*
 public class Center implements OrderTyped {
 
     String centerState = EMPTY_STATE;
@@ -141,3 +154,5 @@ public class Center implements OrderTyped {
         updateState();
     }
 }
+
+ */
