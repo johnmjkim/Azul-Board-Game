@@ -1,9 +1,9 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Azul;
-//After I got the history, the two backend become red, and the statement are not used, so I use this//
-//import comp1110.ass2.backend.Azul;
-//import comp1110.ass2.backend.player.Floor;
+import comp1110.ass2.Constants;
+import comp1110.ass2.PlayerState;
+import comp1110.ass2.SharedState;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,7 +22,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class Viewer extends Application {
+public class Viewer extends Application implements Constants {
 
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 600;
@@ -45,14 +45,18 @@ public class Viewer extends Application {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
+        state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019";
+        state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+
+        SharedState ss = new SharedState(state[0], DEFAULT_MAX_PLAYER);
+        PlayerState ps = new PlayerState(state[1], DEFAULT_MAX_PLAYER);
+
         String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
-        //state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019";
-        //state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
-
         //center
         String center = state[0].substring(state[0].indexOf("C") + 1, state[0].indexOf("B"));
+
         String[] Center = center.split("");
         for (int i = 0; i < Center.length; i++) {
             ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Center[i] + ".png"));
@@ -500,7 +504,6 @@ public class Viewer extends Application {
     // makeControls() is to make control of the Viewer.
     private void makeControls() {
         setupViewer();
-        displayBoard();
     }
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
@@ -569,7 +572,7 @@ public class Viewer extends Application {
 
     // displayBoard() is to show the Center Board and Player Board of the Game class.
     private void displayBoard() {
-        Game.animateBoard();
+
     }
 
     ;
@@ -604,8 +607,6 @@ public class Viewer extends Application {
         root.getChildren().add(matrixBoard);
 
         makeControls();
-
-        displayBoard();
 
         /*
         animateTile();
