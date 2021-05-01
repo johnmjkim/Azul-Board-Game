@@ -14,6 +14,10 @@ public class Game extends Application {
     private static final int BOARD_WIDTH = 1200;
     private static final int BOARD_HEIGHT = 700;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     // animateBoard() contains two parts:
     // showCenterBoard() and showPlayerBoard() of each players
     public static void animateBoard(){

@@ -597,6 +597,9 @@ public class Viewer extends Application implements Constants {
     }
 
     ;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     // start() is to show the Game start.
     @Override
