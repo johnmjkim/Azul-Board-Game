@@ -27,7 +27,7 @@ Comment:
     - Give each parameter name. 
         - e.g. CENTER_POS_X, CENTER_POS_Y
     - Store necessary parameters in interface [Constants](https://gitlab.cecs.anu.edu.au/u7269158/comp1110-ass2-tue12i/-/blob/master/src/comp1110/ass2/Constants.java)
-        - NO : [Numbers without meaning](https://gitlab.cecs.anu.edu.au/u7269158/comp1110-ass2-tue12i/-/blob/master/src/comp1110/ass2/gui/Viewer.java#L57-58)
+        - NO : [Numbers without meaning](https://gitlab.cecs.anu.edu.au/u7269158/comp1110-ass2-tue12i/-/blob/master/src/comp1110/ass2/gui/Viewer.java#L63-87)
             - A.setFitWidth(16);
             - It is very hard interpret what '16' refers to
         - YES : 
