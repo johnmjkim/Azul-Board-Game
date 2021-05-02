@@ -82,9 +82,9 @@ public class Game extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
-        Viewer viewer = new Viewer();
+        //Viewer viewer = new Viewer();
 
-        viewer.start(stage);
+        //viewer.start(stage);
 
         stage.setScene(scene);
         stage.show();
