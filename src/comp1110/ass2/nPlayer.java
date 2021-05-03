@@ -17,6 +17,7 @@ public class nPlayer implements State {
     public Floor floor;
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for nPLayer class
      * This class represents playerstate of each player : PLayer A, B, C, D
      * @param nplayerState

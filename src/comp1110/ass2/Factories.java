@@ -13,6 +13,7 @@ public class Factories implements Tiles {
     public ArrayList<Factory> factory = new ArrayList<Factory>();
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for Factories class
      * Factories contains list of Factory class, number of factories are determined by number of players
      * @param factoriesState

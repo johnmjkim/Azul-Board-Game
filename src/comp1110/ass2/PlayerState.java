@@ -10,6 +10,10 @@ public class PlayerState extends States {
 
     public ArrayList<nPlayer> nplayers = new ArrayList<nPlayer>();
 
+    /**
+     * @author Min Jae, Kim
+     * Constructor method for PlayerState class without parameter
+     */
     public PlayerState(){
         super(EMPTY_STATE, DEFAULT_MAX_PLAYER);
         super.playerState = EMPTY_STATE;
@@ -17,6 +21,12 @@ public class PlayerState extends States {
         setPlayerState( playerState , MAX_PLAYER_NUMBER );
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Constructor method for SharedState class with parameter
+     * @param playerState
+     * @param max_player_number
+     */
     public PlayerState( String playerState , int max_player_number){
         super(playerState, max_player_number);
         super.playerState = playerState;
@@ -24,6 +34,12 @@ public class PlayerState extends States {
         setPlayerState( playerState , max_player_number);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Set all Turn, Factories, Center, Bag, Discard and updateSharedState
+     * @param playerState
+     * @param max_player_number
+     */
     public void setPlayerState( String playerState , int max_player_number ){
         String[] playerNameState = new String[max_player_number];
         String[] playerStates = new String[max_player_number];
@@ -97,6 +113,11 @@ public class PlayerState extends States {
         super.playerState = String.valueOf(SB);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * return true if the player finished its mosaic row
+     * @return
+     */
     public boolean isEndofGame(){
         boolean isGameEnd = false;
         for( nPlayer p : this.nplayers ){
@@ -118,6 +139,11 @@ public class PlayerState extends States {
         return ' ';
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Find out if the player has full storage row
+     * @return
+     */
     public boolean existsPlayerFullStorageRow(){
         boolean existsRowTilesFull = false;
         for( nPlayer p : this.nplayers ){

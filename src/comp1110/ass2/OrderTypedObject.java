@@ -8,6 +8,7 @@ public class OrderTypedObject implements OrderTyped{
     int[] letters = new int[128];
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for OrderTypedObject class
      * OrderTypedObject class is all object that stores tiles like below format:
      * "aabbbccdef"

@@ -16,6 +16,7 @@ public class Mosaic implements Tiles {
     boolean mosaicvalid = true;
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for Mosaic class
      * Mosaic class has two inner classes : MosaicRow, MosaicCol
      * Each class checks validity of state, counts number of tiles, calculate score
@@ -193,8 +194,9 @@ public class Mosaic implements Tiles {
     }
 
     /**
-     * Inner class eachMosaicRow of Mosaic class
-     * Each player has eachMosaicRow state stored here
+     * @author Min Jae, Kim
+     * Inner class MosaicRow of Mosaic class
+     * Each player has MosaicRow state stored here
      */
     public class MosaicRow implements CoordinateTyped{
         String mosaic_rowState = EMPTY_STATE;
@@ -239,17 +241,6 @@ public class Mosaic implements Tiles {
                 mosaicrow_tiles_occupy[mosaic_col_idx.get(j)] = true;
                 mosaicrow_tiles_color[mosaic_col_idx.get(j)] = tile_color.get(j);
             }
-            /*
-            for(int j=0; j < mosaicrow_tiles_occupy.length; j++){
-                System.out.print(mosaicrow_tiles_occupy[j]);
-                System.out.print(",");
-                System.out.print(mosaicrow_tiles_color[j]);
-                System.out.print(" ");
-            }
-            System.out.print(" ");
-            System.out.println();
-
-             */
         }
 
         public boolean checkTilesPosition(){
@@ -408,7 +399,11 @@ public class Mosaic implements Tiles {
         }
     }
 
-
+    /**
+     * @author Min Jae, Kim
+     * Inner class MosaicCol of Mosaic class
+     * Each player has MosaicCol state stored here
+     */
     public class MosaicCol implements CoordinateTyped {
         String mosaic_colState = EMPTY_STATE;
         char[] MOSAIC_MASK_COL = new char[MAX_MOSAIC_COL];
@@ -453,17 +448,6 @@ public class Mosaic implements Tiles {
                 mosaiccol_tiles_occupy[mosaic_row_idx.get(j)] = true;
                 mosaiccol_tiles_color[mosaic_row_idx.get(j)] = tile_color.get(j);
             }
-            /*
-            for(int j=0; j < mosaiccol_tiles_occupy.length; j++){
-                System.out.print(mosaiccol_tiles_occupy[j]);
-                System.out.print(",");
-                System.out.print(mosaiccol_tiles_color[j]);
-                System.out.print(" ");
-            }
-            System.out.print(" ");
-            System.out.println();
-
-             */
         }
 
         public boolean checkTilesPosition(){

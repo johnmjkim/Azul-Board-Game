@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 /**
+ * @author Min Jae, Kim
  * OrderTyped interface is all object that stores tiles like below format:
  * aabbbccdef
  * Floor, Factory, Center class stores tiles like above format

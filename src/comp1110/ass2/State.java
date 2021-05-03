@@ -5,12 +5,14 @@ import java.util.ArrayList;
 public interface State extends Constants {
 
     /**
+     * @author Min Jae, Kim
      * Get boolean true if state is empty
      * @return
      */
     boolean isStateEmpty();
 
     /**
+     * @author Min Jae, Kim
      * Get String of state except its prefix
      * e.g. sharedState string : AF0acee1bdde2aabe3abbd4acdeCaabbdeB0606060608D0306040401
      * e.g. playerState string : A17Me00c01d02b03a04d10c12b14a20b21c23e24e32d43S3a34c3FeeeB16Me00b01d03a04d10e11a13b14d21b23a30e32d34a42S2c24c3Fdf

@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 /**
+ * @author Min Jae, Kim
+ * @author Si Bo, Hu
  * Constants interface stores every important constants that will be used over all codes
  * Reader can immediately acknowledge the meaning of character or integer
  * Code writer does not have to look up for exact character or integer when they use constants

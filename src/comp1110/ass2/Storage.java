@@ -15,6 +15,7 @@ public class Storage implements Tiles {
     boolean storagevalid = true;
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for Storage class
      * Storage class has one inner class : StorageRow
      * Each class checks validity of state, counts number of tiles, calculate score
@@ -181,6 +182,7 @@ public class Storage implements Tiles {
     }
 
     /**
+     * @author Min Jae, Kim
      * Inner class eachStorageRow of Storage class
      * Each player has eachStorageRow state stored here
      */
@@ -288,18 +290,6 @@ public class Storage implements Tiles {
                 color++;
             }
             this.storage_rowState = String.valueOf(SB);
-            /*
-            StringBuilder SB = new StringBuilder();
-            if(getTilesColor() >= BLUE && getTilesColor() <= RED){
-                SB.append(getTilesColor());
-                SB.append(this.letters[getTilesColor()]);
-            }
-            else{
-                SB.append("");
-            }
-            //System.out.println(" Update with : " + SB);
-            this.storage_rowState = String.valueOf(SB);
-             */
         }
 
         @Override

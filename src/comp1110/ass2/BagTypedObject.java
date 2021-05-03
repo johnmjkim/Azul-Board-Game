@@ -8,6 +8,7 @@ public class BagTypedObject implements BagTyped{
     int[] letters = new int[128];
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for BagTypedObject class
      * BagTypedObject class is all object that stores tiles like below format:
      * "1315050716"

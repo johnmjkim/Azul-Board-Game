@@ -8,6 +8,7 @@ import java.util.Random;
 public class Bag extends BagTypedObject{
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for Bag class
      * @param bagTypedObjectState
      */
@@ -16,6 +17,7 @@ public class Bag extends BagTypedObject{
     }
 
     /**
+     * @author Min Jae, Kim
      * Get random tiles based on number of tiles in bag
      * r_output range is 1 (inclusive) ~ getTotalTilesNumber() (inclusive)
      * @return

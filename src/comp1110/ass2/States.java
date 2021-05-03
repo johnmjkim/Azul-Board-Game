@@ -15,6 +15,13 @@ public class States implements State {
     // Player fields strings
     public String playerState = EMPTY_STATE;
 
+    /**
+     * @author Min Jae, Kim
+     * Constructor method for States class
+     * SharedState, PlayerState extends this class
+     * @param State
+     * @param max_player_number
+     */
     public States( String State , int max_player_number ){
         this.State = State;
         this.MAX_PLAYER_NUMBER = max_player_number;

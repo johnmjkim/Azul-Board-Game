@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class Floor extends OrderTypedObject{
     /**
+     * @author Min Jae, Kim
      * Constructor method for Floor class
      * @param orderTypedObjectState
      */
@@ -16,6 +17,7 @@ public class Floor extends OrderTypedObject{
     // Discard
 
     /**
+     * @author Min Jae, Kim
      * Fill discard by tiles from floor
      * refillDiscardtoBag() method in SharedState
      * @return

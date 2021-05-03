@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class Center extends OrderTypedObject{
     /**
+     * @author Min Jae, Kim
      * Constructor method for Center class
      * @param orderTypedObjectState
      */
@@ -14,6 +15,7 @@ public class Center extends OrderTypedObject{
     }
 
     /**
+     * @author Min Jae, Kim
      * Check if there is only one first player token if center has first player token
      * @return
      */
@@ -22,6 +24,7 @@ public class Center extends OrderTypedObject{
     }
 
     /**
+     * @author Min Jae, Kim
      * Check if the center has first player token
      * @return
      */

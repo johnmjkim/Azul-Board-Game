@@ -20,6 +20,7 @@ public class SharedState extends States {
     public final int FACTORY_SIZE = 4;
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for SharedState class without parameter
      */
     public SharedState(){
@@ -30,6 +31,7 @@ public class SharedState extends States {
     }
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for SharedState class with parameter
      * @param sharedState
      * @param max_player_number
@@ -42,6 +44,7 @@ public class SharedState extends States {
     }
 
     /**
+     * @author Min Jae, Kim
      * Set all Turn, Factories, Center, Bag, Discard and updateSharedState
      * @param sharedState
      * @param max_player_number
@@ -69,7 +72,8 @@ public class SharedState extends States {
     }
 
     /**
-     * Get all Strings from center, bag, discard and factories
+     * @author Min Jae, Kim
+     * Get all Strings from center, bag, discard and factories updated
      * Merge them to make new SharedState String
      */
     public void updateSharedState(){
@@ -99,6 +103,7 @@ public class SharedState extends States {
     }
 
     /**
+     * @author Min Jae, Kim
      * If needed, change Turn of sharedstate
      */
     public void changeTurn(){
@@ -141,6 +146,7 @@ public class SharedState extends States {
     }
 
     /**
+     * @author Min Jae, Kim
      * 1. Find out if each factory is empty
      * 2. If factory is empty
      * 3a. Draw four tiles from bag
@@ -167,6 +173,7 @@ public class SharedState extends States {
     }
 
     /**
+     * @author Min Jae, Kim
      * If discard is not empty :
      * 1. Refill all tiles to bag
      * 2. Remove all tiles from discard

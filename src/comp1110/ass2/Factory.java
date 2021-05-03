@@ -9,6 +9,7 @@ public class Factory extends OrderTypedObject{
     int number;
 
     /**
+     * @author Min Jae, Kim
      * Constructor method for Factory class with factory number
      * @param orderTypedObjectState
      * @param number

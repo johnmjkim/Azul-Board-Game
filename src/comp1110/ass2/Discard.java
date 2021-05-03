@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Discard extends BagTypedObject{
     /**
+     * @author Min Jae, Kim
      * Constructor method for Discard class
      * @param bagTypedObjectState
      */
