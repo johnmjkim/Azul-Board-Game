@@ -19,6 +19,9 @@ public class SharedState extends States {
     public final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
     public final int FACTORY_SIZE = 4;
 
+    /**
+     * Constructor method for SharedState class without parameter
+     */
     public SharedState(){
         super( EMPTY_STATE, DEFAULT_MAX_PLAYER);
         super.sharedState = EMPTY_STATE;
@@ -26,6 +29,11 @@ public class SharedState extends States {
         setSharedState( sharedState, MAX_PLAYER_NUMBER );
     }
 
+    /**
+     * Constructor method for SharedState class with parameter
+     * @param sharedState
+     * @param max_player_number
+     */
     public SharedState( String sharedState , int max_player_number ){
         super(sharedState, max_player_number);
         super.sharedState = sharedState;
@@ -33,6 +41,11 @@ public class SharedState extends States {
         setSharedState(sharedState, max_player_number);
     }
 
+    /**
+     * Set all Turn, Factories, Center, Bag, Discard and updateSharedState
+     * @param sharedState
+     * @param max_player_number
+     */
     public void setSharedState( String sharedState , int max_player_number ){
         super.MAX_PLAYER_NUMBER = max_player_number;
         String turnState = sharedState.substring(0, sharedState.indexOf(FACTORY));
@@ -55,6 +68,10 @@ public class SharedState extends States {
         return super.sharedState;
     }
 
+    /**
+     * Get all Strings from center, bag, discard and factories
+     * Merge them to make new SharedState String
+     */
     public void updateSharedState(){
         StringBuilder SB = new StringBuilder();
         // Update all strings of factory, center, bag, discard
@@ -81,6 +98,9 @@ public class SharedState extends States {
         return this.turnState;
     }
 
+    /**
+     * If needed, change Turn of sharedstate
+     */
     public void changeTurn(){
         char now_turn = this.turnState.charAt(0);
         int player_idx = 0;

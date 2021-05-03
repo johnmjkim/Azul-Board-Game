@@ -5,13 +5,19 @@ import comp1110.ass2.Factory;
 
 import java.util.ArrayList;
 
-public class Factories implements State {
+public class Factories implements Tiles {
 
     String factoriesState;
     int max_factories_number;
 
     public ArrayList<Factory> factory = new ArrayList<Factory>();
 
+    /**
+     * Constructor method for Factories class
+     * Factories contains list of Factory class, number of factories are determined by number of players
+     * @param factoriesState
+     * @param max_factories_number
+     */
     public Factories ( String factoriesState , int max_factories_number ){
         this.factoriesState = factoriesState;
         this.max_factories_number = max_factories_number;
@@ -60,7 +66,13 @@ public class Factories implements State {
         }
     }
 
-    public int getFactoryTilesNumber(char color) {
+    @Override
+    public void countTilesNumber(String State) {
+
+    }
+
+    @Override
+    public int getTilesNumber(char color) {
         int tot_tiles = 0;
         for( Factory f : this.factory){
             tot_tiles += f.getTilesNumber(color);
@@ -68,7 +80,8 @@ public class Factories implements State {
         return tot_tiles;
     }
 
-    public int getFactoryTotalTiles() {
+    @Override
+    public int getTotalTilesNumber() {
         int tot_tiles = 0;
         for( Factory f : this.factory){
             tot_tiles += f.getTotalTilesNumber();
@@ -77,7 +90,7 @@ public class Factories implements State {
     }
 
     public boolean isFactoryFull() {
-        return ( FACTORY_SIZE * this.max_factories_number == getFactoryTotalTiles());
+        return ( FACTORY_SIZE * this.max_factories_number == getTotalTilesNumber());
     }
 
     public Factory getFactory(int factory_number){

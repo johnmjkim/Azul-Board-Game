@@ -7,6 +7,13 @@ public class BagTypedObject implements BagTyped{
     String bagTypedObjectState = EMPTY_STATE;
     int[] letters = new int[128];
 
+    /**
+     * Constructor method for BagTypedObject class
+     * BagTypedObject class is all object that stores tiles like below format:
+     * "1315050716"
+     * Bag, Discard class stores tiles like above format
+     * @param bagTypedObjectState
+     */
     public BagTypedObject(String bagTypedObjectState){
         this.bagTypedObjectState = bagTypedObjectState;
         countTilesNumber(bagTypedObjectState);

@@ -1,5 +1,11 @@
 package comp1110.ass2;
 
+/**
+ * Constants interface stores every important constants that will be used over all codes
+ * Reader can immediately acknowledge the meaning of character or integer
+ * Code writer does not have to look up for exact character or integer when they use constants
+ * It reduces mistakes of using wrong constants, and is easy to manage and fix errors
+ */
 public interface Constants {
     // Players substring
     public final char PLAYER_A = 'A';

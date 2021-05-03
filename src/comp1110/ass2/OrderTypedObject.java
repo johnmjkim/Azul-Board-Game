@@ -7,6 +7,13 @@ public class OrderTypedObject implements OrderTyped{
     String orderTypedObjectState = EMPTY_STATE;
     int[] letters = new int[128];
 
+    /**
+     * Constructor method for OrderTypedObject class
+     * OrderTypedObject class is all object that stores tiles like below format:
+     * "aabbbccdef"
+     * Floor, Factory, Center class stores tiles like above format
+     * @param orderTypedObjectState
+     */
     public OrderTypedObject(String orderTypedObjectState){
         this.orderTypedObjectState = orderTypedObjectState;
         countTilesNumber(orderTypedObjectState);

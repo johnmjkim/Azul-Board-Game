@@ -1,5 +1,12 @@
 package comp1110.ass2;
 
+/**
+ * Tiles interface counts all numbers of tiles contains in the class
+ * It also counts number of tiles by color
+ * Used for all classes
+ * SharedState : factories, center, bag, discard
+ * PlayerState : mosaic, storage, floor
+ */
 public interface Tiles extends State{
     public void countTilesNumber(String State);
 

@@ -353,12 +353,12 @@ public class Experiment_PSVM implements TestCountCases {
 
     public static void makefactoriesints(String in) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
-        int out = ss.factories.getFactoryTotalTiles();
+        int out = ss.factories.getTotalTilesNumber();
         System.out.print("new int[]{");
         System.out.print(out + ", ");
         char color = BLUE;
         for (int j = 0; j <= RED - BLUE; j++) {
-            out = ss.factories.getFactoryTilesNumber(color);
+            out = ss.factories.getTilesNumber(color);
             if (j < RED - BLUE) {
                 System.out.print(out + ", ");
             } else {

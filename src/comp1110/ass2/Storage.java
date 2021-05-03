@@ -14,6 +14,12 @@ public class Storage implements Tiles {
 
     boolean storagevalid = true;
 
+    /**
+     * Constructor method for Storage class
+     * Storage class has one inner class : StorageRow
+     * Each class checks validity of state, counts number of tiles, calculate score
+     * @param storageState
+     */
     public Storage(String storageState){
         this.storage_rows.clear();
         this.storageState = storageState;

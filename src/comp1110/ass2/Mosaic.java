@@ -15,6 +15,12 @@ public class Mosaic implements Tiles {
 
     boolean mosaicvalid = true;
 
+    /**
+     * Constructor method for Mosaic class
+     * Mosaic class has two inner classes : MosaicRow, MosaicCol
+     * Each class checks validity of state, counts number of tiles, calculate score
+     * @param mosaicState
+     */
     public Mosaic(String mosaicState){
         this.mosaicState = mosaicState;
         addMosaicRowCol(mosaicState);

@@ -9,6 +9,10 @@ public class Score implements State{
     // Player fields strings
     String scoreState = EMPTY_STATE;
 
+    /**
+     * Constructor method for Score class
+     * @param scoreState
+     */
     public Score ( String scoreState ){
         this.scoreState = scoreState;
         this.score = Integer.valueOf(scoreState);
@@ -18,6 +22,10 @@ public class Score implements State{
         return this.scoreState;
     }
 
+    /**
+     * Add score to the particular player
+     * @param score_added
+     */
     public void addScore( int score_added ){
         int current_score = this.score;
         int adjusted_score = current_score + score_added;
@@ -30,6 +38,11 @@ public class Score implements State{
         updateState();
     }
 
+    /**
+     * Calculate score when clearing floor
+     * @param floor_length
+     * @return
+     */
     public int scoreLose_clearFloor( int floor_length ) {
         if (floor_length == 0) {
             return 0;
@@ -57,6 +70,10 @@ public class Score implements State{
         }
     }
 
+    /**
+     * Calculate and reflect score after clearing floor
+     * @param floor_length
+     */
     public void clearFloorScore( int floor_length ){
         int score_lost = scoreLose_clearFloor(floor_length);
         addScore(score_lost);

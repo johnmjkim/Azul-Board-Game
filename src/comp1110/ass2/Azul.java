@@ -952,7 +952,7 @@ public class Azul implements Constants{
         int total_tiles = 0;
         for(int i=0; i <= FIRST_PLAYER - BLUE; i++) {
             // Add tiles of shared states
-            int factory_tiles = ss.factories.getFactoryTilesNumber(color);
+            int factory_tiles = ss.factories.getTilesNumber(color);
             int center_tiles = ss.center.getTilesNumber(color);
             int bag_tiles = ss.bag.getTilesNumber(color);
             int discard_tiles = ss.discard.getTilesNumber(color);

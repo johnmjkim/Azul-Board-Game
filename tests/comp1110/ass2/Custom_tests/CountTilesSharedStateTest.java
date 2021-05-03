@@ -13,7 +13,7 @@ public class CountTilesSharedStateTest implements TestCountCases {
 
     private void CountFactoriestest(String in, int[] expected) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
-        int out = ss.factories.getFactoryTotalTiles();
+        int out = ss.factories.getTotalTilesNumber();
         assertEquals(expected[0], out, "Input state in Factories test: \"" + in + "\"");
     }
 
@@ -21,7 +21,7 @@ public class CountTilesSharedStateTest implements TestCountCases {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         char color = BLUE;
         for(int j=0; j <= RED - BLUE; j++){
-            int out = ss.factories.getFactoryTilesNumber(color);
+            int out = ss.factories.getTilesNumber(color);
             assertEquals(expected[j+1], out, "Input state in Factories test with color " + color + " : \"" + in + "\"");
             color++;
         }

@@ -3,6 +3,11 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * BagTyped interface is all object that stores tiles like below format:
+ * 1315050716
+ * Bag, Discard class stores tiles like above format
+ */
 public interface BagTyped extends Tiles{
 
     public void refillTiles(String refill);

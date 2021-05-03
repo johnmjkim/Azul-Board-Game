@@ -16,6 +16,12 @@ public class nPlayer implements State {
     public Storage storage;
     public Floor floor;
 
+    /**
+     * Constructor method for nPLayer class
+     * This class represents playerstate of each player : PLayer A, B, C, D
+     * @param nplayerState
+     * @param nplayerNameState
+     */
     public nPlayer( String nplayerState , char nplayerNameState ){
         this.nplayerState = nplayerState;
         this.nplayerNameState = nplayerNameState;
