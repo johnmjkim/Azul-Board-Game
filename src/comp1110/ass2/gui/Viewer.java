@@ -554,18 +554,24 @@ public class Viewer extends Application implements Constants {
 
     // animateTile() is to show the animate of Tile.
     private void animateTile() {
+        /*
         String[] _gameState = Azul.gameState;
         String _move = Azul.move;
         displayState(_gameState);
         moveTile();
+
+         */
     }
 
     ;
 
     // displayEnd() is to show the End of the game.
     private void displayEnd() {
+        /*
         String[] _gameState = Azul.gameState;
         moveTile();
+
+         */
     }
 
     ;

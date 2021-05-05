@@ -10,6 +10,7 @@ package comp1110.ass2;
  */
 public interface Constants {
     // Players substring
+    public static final int DEFAULT_MAX_PLAYER = 2;
     public final char PLAYER_A = 'A';
     public final char PLAYER_B = 'B';
     public final char PLAYER_C = 'C';
@@ -50,18 +51,65 @@ public interface Constants {
     public static final char NINE = '9';
     public static final char[] NUMBERS = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
 
-    // Size, Numbers of all components
-    public static final int DEFAULT_MAX_PLAYER = 2;
+    // Size, Numbers of all components : General
+    public final String EMPTY_STATE = "";
+
+    // Size, Numbers of all components : BagTyped
+    public final String EMPTY_TILES = "0000000000";
+
+    // Size, Numbers of all components : OrderTyped
+    public final int FACTORY_SIZE = 4;
+    public final int MAX_FLOOR_STRING_SIZE = 7;
     public static final int DEFAULT_FACTORY_MAX_NUMBER = 2 * DEFAULT_MAX_PLAYER + 1;
     public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
-    public final int FACTORY_SIZE = 4;
+
+    // Size, Numbers of all components : CoordinateTyped
+    public final int MAX_STORAGE_STRING_SIZE = 5 * 3;
+    public final int MAX_MOSAIC_STRING_SIZE = 25 * 3;
     public final int MAX_MOSAIC_ROW = 5;
     public final int MAX_MOSAIC_COL = 5;
     public final int MAX_MOSAIC_COLOR = 5;
     public final int MAX_STORAGE_ROW = 5;
-    public final String EMPTY_TILES = "0000000000";
-    public final String EMPTY_STATE = "";
+
+    // Size, Numbers of all components : Score
+    public final int[] CLEARING_FLOOR_POINTS = new int[]{0, -1, -2, -4, -6, -8, -11, -14};
     public final int ROW_BONUS_POINT = 2;
     public final int COL_BONUS_POINT = 7;
     public final int COLOR_BONUS_POINT = 10;
+
+    // Image files directory
+    public final String BLUE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(BLUE) + ".png";
+    public final String GREEN_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(GREEN) + ".png";
+    public final String ORANGE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(ORANGE) + ".png";
+    public final String PURPLE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(PURPLE) + ".png";
+    public final String RED_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(RED) + ".png";
+    public final String FIRST_PLAYER_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(FIRST_PLAYER) + ".png";
+    public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
+    public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
+
+    // Image dimensions : Tile
+    public final int TILE_IMAGE_SIZE_X = 1;
+    public final int TILE_IMAGE_SIZE_Y = 1;
+    public final int TILE_IMAGE_SIZE_X_DIFF = 1;
+    public final int TILE_IMAGE_SIZE_Y_DIFF = 1;
+
+    // Image dimensions : Factories, Factory
+    public final int FACTORIES_IMAGE_SIZE_X = 1;
+    public final int FACTORIES_IMAGE_SIZE_Y = 1;
+    public final int FACTORY_IMAGE_SIZE_X = 1;
+    public final int FACTORY_IMAGE_SIZE_Y = 1;
+    public final int FACTORY_IMAGE_SIZE_X_DIFF = 1;
+    public final int FACTORY_IMAGE_SIZE_Y_DIFF = 1;
+
+    // Image dimensions : Center
+
+    // Image dimensions : Bag
+
+    // Image dimensions : Discard
+
+    // Image dimensions : Storage
+
+    // Image dimensions : Mosaic
+
+    // Image dimensions : Floor
 }

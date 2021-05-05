@@ -9,11 +9,6 @@ public class Azul implements Constants{
     // Maximum player numbers
     public static int MAX_PLAYER_NUMBER = 2;
 
-    public static String[] gameState;
-    public static String move;
-    public static SharedState sharedState;
-    public static PlayerState playerState;
-
     // Size, Numbers of all components
     public static final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
 
@@ -106,7 +101,6 @@ public class Azul implements Constants{
         for (int i = 0; i < len; i++) {
             System.out.println(sharedState_name_arr.get(i) + ", " + sharedState_content_arr.get(i));
         }
-
          */
 
         // Find capital letters valid
@@ -174,7 +168,6 @@ public class Azul implements Constants{
         for (int i = 0; i < len; i++) {
             System.out.println(factoryState_name_arr.get(i) + ", " + factoryState_content_arr.get(i));
         }
-
          */
 
         if(len > 1){
@@ -200,25 +193,6 @@ public class Azul implements Constants{
             factory_alphabetical_order = check_alphabetical_order(factoryState_content_arr.get(0));
         }
         factory_content_format = factory_numerical_order && factory_alphabetical_order && factory_tilesnumber;
-
-        /*
-        for (char c : factory_String.toCharArray()) {
-            if (len % 5 == 0) {
-                if (!(c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2])) {
-                    factory_content_format = false;
-                }
-            } else {
-                if (!(c >= BLUE && c <= RED)) {
-                    factory_content_format = false;
-                }
-            }
-            len++;
-        }
-        if (!(len % 5 == 0)) {
-            factory_content_format = false;
-        }
-
-         */
 
         boolean factory_format = factory_name_format && factory_content_format;
         //System.out.println(factory_name_format + ", " + factory_content_format);
@@ -376,7 +350,6 @@ public class Azul implements Constants{
         for (int i = 0; i < len; i++) {
             System.out.println(playerState_name_arr.get(i) + ", " + playerState_content_arr.get(i));
         }
-        
          */
 
         // Find capital letters valid 1 : filter by size
@@ -473,7 +446,7 @@ public class Azul implements Constants{
             }
             len++;
         }
-        if (len > 75) {
+        if (len > MAX_MOSAIC_STRING_SIZE) {
             mosaic_content_format = false;
         } else if (mosaic_String.isEmpty()) {
             mosaic_content_format = true;
@@ -503,7 +476,7 @@ public class Azul implements Constants{
             }
             len++;
         }
-        if (len > 15) {
+        if (len > MAX_STORAGE_STRING_SIZE) {
             storage_content_format = false;
         } else if (storage_String.isEmpty()) {
             storage_content_format = true;
@@ -529,7 +502,7 @@ public class Azul implements Constants{
             }
             len++;
         }
-        if (len > 7) {
+        if (len > MAX_FLOOR_STRING_SIZE) {
             floor_content_format = false;
         } else if (floor_String.isEmpty()) {
             floor_content_format = true;
@@ -887,8 +860,8 @@ public class Azul implements Constants{
         }
         else{
             //System.out.println( " Both well formed " );
-            SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
-            PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
+            SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+            PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
             // Examine that
             // storage row do not exceed tiles
@@ -910,7 +883,7 @@ public class Azul implements Constants{
         // Examine that
         // storage row do not exceed tiles
         // mosaic-storage do not have same color
-        for(int i=0; i < DEFAULT_MAX_PLAYER; i++){
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             for(int j=0; j < MAX_MOSAIC_ROW; j++){
                 char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
                 boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
@@ -927,7 +900,7 @@ public class Azul implements Constants{
             }
         }
         // mosaic rows, columns have valid positioning
-        for(int i=0; i < DEFAULT_MAX_PLAYER; i++) {
+        for(int i=0; i < MAX_PLAYER_NUMBER; i++) {
             for (int j = 0; j < MAX_MOSAIC_ROW; j++) {
                 boolean valid_position_row = ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).tiles_row_position_valid;
                 if(!valid_position_row){
@@ -959,7 +932,7 @@ public class Azul implements Constants{
             total_tiles = factory_tiles + center_tiles + bag_tiles + discard_tiles;
             //System.out.println(" Color (" + color + ") of factory : " + factory_tiles + ", center : " + center_tiles + ", bag : " + bag_tiles + ", discard : " + discard_tiles);
             // Add tiles of player state
-            for (int j = 0; j < DEFAULT_MAX_PLAYER; j++) {
+            for (int j = 0; j < MAX_PLAYER_NUMBER; j++) {
                 int mosaic_tiles = ps.getnPlayer(ALL_PLAYERS[j]).mosaic.getTilesNumber(color);
                 int storage_tiles = ps.getnPlayer(ALL_PLAYERS[j]).storage.getTilesNumber(color);
                 int floor_tiles = ps.getnPlayer(ALL_PLAYERS[j]).floor.getTilesNumber(color);
@@ -1033,8 +1006,8 @@ public class Azul implements Constants{
             return false;
         }
         else{
-            SharedState ss = new SharedState(gameState[0], DEFAULT_MAX_PLAYER);
-            PlayerState ps = new PlayerState(gameState[1], DEFAULT_MAX_PLAYER);
+            SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+            PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
             char player_turn = move.charAt(0);
             boolean right_player_turn = ss.turnState.equals(String.valueOf(player_turn));

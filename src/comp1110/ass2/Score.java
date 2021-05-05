@@ -44,28 +44,10 @@ public class Score implements State{
      * @return
      */
     public int scoreLose_clearFloor( int floor_length ) {
-        if (floor_length == 0) {
-            return 0;
+        if( floor_length < MAX_FLOOR_STRING_SIZE){
+            return CLEARING_FLOOR_POINTS[floor_length];
         }
-        else if (floor_length == 1) {
-            return -1;
-        }
-        else if (floor_length == 2) {
-            return -2;
-        }
-        else if (floor_length == 3) {
-            return -4;
-        }
-        else if (floor_length == 4) {
-            return -6;
-        }
-        else if (floor_length == 5) {
-            return -8;
-        }
-        else if (floor_length == 6) {
-            return -11;
-        }
-        else {
+        else{
             return -14;
         }
     }
