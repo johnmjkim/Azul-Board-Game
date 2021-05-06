@@ -61,6 +61,7 @@ public interface Constants {
     public final int FACTORY_SIZE = 4;
     public final int MAX_FLOOR_STRING_SIZE = 7;
     public static final int DEFAULT_FACTORY_MAX_NUMBER = 2 * DEFAULT_MAX_PLAYER + 1;
+    public static final int[] FACTORY_MAX_NUMBERS = {5, 7, 9};
     public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
 
     // Size, Numbers of all components : CoordinateTyped
@@ -84,26 +85,35 @@ public interface Constants {
     public final String PURPLE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(PURPLE) + ".png";
     public final String RED_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(RED) + ".png";
     public final String FIRST_PLAYER_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(FIRST_PLAYER) + ".png";
+    public final String NO_TILE_IMAGE = "file:src/comp1110/ass2/img/n.png";
     public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
 
     // Image dimensions : Tile
-    public final int TILE_IMAGE_SIZE_X = 1;
-    public final int TILE_IMAGE_SIZE_Y = 1;
-    public final int TILE_IMAGE_SIZE_X_DIFF = 1;
-    public final int TILE_IMAGE_SIZE_Y_DIFF = 1;
+    public final int TILE_IMAGE_SIZE_X = 16;
+    public final int TILE_IMAGE_SIZE_Y = 18;
+    public final int TILE_IMAGE_SIZE_X_SMALL_GAP = 1;
+    public final int TILE_IMAGE_SIZE_Y_SMALL_GAP = 1;
+    public final int TILE_IMAGE_SIZE_X_BIG_GAP = 6;
+    public final int TILE_IMAGE_SIZE_Y_BIG_GAP = 6;
 
     // Image dimensions : Factories, Factory
     public final int FACTORIES_IMAGE_SIZE_X = 1;
     public final int FACTORIES_IMAGE_SIZE_Y = 1;
     public final int FACTORY_IMAGE_SIZE_X = 1;
     public final int FACTORY_IMAGE_SIZE_Y = 1;
-    public final int FACTORY_IMAGE_SIZE_X_DIFF = 1;
-    public final int FACTORY_IMAGE_SIZE_Y_DIFF = 1;
+    public final int FACTORY_IMAGE_SIZE_X_GAP = 1;
+    public final int FACTORY_IMAGE_SIZE_Y_GAP = 1;
 
     // Image dimensions : Center
+    public final int MAX_CENTER_TILES_ROW_IMAGE = 23;
+    public final int INITIAL_CENTER_IMAGE_POS_X = 420;
+    public final int INITIAL_CENTER_IMAGE_POS_Y = 48;
 
     // Image dimensions : Bag
+    public final int MAX_BAG_TILES_ROW_IMAGE = 10;
+    public final int INITIAL_BAG_IMAGE_POS_X = 826;
+    public final int INITIAL_BAG_IMAGE_POS_Y = 227;
 
     // Image dimensions : Discard
 

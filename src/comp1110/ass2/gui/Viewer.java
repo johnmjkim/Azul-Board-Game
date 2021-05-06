@@ -55,88 +55,46 @@ public class Viewer extends Application implements Constants {
         String player_state_of_B = state[1].substring(state[1].indexOf("B"));
 
         //center
-        String center = state[0].substring(state[0].indexOf("C") + 1, state[0].indexOf("B"));
+        String center_String = ss.center.getStateString();
 
-        String[] Center = center.split("");
-        for (int i = 0; i < Center.length; i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Center[i] + ".png"));
-            A.setFitWidth(16);
-            A.setFitHeight(18);
-            if (i < 23) {
-                int x = 420 + 17 * i;
-                int y = 48;
-                A.setLayoutY(y);
-                A.setLayoutX(x);
-            }
-            if (i >= 23 & i < 46) {
-                int x = 420 + 17 * (i - 23);
-                int y = 48 + 19;
-                A.setLayoutY(y);
-                A.setLayoutX(x);
-            }
-            if (i >= 46 & i < 69) {
-                int x = 420 + 17 * (i - 46);
-                int y = 48 + 19 * 2;
-                A.setLayoutY(y);
-                A.setLayoutX(x);
-            }
-            if (i >= 69 & i < 92) {
-                int x = 420 + 17 * (i - 69);
-                int y = 48 + 19 * 3;
-                A.setLayoutY(y);
-                A.setLayoutX(x);
-            }
-            matrixBoard.getChildren().add(A);
+        char[] center_chars = center_String.toCharArray();
+        for (int tiles = 0; tiles < center_chars.length; tiles++){
+            ImageView Center_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[center_chars[tiles]-BLUE]));
+            Center_View.setFitWidth(TILE_IMAGE_SIZE_X);
+            Center_View.setFitHeight(TILE_IMAGE_SIZE_Y);
+            int row = (int) tiles/MAX_CENTER_TILES_ROW_IMAGE;
+            int col = tiles % MAX_CENTER_TILES_ROW_IMAGE;
+            int x = INITIAL_CENTER_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
+            int y = INITIAL_CENTER_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
+            Center_View.setLayoutY(y);
+            Center_View.setLayoutX(x);
+            matrixBoard.getChildren().add(Center_View);
         }
 
         //BAG
-        String bag = state[0].substring(state[0].indexOf("B") + 1, state[0].indexOf("D"));
-        String[] Bag = bag.split("");
-        String[] newS = {"a", "", "b", "", "c", "", "d", "", "e", ""};
-        String alphabet_Bag = "";
-        for (int i = 0; i < Bag.length; i += 2) {
-            for (int j = 0; j < Integer.parseInt(Bag[i]) * 10 + Integer.parseInt(Bag[i + 1]); j++) {
-                alphabet_Bag += newS[i];
-            }
+        int[] bag_tiles = new int[COLORS.length];
+        char color = BLUE;
+        for(int i=0; i < COLORS.length; i++){
+            bag_tiles[i] = ss.bag.getTilesNumber(color);
+            color++;
         }
-        String[] Alphabet_Bag = alphabet_Bag.split("");
 
-        for (int i = 0; i < alphabet_Bag.length(); i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_Bag[i] + ".png"));
-            A.setFitWidth(16);
-            A.setFitHeight(17);
-            if (i < 21) {
-                double x = 826 + 17 * i;
-                A.setLayoutX(x);
-                double y = 227;
-                A.setLayoutY(y);
+        for(int tiles=0; tiles < bag_tiles.length; tiles++){
+            for(int j=0; j < bag_tiles[tiles]; j++){
+                ImageView Bag_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
+                Bag_View.setFitWidth(TILE_IMAGE_SIZE_X);
+                Bag_View.setFitHeight(TILE_IMAGE_SIZE_Y);
+                int row = (int) j/MAX_BAG_TILES_ROW_IMAGE;
+                row = row + 2 * tiles;
+                int col = j % MAX_BAG_TILES_ROW_IMAGE;
+                int x = INITIAL_BAG_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
+                int y = INITIAL_BAG_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
+                Bag_View.setLayoutX(x);
+                Bag_View.setLayoutY(y);
+                matrixBoard.getChildren().add(Bag_View);
             }
-            if (i >= 21 & i < 42) {
-                double x = 826 + 17 * (i - 21);
-                A.setLayoutX(x);
-                double y = 227 + 18;
-                A.setLayoutY(y);
-            }
-            if (i >= 42 & i < 63) {
-                double x = 826 + 17 * (i - 42);
-                A.setLayoutX(x);
-                double y = 227 + 18 * 2;
-                A.setLayoutY(y);
-            }
-            if (i >= 63 & i < 84) {
-                double x = 826 + 17 * (i - 63);
-                A.setLayoutX(x);
-                double y = 227 + 18 * 3;
-                A.setLayoutY(y);
-            }
-            if (i >= 84 & i <= 100) {
-                double x = 826 + 17 * (i - 84);
-                A.setLayoutX(x);
-                double y = 227 + 18 * 4;
-                A.setLayoutY(y);
-            }
-            matrixBoard.getChildren().add(A);
         }
+
 
         //DISCARD
         String discard = state[0].substring(state[0].indexOf("D") + 1);
@@ -185,6 +143,8 @@ public class Viewer extends Application implements Constants {
             }
             matrixBoard.getChildren().add(A);
         }
+
+        //FACTORIES
 
         //FACTORIES
         {String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C")+1);
