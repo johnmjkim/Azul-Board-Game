@@ -90,12 +90,14 @@ public interface Constants {
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
 
     // Image dimensions : Tile
-    public final int TILE_IMAGE_SIZE_X = 16;
-    public final int TILE_IMAGE_SIZE_Y = 18;
+    public final int TILE_IMAGE_SIZE_X = 13;
+    public final int TILE_IMAGE_SIZE_Y = 13;
     public final int TILE_IMAGE_SIZE_X_SMALL_GAP = 1;
     public final int TILE_IMAGE_SIZE_Y_SMALL_GAP = 1;
-    public final int TILE_IMAGE_SIZE_X_BIG_GAP = 6;
-    public final int TILE_IMAGE_SIZE_Y_BIG_GAP = 6;
+    public final int TILE_IMAGE_SIZE_X_BIG = 35;
+    public final int TILE_IMAGE_SIZE_Y_BIG = 39;
+    public final double TILE_IMAGE_SIZE_X_BIG_GAP = 3.2;
+    public final double TILE_IMAGE_SIZE_Y_BIG_GAP = 3.2;
 
     // Image dimensions : Factories, Factory
     public final int FACTORIES_IMAGE_SIZE_X = 1;
@@ -106,16 +108,19 @@ public interface Constants {
     public final int FACTORY_IMAGE_SIZE_Y_GAP = 1;
 
     // Image dimensions : Center
-    public final int MAX_CENTER_TILES_ROW_IMAGE = 23;
-    public final int INITIAL_CENTER_IMAGE_POS_X = 420;
-    public final int INITIAL_CENTER_IMAGE_POS_Y = 48;
+    public final int MAX_CENTER_TILES_ROW_IMAGE = 10;
+    public final int INITIAL_CENTER_IMAGE_POS_X = 772;
+    public final int INITIAL_CENTER_IMAGE_POS_Y = 55;
 
     // Image dimensions : Bag
     public final int MAX_BAG_TILES_ROW_IMAGE = 10;
-    public final int INITIAL_BAG_IMAGE_POS_X = 826;
-    public final int INITIAL_BAG_IMAGE_POS_Y = 227;
+    public final int INITIAL_BAG_IMAGE_POS_X = 772;
+    public final int INITIAL_BAG_IMAGE_POS_Y = 366;
 
     // Image dimensions : Discard
+    public final int MAX_DISCARD_TILES_ROW_IMAGE = 10;
+    public final int INITIAL_DISCARD_IMAGE_POS_X = 772;
+    public final int INITIAL_DISCARD_IMAGE_POS_Y = 184;
 
     // Image dimensions : Storage
 

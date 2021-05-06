@@ -45,8 +45,8 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019";
-        state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+        state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2012201819";
+        state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41b40a42S0b11c12a33d24e4Fabccbaa";
 
         SharedState ss = new SharedState(state[0], DEFAULT_MAX_PLAYER);
         PlayerState ps = new PlayerState(state[1], DEFAULT_MAX_PLAYER);
@@ -60,12 +60,12 @@ public class Viewer extends Application implements Constants {
         char[] center_chars = center_String.toCharArray();
         for (int tiles = 0; tiles < center_chars.length; tiles++){
             ImageView Center_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[center_chars[tiles]-BLUE]));
-            Center_View.setFitWidth(TILE_IMAGE_SIZE_X);
-            Center_View.setFitHeight(TILE_IMAGE_SIZE_Y);
+            Center_View.setFitWidth(TILE_IMAGE_SIZE_X_BIG);
+            Center_View.setFitHeight(TILE_IMAGE_SIZE_Y_BIG);
             int row = (int) tiles/MAX_CENTER_TILES_ROW_IMAGE;
             int col = tiles % MAX_CENTER_TILES_ROW_IMAGE;
-            int x = INITIAL_CENTER_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
-            int y = INITIAL_CENTER_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
+            double x = INITIAL_CENTER_IMAGE_POS_X + (TILE_IMAGE_SIZE_X_BIG + TILE_IMAGE_SIZE_X_BIG_GAP) * col;
+            double y = INITIAL_CENTER_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y_BIG + TILE_IMAGE_SIZE_Y_BIG_GAP) * row;
             Center_View.setLayoutY(y);
             Center_View.setLayoutX(x);
             matrixBoard.getChildren().add(Center_View);
@@ -73,10 +73,11 @@ public class Viewer extends Application implements Constants {
 
         //BAG
         int[] bag_tiles = new int[COLORS.length];
-        char color = BLUE;
+        char color_Bag = BLUE;
         for(int i=0; i < COLORS.length; i++){
-            bag_tiles[i] = ss.bag.getTilesNumber(color);
-            color++;
+
+            bag_tiles[i] = ss.bag.getTilesNumber(color_Bag);
+            color_Bag++;
         }
 
         for(int tiles=0; tiles < bag_tiles.length; tiles++){
@@ -97,54 +98,30 @@ public class Viewer extends Application implements Constants {
 
 
         //DISCARD
-        String discard = state[0].substring(state[0].indexOf("D") + 1);
-        String[] Discard = discard.split("");
-        String[] newD = {"a", "", "b", "", "c", "", "d", "", "e", ""};
-        String alphabet_discard = "";
-        for (int i = 0; i < Discard.length; i += 2) {
-            for (int j = 0; j < Integer.parseInt(Discard[i]) * 10 + Integer.parseInt(Discard[i + 1]); j++) {
-                alphabet_discard += newD[i];
-            }
-        }
-        String[] Alphabet_Discard = alphabet_discard.split("");
-        for (int i = 0; i < alphabet_discard.length(); i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_Discard[i] + ".png"));
-            A.setFitWidth(16);
-            A.setFitHeight(17);
-            if (i < 21) {
-                double x = 826 + 17 * i;
-                A.setLayoutX(x);
-                double y = 48;
-                A.setLayoutY(y);
-            }
-            if (i >= 21 & i < 42) {
-                double x = 826 + 17 * (i - 21);
-                A.setLayoutX(x);
-                double y = 48 + 18;
-                A.setLayoutY(y);
-            }
-            if (i >= 42 & i < 63) {
-                double x = 826 + 17 * (i - 42);
-                A.setLayoutX(x);
-                double y = 48 + 18 * 2;
-                A.setLayoutY(y);
-            }
-            if (i >= 63 & i < 84) {
-                double x = 826 + 17 * (i - 63);
-                A.setLayoutX(x);
-                double y = 48 + 18 * 3;
-                A.setLayoutY(y);
-            }
-            if (i >= 84 & i <= 100) {
-                double x = 826 + 17 * (i - 84);
-                A.setLayoutX(x);
-                double y = 48 + 18 * 4;
-                A.setLayoutY(y);
-            }
-            matrixBoard.getChildren().add(A);
+        int[] discard_tiles = new int[COLORS.length];
+        char color_Discard = BLUE;
+        for(int i=0; i < COLORS.length; i++){
+            discard_tiles[i] = ss.discard.getTilesNumber(color_Discard);
+            color_Discard++;
         }
 
-        //FACTORIES
+
+        for(int tiles=0; tiles < discard_tiles.length; tiles++){
+            for(int j=0; j < discard_tiles[tiles]; j++){
+                ImageView Discard_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
+                Discard_View.setFitWidth(TILE_IMAGE_SIZE_X);
+                Discard_View.setFitHeight(TILE_IMAGE_SIZE_Y);
+                int row = (int) j/MAX_DISCARD_TILES_ROW_IMAGE;
+                row = row + 2 * tiles;
+                int col = j % MAX_DISCARD_TILES_ROW_IMAGE;
+                int x = INITIAL_DISCARD_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
+                int y = INITIAL_DISCARD_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
+                Discard_View.setLayoutX(x);
+                Discard_View.setLayoutY(y);
+                matrixBoard.getChildren().add(Discard_View);
+            }
+        }
+
 
         //FACTORIES
         {String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C")+1);
@@ -230,33 +207,33 @@ public class Viewer extends Application implements Constants {
             ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_1[i] + ".png"));
             A.setFitWidth(35);
             A.setFitHeight(39);
-            double x = 5 + 41.5 * 2* (all_numbers[i]);
+            double x = 351.5 + 81.6* (all_numbers[i]);
             A.setLayoutX(x);
-            double y = 49;
+            double y = 31.5;
             A.setLayoutY(y);
             matrixBoard.getChildren().add(A);
             ImageView B = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_2[i] + ".png"));
             B.setFitWidth(35);
             B.setFitHeight(39);
-            double x1 = 42.2 + 41.5 * 2* (all_numbers[i]);
+            double x1 = 388.3 + 81.6* (all_numbers[i]);
             B.setLayoutX(x1);
-            double y1 = 49;
+            double y1 = 31.5;
             B.setLayoutY(y1);
             matrixBoard.getChildren().add(B);
             ImageView C = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_3[i] + ".png"));
             C.setFitWidth(35);
             C.setFitHeight(39);
-            double x2 = 5 + 41.5 * 2* (all_numbers[i]);
+            double x2 = 351.5 + 81.6* (all_numbers[i]);
             C.setLayoutX(x2);
-            double y2 = 91;
+            double y2 = 72.3;
             C.setLayoutY(y2);
             matrixBoard.getChildren().add(C);
             ImageView D = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_4[i] + ".png"));
             D.setFitWidth(35);
             D.setFitHeight(39);
-            double x3 = 42.2 + 41.5 * 2* (all_numbers[i]);
+            double x3 = 388.8 + 81.6* (all_numbers[i]);
             D.setLayoutX(x3);
-            double y3 = 91;
+            double y3 = 72.3;
             D.setLayoutY(y3);
             matrixBoard.getChildren().add(D);
         }}
@@ -281,8 +258,8 @@ public class Viewer extends Application implements Constants {
             ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Floor_B[i] + ".png"));
             A.setFitWidth(35);
             A.setFitHeight(39);
-            Double x = 415 + 38.5 * i;
-            int y = 467;
+            Double x = 346 + 38.2 * i;
+            int y = 465;
             A.setLayoutX(x);
             A.setLayoutY(y);
             matrixBoard.getChildren().add(A);
@@ -353,8 +330,8 @@ public class Viewer extends Application implements Constants {
                 B.setFitWidth(35);
                 B.setFitHeight(39);
                 double Y1 = Double.parseDouble(Row_B1[i]);
-                double x = 417 + 38.1 * (4 - j);;
-                double y = 226 + 42.9 * Y1;
+                double x = 346 + 38.2 * (4 - j);;
+                double y = 224 + 42.9 * Y1;
                 B.setLayoutX(x);
                 B.setLayoutY(y);
                 matrixBoard.getChildren().add(B);
@@ -425,8 +402,8 @@ public class Viewer extends Application implements Constants {
             B.setFitHeight(39);
             double X2 = Double.parseDouble(Row_B[j]);
             double Y2 = Double.parseDouble(Column_B[j]);
-            double x = 630 + 38.1 * Y2;
-            double y = 226 + 42.7 * X2;
+            double x = 559 + 38.2 * Y2;
+            double y = 224 + 42.9 * X2;
             B.setLayoutX(x);
             B.setLayoutY(y);
             matrixBoard.getChildren().add(B);

@@ -83,6 +83,8 @@ public class Game extends Application implements Constants {
         Group root = new Group();
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
+
+
         //Viewer viewer = new Viewer();
 
         //viewer.start(stage);
