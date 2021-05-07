@@ -284,6 +284,15 @@ public class Mosaic implements Tiles {
             updateState();
         }
 
+        public char getTileColor(int column) {
+            if(mosaicrow_tiles_occupy[column]){
+                return mosaicrow_tiles_color[column];
+            }
+            else{
+                return ' ';
+            }
+        }
+
         public int scoreTotalMosaicRow(){
             int adjacent_score = 0;
             for(int i=1; i < MAX_MOSAIC_COL; i++){
@@ -483,6 +492,21 @@ public class Mosaic implements Tiles {
 
         public boolean existsTile(int row){
             return this.mosaiccol_tiles_occupy[row];
+        }
+
+        public void addTile(char color, int row) {
+            mosaiccol_tiles_occupy[row] = true;
+            mosaiccol_tiles_color[row] = color;
+            updateState();
+        }
+
+        public char getTileColor(int row) {
+            if(mosaiccol_tiles_occupy[row]){
+                return mosaiccol_tiles_color[row];
+            }
+            else{
+                return ' ';
+            }
         }
 
         public int scoreTotalMosaicCol(){

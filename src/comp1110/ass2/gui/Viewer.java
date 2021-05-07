@@ -1,9 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Azul;
-import comp1110.ass2.Constants;
-import comp1110.ass2.PlayerState;
-import comp1110.ass2.SharedState;
+import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -45,370 +42,82 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        state[0]="AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2012201819";
-        state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41b40a42S0b11c12a33d24e4Fabccbaa";
+        state[0]="BF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
+        state[1]="A07Me01a11d20b30b41S0a11b22c13c44d1FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+
+        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcaabbcaacbbefB1915161614D0000000000
+        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
+
+        //state[0]=AF0abde1bbbe2abde4bcceCaabbcebbfB1915161614D0020000019
+        //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
         SharedState ss = new SharedState(state[0], DEFAULT_MAX_PLAYER);
         PlayerState ps = new PlayerState(state[1], DEFAULT_MAX_PLAYER);
 
-        String player_state_of_A = state[1].substring(state[1].indexOf("A"), state[1].indexOf("B"));
-        String player_state_of_B = state[1].substring(state[1].indexOf("B"));
+        String current_player_turn = ss.getTurnState();
+        nPlayer current_player = ps.getnPlayer(current_player_turn.charAt(0));
 
-        //center
-        String center_String = ss.center.getStateString();
-
-        char[] center_chars = center_String.toCharArray();
-        for (int tiles = 0; tiles < center_chars.length; tiles++){
-            ImageView Center_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[center_chars[tiles]-BLUE]));
-            Center_View.setFitWidth(TILE_IMAGE_SIZE_X_BIG);
-            Center_View.setFitHeight(TILE_IMAGE_SIZE_Y_BIG);
-            int row = (int) tiles/MAX_CENTER_TILES_ROW_IMAGE;
-            int col = tiles % MAX_CENTER_TILES_ROW_IMAGE;
-            double x = INITIAL_CENTER_IMAGE_POS_X + (TILE_IMAGE_SIZE_X_BIG + TILE_IMAGE_SIZE_X_BIG_GAP) * col;
-            double y = INITIAL_CENTER_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y_BIG + TILE_IMAGE_SIZE_Y_BIG_GAP) * row;
-            Center_View.setLayoutY(y);
-            Center_View.setLayoutX(x);
-            matrixBoard.getChildren().add(Center_View);
-        }
+        //CENTER
+        String centerStateString = ss.center.getStateString();
+        displayCenter(centerStateString);
 
         //BAG
         int[] bag_tiles = new int[COLORS.length];
-        char color_Bag = BLUE;
+        char color = BLUE;
         for(int i=0; i < COLORS.length; i++){
-
-            bag_tiles[i] = ss.bag.getTilesNumber(color_Bag);
-            color_Bag++;
+            bag_tiles[i] = ss.bag.getTilesNumber(color);
+            color++;
         }
-
-        for(int tiles=0; tiles < bag_tiles.length; tiles++){
-            for(int j=0; j < bag_tiles[tiles]; j++){
-                ImageView Bag_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
-                Bag_View.setFitWidth(TILE_IMAGE_SIZE_X);
-                Bag_View.setFitHeight(TILE_IMAGE_SIZE_Y);
-                int row = (int) j/MAX_BAG_TILES_ROW_IMAGE;
-                row = row + 2 * tiles;
-                int col = j % MAX_BAG_TILES_ROW_IMAGE;
-                int x = INITIAL_BAG_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
-                int y = INITIAL_BAG_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
-                Bag_View.setLayoutX(x);
-                Bag_View.setLayoutY(y);
-                matrixBoard.getChildren().add(Bag_View);
-            }
-        }
-
+        displayBag(bag_tiles);
 
         //DISCARD
         int[] discard_tiles = new int[COLORS.length];
-        char color_Discard = BLUE;
+        color = BLUE;
         for(int i=0; i < COLORS.length; i++){
-            discard_tiles[i] = ss.discard.getTilesNumber(color_Discard);
-            color_Discard++;
+            discard_tiles[i] = ss.discard.getTilesNumber(color);
+            color++;
         }
-
-
-        for(int tiles=0; tiles < discard_tiles.length; tiles++){
-            for(int j=0; j < discard_tiles[tiles]; j++){
-                ImageView Discard_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
-                Discard_View.setFitWidth(TILE_IMAGE_SIZE_X);
-                Discard_View.setFitHeight(TILE_IMAGE_SIZE_Y);
-                int row = (int) j/MAX_DISCARD_TILES_ROW_IMAGE;
-                row = row + 2 * tiles;
-                int col = j % MAX_DISCARD_TILES_ROW_IMAGE;
-                int x = INITIAL_DISCARD_IMAGE_POS_X + (TILE_IMAGE_SIZE_X + TILE_IMAGE_SIZE_X_SMALL_GAP) * col;
-                int y = INITIAL_DISCARD_IMAGE_POS_Y + (TILE_IMAGE_SIZE_Y + TILE_IMAGE_SIZE_Y_SMALL_GAP) * row;
-                Discard_View.setLayoutX(x);
-                Discard_View.setLayoutY(y);
-                matrixBoard.getChildren().add(Discard_View);
-            }
-        }
-
+        displayDiscard(discard_tiles);
 
         //FACTORIES
-        {String factories = state[0].substring(state[0].indexOf("F") + 1, state[0].indexOf("C")+1);
-        String[] Factories = factories.split("");
-        //0cdde1bbbe2abde3cdee4bcceC
-
-        String num_of_factory = "";
-        String num_of_factory_withoutC = "";
-            for (int i = 0; i < factories.length(); i++) {
-                if (Factories[i].equals("0") || Factories[i].equals("1") || Factories[i].equals("2") || Factories[i].equals("3") || Factories[i].equals("4") || Factories[i].equals("C")) {
-                    num_of_factory += Factories[i];
-                }
-                if (Factories[i].equals("0") || Factories[i].equals("1") || Factories[i].equals("2") || Factories[i].equals("3") || Factories[i].equals("4")) {
-                    num_of_factory_withoutC += Factories[i];
-                }
-            }
-            String[] Num_of_factory = {};
-        Num_of_factory = num_of_factory.split("");
-            String[] Num_of_factory_withoutC = {};
-        Num_of_factory_withoutC = num_of_factory_withoutC.split("");
-        //0,1,2,3,4,c,&0,1,2,3,4
-
-        String[] tiles_in_factories = {"nnnn", "nnnn", "nnnn", "nnnn", "nnnn", "", ""};
-        for (int i = 0; i < Num_of_factory_withoutC.length; i++) {
-            String start ="";
-                    start = Num_of_factory[i];
-            String end ="";
-                    end = Num_of_factory[i + 1];
-            tiles_in_factories[Integer.parseInt(Num_of_factory[i])] = factories.substring(factories.indexOf(start)+1, factories.indexOf(end));
-        }
-        //AF0cdde1bbbe2abde3cdee4bcceCaabbcebbeecddaafB1915161614D2020202019,cdde,bbbe,abde,cdee
-
-        for (int i = 0; i < tiles_in_factories.length; i++) {
-            if (4 - tiles_in_factories[i].length() == 0) {
-                tiles_in_factories[i] = tiles_in_factories[i];
-            }
-            if (4 - tiles_in_factories[i].length() == 1) {
-                tiles_in_factories[i] = tiles_in_factories[i] + "n";
-            }
-            if (4 - tiles_in_factories[i].length() == 2) {
-                tiles_in_factories[i] = tiles_in_factories[i] + "n" + "n";
-            }
-            if (4 - tiles_in_factories[i].length() == 3) {
-                tiles_in_factories[i] = tiles_in_factories[i] + "n" + "n" + "n";
-            }
+        int max_factory_number = FACTORY_MAX_NUMBERS[DEFAULT_MAX_PLAYER - DEFAULT_MAX_PLAYER];
+        String[] factoryStates = new String[max_factory_number];
+        for(int factory=0; factory < max_factory_number; factory++) {
+            factoryStates[factory] = ss.factories.getFactory(factory).getStateString();
         }
 
-        String full_srting_of_factories = "";
-        int i = 0;
-        do {
-            full_srting_of_factories += tiles_in_factories[i];
-            i++;
-        } while (i < 5);
-        String[] Full_srting_of_factories=full_srting_of_factories.split("");
-            System.out.println(full_srting_of_factories);
-
-        String alphabet_1 ="";
-        for (int j=0; j<full_srting_of_factories.length(); j+=4){
-            alphabet_1 += Full_srting_of_factories[j];
-        }
-        String[] Alphabet_1 = alphabet_1.split("");
-        System.out.println(Alphabet_1[0]+"+"+Alphabet_1[1]+"+"+Alphabet_1[2]+"+"+Alphabet_1[3]+"+"+Alphabet_1[4]);
-
-        String alphabet_2 ="";
-        for (int j=1; j<full_srting_of_factories.length(); j+=4){
-            alphabet_2 += Full_srting_of_factories[j];
-        }
-        String[] Alphabet_2 = alphabet_2.split("");
-
-        String alphabet_3 ="";
-        for (int j=2; j<full_srting_of_factories.length(); j+=4){
-            alphabet_3 += Full_srting_of_factories[j];
-        }
-        String[] Alphabet_3 = alphabet_3.split("");
-        String alphabet_4 ="";
-        for (int j=3; j<full_srting_of_factories.length(); j+=4){
-            alphabet_4 += Full_srting_of_factories[j];
-        }
-        String[] Alphabet_4 = alphabet_4.split("");
-
-        int[] all_numbers = {0,1,2,3,4};
-        for (i = 0; i < all_numbers.length; i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_1[i] + ".png"));
-            A.setFitWidth(35);
-            A.setFitHeight(39);
-            double x = 351.5 + 81.6* (all_numbers[i]);
-            A.setLayoutX(x);
-            double y = 31.5;
-            A.setLayoutY(y);
-            matrixBoard.getChildren().add(A);
-            ImageView B = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_2[i] + ".png"));
-            B.setFitWidth(35);
-            B.setFitHeight(39);
-            double x1 = 388.3 + 81.6* (all_numbers[i]);
-            B.setLayoutX(x1);
-            double y1 = 31.5;
-            B.setLayoutY(y1);
-            matrixBoard.getChildren().add(B);
-            ImageView C = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_3[i] + ".png"));
-            C.setFitWidth(35);
-            C.setFitHeight(39);
-            double x2 = 351.5 + 81.6* (all_numbers[i]);
-            C.setLayoutX(x2);
-            double y2 = 72.3;
-            C.setLayoutY(y2);
-            matrixBoard.getChildren().add(C);
-            ImageView D = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_4[i] + ".png"));
-            D.setFitWidth(35);
-            D.setFitHeight(39);
-            double x3 = 388.8 + 81.6* (all_numbers[i]);
-            D.setLayoutX(x3);
-            double y3 = 72.3;
-            D.setLayoutY(y3);
-            matrixBoard.getChildren().add(D);
-        }}
-
-        //floor
-        String floor_A = player_state_of_A.substring(player_state_of_A.indexOf("F") + 1);
-        String[] Floor_A = floor_A.split("");
-        for (int i = 0; i < Floor_A.length; i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Floor_A[i] + ".png"));
-            A.setFitWidth(35);
-            A.setFitHeight(39);
-            int x = 5 + 39 * i;
-            int y = 468;
-            A.setLayoutX(x);
-            A.setLayoutY(y);
-            matrixBoard.getChildren().add(A);
-        }
-
-        String floor_B = player_state_of_B.substring(player_state_of_B.indexOf("F") + 1);
-        String[] Floor_B = floor_B.split("");
-        for (int i = 0; i < Floor_B.length; i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Floor_B[i] + ".png"));
-            A.setFitWidth(35);
-            A.setFitHeight(39);
-            Double x = 346 + 38.2 * i;
-            int y = 465;
-            A.setLayoutX(x);
-            A.setLayoutY(y);
-            matrixBoard.getChildren().add(A);
-        }
-
+        displayFactories(factoryStates);
 
         //STORAGE
-        String storage_A = player_state_of_A.substring(player_state_of_A.indexOf("S") + 1, player_state_of_A.indexOf("F"));
-        String[] Storage_A = storage_A.split("");
-
-        String row_A1 = "";
-        for (int i = 0; i < Storage_A.length; i += 3) {
-            row_A1 += Storage_A[i];
-        }
-        String[] Row_A1 = row_A1.split("");
-
-        String alphabet_A1 = "";
-        for (int i = 1; i < Storage_A.length; i += 3) {
-            alphabet_A1 += Storage_A[i];
-        }
-        String[] Alphabet_A1 = alphabet_A1.split("");
-
-        String number_A1 = "";
-        for (int i = 2; i < Storage_A.length; i += 3) {
-            number_A1 += Storage_A[i];
-        }
-        String[] Number_A1 = number_A1.split("");
-
-        for (int i = 0; i < number_A1.length(); i++) {
-            for (int j = 0; j < Integer.parseInt(Number_A1[i]); j++){
-                ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_A1[i] + ".png"));
-                A.setFitWidth(35);
-                A.setFitHeight(39);
-                double Y1 = Double.parseDouble(Row_A1[i]);
-                Double x = 6 + 38.0 * (4 - j);
-                Double y = 227 + 42.9 * Y1;
-                A.setLayoutX(x);
-                A.setLayoutY(y);
-                matrixBoard.getChildren().add(A);
-            }
+        int[] storage_row_Tiles = new int[MAX_STORAGE_ROW];
+        char[] storage_row_Colors = new char[MAX_STORAGE_ROW];
+        for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++) {
+            storage_row_Tiles[storage_row] = current_player.storage.getStorageRow(storage_row).getTotalTilesNumber();
+            storage_row_Colors[storage_row] = current_player.storage.getStorageRow(storage_row).getTilesColor();
         }
 
+        displayStorage(storage_row_Tiles, storage_row_Colors);
 
-        String storage_B = player_state_of_B.substring(player_state_of_B.indexOf("S") + 1, player_state_of_B.indexOf("F"));
-        String[] Storage_B= storage_B.split("");
+        //MOSAIC
+        displayMosaic(current_player);
 
-        String row_B1 = "";
-        for (int i = 0; i < Storage_B.length; i += 3) {
-            row_B1 += Storage_B[i];
+        //FLOOR
+        String floorStateString = current_player.floor.getStateString();
+        displayFloor(floorStateString);
+
+        //SCORE
+        HBox scoreBox = new HBox();
+        for(int player=0; player < DEFAULT_MAX_PLAYER; player++) {
+            int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
+            Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
+            scoreBox.getChildren().add(score_label);
         }
-        String[] Row_B1 = row_B1.split("");
+        scoreBox.setSpacing(SCORE_IMAGE_GAP);
+        scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
+        scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
+        controls.getChildren().add(scoreBox);
 
-        String alphabet_B1 = "";
-        for (int i = 1; i < Storage_B.length; i += 3) {
-            alphabet_B1 += Storage_B[i];
-        }
-        String[] Alphabet_B1 = alphabet_B1.split("");
-
-        String number_B1 = "";
-        for (int i = 2; i < Storage_B.length; i += 3) {
-            number_B1 += Storage_B[i];
-        }
-        String[] Number_B1 = number_B1.split("");
-
-        for (int i = 0; i < number_B1.length(); i++) {
-            for (int j = 0; j < Integer.parseInt(Number_B1[i]); j++){
-                ImageView B = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_B1[i] + ".png"));
-                B.setFitWidth(35);
-                B.setFitHeight(39);
-                double Y1 = Double.parseDouble(Row_B1[i]);
-                double x = 346 + 38.2 * (4 - j);;
-                double y = 224 + 42.9 * Y1;
-                B.setLayoutX(x);
-                B.setLayoutY(y);
-                matrixBoard.getChildren().add(B);
-            }
-        }
-
-        //mosaic
-        String mosaic_A = player_state_of_A.substring(player_state_of_A.indexOf("M") + 1, player_state_of_A.indexOf("S"));
-        String[] Mosaic_A = mosaic_A.split("");
-
-        String alphabet_A = "";
-        for (int i = 0; i < Mosaic_A.length; i += 3) {
-            alphabet_A += Mosaic_A[i];
-        }
-        String[] Alphabet_A = alphabet_A.split("");
-
-        String row_A = "";
-        for (int i = 1; i < Mosaic_A.length; i += 3) {
-            row_A += Mosaic_A[i];
-        }
-        String[] Row_A = row_A.split("");
-
-        String column_A = "";
-        for (int i = 2; i < Mosaic_A.length; i += 3) {
-            column_A += Mosaic_A[i];
-        }
-        String[] Column_A = column_A.split("");
-
-        for (int i = 0; i < Column_A.length; i++) {
-            ImageView A = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_A[i] + ".png"));
-            A.setFitWidth(35);
-            A.setFitHeight(39);
-            double X1 = Double.parseDouble(Row_A[i]);
-            double Y1 = Double.parseDouble(Column_A[i]);
-            Double x = 218 + 38.1 * Y1;
-            Double y = 227 + 42.5 * X1;
-            A.setLayoutX(x);
-            A.setLayoutY(y);
-            matrixBoard.getChildren().add(A);
-        }
-
-
-        //MOSAIC B
-        String mosaic_B = player_state_of_B.substring(player_state_of_B.indexOf("M") + 1, player_state_of_B.indexOf("S"));
-        String[] Mosaic_B = mosaic_B.split("");
-
-        String alphabet_B = "";
-        for (int i = 0; i < Mosaic_B.length; i += 3) {
-            alphabet_B += Mosaic_B[i];
-        }
-        String[] Alphabet_B = alphabet_B.split("");
-
-        String row_B = "";
-        for (int i = 1; i < Mosaic_B.length; i += 3) {
-            row_B += Mosaic_B[i];
-        }
-        String[] Row_B = row_B.split("");
-
-        String column_B = "";
-        for (int i = 2; i < Mosaic_B.length; i += 3) {
-            column_B += Mosaic_B[i];
-        }
-        String[] Column_B = column_B.split("");
-
-        for (int j = 0; j < alphabet_B.length(); j++) {
-            ImageView B = new ImageView(new Image("file:src/comp1110/ass2/img/" + Alphabet_B[j] + ".png"));
-            B.setFitWidth(35);
-            B.setFitHeight(39);
-            double X2 = Double.parseDouble(Row_B[j]);
-            double Y2 = Double.parseDouble(Column_B[j]);
-            double x = 559 + 38.2 * Y2;
-            double y = 224 + 42.9 * X2;
-            B.setLayoutX(x);
-            B.setLayoutY(y);
-            matrixBoard.getChildren().add(B);
-        }
-
+        /*
         //SCORE
         String score_A = player_state_of_A.substring(player_state_of_A.indexOf("A") + 1, player_state_of_A.indexOf("M"));
         String[] Score_A = score_A.split("");
@@ -424,15 +133,138 @@ public class Viewer extends Application implements Constants {
         Sc.setLayoutX(550);
         Sc.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(Sc);
-
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcaabbcaacbbefB1915161614D0000000000
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
-
-        //state[0]=AF0abde1bbbe2abde4bcceCaabbcebbfB1915161614D0020000019
-        //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
+         */
 
     }
 
+    private void displayCenter(String centerState){
+        char[] center_chars = centerState.toCharArray();
+        for (int tiles = 0; tiles < center_chars.length; tiles++){
+            ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[center_chars[tiles]-BLUE]));
+            Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+            Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+            int row = (int) tiles/MAX_CENTER_TILES_COL_IMAGE;
+            int col = tiles % MAX_CENTER_TILES_COL_IMAGE;
+            int x = INITIAL_CENTER_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
+            int y = INITIAL_CENTER_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
+            Tile_View.setLayoutY(y);
+            Tile_View.setLayoutX(x);
+            matrixBoard.getChildren().add(Tile_View);
+        }
+    }
+
+    private void displayBag(int[] bag_tiles){
+        for(int tiles=0; tiles < bag_tiles.length; tiles++){
+            for(int j=0; j < bag_tiles[tiles]; j++){
+                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
+                Tile_View.setFitWidth(SMALL_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(SMALL_TILE_IMAGE_SIZE_Y);
+                int row = (int) j/MAX_BAG_TILES_COL_IMAGE;
+                row = row + 2 * tiles;
+                int col = j % MAX_BAG_TILES_COL_IMAGE;
+                int x = INITIAL_BAG_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
+                int y = INITIAL_BAG_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
+                Tile_View.setLayoutX(x);
+                Tile_View.setLayoutY(y);
+                matrixBoard.getChildren().add(Tile_View);
+            }
+        }
+    }
+
+    private void displayDiscard(int[] discard_tiles){
+        for(int tiles=0; tiles < discard_tiles.length; tiles++){
+            for(int j=0; j < discard_tiles[tiles]; j++){
+                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[tiles]));
+                Tile_View.setFitWidth(SMALL_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(SMALL_TILE_IMAGE_SIZE_Y);
+                int row = (int) j/MAX_DISCARD_TILES_COL_IMAGE;
+                row = row + 2 * tiles;
+                int col = j % MAX_DISCARD_TILES_COL_IMAGE;
+                int x = INITIAL_DISCARD_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
+                int y = INITIAL_DISCARD_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
+                Tile_View.setLayoutX(x);
+                Tile_View.setLayoutY(y);
+                matrixBoard.getChildren().add(Tile_View);
+            }
+        }
+    }
+
+    private void displayFactories(String[] factoryStates){
+        for(int factory=0; factory < factoryStates.length; factory++){
+            String factoryState = factoryStates[factory];
+            char[] factory_chars = factoryState.toCharArray();
+            int factories_row = (int) factory/MAX_FACTORIES_TILES_COL_IMAGE;
+            int factories_col = factory % MAX_FACTORIES_TILES_COL_IMAGE + factories_row;
+            for (int tiles = 0; tiles < factory_chars.length; tiles++){
+                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[factory_chars[tiles]-BLUE]));
+                Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                int factory_row = (int) tiles/MAX_FACTORY_TILES_ROW_IMAGE;
+                int factory_col = tiles % MAX_FACTORY_TILES_ROW_IMAGE;
+                int x = INITIAL_FACTORIES_IMAGE_POS_X + FACTORIES_IMAGE_SIZE_X_GAP * factories_col + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * factory_col;
+                int y = INITIAL_FACTORIES_IMAGE_POS_Y + FACTORIES_IMAGE_SIZE_Y_GAP * factories_row + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * factory_row;
+                Tile_View.setLayoutY(y);
+                Tile_View.setLayoutX(x);
+                matrixBoard.getChildren().add(Tile_View);
+            }
+        }
+    }
+
+    private void displayStorage(int[] storage_row_tiles, char[] storage_row_colors){
+        for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++){
+            for(int tiles=0; tiles < storage_row_tiles[storage_row]; tiles++){
+                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row]-BLUE]));
+                Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                int storage_col = MAX_STORAGE_ROW - tiles - 1;
+                int x = INITIAL_STORAGE_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * storage_col;
+                int y = INITIAL_STORAGE_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * storage_row;
+                Tile_View.setLayoutY(y);
+                Tile_View.setLayoutX(x);
+                matrixBoard.getChildren().add(Tile_View);
+
+            }
+        }
+    }
+
+    private void displayMosaic(nPlayer current_player){
+        for(int mosaic_row=0; mosaic_row < MAX_MOSAIC_ROW; mosaic_row++){
+            for(int mosaic_col=0; mosaic_col < MAX_MOSAIC_COL; mosaic_col++){
+                boolean mosaic_tile_exists = current_player.mosaic.getMosaicRow(mosaic_row).existsTile(mosaic_col);
+                if(mosaic_tile_exists){
+                    char mosaic_tile_color = current_player.mosaic.getMosaicRow(mosaic_row).getTileColor(mosaic_col);
+                    ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[mosaic_tile_color-BLUE]));
+                    Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                    Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                    int x = INITIAL_MOSAIC_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * mosaic_col;
+                    int y = INITIAL_MOSAIC_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * mosaic_row;
+                    Tile_View.setLayoutY(y);
+                    Tile_View.setLayoutX(x);
+                    matrixBoard.getChildren().add(Tile_View);
+                }
+            }
+        }
+    }
+
+    private void displayFloor(String floorState){
+        char[] floor_chars = floorState.toCharArray();
+        for (int tiles = 0; tiles < floor_chars.length; tiles++){
+            ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles]-BLUE]));
+            Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+            Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+            int row = (int) tiles/MAX_FLOOR_TILES_COL_IMAGE;
+            int col = tiles % MAX_FLOOR_TILES_COL_IMAGE;
+            int x = INITIAL_FLOOR_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
+            int y = INITIAL_FLOOR_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
+            Tile_View.setLayoutY(y);
+            Tile_View.setLayoutX(x);
+            matrixBoard.getChildren().add(Tile_View);
+        }
+    }
+
+    private void displayScore(String scoreState){
+
+    }
 
     /**
      * Create a basic text field for input and a refresh button.

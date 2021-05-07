@@ -19,7 +19,12 @@ public class Score implements State{
     }
 
     public String getScoreState(){
+        updateState();
         return this.scoreState;
+    }
+
+    public int getScore(){
+        return this.score;
     }
 
     /**
