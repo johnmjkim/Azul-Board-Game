@@ -90,54 +90,62 @@ public interface Constants {
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
 
     // Image dimensions : Tile
-    public final int SMALL_TILE_IMAGE_SIZE_X = 13;
-    public final int SMALL_TILE_IMAGE_SIZE_Y = 13;
+    public final int SMALL_TILE_IMAGE_SIZE_X = 14;
+    public final int SMALL_TILE_IMAGE_SIZE_Y = 14;
     public final int SMALL_TILE_IMAGE_SIZE_X_GAP = 1;
     public final int SMALL_TILE_IMAGE_SIZE_Y_GAP = 1;
-    public final int BIG_TILE_IMAGE_SIZE_X = 35;
-    public final int BIG_TILE_IMAGE_SIZE_Y = 39;
-    public final int BIG_TILE_IMAGE_SIZE_X_GAP = 3;
-    public final int BIG_TILE_IMAGE_SIZE_Y_GAP = 3;
+    public final int BIG_TILE_IMAGE_SIZE_X = 28;
+    public final int BIG_TILE_IMAGE_SIZE_Y = 28;
+    public final int BIG_TILE_IMAGE_SIZE_X_GAP = 2;
+    public final int BIG_TILE_IMAGE_SIZE_Y_GAP = 2;
+
+    // Image dimensions : Common Boards
+    public final int FIRST_BOARD_POS_X = 50;
+    public final int FIRST_BOARD_POS_Y = 50;
+    public final int SECOND_BOARD_POS_X = 600;
+    public final int SECOND_BOARD_POS_Y = 250;
+    public final int THIRD_BOARD_POS_X = 1000;
 
     // Image dimensions : Factories, Factory
     public final int MAX_FACTORIES_TILES_COL_IMAGE = 5;
-    public final int INITIAL_FACTORIES_IMAGE_POS_X = 350;
-    public final int INITIAL_FACTORIES_IMAGE_POS_Y = 30;
+    public final int INITIAL_FACTORIES_IMAGE_POS_X = SECOND_BOARD_POS_X;
+    public final int INITIAL_FACTORIES_IMAGE_POS_Y = FIRST_BOARD_POS_Y;
     public final int MAX_FACTORY_TILES_ROW_IMAGE = 2;
     public final int MAX_FACTORY_TILES_COL_IMAGE = 2;
 
     public final int FACTORIES_IMAGE_ROW_GAP = 5;
-    public final int FACTORIES_IMAGE_COL_GAP = 6;
+    public final int FACTORIES_IMAGE_COL_GAP = 5;
 
     public final int FACTORIES_IMAGE_SIZE_X_GAP = (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * MAX_FACTORY_TILES_COL_IMAGE + FACTORIES_IMAGE_COL_GAP;
     public final int FACTORIES_IMAGE_SIZE_Y_GAP = (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * MAX_FACTORY_TILES_ROW_IMAGE + FACTORIES_IMAGE_ROW_GAP;
 
     // Image dimensions : Center
-    public final int MAX_CENTER_TILES_COL_IMAGE = 10;
-    public final int INITIAL_CENTER_IMAGE_POS_X = 772;
-    public final int INITIAL_CENTER_IMAGE_POS_Y = 55;
+    public final int MAX_CENTER_TILES_COL_IMAGE = 5;
+    public final int INITIAL_CENTER_IMAGE_POS_X = THIRD_BOARD_POS_X;
+    public final int INITIAL_CENTER_IMAGE_POS_Y = FIRST_BOARD_POS_Y;
 
     // Image dimensions : Bag
     public final int MAX_BAG_TILES_COL_IMAGE = 10;
-    public final int INITIAL_BAG_IMAGE_POS_X = 772;
-    public final int INITIAL_BAG_IMAGE_POS_Y = 366;
+    public final int INITIAL_BAG_IMAGE_POS_X = THIRD_BOARD_POS_X;
+    public final int INITIAL_BAG_IMAGE_POS_Y = 360;
 
     // Image dimensions : Discard
     public final int MAX_DISCARD_TILES_COL_IMAGE = 10;
-    public final int INITIAL_DISCARD_IMAGE_POS_X = 772;
-    public final int INITIAL_DISCARD_IMAGE_POS_Y = 184;
+    public final int INITIAL_DISCARD_IMAGE_POS_X = THIRD_BOARD_POS_X;
+    public final int INITIAL_DISCARD_IMAGE_POS_Y = 180;
 
     // Image dimensions : Storage
-    public final int INITIAL_STORAGE_IMAGE_POS_X = 345;
-    public final int INITIAL_STORAGE_IMAGE_POS_Y = 227;
+    public final int INITIAL_STORAGE_IMAGE_POS_X = SECOND_BOARD_POS_X;
+    public final int INITIAL_STORAGE_IMAGE_POS_Y = SECOND_BOARD_POS_Y;
 
     // Image dimensions : Mosaic
-    public final int INITIAL_MOSAIC_IMAGE_POS_X = 559;
-    public final int INITIAL_MOSAIC_IMAGE_POS_Y = 227;
+    public final int STORAGE_MOSAIC_IMAGE_ROW_GAP = 15;
+    public final int INITIAL_MOSAIC_IMAGE_POS_X = SECOND_BOARD_POS_X + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * MAX_STORAGE_ROW + STORAGE_MOSAIC_IMAGE_ROW_GAP;
+    public final int INITIAL_MOSAIC_IMAGE_POS_Y = SECOND_BOARD_POS_Y;
 
     // Image dimensions : Floor
     public final int MAX_FLOOR_TILES_COL_IMAGE = 7;
-    public final int INITIAL_FLOOR_IMAGE_POS_X = 345;
+    public final int INITIAL_FLOOR_IMAGE_POS_X = SECOND_BOARD_POS_X;
     public final int INITIAL_FLOOR_IMAGE_POS_Y = 465;
 
     // Image dimensions : Status (Score, Current Player)
