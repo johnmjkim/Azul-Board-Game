@@ -53,8 +53,8 @@ public class Viewer extends Application implements Constants {
         //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
         // Four players example
-        state[0]="CF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
-        state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeD08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+        state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
+        state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
         SharedState ss = new SharedState(state[0], PLAYER_NUMBER);
         PlayerState ps = new PlayerState(state[1], PLAYER_NUMBER);

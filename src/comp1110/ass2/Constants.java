@@ -103,7 +103,7 @@ public interface Constants {
     public final int FIRST_BOARD_POS_X = 50;
     public final int FIRST_BOARD_POS_Y = 50;
     public final int SECOND_BOARD_POS_X = 600;
-    public final int SECOND_BOARD_POS_Y = 250;
+    public final int SECOND_BOARD_POS_Y = 280;
     public final int THIRD_BOARD_POS_X = 1000;
 
     // Image dimensions : Factories, Factory
