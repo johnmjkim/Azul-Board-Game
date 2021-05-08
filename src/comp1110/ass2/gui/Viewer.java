@@ -272,7 +272,8 @@ public class Viewer extends Application implements Constants {
 
     // makeControls() is to make control of the Viewer.
     private void makeControls() {
-        setupViewer();
+        start_page();
+        //setupViewer();
     }
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
@@ -319,6 +320,25 @@ public class Viewer extends Application implements Constants {
 
     }
 
+    private void start_page(){
+        Button button_1 = new Button("Start");
+        Button button_2 = new Button("Exit");
+        ImageView boardA = new ImageView(new Image("file:src/comp1110/ass2/img/Welcome.png"));
+        boardA.setFitWidth(1200);
+        boardA.setFitHeight(500);
+        boardA.setLayoutX(0);
+        boardA.setLayoutY(15);
+        matrixBoard.getChildren().add(boardA);
+        button_1.setOnAction(ae -> {
+            setupViewer();
+        });
+        HBox hb = new HBox();
+        hb.getChildren().addAll(button_1,button_2);
+        hb.setSpacing(10);
+        hb.setLayoutX(530);
+        hb.setLayoutY(VIEWER_HEIGHT - 50);
+        controls.getChildren().add(hb);
+    }
     ;
 
     // animateTile() is to show the animate of Tile.
