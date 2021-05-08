@@ -30,7 +30,7 @@ public class Viewer extends Application implements Constants {
     private TextField playerTextField;
     private TextField boardTextField;
 
-    public static int PLAYER_NUMBER = 4;
+    public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -150,8 +150,8 @@ public class Viewer extends Application implements Constants {
             Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
             int row = (int) tiles/MAX_CENTER_TILES_COL_IMAGE;
             int col = tiles % MAX_CENTER_TILES_COL_IMAGE;
-            int x = INITIAL_CENTER_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
-            int y = INITIAL_CENTER_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
+            double x = INITIAL_CENTER_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
+            double y = INITIAL_CENTER_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
             Tile_View.setLayoutY(y);
             Tile_View.setLayoutX(x);
             matrixBoard.getChildren().add(Tile_View);
@@ -167,8 +167,8 @@ public class Viewer extends Application implements Constants {
                 int row = (int) j/MAX_BAG_TILES_COL_IMAGE;
                 row = row + 2 * tiles;
                 int col = j % MAX_BAG_TILES_COL_IMAGE;
-                int x = INITIAL_BAG_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
-                int y = INITIAL_BAG_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
+                double x = INITIAL_BAG_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
+                double y = INITIAL_BAG_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
                 Tile_View.setLayoutX(x);
                 Tile_View.setLayoutY(y);
                 matrixBoard.getChildren().add(Tile_View);
@@ -185,8 +185,8 @@ public class Viewer extends Application implements Constants {
                 int row = (int) j/MAX_DISCARD_TILES_COL_IMAGE;
                 row = row + 2 * tiles;
                 int col = j % MAX_DISCARD_TILES_COL_IMAGE;
-                int x = INITIAL_DISCARD_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
-                int y = INITIAL_DISCARD_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
+                double x = INITIAL_DISCARD_IMAGE_POS_X + (SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP) * col;
+                double y = INITIAL_DISCARD_IMAGE_POS_Y + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * row;
                 Tile_View.setLayoutX(x);
                 Tile_View.setLayoutY(y);
                 matrixBoard.getChildren().add(Tile_View);
@@ -206,8 +206,8 @@ public class Viewer extends Application implements Constants {
                 Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
                 int factory_row = (int) tiles/MAX_FACTORY_TILES_ROW_IMAGE;
                 int factory_col = tiles % MAX_FACTORY_TILES_ROW_IMAGE;
-                int x = INITIAL_FACTORIES_IMAGE_POS_X + FACTORIES_IMAGE_SIZE_X_GAP * factories_col + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * factory_col;
-                int y = INITIAL_FACTORIES_IMAGE_POS_Y + FACTORIES_IMAGE_SIZE_Y_GAP * factories_row + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * factory_row;
+                double x = INITIAL_FACTORIES_IMAGE_POS_X + FACTORIES_IMAGE_SIZE_X_GAP * factories_col + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * factory_col;
+                double y = INITIAL_FACTORIES_IMAGE_POS_Y + FACTORIES_IMAGE_SIZE_Y_GAP * factories_row + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * factory_row;
                 Tile_View.setLayoutY(y);
                 Tile_View.setLayoutX(x);
                 matrixBoard.getChildren().add(Tile_View);
@@ -222,8 +222,8 @@ public class Viewer extends Application implements Constants {
                 Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                 Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
                 int storage_col = MAX_STORAGE_ROW - tiles - 1;
-                int x = INITIAL_STORAGE_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * storage_col;
-                int y = INITIAL_STORAGE_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * storage_row;
+                double x = INITIAL_STORAGE_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * storage_col;
+                double y = INITIAL_STORAGE_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * storage_row;
                 Tile_View.setLayoutY(y);
                 Tile_View.setLayoutX(x);
                 matrixBoard.getChildren().add(Tile_View);
@@ -241,8 +241,8 @@ public class Viewer extends Application implements Constants {
                     ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[mosaic_tile_color-BLUE]));
                     Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                     Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
-                    int x = INITIAL_MOSAIC_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * mosaic_col;
-                    int y = INITIAL_MOSAIC_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * mosaic_row;
+                    double x = INITIAL_MOSAIC_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * mosaic_col;
+                    double y = INITIAL_MOSAIC_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * mosaic_row;
                     Tile_View.setLayoutY(y);
                     Tile_View.setLayoutX(x);
                     matrixBoard.getChildren().add(Tile_View);
@@ -259,8 +259,8 @@ public class Viewer extends Application implements Constants {
             Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
             int row = (int) tiles/MAX_FLOOR_TILES_COL_IMAGE;
             int col = tiles % MAX_FLOOR_TILES_COL_IMAGE;
-            int x = INITIAL_FLOOR_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
-            int y = INITIAL_FLOOR_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
+            double x = INITIAL_FLOOR_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * col;
+            double y = INITIAL_FLOOR_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
             Tile_View.setLayoutY(y);
             Tile_View.setLayoutX(x);
             matrixBoard.getChildren().add(Tile_View);
@@ -344,7 +344,6 @@ public class Viewer extends Application implements Constants {
         hb.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(hb);
     }
-    ;
 
     // animateTile() is to show the animate of Tile.
     private void animateTile() {

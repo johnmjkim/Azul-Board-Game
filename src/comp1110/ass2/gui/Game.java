@@ -4,6 +4,8 @@ import comp1110.ass2.Constants;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
@@ -14,6 +16,14 @@ public class Game extends Application implements Constants {
     /* board layout */
     private static final int BOARD_WIDTH = 1200;
     private static final int BOARD_HEIGHT = 700;
+
+    public static int PLAYER_NUMBER = 4;
+    public static int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
+    public static CenterCoordinates CENTER_COORDINATES;
+    public static FactoriesCoordinates FACTORIES_COORDINATES;
+    public static StorageCoordinates STORAGE_COORDINATES;
+    public static MosaicCoordinates MOSAIC_COORDINATES;
+    public static FloorCoordinates FLOOR_COORDINATES;
 
     public static void main(String[] args) {
         launch(args);
@@ -83,8 +93,57 @@ public class Game extends Application implements Constants {
         Group root = new Group();
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
+        makeCoordinates();
+        System.out.println(CENTER_COORDINATES);
+        System.out.println(FACTORIES_COORDINATES);
+        System.out.println(STORAGE_COORDINATES);
+        System.out.println(MOSAIC_COORDINATES);
+        System.out.println(FLOOR_COORDINATES);
+        /*
+        System.out.println("Center");
+        for(int tiles=0; tiles< MAX_CENTER_STRING_SIZE; tiles++){
+            if(tiles % MAX_CENTER_TILES_COL_IMAGE == 0 && tiles != 0){
+                System.out.println();
+            }
+            System.out.print(" (x, y) = (" + CENTER_COORDINATES.getPos_x(tiles)+ ", " + CENTER_COORDINATES.getPos_y(tiles) + ")");
+        }
+        System.out.println();
+        System.out.println("Factories");
+        for(int factory=0; factory < FACTORY_MAX_NUMBER; factory++){
+            System.out.print("Factory " + factory);
+            for(int tiles=0; tiles < FACTORY_SIZE; tiles++){
+                if(tiles % MAX_FACTORY_TILES_COL_IMAGE == 0){
+                    System.out.println();
+                }
+                System.out.print(" (x, y) = (" + FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles)+ ", " + FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles) + ")");
+            }
+            System.out.println();
+        }
+        System.out.println("Storage");
+        for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++){
+            System.out.print("Storage Row " + storage_row);
+            for(int tiles=0; tiles < storage_row + 1; tiles++){
+                System.out.print(" (x, y) = (" + STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles)+ ", " + STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles) + ")");
+            }
+            System.out.println();
+        }
+        System.out.println("Mosaic");
+        for(int mosaic_row=0; mosaic_row < MAX_MOSAIC_COL; mosaic_row++){
+            System.out.print("Mosaic Row " + mosaic_row);
+            for(int tiles=0; tiles < MAX_MOSAIC_COL; tiles++){
+                System.out.print(" (x, y) = (" + MOSAIC_COORDINATES.getMosaicRowCoordinates(mosaic_row).getPos_x(tiles)+ ", " + MOSAIC_COORDINATES.getMosaicRowCoordinates(mosaic_row).getPos_y(tiles) + ")");
+            }
+            System.out.println();
+        }
+        System.out.println("Floor");
+        for(int tiles=0; tiles< MAX_FLOOR_STRING_SIZE; tiles++){
+            if(tiles % MAX_FLOOR_TILES_COL_IMAGE == 0){
+                System.out.println();
+            }
+            System.out.print(" (x, y) = (" + FLOOR_COORDINATES.getPos_x(tiles)+ ", " + FLOOR_COORDINATES.getPos_y(tiles) + ")");
+        }
 
-
+         */
 
         stage.setScene(scene);
         stage.show();
@@ -93,6 +152,15 @@ public class Game extends Application implements Constants {
         viewer.start(stage);
 
 
+    }
+
+    private void makeCoordinates(){
+        // Center Coordinates
+        CENTER_COORDINATES = new CenterCoordinates();
+        FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
+        STORAGE_COORDINATES = new StorageCoordinates();
+        MOSAIC_COORDINATES = new MosaicCoordinates();
+        FLOOR_COORDINATES = new FloorCoordinates();
     }
 
     public class GameTile extends Polygon {
