@@ -30,6 +30,7 @@ public class Viewer extends Application implements Constants {
     private TextField playerTextField;
     private TextField boardTextField;
 
+    public static int PLAYER_NUMBER = 4;
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -42,8 +43,8 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
-        state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+        //state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
+        //state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
 
         //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcaabbcaacbbefB1915161614D0000000000
         //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
@@ -51,8 +52,12 @@ public class Viewer extends Application implements Constants {
         //state[0]=AF0abde1bbbe2abde4bcceCaabbcebbfB1915161614D0020000019
         //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
-        SharedState ss = new SharedState(state[0], DEFAULT_MAX_PLAYER);
-        PlayerState ps = new PlayerState(state[1], DEFAULT_MAX_PLAYER);
+        // Four players example
+        state[0]="CF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
+        state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeD08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+
+        SharedState ss = new SharedState(state[0], PLAYER_NUMBER);
+        PlayerState ps = new PlayerState(state[1], PLAYER_NUMBER);
 
         String current_player_turn = ss.getTurnState();
         nPlayer current_player = ps.getnPlayer(current_player_turn.charAt(0));
@@ -80,7 +85,7 @@ public class Viewer extends Application implements Constants {
         displayDiscard(discard_tiles);
 
         //FACTORIES
-        int max_factory_number = FACTORY_MAX_NUMBERS[DEFAULT_MAX_PLAYER - DEFAULT_MAX_PLAYER];
+        int max_factory_number = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
         String[] factoryStates = new String[max_factory_number];
         for(int factory=0; factory < max_factory_number; factory++) {
             factoryStates[factory] = ss.factories.getFactory(factory).getStateString();
@@ -107,7 +112,7 @@ public class Viewer extends Application implements Constants {
 
         //SCORE
         HBox scoreBox = new HBox();
-        for(int player=0; player < DEFAULT_MAX_PLAYER; player++) {
+        for(int player=0; player < PLAYER_NUMBER; player++) {
             int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
             Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
             scoreBox.getChildren().add(score_label);
