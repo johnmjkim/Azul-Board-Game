@@ -85,12 +85,13 @@ public class Game extends Application implements Constants {
 
 
 
-        //Viewer viewer = new Viewer();
 
-        //viewer.start(stage);
 
         stage.setScene(scene);
         stage.show();
+
+        Viewer viewer = new Viewer();
+        viewer.start(stage);
     }
 
     public class GameTile extends Polygon {
