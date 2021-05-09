@@ -15,7 +15,8 @@ public class MosaicCoordinates implements Constants {
         double[] gap_xy = new double[]{BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP,BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP};
 
         for(int mosaic_row=0; mosaic_row < MAX_MOSAIC_ROW; mosaic_row++){
-            MosaicRowCoordinates MOSAIC_ROW_COORDINATES = new MosaicRowCoordinates(max_row_col, initial_xy, gap_xy, mosaic_row);
+            double[] mosaic_row_initial_xy = new double[]{initial_xy[0], initial_xy[1] + gap_xy[1] * mosaic_row};
+            MosaicRowCoordinates MOSAIC_ROW_COORDINATES = new MosaicRowCoordinates(max_row_col, mosaic_row_initial_xy, gap_xy, mosaic_row);
             mosaicrowcoordinates.add(MOSAIC_ROW_COORDINATES);
         }
     }

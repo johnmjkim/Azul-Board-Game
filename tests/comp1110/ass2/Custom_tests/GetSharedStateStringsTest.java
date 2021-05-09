@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetSharedStateStringsTest implements TestStateCases {
 
-    // TODO Complete Test for Center, Bag, Discard
-
     private void Turntest(String in, String expected) {
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         String out = ss.getTurnState();
@@ -32,21 +30,18 @@ public class GetSharedStateStringsTest implements TestStateCases {
     }
 
     private void Centertest(String in, String expected) {
-        // TODO Center test
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         String out = ss.center.getStateString();
         assertEquals(expected, out, "Input state in Centertest: \"" + in + "\"");
     }
 
     private void Bagtest(String in, String expected) {
-        // TODO Bag test
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         String out = ss.bag.getStateString();
         assertEquals(expected, out, "Input state in Bagtest: \"" + in + "\"");
     }
 
     private void Discardtest(String in, String expected) {
-        // TODO Discard test
         SharedState ss = new SharedState(in, DEFAULT_MAX_PLAYER);
         String out = ss.discard.getStateString();
         assertEquals(expected, out, "Input state in Discardtest: \"" + in + "\"");
@@ -77,7 +72,6 @@ public class GetSharedStateStringsTest implements TestStateCases {
 
     @Test
     public void testCenterState(){
-        // TODO use Center test
         for (int i = 0; i < VALID_STATES.length; i++) {
             Centertest(VALID_STATES[i][0], VALID_STATES_CENTER[i]);
         }
@@ -85,7 +79,6 @@ public class GetSharedStateStringsTest implements TestStateCases {
 
     @Test
     public void testBagState(){
-        // TODO use Bag test
         for (int i = 0; i < VALID_STATES.length; i++) {
             Bagtest(VALID_STATES[i][0], VALID_STATES_BAG[i]);
         }
@@ -93,7 +86,6 @@ public class GetSharedStateStringsTest implements TestStateCases {
 
     @Test
     public void testDiscardState(){
-        // TODO use Discard test
         for (int i = 0; i < VALID_STATES.length; i++) {
             Discardtest(VALID_STATES[i][0], VALID_STATES_DISCARD[i]);
         }

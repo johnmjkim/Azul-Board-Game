@@ -114,7 +114,6 @@ public interface TestStateCases extends Constants {
      * Include : Center
      */
     public static final String[] VALID_STATES_CENTER = {
-            // TODO Valid States Center Test Cases
             // ROUND 1
             "f",
             "",
@@ -149,7 +148,6 @@ public interface TestStateCases extends Constants {
      * Include : Bag
      */
     public static final String[] VALID_STATES_BAG = {
-            // TODO Valid States Bag Test Cases
             // ROUND 1
             "1915161614",
             "1915161614",
@@ -183,7 +181,6 @@ public interface TestStateCases extends Constants {
      * Include : Discard
      */
     public static final String[] VALID_STATES_DISCARD = {
-            // TODO Valid States Discard Test Cases
             // ROUND 1
             "0000000000",
             "0000000000",
@@ -252,7 +249,6 @@ public interface TestStateCases extends Constants {
      * Include 2 columns: PLayer A Mosaic, Player B Mosaic
      */
     public static final String[][] VALID_STATES_MOSAIC = {
-            // TODO Valid States Mosaic Test Cases
             // ROUND 1
             new String[]{"", ""},
             new String[]{"", ""},
@@ -286,7 +282,6 @@ public interface TestStateCases extends Constants {
      * Include 10 columns: Player A Mosaic Row 0, 1, 2, 3, 4 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_MOSAIC_ROW = {
-            // TODO Valid States Mosaic Row Test Cases
             // ROUND 1
             new String[]{"","","","","","","","","",""},
             new String[]{"","","","","","","","","",""},
@@ -321,7 +316,6 @@ public interface TestStateCases extends Constants {
      * Include 10 columns: Player A Mosaic Col 0, 1, 2, 3, 4, 5 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_MOSAIC_COL = {
-            // TODO Valid States Mosaic Col Test Cases
             // ROUND 1
             new String[]{"","","","","","","","","",""},
             new String[]{"","","","","","","","","",""},
@@ -355,7 +349,6 @@ public interface TestStateCases extends Constants {
      * Include 2 columns: PLayer A Storage, Player B Storage
      */
     public static final String[][] VALID_STATES_STORAGE = {
-            // TODO Valid States Storage Test Cases
             // ROUND 1
             new String[]{"",""},
             new String[]{"0d11c22b33e44e1","0a11b22d33c2"},
@@ -390,7 +383,6 @@ public interface TestStateCases extends Constants {
      * Include 10 columns: Player A Storage Row 0, 1, 2, 3, 4 and Player B Storage Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_STORAGE_ROW = {
-            // TODO Valid States STORAGE Row Test Cases
             // ROUND 1
             new String[]{"","","","","","","","","",""},
             new String[]{"d1","c2","b3","e4","e1","a1","b2","d3","c2",""},
@@ -424,7 +416,6 @@ public interface TestStateCases extends Constants {
      * Include 2 columns: PLayer A Floor, Player B Floor
      */
     public static final String[][] VALID_STATES_FLOOR = {
-            // TODO Valid States FLOOR Test Cases
             // ROUND 1
             new String[]{"",""},
             new String[]{"ef",""},

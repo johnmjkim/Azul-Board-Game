@@ -154,7 +154,7 @@ public interface Constants {
     public final double INITIAL_FLOOR_IMAGE_POS_X = SECOND_BOARD_POS_X;
     public final double INITIAL_FLOOR_IMAGE_POS_Y = 465;
 
-    // Image dimensions : Status (Score, Current Player)
+    // Image dimensions : Status (Rank, Score, Current Player)
     public final double INITIAL_SCORE_IMAGE_POS_X = 500;
     public final double INITIAL_SCORE_IMAGE_POS_Y = 550;
     public final double SCORE_IMAGE_GAP = 10;
