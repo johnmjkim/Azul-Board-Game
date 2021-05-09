@@ -31,6 +31,11 @@ public class Viewer extends Application implements Constants {
     private TextField boardTextField;
 
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
+    public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
+    public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
+    public MosaicCoordinates MOSAIC_COORDINATES = Game.MOSAIC_COORDINATES;
+    public FloorCoordinates FLOOR_COORDINATES = Game.FLOOR_COORDINATES;
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -152,6 +157,14 @@ public class Viewer extends Application implements Constants {
 
     //display empty board
     private void display_empty_Center(){
+        for(int tiles=0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++){
+            double x = CENTER_COORDINATES.getPos_x(tiles);
+            double y = CENTER_COORDINATES.getPos_y(tiles);
+            Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+            r.setFill(Color.GREY);
+            controls.getChildren().add(r);
+        }
+        /*
         for (int row = 0; row < 6; row++){
             for (int col = 0; col < 5; col++){
                 double x = INITIAL_CENTER_IMAGE_POS_X + row*(BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP);
@@ -161,9 +174,21 @@ public class Viewer extends Application implements Constants {
                 controls.getChildren().add(r);
             }
         }
+
+         */
     }
 
     private void display_empty_Factories(){
+        for(int factory=0; factory < FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; factory++){
+            for(int tiles=0; tiles < FACTORY_SIZE; tiles++){
+                double x = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles);
+                double y = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles);
+                Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+        /*
         for(int factory=0; factory < 5; factory++){
             int factories_row = factory/MAX_FACTORIES_TILES_COL_IMAGE;
             int factories_col = factory % MAX_FACTORIES_TILES_COL_IMAGE + factories_row;
@@ -190,6 +215,8 @@ public class Viewer extends Application implements Constants {
                 controls.getChildren().add(r);
             }
         }
+
+         */
 
     }
 

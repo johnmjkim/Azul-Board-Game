@@ -113,7 +113,7 @@ public interface Constants {
     public final double THIRD_BOARD_POS_X = 1000;
 
     // Image dimensions : Factories, Factory
-    public final int MAX_FACTORIES_TILES_COL_IMAGE = 10;
+    public final int MAX_FACTORIES_TILES_COL_IMAGE = 5;
     public final int MAX_FACTORY_TILES_ROW_IMAGE = 2;
     public final int MAX_FACTORY_TILES_COL_IMAGE = 2;
 
