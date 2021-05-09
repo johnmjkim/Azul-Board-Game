@@ -61,7 +61,9 @@ public interface Constants {
     // Size, Numbers of all components : OrderTyped
     public final int FACTORY_SIZE = 4;
     public final int MAX_CENTER_STRING_SIZE = 15;
+    public final int MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE = MAX_CENTER_STRING_SIZE + 1;
     public final int MAX_FLOOR_STRING_SIZE = 7;
+    public final int MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE = MAX_FLOOR_STRING_SIZE + MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE;
     public static final int DEFAULT_FACTORY_MAX_NUMBER = 2 * DEFAULT_MAX_PLAYER + 1;
     public static final int[] FACTORY_MAX_NUMBERS = {5, 7, 9};
     public static final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
