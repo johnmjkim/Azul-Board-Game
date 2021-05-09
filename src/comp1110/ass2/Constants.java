@@ -113,7 +113,7 @@ public interface Constants {
     public final double THIRD_BOARD_POS_X = 1000;
 
     // Image dimensions : Factories, Factory
-    public final int MAX_FACTORIES_TILES_COL_IMAGE = 5;
+    public final int MAX_FACTORIES_TILES_COL_IMAGE = 10;
     public final int MAX_FACTORY_TILES_ROW_IMAGE = 2;
     public final int MAX_FACTORY_TILES_COL_IMAGE = 2;
 
@@ -127,19 +127,19 @@ public interface Constants {
     public final double FACTORIES_IMAGE_SIZE_Y_GAP = (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * MAX_FACTORY_TILES_ROW_IMAGE + FACTORIES_IMAGE_ROW_GAP;
 
     // Image dimensions : Center
-    public final int MAX_CENTER_TILES_COL_IMAGE = 5;
+    public final int MAX_CENTER_TILES_COL_IMAGE = 6;
     public final double INITIAL_CENTER_IMAGE_POS_X = THIRD_BOARD_POS_X;
-    public final double INITIAL_CENTER_IMAGE_POS_Y = FIRST_BOARD_POS_Y;
+    public final double INITIAL_CENTER_IMAGE_POS_Y = FIRST_BOARD_POS_Y-29;
 
     // Image dimensions : Bag
     public final int MAX_BAG_TILES_COL_IMAGE = 10;
     public final double INITIAL_BAG_IMAGE_POS_X = THIRD_BOARD_POS_X;
-    public final double INITIAL_BAG_IMAGE_POS_Y = 360;
+    public final double INITIAL_BAG_IMAGE_POS_Y = 364;
 
     // Image dimensions : Discard
     public final int MAX_DISCARD_TILES_COL_IMAGE = 10;
     public final double INITIAL_DISCARD_IMAGE_POS_X = THIRD_BOARD_POS_X;
-    public final double INITIAL_DISCARD_IMAGE_POS_Y = 180;
+    public final double INITIAL_DISCARD_IMAGE_POS_Y = 192;
 
     // Image dimensions : Storage
     public final double INITIAL_STORAGE_IMAGE_POS_X = SECOND_BOARD_POS_X;

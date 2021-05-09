@@ -325,18 +325,24 @@ public class Viewer extends Application implements Constants {
 
     }
 
+    //show the start page
     private void start_page(){
         Button button_1 = new Button("Start");
-        Button button_2 = new Button("Exit");
+        Button button_2 = new Button("Exit ");
         ImageView boardA = new ImageView(new Image("file:src/comp1110/ass2/img/Welcome.png"));
         boardA.setFitWidth(1200);
         boardA.setFitHeight(500);
         boardA.setLayoutX(0);
         boardA.setLayoutY(15);
         matrixBoard.getChildren().add(boardA);
+
         button_1.setOnAction(ae -> {
             setupViewer();
         });
+        button_2.setOnAction(ae -> {
+            System.exit(0);
+        });
+
         HBox hb = new HBox();
         hb.getChildren().addAll(button_1,button_2);
         hb.setSpacing(10);
