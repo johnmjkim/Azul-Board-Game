@@ -101,6 +101,8 @@ public class Game extends Application implements Constants {
         Viewer viewer = new Viewer();
         viewer.start(stage);
 
+        //Create draggable tiles
+
 
     }
 
@@ -218,7 +220,7 @@ public class Board extends Application {
         // Set window title to "Board"
         window.setTitle("Board");
 
-        // 2. Draw a triangle : Set polygon
+        // 2. Draw a triangle : Set polygon(Hu: already have the images)
 
         Polygon p = new Polygon();
         p.getPoints().addAll(new Double[]{0.0, -86.6, 100.0, 86.6, -100.0, 86.6});
@@ -228,6 +230,7 @@ public class Board extends Application {
 
 
         // 4. Fill the board with triangles & 5. Create a white border
+        (Hu: maybe I can fill the empty-board with some grey squares)
         //ArrayList<Triangle> Triangles = new ArrayList<Triangle>();
         for(int i=-2; i <=2 ; i++){
             for(int j=-1; j <=1 ; j++){
@@ -253,6 +256,7 @@ public class Board extends Application {
             root.getChildren().add(ts);
             count++;
         }
+
         // Extension 4. Create a draggable triangle
         DraggableTriangle dt = new DraggableTriangle(300, 260, 200, this);
         root.getChildren().add(dt);
@@ -325,6 +329,7 @@ public class Board extends Application {
         private Board board;
         private double mousex, mousey;
         private double posit_x, posit_y;
+
         // Extension 2 : Add a constructor
         public DraggableTriangle(double x, double y, double size, Board board){
             super( x, y, size);
@@ -333,6 +338,7 @@ public class Board extends Application {
             this.board = board;
             setLayoutX(super.getLayoutX());
             setLayoutY(super.getLayoutY());
+
             // Extension 5: Make the inner class draggable
             this.toFront();
             this.setOnMousePressed(event ->{
@@ -346,6 +352,7 @@ public class Board extends Application {
                 setLayoutY(event.getSceneY() - mousey + this.posit_y);
                 board.highlightedNearestTriangle(getLayoutX(), getLayoutY());
             });
+
             // Extension 9 : Snap to nearest triangle
             this.setOnMouseReleased(event ->{
                 setRotate(board.highlighted.getRotate());

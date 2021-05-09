@@ -53,7 +53,7 @@ public class Viewer extends Application implements Constants {
         //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
         // Four players example
-        state[0]="AF0cdde2abde3cdee8bcceCaaaaabbbbbbcccccddddddeeeeefB1915161614D1618152019";
+        state[0]="AF0cdde2abde3cdee4bcce5ccddCaaaaabbbbbbcccccddddddeeeeefB1915161614D1618152019";
         state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
         SharedState ss = new SharedState(state[0], PLAYER_NUMBER);
@@ -61,6 +61,13 @@ public class Viewer extends Application implements Constants {
 
         String current_player_turn = ss.getTurnState();
         nPlayer current_player = ps.getnPlayer(current_player_turn.charAt(0));
+
+        //display empty board
+        display_empty_Center();
+        display_empty_Mosaic();
+        display_empty_Floor();
+        display_empty_Storage();
+        display_empty_Factories();
 
         //CENTER
         String centerStateString = ss.center.getStateString();
@@ -142,6 +149,86 @@ public class Viewer extends Application implements Constants {
 
     }
 
+
+    //display empty board
+    private void display_empty_Center(){
+        for (int row = 0; row < 6; row++){
+            for (int col = 0; col < 5; col++){
+                double x = INITIAL_CENTER_IMAGE_POS_X + row*(BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP);
+                double y = INITIAL_CENTER_IMAGE_POS_Y + col*(BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP);
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+    }
+
+    private void display_empty_Factories(){
+        for(int factory=0; factory < 5; factory++){
+            int factories_row = factory/MAX_FACTORIES_TILES_COL_IMAGE;
+            int factories_col = factory % MAX_FACTORIES_TILES_COL_IMAGE + factories_row;
+            for (int tiles = 0; tiles < 4; tiles++){
+                int factory_row = tiles/MAX_FACTORY_TILES_ROW_IMAGE;
+                int factory_col = tiles % MAX_FACTORY_TILES_ROW_IMAGE;
+                double x = INITIAL_FACTORIES_IMAGE_POS_X + FACTORIES_IMAGE_SIZE_X_GAP * factories_col + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * factory_col;
+                double y = INITIAL_FACTORIES_IMAGE_POS_Y + FACTORIES_IMAGE_SIZE_Y_GAP * factories_row + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * factory_row;
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+        for(int factory=0; factory < 4; factory++){
+            int factories_row = factory/MAX_FACTORIES_TILES_COL_IMAGE;
+            int factories_col = factory % MAX_FACTORIES_TILES_COL_IMAGE + factories_row;
+            for (int tiles = 0; tiles < 4; tiles++){
+                int factory_row = tiles/MAX_FACTORY_TILES_ROW_IMAGE;
+                int factory_col = tiles % MAX_FACTORY_TILES_ROW_IMAGE;
+                double x = INITIAL_FACTORIES_IMAGE_POS_X+65 + FACTORIES_IMAGE_SIZE_X_GAP * factories_col + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * factory_col;
+                double y = INITIAL_FACTORIES_IMAGE_POS_Y+65 + FACTORIES_IMAGE_SIZE_Y_GAP * factories_row + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * factory_row;
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+
+    }
+
+    private void display_empty_Storage(){
+        int[] storage_row_tile = {1,2,3,4,5};
+        for(int row=0; row < 5; row++){
+            for(int tiles=0; tiles < storage_row_tile[row]; tiles++){
+                int storage_col = MAX_STORAGE_ROW - tiles - 1;
+                double x = INITIAL_STORAGE_IMAGE_POS_X + (BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP) * storage_col;
+                double y = INITIAL_STORAGE_IMAGE_POS_Y + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * row;
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+    }
+
+    private void display_empty_Floor(){
+        for (int col = 0; col < 7; col++){
+                double x = INITIAL_FLOOR_IMAGE_POS_X + col*(BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP);
+                double y = INITIAL_FLOOR_IMAGE_POS_Y;
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+        }
+    }
+
+    private void display_empty_Mosaic(){
+        for (int row = 0; row < 5; row++){
+            for (int col = 0; col < 5; col++){
+                double x = INITIAL_MOSAIC_IMAGE_POS_X + row*(BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP);
+                double y = INITIAL_MOSAIC_IMAGE_POS_Y + col*(BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP);
+                javafx.scene.shape.Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                controls.getChildren().add(r);
+            }
+        }
+    }
+
     private void displayCenter(String centerState){
         char[] center_chars = centerState.toCharArray();
         for (int tiles = 0; tiles < center_chars.length; tiles++){
@@ -193,6 +280,8 @@ public class Viewer extends Application implements Constants {
             }
         }
     }
+
+
 
     private void displayFactories(String[] factoryStates){
         for(int factory=0; factory < factoryStates.length; factory++){
@@ -271,6 +360,7 @@ public class Viewer extends Application implements Constants {
 
     }
 
+
     /**
      * Create a basic text field for input and a refresh button.
      */
@@ -310,6 +400,7 @@ public class Viewer extends Application implements Constants {
             boardA.setFitHeight(500);
             boardA.setLayoutX(0);
             boardA.setLayoutY(15);
+            boardA.setOpacity(0.2);
             matrixBoard.getChildren().add(boardA);
 
             displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
@@ -325,18 +416,54 @@ public class Viewer extends Application implements Constants {
 
     }
 
+    //show the start page
     private void start_page(){
+
+        javafx.scene.shape.Rectangle r1 = new Rectangle(50, 548, 1200, 30);
+        r1.setFill(Color.WHITE);
+        controls.getChildren().add(r1);
+
         Button button_1 = new Button("Start");
-        Button button_2 = new Button("Exit");
+        Button button_2 = new Button("Exit ");
+
         ImageView boardA = new ImageView(new Image("file:src/comp1110/ass2/img/Welcome.png"));
         boardA.setFitWidth(1200);
         boardA.setFitHeight(500);
         boardA.setLayoutX(0);
         boardA.setLayoutY(15);
         matrixBoard.getChildren().add(boardA);
+
         button_1.setOnAction(ae -> {
+
+            boardA.setOpacity(0);
+
             setupViewer();
+
+            javafx.scene.shape.Rectangle r = new Rectangle(510, 548, 300, 30);
+            r.setFill(Color.WHITE);
+            controls.getChildren().add(r);
+
+            Button button_3 = new Button("Exit ");
+            Button button_4 = new Button("Next round");
+
+            button_3.setOnAction(ae1 -> {
+                System.exit(0);
+            });
+            button_4.setOnAction(ae1 -> {
+                start_page();
+            });
+
+            HBox hb1 = new HBox(button_3,button_4);
+            hb1.setSpacing(10);
+            hb1.setLayoutX(1000);
+            hb1.setLayoutY(VIEWER_HEIGHT - 50);
+            controls.getChildren().add(hb1);
         });
+
+        button_2.setOnAction(ae -> {
+            System.exit(0);
+        });
+
         HBox hb = new HBox();
         hb.getChildren().addAll(button_1,button_2);
         hb.setSpacing(10);
