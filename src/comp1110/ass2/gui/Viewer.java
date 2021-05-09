@@ -76,7 +76,8 @@ public class Viewer extends Application implements Constants {
 
         //CENTER
         String centerStateString = ss.center.getStateString();
-        displayCenter(centerStateString);
+        //displayCenter(centerStateString);
+        displayCenter(ss);
 
         //BAG
         int[] bag_tiles = new int[COLORS.length];
@@ -103,7 +104,8 @@ public class Viewer extends Application implements Constants {
             factoryStates[factory] = ss.factories.getFactory(factory).getStateString();
         }
 
-        displayFactories(factoryStates);
+        displayFactories(ss);
+        //displayFactories(factoryStates);
 
         //STORAGE
         int[] storage_row_Tiles = new int[MAX_STORAGE_ROW];
@@ -256,6 +258,22 @@ public class Viewer extends Application implements Constants {
         }
     }
 
+    private void displayCenter(SharedState ss) {
+        for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
+            double x = CENTER_COORDINATES.getPos_x(tiles);
+            double y = CENTER_COORDINATES.getPos_y(tiles);
+            ImageView Tile_View = new ImageView();
+            if(ss.center.getTileColor(tiles) != NO_COLOR){
+                Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles)-BLUE]));
+            }
+            Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+            Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+            Tile_View.setLayoutY(y);
+            Tile_View.setLayoutX(x);
+            matrixBoard.getChildren().add(Tile_View);
+        }
+    }
+    /*
     private void displayCenter(String centerState){
         char[] center_chars = centerState.toCharArray();
         for (int tiles = 0; tiles < center_chars.length; tiles++){
@@ -271,6 +289,8 @@ public class Viewer extends Application implements Constants {
             matrixBoard.getChildren().add(Tile_View);
         }
     }
+
+     */
 
     private void displayBag(int[] bag_tiles){
         for(int tiles=0; tiles < bag_tiles.length; tiles++){
@@ -308,8 +328,24 @@ public class Viewer extends Application implements Constants {
         }
     }
 
-
-
+    private void displayFactories(SharedState ss){
+        for(int factory=0; factory < FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; factory++){
+            for(int tiles=0; tiles < FACTORY_SIZE; tiles++){
+                double x = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles);
+                double y = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles);
+                ImageView Tile_View = new ImageView();
+                if(ss.factories.getFactory(factory).getTileColor(tiles) != NO_COLOR){
+                    Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[ss.factories.getFactory(factory).getTileColor(tiles)-BLUE]));
+                }
+                Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                Tile_View.setLayoutY(y);
+                Tile_View.setLayoutX(x);
+                matrixBoard.getChildren().add(Tile_View);
+            }
+        }
+    }
+    /*
     private void displayFactories(String[] factoryStates){
         for(int factory=0; factory < factoryStates.length; factory++){
             String factoryState = factoryStates[factory];
@@ -330,6 +366,8 @@ public class Viewer extends Application implements Constants {
             }
         }
     }
+
+     */
 
     private void displayStorage(int[] storage_row_tiles, char[] storage_row_colors){
         for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++){
