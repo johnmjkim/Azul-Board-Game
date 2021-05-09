@@ -15,10 +15,6 @@ public class SharedState extends States {
     public Bag bag;
     public Discard discard;
 
-    // Size, Numbers of all components
-    public final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;
-    public final int FACTORY_SIZE = 4;
-
     /**
      * @author Min Jae, Kim
      * Constructor method for SharedState class without parameter
@@ -59,8 +55,8 @@ public class SharedState extends States {
         String discardState = rest_sharedState.substring(rest_sharedState.indexOf(DISCARD) + 1, rest_sharedState.length());
 
         setTurnState(turnState);
-        setFactoriesState(factoryState);
-        setCenterState(centerState);
+        setFactoriesState(factoryState, max_player_number);
+        setCenterState(centerState, max_player_number);
         setBagState(bagState);
         setDiscardState(discardState);
         updateSharedState();
@@ -121,15 +117,15 @@ public class SharedState extends States {
         this.turnState = turnState;
     }
 
-    private void setFactoriesState( String factoryState ){
+    private void setFactoriesState( String factoryState , int max_player_number){
         this.factoriesState = factoryState;
-        Factories factories = new Factories(factoryState, FACTORY_MAX_NUMBER);
+        Factories factories = new Factories(factoryState, 2 * max_player_number + 1);
         this.factories = factories;
     }
 
-    private void setCenterState( String centerState ){
+    private void setCenterState( String centerState , int max_player_number){
         this.centerState = centerState;
-        Center center = new Center(centerState);
+        Center center = new Center(centerState, max_player_number);
         this.center = center;
     }
 

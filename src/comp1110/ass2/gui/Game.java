@@ -106,7 +106,7 @@ public class Game extends Application implements Constants {
 
     private void makeCoordinates(){
         // Center Coordinates
-        CENTER_COORDINATES = new CenterCoordinates();
+        CENTER_COORDINATES = new CenterCoordinates(PLAYER_NUMBER);
         FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
         STORAGE_COORDINATES = new StorageCoordinates();
         MOSAIC_COORDINATES = new MosaicCoordinates();

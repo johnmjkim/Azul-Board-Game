@@ -6,6 +6,10 @@ import java.util.Arrays;
 
 public class Center extends OrderTypedObject{
 
+    // maximum player number, center tiles
+    int max_player_number;
+    int max_center_tiles;
+
     // tiles occupy, color
     boolean[] tiles_occupy = new boolean[MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE];
     char[] tiles_color = new char[MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE];
@@ -15,14 +19,18 @@ public class Center extends OrderTypedObject{
      * Constructor method for Center class
      * @param orderTypedObjectState
      */
-    public Center(String orderTypedObjectState) {
+    public Center(String orderTypedObjectState, int max_player_number) {
         super(orderTypedObjectState);
+        this.max_player_number = max_player_number;
+        this.max_center_tiles = CENTER_MAX_NUMBERS[max_player_number - DEFAULT_MAX_PLAYER];
+        this.tiles_occupy = new boolean[max_center_tiles];
+        this.tiles_color = new char[max_center_tiles];
         storeTilesColor();
     }
 
     private void storeTilesColor(){
         if(super.isStateEmpty()){
-            for(int col=0; col < MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE; col++){
+            for(int col=0; col < max_center_tiles; col++){
                 tiles_occupy[col] = false;
                 tiles_color[col] = NO_COLOR;
             }
@@ -35,7 +43,7 @@ public class Center extends OrderTypedObject{
                 tiles_color[col] = color;
                 col++;
             }
-            for(int rest_col = col; rest_col < MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE; rest_col++){
+            for(int rest_col = col; rest_col < max_center_tiles; rest_col++){
                 tiles_occupy[col] = false;
                 tiles_color[col] = NO_COLOR;
             }

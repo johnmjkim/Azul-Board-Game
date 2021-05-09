@@ -23,38 +23,23 @@ public class nPlayer implements State {
      * @param nplayerState
      * @param nplayerNameState
      */
-    public nPlayer( String nplayerState , char nplayerNameState ){
+    public nPlayer( String nplayerState , char nplayerNameState , int max_player_number){
         this.nplayerState = nplayerState;
         this.nplayerNameState = nplayerNameState;
-        setnPlayerState(nplayerState);
+        setnPlayerState(nplayerState, max_player_number);
     }
 
-    public void setnPlayerState( String nplayerState ){
-        scoreState = nplayerState.substring(0, nplayerState.indexOf(MOSAIC));
-        mosaicState = nplayerState.substring(nplayerState.indexOf(MOSAIC) + 1, nplayerState.indexOf(STORAGE));
-        storageState = nplayerState.substring(nplayerState.indexOf(STORAGE) + 1, nplayerState.indexOf(FLOOR));
-        floorState = nplayerState.substring(nplayerState.indexOf(FLOOR) + 1, nplayerState.length());
+    public void setnPlayerState( String nplayerState , int max_player_number){
+        String scoreState = nplayerState.substring(0, nplayerState.indexOf(MOSAIC));
+        String mosaicState = nplayerState.substring(nplayerState.indexOf(MOSAIC) + 1, nplayerState.indexOf(STORAGE));
+        String storageState = nplayerState.substring(nplayerState.indexOf(STORAGE) + 1, nplayerState.indexOf(FLOOR));
+        String floorState = nplayerState.substring(nplayerState.indexOf(FLOOR) + 1, nplayerState.length());
 
         setScoreState(scoreState);
         setMosaicState(mosaicState);
         setStorageState(storageState);
-        setFloorState(floorState);
+        setFloorState(floorState, max_player_number);
     }
-    /*
-    public String getnplayerState(){
-        StringBuilder SB = new StringBuilder();
-        SB.append(this.score.getScoreState());
-        SB.append(MOSAIC);
-        SB.append(this.mosaic.getMosaicState());
-        SB.append(STORAGE);
-        SB.append(this.storage.getStorageState());
-        SB.append(FLOOR);
-        SB.append(this.floor.getFloorState());
-        this.nplayerState = String.valueOf(SB);
-        return this.nplayerState;
-    }
-
-     */
 
     private void setScoreState( String scoreState ) {
         this.scoreState = scoreState;
@@ -71,9 +56,9 @@ public class nPlayer implements State {
         this.storage = new Storage( storageState );
     }
 
-    private void setFloorState( String floorState ){
+    private void setFloorState( String floorState , int max_player_number ){
         this.floorState = floorState;
-        this.floor = new Floor( floorState );
+        this.floor = new Floor( floorState , max_player_number);
     }
 
     public boolean isEnder(){
@@ -108,6 +93,13 @@ public class nPlayer implements State {
     @Override
     public void updateState() {
         StringBuilder SB = new StringBuilder();
+
+        // Update all strings of score, mosaic, storage, floor
+        this.scoreState = this.score.getStateString();
+        this.mosaicState = this.mosaic.getStateString();
+        this.storageState = this.storage.getStateString();
+        this.floorState = this.floor.getStateString();
+
         SB.append(this.score.getStateString());
         SB.append(MOSAIC);
         SB.append(this.mosaic.getStateString());

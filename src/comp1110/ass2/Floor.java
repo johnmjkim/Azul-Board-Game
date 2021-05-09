@@ -6,23 +6,31 @@ import java.util.Arrays;
 
 public class Floor extends OrderTypedObject{
 
+    // maximum player number, floor tiles
+    int max_player_number;
+    int max_floor_tiles_before_adjust;
+
     // tiles occupy, color
-    boolean[] tiles_occupy = new boolean[MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE];
-    char[] tiles_color = new char[MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE];
+    boolean[] tiles_occupy;
+    char[] tiles_color;
 
     /**
      * @author Min Jae, Kim
      * Constructor method for Floor class
      * @param orderTypedObjectState
      */
-    public Floor(String orderTypedObjectState) {
+    public Floor(String orderTypedObjectState, int max_player_number) {
         super(orderTypedObjectState);
+        this.max_player_number = max_player_number;
+        this.max_floor_tiles_before_adjust = MAX_FLOOR_STRING_SIZE + CENTER_MAX_NUMBERS[max_player_number - DEFAULT_MAX_PLAYER];
+        this.tiles_occupy = new boolean[max_floor_tiles_before_adjust];
+        this.tiles_color = new char[max_floor_tiles_before_adjust];
         storeTilesColor();
     }
 
     private void storeTilesColor(){
         if(super.isStateEmpty()){
-            for(int col=0; col < MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE; col++){
+            for(int col=0; col < max_floor_tiles_before_adjust; col++){
                 tiles_occupy[col] = false;
                 tiles_color[col] = NO_COLOR;
             }
@@ -35,7 +43,7 @@ public class Floor extends OrderTypedObject{
                 tiles_color[col] = color;
                 col++;
             }
-            for(int rest_col = col; rest_col < MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE; rest_col++){
+            for(int rest_col = col; rest_col < max_floor_tiles_before_adjust; rest_col++){
                 tiles_occupy[col] = false;
                 tiles_color[col] = NO_COLOR;
             }

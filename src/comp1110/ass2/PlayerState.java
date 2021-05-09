@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class PlayerState extends States {
 
     // Player fields strings
-    String[] playerNameState = new String[MAX_PLAYER_NUMBER];
-    String[] playerStates = new String[MAX_PLAYER_NUMBER];
+    String[] playerNameState;
+    String[] playerStates;
 
     public ArrayList<nPlayer> nplayers = new ArrayList<nPlayer>();
 
@@ -41,8 +41,8 @@ public class PlayerState extends States {
      * @param max_player_number
      */
     public void setPlayerState( String playerState , int max_player_number ){
-        String[] playerNameState = new String[max_player_number];
-        String[] playerStates = new String[max_player_number];
+        this.playerNameState = new String[max_player_number];
+        this.playerStates = new String[max_player_number];
 
         String playerState_substring = EMPTY_STATE;
 
@@ -57,13 +57,13 @@ public class PlayerState extends States {
             playerStates[i] = playerState_substring.substring(1,playerState_substring.length());
         }
 
-        setPlayerStates(playerStates, playerNameState);
+        setPlayerStates(playerStates, playerNameState , max_player_number);
     }
 
-    private void setPlayerStates( String[] playerStates, String[] playerNameState ){
+    private void setPlayerStates( String[] playerStates, String[] playerNameState , int max_player_number ){
         this.nplayers.clear();
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
-            this.nplayers.add(new nPlayer( playerStates[i] , playerNameState[i].charAt(0) ));
+            this.nplayers.add(new nPlayer( playerStates[i] , playerNameState[i].charAt(0), max_player_number));
         }
 
     }
