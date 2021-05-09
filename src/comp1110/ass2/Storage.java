@@ -129,7 +129,7 @@ public class Storage implements Tiles {
         for( StorageRow sr : this.storage_rows){
             if(!sr.isStateEmpty()){
                 //System.out.println(" color : " + sr.getTilesColor() + " number : " + sr.getTilesNumber());
-                this.letters[sr.getTilesColor()] += sr.getTotalTilesNumber();
+                this.letters[sr.getRowTilesColor()] += sr.getTotalTilesNumber();
             }
         }
     }
@@ -188,22 +188,26 @@ public class Storage implements Tiles {
      */
     public class StorageRow implements CoordinateTyped{
         String storage_rowState = EMPTY_STATE;
-        char storage_row_color = ' ';
+        char storage_row_color = NO_COLOR;
         int row;
         int MAX_TILES_LIMIT;
         int[] letters = new int[128];
+        boolean[] storagerow_tiles_occupy;
+        char[] storagerow_tiles_color;
 
         public StorageRow (String storage_rowState, int row){
             this.storage_rowState = storage_rowState;
             this.row = row;
             this.MAX_TILES_LIMIT = row + 1;
-            this.storage_row_color = getTilesColor();
+            this.storagerow_tiles_occupy = new boolean[MAX_TILES_LIMIT];
+            this.storagerow_tiles_color = new char[MAX_TILES_LIMIT];
+            this.storage_row_color = getRowTilesColor();
             countTilesNumber(storage_rowState);
         }
 
-        public char getTilesColor(){
+        public char getRowTilesColor(){
             if(this.isStateEmpty()){
-                return ' ';
+                return NO_COLOR;
             }
             else{
                 char storage_row_color = this.storage_rowState.charAt(0);
@@ -212,7 +216,7 @@ public class Storage implements Tiles {
         }
 
         boolean isStorageRowTileColorValid(char color){
-            return (getTilesColor() == color);
+            return (getRowTilesColor() == color);
         }
 
         boolean isStorageRowTilesValid(){
@@ -294,13 +298,26 @@ public class Storage implements Tiles {
 
         @Override
         public void countTilesNumber(String State) {
-            this.storage_row_color = getTilesColor();
+            this.storage_row_color = getRowTilesColor();
             if(this.isStateEmpty()){
-
+                for(int col=0; col < MAX_TILES_LIMIT; col++){
+                    storagerow_tiles_occupy[col] = false;
+                    storagerow_tiles_color[col] = NO_COLOR;
+                }
             }
             else{
                 int storage_row_count = Character.getNumericValue(State.charAt(1));
                 this.letters[storage_row_color] = storage_row_count;
+                for(int col=0; col < MAX_TILES_LIMIT; col++){
+                    if(col < storage_row_count){
+                        storagerow_tiles_occupy[col] = false;
+                        storagerow_tiles_color[col] = NO_COLOR;
+                    }
+                    else{
+                        storagerow_tiles_occupy[col] = false;
+                        storagerow_tiles_color[col] = this.storage_row_color;
+                    }
+                }
             }
         }
 
@@ -322,6 +339,11 @@ public class Storage implements Tiles {
         @Override
         public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
+        }
+
+        @Override
+        public char getTileColor(int column) {
+            return storagerow_tiles_color[column];
         }
     }
 }

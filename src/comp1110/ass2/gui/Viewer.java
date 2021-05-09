@@ -98,7 +98,7 @@ public class Viewer extends Application implements Constants {
         char[] storage_row_Colors = new char[MAX_STORAGE_ROW];
         for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             storage_row_Tiles[storage_row] = current_player.storage.getStorageRow(storage_row).getTotalTilesNumber();
-            storage_row_Colors[storage_row] = current_player.storage.getStorageRow(storage_row).getTilesColor();
+            storage_row_Colors[storage_row] = current_player.storage.getStorageRow(storage_row).getRowTilesColor();
         }
 
         displayStorage(storage_row_Tiles, storage_row_Colors);

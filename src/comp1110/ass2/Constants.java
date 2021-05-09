@@ -35,6 +35,7 @@ public interface Constants {
     public final char PURPLE = 'd';
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
+    public final char NO_COLOR = 'n';
     public final char[] COLORS = {BLUE, GREEN, ORANGE, PURPLE, RED};
     public final char[] COLORS_WITH_FIRST_PLAYER = {BLUE, GREEN, ORANGE, PURPLE, RED, FIRST_PLAYER};
 
@@ -87,7 +88,7 @@ public interface Constants {
     public final String PURPLE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(PURPLE) + ".png";
     public final String RED_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(RED) + ".png";
     public final String FIRST_PLAYER_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(FIRST_PLAYER) + ".png";
-    public final String NO_TILE_IMAGE = "file:src/comp1110/ass2/img/n.png";
+    public final String NO_TILE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(NO_COLOR) + ".png";
     public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
 

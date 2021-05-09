@@ -21,7 +21,7 @@ public class Experiment_PSVM implements TestCountCases {
         int input_col = Character.getNumericValue(input_move.charAt(2));
 
         // Shared State Experiment
-        SharedState ss = new SharedState(input_sharedState_4, DEFAULT_MAX_PLAYER);
+        SharedState ss = new SharedState(input_sharedState_2, DEFAULT_MAX_PLAYER);
         PlayerState ps = new PlayerState(input_playerState_6, DEFAULT_MAX_PLAYER);
 
         System.out.println(" SharedState : " + ss);

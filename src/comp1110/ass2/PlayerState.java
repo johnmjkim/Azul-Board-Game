@@ -136,7 +136,7 @@ public class PlayerState extends States {
             }
             ender_idx++;
         }
-        return ' ';
+        return NO_COLOR;
     }
 
     /**

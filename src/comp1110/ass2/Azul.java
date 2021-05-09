@@ -885,7 +885,7 @@ public class Azul implements Constants{
         // mosaic-storage do not have same color
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             for(int j=0; j < MAX_MOSAIC_ROW; j++){
-                char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getTilesColor();
+                char storage_row_tile_color = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).getRowTilesColor();
                 boolean valid_mosiac_storage_row = !ps.getnPlayer(ALL_PLAYERS[i]).mosaic.getMosaicRow(j).existsTileColor(storage_row_tile_color);
                 boolean valid_storage_row = ps.getnPlayer(ALL_PLAYERS[i]).storage.getStorageRow(j).isStorageRowTilesValid();
 
@@ -1092,7 +1092,7 @@ public class Azul implements Constants{
         else{
             int storage_row = Character.getNumericValue(storage_row_or_floor);
             boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
-            boolean storage_row_same_color = (color_of_tile == ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor());
+            boolean storage_row_same_color = (color_of_tile == ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getRowTilesColor());
             boolean storage_row_empty = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isStateEmpty();
             boolean storage_row_color_valid = storage_row_same_color || storage_row_empty;
             boolean mosaic_row_color_exists = ps.getnPlayer(player_turn).mosaic.getMosaicRow(storage_row).existsTileColor(color_of_tile);
@@ -1117,7 +1117,7 @@ public class Azul implements Constants{
         int storage_row = Character.getNumericValue(storage_mosaic_row);
         int mosaic_row = storage_row;
 
-        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getRowTilesColor();
         boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
 
         if(!(mosaic_column_or_floor == FLOOR)){
@@ -1228,7 +1228,7 @@ public class Azul implements Constants{
         char mosaic_column_or_floor = move.charAt(2);
         int storage_row = Character.getNumericValue(storage_mosaic_row);
         int mosaic_row = storage_row;
-        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTilesColor();
+        char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getRowTilesColor();
         int storage_row_tiles = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getTotalTilesNumber();
 
         if(storage_row_tiles > 1){

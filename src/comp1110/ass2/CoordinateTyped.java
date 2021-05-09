@@ -11,4 +11,6 @@ public interface CoordinateTyped extends Tiles{
 
     public boolean isTilesFull();
 
+    public char getTileColor(int index);
+
 }

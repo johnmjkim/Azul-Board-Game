@@ -278,21 +278,6 @@ public class Mosaic implements Tiles {
             return this.mosaicrow_tiles_occupy[column];
         }
 
-        public void addTile(char color, int column) {
-            mosaicrow_tiles_occupy[column] = true;
-            mosaicrow_tiles_color[column] = color;
-            updateState();
-        }
-
-        public char getTileColor(int column) {
-            if(mosaicrow_tiles_occupy[column]){
-                return mosaicrow_tiles_color[column];
-            }
-            else{
-                return ' ';
-            }
-        }
-
         public int scoreTotalMosaicRow(){
             int adjacent_score = 0;
             for(int i=1; i < MAX_MOSAIC_COL; i++){
@@ -334,6 +319,17 @@ public class Mosaic implements Tiles {
                 adjacent_score += 1;
             }
             return adjacent_score;
+        }
+
+        public void addTile(char color, int column) {
+            mosaicrow_tiles_occupy[column] = true;
+            mosaicrow_tiles_color[column] = color;
+            updateState();
+        }
+
+        @Override
+        public char getTileColor(int column) {
+            return mosaicrow_tiles_color[column];
         }
 
         @Override
@@ -494,21 +490,6 @@ public class Mosaic implements Tiles {
             return this.mosaiccol_tiles_occupy[row];
         }
 
-        public void addTile(char color, int row) {
-            mosaiccol_tiles_occupy[row] = true;
-            mosaiccol_tiles_color[row] = color;
-            updateState();
-        }
-
-        public char getTileColor(int row) {
-            if(mosaiccol_tiles_occupy[row]){
-                return mosaiccol_tiles_color[row];
-            }
-            else{
-                return ' ';
-            }
-        }
-
         public int scoreTotalMosaicCol(){
             int adjacent_score = 0;
             for(int i=1; i < MAX_MOSAIC_ROW; i++){
@@ -550,6 +531,17 @@ public class Mosaic implements Tiles {
                 adjacent_score += 1;
             }
             return adjacent_score;
+        }
+
+        public void addTile(char color, int row) {
+            mosaiccol_tiles_occupy[row] = true;
+            mosaiccol_tiles_color[row] = color;
+            updateState();
+        }
+
+        @Override
+        public char getTileColor(int row) {
+            return mosaiccol_tiles_color[row];
         }
 
         @Override

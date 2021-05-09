@@ -94,6 +94,24 @@ public class Game extends Application implements Constants {
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
         makeCoordinates();
+
+        stage.setScene(scene);
+        stage.show();
+
+        Viewer viewer = new Viewer();
+        viewer.start(stage);
+
+
+    }
+
+    private void makeCoordinates(){
+        // Center Coordinates
+        CENTER_COORDINATES = new CenterCoordinates();
+        FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
+        STORAGE_COORDINATES = new StorageCoordinates();
+        MOSAIC_COORDINATES = new MosaicCoordinates();
+        FLOOR_COORDINATES = new FloorCoordinates();
+
         System.out.println(CENTER_COORDINATES);
         System.out.println(FACTORIES_COORDINATES);
         System.out.println(STORAGE_COORDINATES);
@@ -144,23 +162,6 @@ public class Game extends Application implements Constants {
         }
 
          */
-
-        stage.setScene(scene);
-        stage.show();
-
-        Viewer viewer = new Viewer();
-        viewer.start(stage);
-
-
-    }
-
-    private void makeCoordinates(){
-        // Center Coordinates
-        CENTER_COORDINATES = new CenterCoordinates();
-        FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
-        STORAGE_COORDINATES = new StorageCoordinates();
-        MOSAIC_COORDINATES = new MosaicCoordinates();
-        FLOOR_COORDINATES = new FloorCoordinates();
     }
 
     public class GameTile extends Polygon {
