@@ -199,15 +199,18 @@ public class Viewer extends Application implements Constants {
 
     Rectangle highlighted = null;
     public void highlightNearestRectangle(double x, double y){
+        int i=0;
         highlighted = findNearestRectangle(x,y);
-        for (Rectangle t : rectangleList){
-            if (t == highlighted){
-                t.setFill(Color.GREEN);
-                //triangles.set(i, t);
+        ArrayList<Rectangle> rs = this.rectangleList;
+        for (Rectangle r : rs){
+            if (r.equals(this.highlighted)){
+                r.setFill(Color.GREEN);
+                rectangleList.set(i, r);
             }else {
-                t.setFill(Color.LIGHTGREY);
-                //triangles.set(i, t);
+                r.setFill(Color.LIGHTGREY);
+                rectangleList.set(i, r);
             }
+            i++;
         }
     }
 
@@ -218,7 +221,8 @@ public class Viewer extends Application implements Constants {
         private double mousex;
         private double mousey;
 
-        public DraggableTiles (double x, double y, Viewer viewer) {
+        public DraggableTiles (double x, double y, String image_file ,Viewer viewer) {
+            super(new Image(image_file));
             this.toFront();
 
             this.setOnMousePressed(event ->{
@@ -314,6 +318,15 @@ public class Viewer extends Application implements Constants {
         for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
             double x = CENTER_COORDINATES.getPos_x(tiles);
             double y = CENTER_COORDINATES.getPos_y(tiles);
+            if (ss.center.getTileColor(tiles) != NO_COLOR) {
+                DraggableTiles Tile_View = new DraggableTiles(x, y, COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles) - BLUE],this);
+                Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                Tile_View.setLayoutY(y);
+                Tile_View.setLayoutX(x);
+                matrixBoard.getChildren().add(Tile_View);
+            }
+            /*
             ImageView Tile_View = new ImageView();
             if (ss.center.getTileColor(tiles) != NO_COLOR) {
                 Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles) - BLUE]));
@@ -323,6 +336,8 @@ public class Viewer extends Application implements Constants {
             Tile_View.setLayoutY(y);
             Tile_View.setLayoutX(x);
             matrixBoard.getChildren().add(Tile_View);
+
+             */
         }
     }
     /*
