@@ -11,8 +11,8 @@ public class Center extends OrderTypedObject{
     int max_center_tiles;
 
     // tiles occupy, color
-    boolean[] tiles_occupy = new boolean[MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE];
-    char[] tiles_color = new char[MAX_CENTER_WITH_FIRST_PLAYER_TOKEN_STRING_SIZE];
+    boolean[] tiles_occupy;
+    char[] tiles_color;
 
     /**
      * @author Min Jae, Kim
@@ -44,8 +44,8 @@ public class Center extends OrderTypedObject{
                 col++;
             }
             for(int rest_col = col; rest_col < max_center_tiles; rest_col++){
-                tiles_occupy[col] = false;
-                tiles_color[col] = NO_COLOR;
+                tiles_occupy[rest_col] = false;
+                tiles_color[rest_col] = NO_COLOR;
             }
         }
     }

@@ -40,8 +40,8 @@ public class Factory extends OrderTypedObject{
                 col++;
             }
             for(int rest_col = col; rest_col < FACTORY_SIZE; rest_col++){
-                tiles_occupy[col] = false;
-                tiles_color[col] = NO_COLOR;
+                tiles_occupy[rest_col] = false;
+                tiles_color[rest_col] = NO_COLOR;
             }
         }
     }

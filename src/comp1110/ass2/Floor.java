@@ -44,8 +44,8 @@ public class Floor extends OrderTypedObject{
                 col++;
             }
             for(int rest_col = col; rest_col < max_floor_tiles_before_adjust; rest_col++){
-                tiles_occupy[col] = false;
-                tiles_color[col] = NO_COLOR;
+                tiles_occupy[rest_col] = false;
+                tiles_color[rest_col] = NO_COLOR;
             }
         }
     }
