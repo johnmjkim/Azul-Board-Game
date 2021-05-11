@@ -125,7 +125,6 @@ public class Viewer extends Application implements Constants {
 
         //FACTORIES
         displayFactories(ss);
-        //displayFactories(factoryStates);
 
         //STORAGE
         int[] storage_row_Tiles = new int[MAX_STORAGE_ROW];
@@ -244,7 +243,6 @@ public class Viewer extends Application implements Constants {
         for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
             double x = CENTER_COORDINATES.getPos_x(tiles);
             double y = CENTER_COORDINATES.getPos_y(tiles);
-            System.out.println(ss.center.getTileColor(tiles));
             if (ss.center.getTileColor(tiles) == NO_COLOR) {
 
             }
@@ -467,8 +465,9 @@ public class Viewer extends Application implements Constants {
 
         WelcomeStartButton.setOnAction(ae -> {
 
-            boardA.setOpacity(0);
-
+            //boardA.setOpacity(0);
+            matrixBoard.getChildren().clear();
+            controls.getChildren().clear();
             setupViewer();
 
             Rectangle r = new Rectangle(510, 548, 300, 30);
@@ -557,13 +556,18 @@ public class Viewer extends Application implements Constants {
     }
 
     public void highlightNearestRectangle(double x, double y){
+        int i=0;
         highlighted = findNearestRectangle(x,y);
-        for (Rectangle t : rectangleList){
+        ArrayList<Rectangle> ts = this.snappable_Tile;
+        for (Rectangle t : ts){
             if (t == highlighted){
                 t.setFill(Color.GREEN);
+                this.snappable_Tile.set(i,t);
             }else {
                 t.setFill(Color.GREY);
+                this.snappable_Tile.set(i,t);
             }
+            i++;
         }
     }
 

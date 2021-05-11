@@ -121,51 +121,7 @@ public class Game extends Application implements Constants {
         System.out.println(STORAGE_COORDINATES);
         System.out.println(MOSAIC_COORDINATES);
         System.out.println(FLOOR_COORDINATES);
-        /*
-        System.out.println("Center");
-        for(int tiles=0; tiles< MAX_CENTER_STRING_SIZE; tiles++){
-            if(tiles % MAX_CENTER_TILES_COL_IMAGE == 0 && tiles != 0){
-                System.out.println();
-            }
-            System.out.print(" (x, y) = (" + CENTER_COORDINATES.getPos_x(tiles)+ ", " + CENTER_COORDINATES.getPos_y(tiles) + ")");
-        }
-        System.out.println();
-        System.out.println("Factories");
-        for(int factory=0; factory < FACTORY_MAX_NUMBER; factory++){
-            System.out.print("Factory " + factory);
-            for(int tiles=0; tiles < FACTORY_SIZE; tiles++){
-                if(tiles % MAX_FACTORY_TILES_COL_IMAGE == 0){
-                    System.out.println();
-                }
-                System.out.print(" (x, y) = (" + FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles)+ ", " + FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles) + ")");
-            }
-            System.out.println();
-        }
-        System.out.println("Storage");
-        for(int storage_row=0; storage_row < MAX_STORAGE_ROW; storage_row++){
-            System.out.print("Storage Row " + storage_row);
-            for(int tiles=0; tiles < storage_row + 1; tiles++){
-                System.out.print(" (x, y) = (" + STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles)+ ", " + STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles) + ")");
-            }
-            System.out.println();
-        }
-        System.out.println("Mosaic");
-        for(int mosaic_row=0; mosaic_row < MAX_MOSAIC_COL; mosaic_row++){
-            System.out.print("Mosaic Row " + mosaic_row);
-            for(int tiles=0; tiles < MAX_MOSAIC_COL; tiles++){
-                System.out.print(" (x, y) = (" + MOSAIC_COORDINATES.getMosaicRowCoordinates(mosaic_row).getPos_x(tiles)+ ", " + MOSAIC_COORDINATES.getMosaicRowCoordinates(mosaic_row).getPos_y(tiles) + ")");
-            }
-            System.out.println();
-        }
-        System.out.println("Floor");
-        for(int tiles=0; tiles< MAX_FLOOR_STRING_SIZE; tiles++){
-            if(tiles % MAX_FLOOR_TILES_COL_IMAGE == 0){
-                System.out.println();
-            }
-            System.out.print(" (x, y) = (" + FLOOR_COORDINATES.getPos_x(tiles)+ ", " + FLOOR_COORDINATES.getPos_y(tiles) + ")");
-        }
 
-         */
     }
 
     public class GameTile extends Polygon {
