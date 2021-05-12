@@ -63,8 +63,6 @@ public class Viewer extends Application implements Constants {
     public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyCenterList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<Rectangle>();
-    public ArrayList<Rectangle> emptyStorageList = new ArrayList<Rectangle>();
-    public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
     public ArrayList<SnappableTiles> snappableStorageTiles = new ArrayList<SnappableTiles>();
     public ArrayList<SnappableTiles> snappableFloorTiles = new ArrayList<SnappableTiles>();
 
@@ -658,9 +656,6 @@ public class Viewer extends Application implements Constants {
         boardA.setLayoutY(15);
         boardA.setOpacity(1.0);
         matrixBoard.getChildren().add(boardA);
-
-        Button WelcomeStartButton = new Button("Start");
-        Button WelcomeExitButton = new Button("Exit ");
 
         WelcomeStartButton.setLayoutX(430);
         WelcomeStartButton.setLayoutY(360);
