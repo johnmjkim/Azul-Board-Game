@@ -25,6 +25,8 @@ public class Game extends Application implements Constants {
     public static StorageCoordinates STORAGE_COORDINATES;
     public static MosaicCoordinates MOSAIC_COORDINATES;
     public static FloorCoordinates FLOOR_COORDINATES;
+    public static BagCoordinates BAG_COORDINATES;
+    public static DiscardCoordinates DISCARD_COORDINATES;
 
     public static void main(String[] args) {
         launch(args);
@@ -115,12 +117,16 @@ public class Game extends Application implements Constants {
         STORAGE_COORDINATES = new StorageCoordinates();
         MOSAIC_COORDINATES = new MosaicCoordinates();
         FLOOR_COORDINATES = new FloorCoordinates();
+        BAG_COORDINATES = new BagCoordinates();
+        DISCARD_COORDINATES = new DiscardCoordinates();
 
-        System.out.println(CENTER_COORDINATES);
-        System.out.println(FACTORIES_COORDINATES);
-        System.out.println(STORAGE_COORDINATES);
+        //System.out.println(CENTER_COORDINATES);
+        //System.out.println(FACTORIES_COORDINATES);
+        //System.out.println(STORAGE_COORDINATES);
         System.out.println(MOSAIC_COORDINATES);
-        System.out.println(FLOOR_COORDINATES);
+        //System.out.println(FLOOR_COORDINATES);
+        //System.out.println(BAG_COORDINATES);
+        //System.out.println(DISCARD_COORDINATES);
 
     }
 

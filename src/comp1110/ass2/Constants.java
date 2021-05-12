@@ -56,6 +56,10 @@ public interface Constants {
     public final String EMPTY_STATE = "";
 
     // Size, Numbers of all components : BagTyped
+    public final int MAX_DISCARD_EACH_COLOR_SIZE = 20;
+    public final int MAX_BAG_EACH_COLOR_SIZE = 20;
+    public final int MAX_DISCARD_SIZE = 100;
+    public final int MAX_BAG_SIZE = 100;
     public final String EMPTY_TILES = "0000000000";
 
     // Size, Numbers of all components : OrderTyped
