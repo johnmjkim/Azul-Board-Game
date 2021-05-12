@@ -40,16 +40,16 @@ public class Viewer extends Application implements Constants {
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
 
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
-    public MosaicCoordinates MOSAIC_COORDINATES = Game.MOSAIC_COORDINATES;
     public FloorCoordinates FLOOR_COORDINATES = Game.FLOOR_COORDINATES;
+    public MosaicCoordinates MOSAIC_COORDINATES = Game.MOSAIC_COORDINATES;
     public BagCoordinates BAG_COORDINATES = Game.BAG_COORDINATES;
     public DiscardCoordinates DISCARD_COORDINATES = Game.DISCARD_COORDINATES;
     public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
     public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
 
     public ArrayList<ImageView> storageTiles = new ArrayList<ImageView>();
-    public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> floorTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> bagTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> discardTiles = new ArrayList<ImageView>();
     public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<DraggableTiles>();
@@ -58,14 +58,17 @@ public class Viewer extends Application implements Constants {
     public ArrayList<ImageView> undraggableTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> draggableTiles = new ArrayList<ImageView>();
 
-    public ArrayList<Rectangle> emptyStorageList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyMosaicList = new ArrayList<Rectangle>();
-    public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyCenterList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyStorageList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
+    public ArrayList<SnappableTiles> snappableStorageTiles = new ArrayList<SnappableTiles>();
+    public ArrayList<SnappableTiles> snappableFloorTiles = new ArrayList<SnappableTiles>();
 
     public ArrayList<Rectangle> non_snappable_Tile = new ArrayList<>();
-    public ArrayList<Rectangle> snappable_Tile = new ArrayList<>();
+    public ArrayList<Rectangle> snappable_Tile = new ArrayList<Rectangle>();
+    public ArrayList<SnappableTiles> snappableTiles = new ArrayList<SnappableTiles>();
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -105,11 +108,6 @@ public class Viewer extends Application implements Constants {
         // Display draggable board : Factories, Center
         displayDraggableBoard(ss);
 
-        for(int i=0; i < non_snappable_Tile.size(); i++){
-            System.out.print(" Non snappable : " + i + " ");
-            System.out.print(non_snappable_Tile.get(i).getFill());
-            System.out.println();
-        }
         //SCORE
         HBox scoreBox = new HBox();
         for (int player = 0; player < PLAYER_NUMBER; player++) {
@@ -159,6 +157,11 @@ public class Viewer extends Application implements Constants {
         snappable_Tile.addAll(emptyStorageList);
         snappable_Tile.addAll(emptyFloorList);
         matrixBoard.getChildren().addAll(snappable_Tile);
+
+        snappableTiles.clear();
+        snappableTiles.addAll(snappableStorageTiles);
+        snappableTiles.addAll(snappableFloorTiles);
+        matrixBoard.getChildren().addAll(snappableTiles);
     }
 
     private void display_empty_Center() {
@@ -167,7 +170,7 @@ public class Viewer extends Application implements Constants {
             double x = CENTER_COORDINATES.getPos_x(tiles);
             double y = CENTER_COORDINATES.getPos_y(tiles);
             Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-            //r.setFill(Color.GREY);
+            r.setFill(Color.RED);
             emptyCenterList.add(r);
         }
     }
@@ -328,6 +331,7 @@ public class Viewer extends Application implements Constants {
 
     private void displayStorage(int[] storage_row_tiles, char[] storage_row_colors) {
         storageTiles.clear();
+        snappableStorageTiles.clear();
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             for (int tiles = 0; tiles < storage_row_tiles[storage_row]; tiles++) {
                 ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row] - BLUE]));
@@ -340,6 +344,22 @@ public class Viewer extends Application implements Constants {
                 Tile_View.setLayoutX(x);
                 storageTiles.add(Tile_View);
             }
+        }
+    }
+
+    private void displayFloor(String floorState) {
+        floorTiles.clear();
+        snappableFloorTiles.clear();
+        char[] floor_chars = floorState.toCharArray();
+        for (int tiles = 0; tiles < floor_chars.length; tiles++) {
+            ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles] - BLUE]));
+            Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+            Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+            double x = FLOOR_COORDINATES.getPos_x(tiles);
+            double y = FLOOR_COORDINATES.getPos_y(tiles);
+            Tile_View.setLayoutX(x);
+            Tile_View.setLayoutY(y);
+            floorTiles.add(Tile_View);
         }
     }
 
@@ -360,21 +380,6 @@ public class Viewer extends Application implements Constants {
                     mosaicTiles.add(Tile_View);
                 }
             }
-        }
-    }
-
-    private void displayFloor(String floorState) {
-        floorTiles.clear();
-        char[] floor_chars = floorState.toCharArray();
-        for (int tiles = 0; tiles < floor_chars.length; tiles++) {
-            ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles] - BLUE]));
-            Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
-            Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
-            double x = FLOOR_COORDINATES.getPos_x(tiles);
-            double y = FLOOR_COORDINATES.getPos_y(tiles);
-            Tile_View.setLayoutX(x);
-            Tile_View.setLayoutY(y);
-            floorTiles.add(Tile_View);
         }
     }
 
@@ -435,7 +440,7 @@ public class Viewer extends Application implements Constants {
             r.setFill(Color.WHITE);
             controls.getChildren().add(r);
             //add backboard each time to empty the tiles which has been displayed
-            ImageView boardA = new ImageView(new Image("file:src/comp1110/ass2/img/empty-board.png"));
+            ImageView boardA = new ImageView(new Image(EMPTY_BOARD_IMAGE));
             boardA.setFitWidth(1200);
             boardA.setFitHeight(500);
             boardA.setLayoutX(0);
@@ -470,7 +475,7 @@ public class Viewer extends Application implements Constants {
         Button WelcomeStartButton = new Button("Start");
         Button WelcomeExitButton = new Button("Exit ");
 
-        ImageView boardA = new ImageView(new Image("file:src/comp1110/ass2/img/Welcome.png"));
+        ImageView boardA = new ImageView(new Image(WELCOME_PAGE_IMAGE));
         boardA.setFitWidth(1200);
         boardA.setFitHeight(500);
         boardA.setLayoutX(0);
@@ -602,91 +607,6 @@ public class Viewer extends Application implements Constants {
                 this.snappable_Tile.set(i,t);
             }
             i++;
-        }
-    }
-
-    public class DraggableTiles extends ImageView {
-        double x, y;
-        int tile_num, index;
-        char type;
-        private double mousex, mousey;
-        private Viewer viewer;
-
-        public DraggableTiles (double x, double y, String image_link, Viewer viewer, char type, int tile_num) {
-            super(new Image(image_link));
-            this.toFront();
-            this.type = type;
-            this.tile_num = tile_num;
-            this.viewer = viewer;
-            mouseControlSetting();
-        }
-
-        public DraggableTiles (double x, double y, String image_link, Viewer viewer, char type, int index, int tile_num) {
-            super(new Image(image_link));
-            this.toFront();
-            this.type = type;
-            this.index = index;
-            this.tile_num = tile_num;
-            this.viewer = viewer;
-            mouseControlSetting();
-        }
-
-        public void mouseControlSetting(){
-            this.setOnMousePressed(event ->{
-                mousex = event.getSceneX();
-                mousey = event.getSceneY();
-            });
-
-            this.setOnMouseDragged(event ->{
-                mousex = event.getSceneX();
-                mousey = event.getSceneY();
-
-                setLayoutX(mousex - BIG_TILE_IMAGE_SIZE_X/2);
-                setLayoutY(mousey - BIG_TILE_IMAGE_SIZE_Y/2);
-                System.out.println(" mouse x, y : " + (mousex - BIG_TILE_IMAGE_SIZE_X/2) + ", " + (mousey - BIG_TILE_IMAGE_SIZE_Y/2));
-                viewer.highlightNearestRectangle(mousex - BIG_TILE_IMAGE_SIZE_X/2,mousey - BIG_TILE_IMAGE_SIZE_Y/2);
-
-            });
-            this.setOnMouseReleased(event ->{
-                this.x = event.getSceneX() - BIG_TILE_IMAGE_SIZE_X/2;
-                this.y = event.getSceneY() - BIG_TILE_IMAGE_SIZE_X/2;
-                double mouse_highlight_dist = Math.sqrt(Math.pow(highlighted.x - this.x, 2) + Math.pow(highlighted.y - this.y, 2));
-                System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
-                if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
-                    System.out.println(" Snapped ");
-                    setLayoutX(highlighted.x);
-                    setLayoutY(highlighted.y);
-                }
-                else{
-                    System.out.println(" Returned ");
-                    returnTile();
-                }
-            });
-        }
-
-        public int getIndex() {
-            return this.index;
-        }
-
-        public int getTileNum() {
-            return this.tile_num;
-        }
-
-        public void returnTile(){
-            double start_x, start_y;
-            if(type == FACTORY){
-                start_x = FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_x(tile_num);
-                start_y = FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_y(tile_num);
-                setLayoutX(start_x);
-                setLayoutY(start_y);
-            }
-            else if(type == CENTER){
-                start_x = CENTER_COORDINATES.getPos_x(tile_num);
-                start_y = CENTER_COORDINATES.getPos_y(tile_num);
-                setLayoutX(start_x);
-                setLayoutY(start_y);
-            }
-
         }
     }
 

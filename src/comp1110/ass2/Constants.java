@@ -36,6 +36,7 @@ public interface Constants {
     public final char RED = 'e';
     public final char FIRST_PLAYER = 'f';
     public final char NO_COLOR = 'n';
+    public final char HIGHTLIGHT_COLOR = 'h';
     public final char[] COLORS = {BLUE, GREEN, ORANGE, PURPLE, RED};
     public final char[] COLORS_WITH_FIRST_PLAYER = {BLUE, GREEN, ORANGE, PURPLE, RED, FIRST_PLAYER};
 
@@ -96,8 +97,11 @@ public interface Constants {
     public final String RED_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(RED) + ".png";
     public final String FIRST_PLAYER_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(FIRST_PLAYER) + ".png";
     public final String NO_TILE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(NO_COLOR) + ".png";
+    public final String HIGHLIGHT_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(HIGHTLIGHT_COLOR) + ".png";
     public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
+    public final String EMPTY_BOARD_IMAGE = "file:src/comp1110/ass2/img/empty-board.png";
+    public final String WELCOME_PAGE_IMAGE = "file:src/comp1110/ass2/img/Welcome.png";
 
     // Image dimensions : Tile
     public final double SMALL_TILE_IMAGE_SIZE_X = 14;
@@ -108,6 +112,9 @@ public interface Constants {
     public final double BIG_TILE_IMAGE_SIZE_Y = 28;
     public final double BIG_TILE_IMAGE_SIZE_X_GAP = 2;
     public final double BIG_TILE_IMAGE_SIZE_Y_GAP = 2;
+
+    public final double HIGHLIGHT_IMAGE_SIZE_X = BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP/2;
+    public final double HIGHLIGHT_IMAGE_SIZE_Y = BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP/2;
     public final double BIG_TILE_IMAGE_SNAP_DISTANCE = Math.sqrt(Math.pow((BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP)/2,2) + Math.pow((BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP)/2,2));
 
     // Image dimensions : Common Boards

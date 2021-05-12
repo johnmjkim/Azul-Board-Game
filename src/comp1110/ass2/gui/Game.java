@@ -21,8 +21,8 @@ public class Game extends Application implements Constants {
     public static int PLAYER_NUMBER = 4;
     public static int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
     public static StorageCoordinates STORAGE_COORDINATES;
-    public static MosaicCoordinates MOSAIC_COORDINATES;
     public static FloorCoordinates FLOOR_COORDINATES;
+    public static MosaicCoordinates MOSAIC_COORDINATES;
     public static BagCoordinates BAG_COORDINATES;
     public static DiscardCoordinates DISCARD_COORDINATES;
     public static CenterCoordinates CENTER_COORDINATES;
@@ -117,16 +117,16 @@ public class Game extends Application implements Constants {
     private void makeCoordinates(){
         // Coordinates
         STORAGE_COORDINATES = new StorageCoordinates();
-        MOSAIC_COORDINATES = new MosaicCoordinates();
         FLOOR_COORDINATES = new FloorCoordinates();
+        MOSAIC_COORDINATES = new MosaicCoordinates();
         BAG_COORDINATES = new BagCoordinates();
         DISCARD_COORDINATES = new DiscardCoordinates();
         CENTER_COORDINATES = new CenterCoordinates(PLAYER_NUMBER);
         FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
 
-        System.out.println(STORAGE_COORDINATES);
-        //System.out.println(MOSAIC_COORDINATES);
+        //System.out.println(STORAGE_COORDINATES);
         //System.out.println(FLOOR_COORDINATES);
+        //System.out.println(MOSAIC_COORDINATES);
         //System.out.println(BAG_COORDINATES);
         //System.out.println(DISCARD_COORDINATES);
         //System.out.println(CENTER_COORDINATES);
