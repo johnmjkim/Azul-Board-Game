@@ -97,7 +97,7 @@ public interface Constants {
     public final String RED_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(RED) + ".png";
     public final String FIRST_PLAYER_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(FIRST_PLAYER) + ".png";
     public final String NO_TILE_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(NO_COLOR) + ".png";
-    public final String HIGHLIGHT_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(HIGHTLIGHT_COLOR) + ".png";
+    public final String HIGHLIGHT_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(HIGHTLIGHT_COLOR) + "1.png";
     public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
     public final String EMPTY_BOARD_IMAGE = "file:src/comp1110/ass2/img/empty-board.png";

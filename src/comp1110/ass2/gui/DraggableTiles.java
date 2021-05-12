@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Azul;
 import comp1110.ass2.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,9 +53,19 @@ public class DraggableTiles extends ImageView implements Constants {
             double mouse_highlight_dist = Math.sqrt(Math.pow(viewer.highlighted.x - this.x, 2) + Math.pow(viewer.highlighted.y - this.y, 2));
             System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
             if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
-                System.out.println(" Snapped ");
-                setLayoutX(viewer.highlighted.x);
-                setLayoutY(viewer.highlighted.y);
+                StringBuilder SB = new StringBuilder();
+                System.out.print(" Snapped , move : ");
+                System.out.println(findDraftingMove());
+                if(Azul.isDraftingValid(viewer.currentState, findDraftingMove())){
+                    System.out.println("valid");
+                    setLayoutX(viewer.highlighted.x);
+                    setLayoutY(viewer.highlighted.y);
+                }
+                else{
+                    System.out.println("invalid");
+                    returnTile();
+                }
+
             }
             else{
                 System.out.println(" Returned ");
@@ -73,18 +84,45 @@ public class DraggableTiles extends ImageView implements Constants {
 
     public void returnTile(){
         double start_x, start_y;
-        if(type == FACTORY){
+        if(fromFactory()){
             start_x = viewer.FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_x(tile_num);
             start_y = viewer.FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_y(tile_num);
             setLayoutX(start_x);
             setLayoutY(start_y);
         }
-        else if(type == CENTER){
+        else if(fromCenter()){
             start_x = viewer.CENTER_COORDINATES.getPos_x(tile_num);
             start_y = viewer.CENTER_COORDINATES.getPos_y(tile_num);
             setLayoutX(start_x);
             setLayoutY(start_y);
         }
+    }
 
+    public boolean fromFactory(){
+        return type == FACTORY;
+    }
+
+    public boolean fromCenter(){
+        return type == CENTER;
+    }
+
+    public String findDraftingMove(){
+        StringBuilder SB = new StringBuilder();
+        SB.append(viewer.current_turn);
+        if(fromFactory()){
+            SB.append(getIndex());
+            SB.append(viewer.ss.factories.getFactory(getIndex()).getTileColor(getTileNum()));
+        }
+        else if(fromCenter()){
+            SB.append(CENTER);
+            SB.append(viewer.ss.center.getTileColor(getTileNum()));
+        }
+        if(viewer.highlighted.toStorage()){
+            SB.append(viewer.highlighted.getIndex());
+        }
+        else if(viewer.highlighted.toFloor()){
+            SB.append(FLOOR);
+        }
+        return String.valueOf(SB);
     }
 }

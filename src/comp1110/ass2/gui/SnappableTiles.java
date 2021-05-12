@@ -16,22 +16,49 @@ public class SnappableTiles extends ImageView implements Constants {
     public SnappableTiles(double x, double y, String image_link, Viewer viewer, char type, int tile_num) {
         super(new Image(image_link));
         this.toFront();
+        this.x = x;
+        this.y = y;
         this.type = type;
         this.tile_num = tile_num;
         this.viewer = viewer;
+        setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+        setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+        setLayoutY(y);
+        setLayoutX(x);
     }
 
     public SnappableTiles(double x, double y, String image_link, Viewer viewer, char type, int index, int tile_num) {
         super(new Image(image_link));
         this.toFront();
+        this.x = x;
+        this.y = y;
         this.type = type;
         this.index = index;
         this.tile_num = tile_num;
         this.viewer = viewer;
+        setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+        setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+        setLayoutY(y);
+        setLayoutX(x);
     }
 
     public double distance(double x,double y){
         return Math.sqrt((x-this.x)*(x-this.x) + (y-this.y)*(y-this.y));
+    }
+
+    public int getIndex() {
+        return this.index;
+    }
+
+    public int getTileNum() {
+        return this.tile_num;
+    }
+
+    public boolean toStorage(){
+        return type == STORAGE;
+    }
+    public boolean toFloor(){
+        return type == FLOOR;
     }
 }
 /*

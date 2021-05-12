@@ -1,13 +1,14 @@
 package comp1110.ass2;
 
 import com.sun.jdi.ArrayReference;
+import comp1110.ass2.gui.Game;
 
 import java.util.*;
 
 public class Azul implements Constants{
 
     // Maximum player numbers
-    public static int MAX_PLAYER_NUMBER = 2;
+    public static int MAX_PLAYER_NUMBER = Game.PLAYER_NUMBER;
 
     // Size, Numbers of all components
     public static final int FACTORY_MAX_NUMBER = 2 * MAX_PLAYER_NUMBER + 1;

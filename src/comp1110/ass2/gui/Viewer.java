@@ -32,12 +32,16 @@ public class Viewer extends Application implements Constants {
     Group controls = new Group();
     Group matrixBoard = new Group();
 
-    Rectangle highlighted = null;
+    SnappableTiles highlighted = null;
 
     private TextField playerTextField;
     private TextField boardTextField;
 
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    public char current_turn;
+    SharedState ss;
+    PlayerState ps;
+    String[] currentState;
 
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
     public FloorCoordinates FLOOR_COORDINATES = Game.FLOOR_COORDINATES;
@@ -80,6 +84,11 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
+        // VALID STATES
+
+        state[0]="AF0bccc1aabc2abce3acdd4abddCfB0000000000D0909101116";
+        state[1]="A0Mb00d03e04d10b11a14c21a32a43S2a23b2FB0Mb00c02e03d04d12b14c21e24b31d33S3c14a1F";
+
         //state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
         //state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
 
@@ -90,14 +99,17 @@ public class Viewer extends Application implements Constants {
         //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
         // Four players example
-        state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";
-        state[1] = "A07Me01b04a11d20b30b41e44S0a11b22c13c14d2FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
+        //state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";
+        //state[1] = "A07Me01b04a11d20b30b41e44S0a11b22c13c14d2FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
-        SharedState ss = new SharedState(state[0], PLAYER_NUMBER);
-        PlayerState ps = new PlayerState(state[1], PLAYER_NUMBER);
+        currentState = state;
+
+        ss = new SharedState(state[0], PLAYER_NUMBER);
+        ps = new PlayerState(state[1], PLAYER_NUMBER);
 
         String current_player_turn = ss.getTurnState();
-        nPlayer current_player = ps.getnPlayer(current_player_turn.charAt(0));
+        current_turn = current_player_turn.charAt(0);
+        nPlayer current_player = ps.getnPlayer(current_turn);
 
         // Display empty board
         display_empty_Board();
@@ -142,21 +154,24 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Board(){
-        display_empty_Storage();
+
         display_empty_Mosaic();
-        display_empty_Floor();
         display_empty_Center();
         display_empty_Factories();
+        display_empty_Storage();
+        display_empty_Floor();
         non_snappable_Tile.clear();
         non_snappable_Tile.addAll(emptyMosaicList);
         non_snappable_Tile.addAll(emptyCenterList);
         non_snappable_Tile.addAll(emptyFactoriesList);
         matrixBoard.getChildren().addAll(non_snappable_Tile);
-
+        /*
         snappable_Tile.clear();
         snappable_Tile.addAll(emptyStorageList);
         snappable_Tile.addAll(emptyFloorList);
         matrixBoard.getChildren().addAll(snappable_Tile);
+
+         */
 
         snappableTiles.clear();
         snappableTiles.addAll(snappableStorageTiles);
@@ -234,6 +249,16 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Storage() {
+        snappableStorageTiles.clear();
+        for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
+            for (int tiles = 0; tiles < storage_row + 1; tiles++) {
+                double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles);
+                double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles);
+                SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, STORAGE, storage_row, tiles);
+                snappableStorageTiles.add(snapTile);
+            }
+        }
+        /*
         emptyStorageList.clear();
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             for (int tiles = 0; tiles < storage_row + 1; tiles++) {
@@ -244,9 +269,19 @@ public class Viewer extends Application implements Constants {
                 emptyStorageList.add(r);
             }
         }
+
+         */
     }
 
     private void display_empty_Floor() {
+        snappableFloorTiles.clear();
+        for(int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++){
+            double x = FLOOR_COORDINATES.getPos_x(tiles);
+            double y = FLOOR_COORDINATES.getPos_y(tiles);
+            SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, FLOOR, tiles);
+            snappableFloorTiles.add(snapTile);
+        }
+        /*
         emptyFloorList.clear();
         for (int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++) {
             double x = FLOOR_COORDINATES.getPos_x(tiles);
@@ -255,6 +290,8 @@ public class Viewer extends Application implements Constants {
             //r.setFill(Color.GREY);
             emptyFloorList.add(r);
         }
+
+         */
     }
 
     private void display_empty_Mosaic() {
@@ -331,7 +368,6 @@ public class Viewer extends Application implements Constants {
 
     private void displayStorage(int[] storage_row_tiles, char[] storage_row_colors) {
         storageTiles.clear();
-        snappableStorageTiles.clear();
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             for (int tiles = 0; tiles < storage_row_tiles[storage_row]; tiles++) {
                 ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row] - BLUE]));
@@ -349,7 +385,6 @@ public class Viewer extends Application implements Constants {
 
     private void displayFloor(String floorState) {
         floorTiles.clear();
-        snappableFloorTiles.clear();
         char[] floor_chars = floorState.toCharArray();
         for (int tiles = 0; tiles < floor_chars.length; tiles++) {
             ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles] - BLUE]));
@@ -749,11 +784,11 @@ public class Viewer extends Application implements Constants {
         }
     }
 
-    public Rectangle findNearestRectangle(double x, double y){
+    public SnappableTiles findNearestRectangle(double x, double y){
         int i = 0;
         double distance = 0;
         int closestID = -1;
-        for (Rectangle t : snappable_Tile){
+        for (SnappableTiles t : snappableTiles){
             if (i == 0){
                 distance = t.distance(x,y);
                 closestID = i;
@@ -764,24 +799,37 @@ public class Viewer extends Application implements Constants {
             i++;
         }
         System.out.print("closestID : " + closestID + " distance : " + distance);
-        System.out.println(" snappable_Tile x, y : " + snappable_Tile.get(closestID).x + ", " + snappable_Tile.get(closestID).y);
-        return snappable_Tile.get(closestID);
+        System.out.println(" snappableTiles x, y : " + snappableTiles.get(closestID).x + ", " + snappableTiles.get(closestID).y);
+        return snappableTiles.get(closestID);
     }
 
     public void highlightNearestRectangle(double x, double y){
         int i=0;
         highlighted = findNearestRectangle(x,y);
-        ArrayList<Rectangle> ts = this.snappable_Tile;
-        for (Rectangle t : ts){
+        ArrayList<SnappableTiles> ts = this.snappableTiles;
+        for (SnappableTiles t : ts){
             if (t.equals(this.highlighted)){
-                //this.snappable_Tile.get(i).setFill(Color.GREEN);
-                t.setFill(Color.GREEN);
-                this.snappable_Tile.set(i,t);
+                if(t.toStorage()){
+                    SnappableTiles new_t = new SnappableTiles(t.x, t.y, HIGHLIGHT_IMAGE, this, STORAGE, t.index, t.tile_num);
+                    System.out.println(" Snap at : " + new_t.index);
+                    this.snappableTiles.set(i,new_t);
+                }
+                else if(t.toFloor()){
+                    SnappableTiles new_t = new SnappableTiles(t.x, t.y, HIGHLIGHT_IMAGE, this, FLOOR, t.tile_num);
+                    System.out.println(" Snap at : " + "F");
+                    this.snappableTiles.set(i,new_t);
+                }
+
             }
             else {
-                //this.snappable_Tile.get(i).setFill(Color.GREY);
-                t.setFill(Color.GREY);
-                this.snappable_Tile.set(i,t);
+                if(t.toStorage()){
+                    SnappableTiles new_t = new SnappableTiles(t.x, t.y, NO_TILE_IMAGE, this, STORAGE, t.index, t.tile_num);
+                    this.snappableTiles.set(i,new_t);
+                }
+                else if(t.toFloor()){
+                    SnappableTiles new_t = new SnappableTiles(t.x, t.y, NO_TILE_IMAGE, this, FLOOR, t.tile_num);
+                    this.snappableTiles.set(i,new_t);
+                }
             }
             i++;
         }

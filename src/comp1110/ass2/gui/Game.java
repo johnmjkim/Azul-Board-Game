@@ -18,7 +18,7 @@ public class Game extends Application implements Constants {
     private static final int BOARD_WIDTH = 1200;
     private static final int BOARD_HEIGHT = 700;
 
-    public static int PLAYER_NUMBER = 4;
+    public static int PLAYER_NUMBER = 2;
     public static int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
     public static StorageCoordinates STORAGE_COORDINATES;
     public static FloorCoordinates FLOOR_COORDINATES;
