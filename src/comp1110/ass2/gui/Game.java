@@ -20,13 +20,13 @@ public class Game extends Application implements Constants {
 
     public static int PLAYER_NUMBER = 4;
     public static int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
-    public static CenterCoordinates CENTER_COORDINATES;
-    public static FactoriesCoordinates FACTORIES_COORDINATES;
     public static StorageCoordinates STORAGE_COORDINATES;
     public static MosaicCoordinates MOSAIC_COORDINATES;
     public static FloorCoordinates FLOOR_COORDINATES;
     public static BagCoordinates BAG_COORDINATES;
     public static DiscardCoordinates DISCARD_COORDINATES;
+    public static CenterCoordinates CENTER_COORDINATES;
+    public static FactoriesCoordinates FACTORIES_COORDINATES;
 
     public static void main(String[] args) {
         launch(args);
@@ -98,6 +98,10 @@ public class Game extends Application implements Constants {
 
         makeCoordinates();
 
+        Rectangle r = new Rectangle(50, 50, 100, 100);
+        r.setFill(Color.RED);
+        root.getChildren().add(r);
+
         stage.setScene(scene);
         stage.show();
 
@@ -111,34 +115,22 @@ public class Game extends Application implements Constants {
 
 
     private void makeCoordinates(){
-        // Center Coordinates
-        CENTER_COORDINATES = new CenterCoordinates(PLAYER_NUMBER);
-        FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
+        // Coordinates
         STORAGE_COORDINATES = new StorageCoordinates();
         MOSAIC_COORDINATES = new MosaicCoordinates();
         FLOOR_COORDINATES = new FloorCoordinates();
         BAG_COORDINATES = new BagCoordinates();
         DISCARD_COORDINATES = new DiscardCoordinates();
+        CENTER_COORDINATES = new CenterCoordinates(PLAYER_NUMBER);
+        FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
 
-        //System.out.println(CENTER_COORDINATES);
-        //System.out.println(FACTORIES_COORDINATES);
-        //System.out.println(STORAGE_COORDINATES);
-        System.out.println(MOSAIC_COORDINATES);
+        System.out.println(STORAGE_COORDINATES);
+        //System.out.println(MOSAIC_COORDINATES);
         //System.out.println(FLOOR_COORDINATES);
         //System.out.println(BAG_COORDINATES);
         //System.out.println(DISCARD_COORDINATES);
-
-    }
-
-    public class GameTile extends Polygon {
-
-    }
-
-    public class GameTileDrag extends GameTile{
-
-    }
-
-    public class GameBoard extends Polygon{
+        //System.out.println(CENTER_COORDINATES);
+        //System.out.println(FACTORIES_COORDINATES);
 
     }
 

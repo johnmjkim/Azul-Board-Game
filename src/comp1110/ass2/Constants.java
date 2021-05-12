@@ -108,6 +108,7 @@ public interface Constants {
     public final double BIG_TILE_IMAGE_SIZE_Y = 28;
     public final double BIG_TILE_IMAGE_SIZE_X_GAP = 2;
     public final double BIG_TILE_IMAGE_SIZE_Y_GAP = 2;
+    public final double BIG_TILE_IMAGE_SNAP_DISTANCE = Math.sqrt(Math.pow((BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP)/2,2) + Math.pow((BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP)/2,2));
 
     // Image dimensions : Common Boards
     public final double FIRST_BOARD_POS_X = 50;

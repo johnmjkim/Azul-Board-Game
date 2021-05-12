@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
@@ -26,43 +25,47 @@ public class Viewer extends Application implements Constants {
 
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 600;
-    private final Group matrixBoard = new Group();
 
-    private final Group root = new Group();
-    private final Group controls = new Group();
+    Stage window;
+    Scene scene;
+    Group root = new Group();
+    Group controls = new Group();
+    Group matrixBoard = new Group();
+
+    Rectangle highlighted = null;
+
     private TextField playerTextField;
     private TextField boardTextField;
 
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
 
-    public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
-    public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
     public MosaicCoordinates MOSAIC_COORDINATES = Game.MOSAIC_COORDINATES;
     public FloorCoordinates FLOOR_COORDINATES = Game.FLOOR_COORDINATES;
     public BagCoordinates BAG_COORDINATES = Game.BAG_COORDINATES;
     public DiscardCoordinates DISCARD_COORDINATES = Game.DISCARD_COORDINATES;
+    public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
+    public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
 
-    public ArrayList<DraggableTiles> draggableFactoriesTiles = new ArrayList<DraggableTiles>();
-    public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<DraggableTiles>();
     public ArrayList<ImageView> storageTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> floorTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> bagTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> discardTiles = new ArrayList<ImageView>();
-    public ArrayList<ImageView> draggableTiles = new ArrayList<ImageView>();
+    public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<DraggableTiles>();
+    public ArrayList<ImageView> firstplayerCenterTiles = new ArrayList<ImageView>();
+    public ArrayList<DraggableTiles> draggableFactoriesTiles = new ArrayList<DraggableTiles>();
     public ArrayList<ImageView> undraggableTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> draggableTiles = new ArrayList<ImageView>();
 
-    public ArrayList<Rectangle> emptyCenterList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyStorageList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyMosaicList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyCenterList = new ArrayList<Rectangle>();
     public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<Rectangle>();
 
-    public ArrayList<Rectangle> snappable_Tile = new ArrayList<>();
     public ArrayList<Rectangle> non_snappable_Tile = new ArrayList<>();
-
-    Rectangle highlighted = null;
+    public ArrayList<Rectangle> snappable_Tile = new ArrayList<>();
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -84,7 +87,7 @@ public class Viewer extends Application implements Constants {
         //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
 
         // Four players example
-        state[0] = "AF0cdde2abde3cdee4bcceCaaaabbbbccccdddeefB1915161614D1718152019";
+        state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";
         state[1] = "A07Me01b04a11d20b30b41e44S0a11b22c13c14d2FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
         SharedState ss = new SharedState(state[0], PLAYER_NUMBER);
@@ -96,12 +99,17 @@ public class Viewer extends Application implements Constants {
         // Display empty board
         display_empty_Board();
 
-        // Display draggable board : Factories, Center
-        displayDraggableBoard(ss);
-
         // Display undraggable board : Storage, Mosaic, Floor, Bag, Discard
         displayUndraggableBoard(ss, current_player);
 
+        // Display draggable board : Factories, Center
+        displayDraggableBoard(ss);
+
+        for(int i=0; i < non_snappable_Tile.size(); i++){
+            System.out.print(" Non snappable : " + i + " ");
+            System.out.print(non_snappable_Tile.get(i).getFill());
+            System.out.println();
+        }
         //SCORE
         HBox scoreBox = new HBox();
         for (int player = 0; player < PLAYER_NUMBER; player++) {
@@ -130,19 +138,21 @@ public class Viewer extends Application implements Constants {
         Sc.setLayoutX(550);
         Sc.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(Sc);
+
          */
+
     }
 
     private void display_empty_Board(){
-        display_empty_Center();
-        display_empty_Factories();
         display_empty_Storage();
         display_empty_Mosaic();
         display_empty_Floor();
+        display_empty_Center();
+        display_empty_Factories();
         non_snappable_Tile.clear();
+        non_snappable_Tile.addAll(emptyMosaicList);
         non_snappable_Tile.addAll(emptyCenterList);
         non_snappable_Tile.addAll(emptyFactoriesList);
-        non_snappable_Tile.addAll(emptyMosaicList);
         matrixBoard.getChildren().addAll(non_snappable_Tile);
 
         snappable_Tile.clear();
@@ -157,7 +167,7 @@ public class Viewer extends Application implements Constants {
             double x = CENTER_COORDINATES.getPos_x(tiles);
             double y = CENTER_COORDINATES.getPos_y(tiles);
             Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-            r.setFill(Color.GREY);
+            //r.setFill(Color.GREY);
             emptyCenterList.add(r);
         }
     }
@@ -169,7 +179,7 @@ public class Viewer extends Application implements Constants {
                 double x = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles);
                 double y = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles);
                 Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-                r.setFill(Color.GREY);
+                //r.setFill(Color.GREY);
                 emptyFactoriesList.add(r);
             }
         }
@@ -239,7 +249,7 @@ public class Viewer extends Application implements Constants {
             double x = FLOOR_COORDINATES.getPos_x(tiles);
             double y = FLOOR_COORDINATES.getPos_y(tiles);
             Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-            r.setFill(Color.GREY);
+            //r.setFill(Color.GREY);
             emptyFloorList.add(r);
         }
     }
@@ -251,7 +261,7 @@ public class Viewer extends Application implements Constants {
                 double x = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_x(tiles);
                 double y = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_y(tiles);
                 Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-                r.setFill(Color.GREY);
+                //r.setFill(Color.GREY);
                 emptyMosaicList.add(r);
             }
         }
@@ -267,6 +277,7 @@ public class Viewer extends Application implements Constants {
         draggableTiles.addAll(draggableFactoriesTiles);
         draggableTiles.addAll(draggableCenterTiles);
         matrixBoard.getChildren().addAll(draggableTiles);
+        matrixBoard.getChildren().addAll(firstplayerCenterTiles);
     }
 
     private void displayFactories(SharedState ss) {
@@ -276,7 +287,7 @@ public class Viewer extends Application implements Constants {
                 double x = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_x(tiles);
                 double y = FACTORIES_COORDINATES.getFactoryCoordinates(factory).getPos_y(tiles);
                 if (ss.factories.getFactory(factory).getTileColor(tiles) != NO_COLOR) {
-                    DraggableTiles draggableTile = new DraggableTiles(x, y, COLORS_WITH_FIRST_PLAYER_IMAGE[ss.factories.getFactory(factory).getTileColor(tiles) - BLUE], this);
+                    DraggableTiles draggableTile = new DraggableTiles(x, y, COLORS_WITH_FIRST_PLAYER_IMAGE[ss.factories.getFactory(factory).getTileColor(tiles) - BLUE], this, FACTORY, factory, tiles);
                     draggableTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                     draggableTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
                     draggableTile.setLayoutY(y);
@@ -289,14 +300,23 @@ public class Viewer extends Application implements Constants {
 
     private void displayCenter(SharedState ss) {
         draggableCenterTiles.clear();
+        firstplayerCenterTiles.clear();
         for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
             double x = CENTER_COORDINATES.getPos_x(tiles);
             double y = CENTER_COORDINATES.getPos_y(tiles);
             if (ss.center.getTileColor(tiles) == NO_COLOR) {
 
             }
+            else if(ss.center.getTileColor(tiles) == FIRST_PLAYER){
+                ImageView firstplayerTile = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles) - BLUE]));
+                firstplayerTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                firstplayerTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                firstplayerTile.setLayoutY(y);
+                firstplayerTile.setLayoutX(x);
+                firstplayerCenterTiles.add(firstplayerTile);
+            }
             else{
-                DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles) - BLUE],this);
+                DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_WITH_FIRST_PLAYER_IMAGE[ss.center.getTileColor(tiles) - BLUE],this,CENTER ,tiles);
                 draggableTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                 draggableTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
                 draggableTile.setLayoutY(y);
@@ -420,7 +440,7 @@ public class Viewer extends Application implements Constants {
             boardA.setFitHeight(500);
             boardA.setLayoutX(0);
             boardA.setLayoutY(15);
-            boardA.setOpacity(0.2);
+            //boardA.setOpacity(0.2);
             matrixBoard.getChildren().add(boardA);
 
             displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
@@ -440,6 +460,8 @@ public class Viewer extends Application implements Constants {
         launch(args);
     }
     private void start_page() {
+        matrixBoard.getChildren().clear();
+        controls.getChildren().clear();
 
         Rectangle r1 = new Rectangle(50, 548, 1200, 30);
         r1.setFill(Color.WHITE);
@@ -503,15 +525,30 @@ public class Viewer extends Application implements Constants {
     // start() is to show the Game start.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Azul Viewer");
-        Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
+        window = primaryStage;
+        window.setTitle("Azul Viewer");
+        scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
+        window.setScene(scene);
+
+        /*
+        javafx.scene.shape.Rectangle r = new javafx.scene.shape.Rectangle(50, 50, 100, 100);
+        r.setFill(Color.RED);
+        root.getChildren().add(r);
+
+         */
+
+        /*
+        Rectangle r = new Rectangle(50, 50, 100, 100);
+        r.setFill(Color.RED);
+        root.getChildren().add(r);
+
+         */
+
         root.getChildren().add(controls);
         root.getChildren().add(matrixBoard);
 
         makeControls();
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        window.show();
     }
 
     public static class Rectangle extends Polygon {
@@ -544,6 +581,8 @@ public class Viewer extends Application implements Constants {
             }
             i++;
         }
+        System.out.print("closestID : " + closestID + " distance : " + distance);
+        System.out.println(" snappable_Tile x, y : " + snappable_Tile.get(closestID).x + ", " + snappable_Tile.get(closestID).y);
         return snappable_Tile.get(closestID);
     }
 
@@ -552,10 +591,13 @@ public class Viewer extends Application implements Constants {
         highlighted = findNearestRectangle(x,y);
         ArrayList<Rectangle> ts = this.snappable_Tile;
         for (Rectangle t : ts){
-            if (t == highlighted){
+            if (t.equals(this.highlighted)){
+                //this.snappable_Tile.get(i).setFill(Color.GREEN);
                 t.setFill(Color.GREEN);
                 this.snappable_Tile.set(i,t);
-            }else {
+            }
+            else {
+                //this.snappable_Tile.get(i).setFill(Color.GREY);
                 t.setFill(Color.GREY);
                 this.snappable_Tile.set(i,t);
             }
@@ -565,12 +607,31 @@ public class Viewer extends Application implements Constants {
 
     public class DraggableTiles extends ImageView {
         double x, y;
+        int tile_num, index;
+        char type;
         private double mousex, mousey;
-        private double posit_x, posit_y;
-        public DraggableTiles (double x, double y, String image_link, Viewer viewer) {
+        private Viewer viewer;
+
+        public DraggableTiles (double x, double y, String image_link, Viewer viewer, char type, int tile_num) {
             super(new Image(image_link));
             this.toFront();
+            this.type = type;
+            this.tile_num = tile_num;
+            this.viewer = viewer;
+            mouseControlSetting();
+        }
 
+        public DraggableTiles (double x, double y, String image_link, Viewer viewer, char type, int index, int tile_num) {
+            super(new Image(image_link));
+            this.toFront();
+            this.type = type;
+            this.index = index;
+            this.tile_num = tile_num;
+            this.viewer = viewer;
+            mouseControlSetting();
+        }
+
+        public void mouseControlSetting(){
             this.setOnMousePressed(event ->{
                 mousex = event.getSceneX();
                 mousey = event.getSceneY();
@@ -582,17 +643,51 @@ public class Viewer extends Application implements Constants {
 
                 setLayoutX(mousex - BIG_TILE_IMAGE_SIZE_X/2);
                 setLayoutY(mousey - BIG_TILE_IMAGE_SIZE_Y/2);
-                viewer.highlightNearestRectangle(mousex,mousey);
+                System.out.println(" mouse x, y : " + (mousex - BIG_TILE_IMAGE_SIZE_X/2) + ", " + (mousey - BIG_TILE_IMAGE_SIZE_Y/2));
+                viewer.highlightNearestRectangle(mousex - BIG_TILE_IMAGE_SIZE_X/2,mousey - BIG_TILE_IMAGE_SIZE_Y/2);
 
             });
             this.setOnMouseReleased(event ->{
-                this.x = event.getSceneX();
-                this.y = event.getSceneY();
-                setLayoutX(highlighted.x);
-                setLayoutY(highlighted.y);
+                this.x = event.getSceneX() - BIG_TILE_IMAGE_SIZE_X/2;
+                this.y = event.getSceneY() - BIG_TILE_IMAGE_SIZE_X/2;
+                double mouse_highlight_dist = Math.sqrt(Math.pow(highlighted.x - this.x, 2) + Math.pow(highlighted.y - this.y, 2));
+                System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
+                if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
+                    System.out.println(" Snapped ");
+                    setLayoutX(highlighted.x);
+                    setLayoutY(highlighted.y);
+                }
+                else{
+                    System.out.println(" Returned ");
+                    returnTile();
+                }
             });
         }
 
+        public int getIndex() {
+            return this.index;
+        }
+
+        public int getTileNum() {
+            return this.tile_num;
+        }
+
+        public void returnTile(){
+            double start_x, start_y;
+            if(type == FACTORY){
+                start_x = FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_x(tile_num);
+                start_y = FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_y(tile_num);
+                setLayoutX(start_x);
+                setLayoutY(start_y);
+            }
+            else if(type == CENTER){
+                start_x = CENTER_COORDINATES.getPos_x(tile_num);
+                start_y = CENTER_COORDINATES.getPos_y(tile_num);
+                setLayoutX(start_x);
+                setLayoutY(start_y);
+            }
+
+        }
     }
 
 }
