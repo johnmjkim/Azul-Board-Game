@@ -86,8 +86,8 @@ public class Viewer extends Application implements Constants {
 
         // VALID STATES
 
-        state[0]="AF0bccc1aabc2abce3acdd4abddCfB0000000000D0909101116";
-        state[1]="A0Mb00d03e04d10b11a14c21a32a43S2a23b2FB0Mb00c02e03d04d12b14c21e24b31d33S3c14a1F";
+        state[0]="AFCB1616181614D000000000";
+        state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
         //state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
         //state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
@@ -471,9 +471,9 @@ public class Viewer extends Application implements Constants {
         // Use lambda expression for button
         RefreshButton.setOnAction(ae -> {
             matrixBoard.getChildren().clear();
-            Rectangle r = new Rectangle(510, 550, 300, 30);
-            r.setFill(Color.WHITE);
-            controls.getChildren().add(r);
+            //Rectangle r = new Rectangle(510, 550, 300, 30);
+            //r.setFill(Color.WHITE);
+            //controls.getChildren().add(r);
             //add backboard each time to empty the tiles which has been displayed
             ImageView boardA = new ImageView(new Image(EMPTY_BOARD_IMAGE));
             boardA.setFitWidth(1200);

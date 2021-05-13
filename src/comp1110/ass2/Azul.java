@@ -150,7 +150,7 @@ public class Azul implements Constants{
         ArrayList<String> factoryState_content_arr = new ArrayList<String>();
         for (char c : factory_String.toCharArray()) {
             //System.out.println(c);
-            if (c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - 2]) {
+            if (c >= ZERO && c <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - DEFAULT_MAX_PLAYER]) {
                 //System.out.println(String.valueOf(c));
                 factoryState_name_arr.add(c);
                 factoryState_content_arr.add(String.valueOf(SB));
@@ -215,7 +215,7 @@ public class Azul implements Constants{
                 len++;
             }
         }
-        if (len > 3 * FACTORY_MAX_NUMBER) {
+        if (len > CENTER_MAX_NUMBERS[MAX_PLAYER_NUMBER - DEFAULT_MAX_PLAYER]) {
             center_content_format = false;
         }
         boolean center_format = center_name_format && center_content_format;

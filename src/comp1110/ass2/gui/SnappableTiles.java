@@ -13,6 +13,15 @@ public class SnappableTiles extends ImageView implements Constants {
     char type;
     private Viewer viewer;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param image_link
+     * @param viewer
+     * @param type
+     * @param tile_num
+     */
     public SnappableTiles(double x, double y, String image_link, Viewer viewer, char type, int tile_num) {
         super(new Image(image_link));
         this.toFront();
