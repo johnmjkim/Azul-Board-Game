@@ -55,10 +55,13 @@ public class DraggableTiles extends ImageView implements Constants {
             if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
                 StringBuilder SB = new StringBuilder();
                 System.out.print(" Snapped , move : ");
-
-                System.out.println(findDraftingMove());
                 if(viewer.multiazul.isMoveValid(viewer.currentState, findDraftingMove())){
-                    System.out.println("valid");
+                    System.out.println("drafting valid : " + findDraftingMove());
+                    setLayoutX(viewer.highlighted.x);
+                    setLayoutY(viewer.highlighted.y);
+                }
+                else if(viewer.multiazul.isMoveValid(viewer.currentState, findTilingMove())){
+                    System.out.println("tiling valid : " + findTilingMove());
                     setLayoutX(viewer.highlighted.x);
                     setLayoutY(viewer.highlighted.y);
                 }
@@ -148,7 +151,9 @@ public class DraggableTiles extends ImageView implements Constants {
         }
 
         if(viewer.highlighted.toMosaic()){
-            SB.append(viewer.highlighted.getTileNum());
+            if(viewer.highlighted.index == this.index){
+                SB.append(viewer.highlighted.getTileNum());
+            }
         }
         else if(viewer.highlighted.toFloor()){
             SB.append(FLOOR);

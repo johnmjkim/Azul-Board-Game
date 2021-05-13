@@ -50,8 +50,6 @@ public class Viewer extends Application implements Constants {
     public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
     public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
 
-    public ArrayList<ImageView> factoriesTiles = new ArrayList<>();
-    public ArrayList<ImageView> centerTiles = new ArrayList<>();
     public ArrayList<ImageView> storageTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> floorTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
@@ -87,16 +85,20 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
+        /*
         // VALID STATES : Drafting Stage
         state[0] = "BF0cdee1bdde4aaaeCbbbdeB1616181614D0000000000";
         state[1] = "A0MS2c14a1FB0MS2e1Ff";
 
-        /*
-        // VALID STATES : Tiling Stage
-        state[0]="AFCB1616181614D000000000";
+        // VALID STATES : Tiling Stage to Mosaic
+        state[0]="AFCB1616181614D0000000000";
         state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
          */
+
+        // VALID STATES : Tiling Stage to Floor
+        state[0]="AFCB1616181614D0000000000";
+        state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
         /*
         // VALID STATES : Next Round Stage
@@ -111,6 +113,7 @@ public class Viewer extends Application implements Constants {
         state[0]="AFCfB0609090913D0204040502";
         state[1]="A35Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FB19Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33c34S2a14a4F";
          */
+
         boolean valid_state = multiazul.isStateValid(state);
         boolean isdraftingstage = multiazul.isDraftingStage(state);
         boolean istilingstage = multiazul.isTilingStage(state);
@@ -207,6 +210,52 @@ public class Viewer extends Application implements Constants {
         }
     }
 
+    private void display_empty_Storage() {
+        emptyStorageList.clear();
+        snappableStorageTiles.clear();
+        for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
+            for (int tiles = 0; tiles < storage_row + 1; tiles++) {
+                double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles);
+                double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles);
+                Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                r.setFill(Color.GREY);
+                emptyStorageList.add(r);
+                SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, STORAGE, storage_row, tiles);
+                snappableStorageTiles.add(snapTile);
+            }
+        }
+    }
+
+    private void display_empty_Floor() {
+        emptyFloorList.clear();
+        snappableFloorTiles.clear();
+        for (int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++) {
+            double x = FLOOR_COORDINATES.getPos_x(tiles);
+            double y = FLOOR_COORDINATES.getPos_y(tiles);
+            Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+            //r.setFill(Color.GREY);
+            emptyFloorList.add(r);
+            SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, FLOOR, tiles);
+            snappableFloorTiles.add(snapTile);
+        }
+    }
+
+    private void display_empty_Mosaic() {
+        emptyMosaicList.clear();
+        snappableMosaicTiles.clear();
+        for (int row = 0; row < MAX_MOSAIC_ROW; row++) {
+            for (int tiles = 0; tiles < MAX_MOSAIC_COL; tiles++) {
+                double x = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_x(tiles);
+                double y = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_y(tiles);
+                Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
+                //r.setFill(Color.GREY);
+                emptyMosaicList.add(r);
+                SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, MOSAIC, row, tiles);
+                snappableMosaicTiles.add(snapTile);
+            }
+        }
+    }
+
     private void display_empty_Factories() {
         emptyFactoriesList.clear();
         for (int factory = 0; factory < FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; factory++) {
@@ -229,7 +278,7 @@ public class Viewer extends Application implements Constants {
             storage_row_Colors[storage_row] = current_player.storage.getStorageRow(storage_row).getRowTilesColor();
         }
 
-        displayStorage(storage_row_Tiles, storage_row_Colors);
+        displayStorage(current_player, storage_row_Tiles, storage_row_Colors);
 
         //MOSAIC
         displayMosaic(current_player);
@@ -265,64 +314,6 @@ public class Viewer extends Application implements Constants {
         matrixBoard.getChildren().addAll(undraggableTiles);
     }
 
-    private void display_empty_Storage() {
-        snappableStorageTiles.clear();
-        for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
-            for (int tiles = 0; tiles < storage_row + 1; tiles++) {
-                double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles);
-                double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles);
-                SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, STORAGE, storage_row, tiles);
-                snappableStorageTiles.add(snapTile);
-            }
-        }
-        /*
-        emptyStorageList.clear();
-        for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
-            for (int tiles = 0; tiles < storage_row + 1; tiles++) {
-                double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(tiles);
-                double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(tiles);
-                Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-                r.setFill(Color.GREY);
-                emptyStorageList.add(r);
-            }
-        }
-
-         */
-    }
-
-    private void display_empty_Floor() {
-        snappableFloorTiles.clear();
-        for(int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++){
-            double x = FLOOR_COORDINATES.getPos_x(tiles);
-            double y = FLOOR_COORDINATES.getPos_y(tiles);
-            SnappableTiles snapTile = new SnappableTiles(x, y, NO_TILE_IMAGE, this, FLOOR, tiles);
-            snappableFloorTiles.add(snapTile);
-        }
-        /*
-        emptyFloorList.clear();
-        for (int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++) {
-            double x = FLOOR_COORDINATES.getPos_x(tiles);
-            double y = FLOOR_COORDINATES.getPos_y(tiles);
-            Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-            //r.setFill(Color.GREY);
-            emptyFloorList.add(r);
-        }
-
-         */
-    }
-
-    private void display_empty_Mosaic() {
-        emptyMosaicList.clear();
-        for (int row = 0; row < MAX_MOSAIC_ROW; row++) {
-            for (int tiles = 0; tiles < MAX_MOSAIC_COL; tiles++) {
-                double x = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_x(tiles);
-                double y = MOSAIC_COORDINATES.getMosaicRowCoordinates(row).getPos_y(tiles);
-                Rectangle r = new Rectangle(x, y, BIG_TILE_IMAGE_SIZE_X, BIG_TILE_IMAGE_SIZE_Y);
-                //r.setFill(Color.GREY);
-                emptyMosaicList.add(r);
-            }
-        }
-    }
 
     private void displayDraggableBoard(SharedState ss){
         //FACTORIES
@@ -331,6 +322,15 @@ public class Viewer extends Application implements Constants {
         displayCenter(ss);
 
         draggableTiles.clear();
+        if(current_stage == DRAFTING_STAGE){
+
+        }
+        else if(current_stage == TILING_STAGE){
+            draggableTiles.addAll(draggableStorageTiles);
+        }
+        else {
+
+        }
         draggableTiles.addAll(draggableFactoriesTiles);
         draggableTiles.addAll(draggableCenterTiles);
         matrixBoard.getChildren().addAll(draggableTiles);
@@ -383,19 +383,30 @@ public class Viewer extends Application implements Constants {
         }
     }
 
-    private void displayStorage(int[] storage_row_tiles, char[] storage_row_colors) {
+    private void displayStorage(nPlayer current_player, int[] storage_row_tiles, char[] storage_row_colors) {
         storageTiles.clear();
+        draggableStorageTiles.clear();
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             for (int tiles = 0; tiles < storage_row_tiles[storage_row]; tiles++) {
-                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row] - BLUE]));
                 int storage_col = storage_row - tiles;
                 double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(storage_col);
                 double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(storage_col);
-                Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
-                Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
-                Tile_View.setLayoutY(y);
-                Tile_View.setLayoutX(x);
-                storageTiles.add(Tile_View);
+                if(current_player.storage.getStorageRow(storage_row).isTilesFull()){
+                    DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_IMAGE[storage_row_colors[storage_row] - BLUE],this, STORAGE ,storage_row , tiles);
+                    draggableTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                    draggableTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                    draggableTile.setLayoutY(y);
+                    draggableTile.setLayoutX(x);
+                    draggableStorageTiles.add(draggableTile);
+                }
+                else{
+                    ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row] - BLUE]));
+                    Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
+                    Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+                    Tile_View.setLayoutY(y);
+                    Tile_View.setLayoutX(x);
+                    storageTiles.add(Tile_View);
+                }
             }
         }
     }
