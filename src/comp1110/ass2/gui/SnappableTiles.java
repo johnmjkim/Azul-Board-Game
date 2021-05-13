@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.backend.Constants;
+import comp1110.ass2.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -63,48 +63,12 @@ public class SnappableTiles extends ImageView implements Constants {
     public boolean toStorage(){
         return type == STORAGE;
     }
+
+    public boolean toMosaic() {
+        return type == MOSAIC;
+    }
+
     public boolean toFloor(){
         return type == FLOOR;
     }
 }
-/*
-    public Viewer.Rectangle findNearestRectangle(double x, double y){
-        int i = 0;
-        double distance = 0;
-        int closestID = -1;
-        for (Viewer.Rectangle t : snappable_Tile){
-            if (i == 0){
-                distance = t.distance(x,y);
-                closestID = i;
-            }else if(t.distance(x,y) < distance){
-                closestID = i;
-                distance = t.distance(x,y);
-            }
-            i++;
-        }
-        System.out.print("closestID : " + closestID + " distance : " + distance);
-        System.out.println(" snappable_Tile x, y : " + snappable_Tile.get(closestID).x + ", " + snappable_Tile.get(closestID).y);
-        return snappable_Tile.get(closestID);
-    }
-
-    public void highlightNearestRectangle(double x, double y){
-        int i=0;
-        highlighted = findNearestRectangle(x,y);
-        ArrayList<Viewer.Rectangle> ts = this.snappable_Tile;
-        for (Viewer.Rectangle t : ts){
-            if (t.equals(this.highlighted)){
-                //this.snappable_Tile.get(i).setFill(Color.GREEN);
-                t.setFill(Color.GREEN);
-                this.snappable_Tile.set(i,t);
-            }
-            else {
-                //this.snappable_Tile.get(i).setFill(Color.GREY);
-                t.setFill(Color.GREY);
-                this.snappable_Tile.set(i,t);
-            }
-            i++;
-        }
-    }
-}
-
- */

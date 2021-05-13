@@ -1,5 +1,7 @@
 package comp1110.ass2.backend;
 
+import comp1110.ass2.Constants;
+
 public class Factory extends OrderTypedObject{
     // number of Factory 0~4 for two players
     int number;

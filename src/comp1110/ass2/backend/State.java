@@ -1,6 +1,6 @@
 package comp1110.ass2.backend;
 
-import comp1110.ass2.backend.Constants;
+import comp1110.ass2.Constants;
 
 public interface State extends Constants {
 

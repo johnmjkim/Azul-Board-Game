@@ -1,5 +1,7 @@
 package comp1110.ass2.backend;
 
+import comp1110.ass2.Constants;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -1368,5 +1370,25 @@ public class MultiAzul implements Constants {
     public boolean isEndGameValid(String[] gameState) {
         isStateValid(gameState);
         return false;
+    }
+
+    public char findCurrentStage(String[] state){
+        boolean isdraftingstage = isDraftingStage(state);
+        boolean istilingstage = isTilingStage(state);
+        boolean isendofgame = isGameEndStage(state);
+        if(isdraftingstage){
+            return DRAFTING_STAGE;
+        }
+        else if(istilingstage){
+            return TILING_STAGE;
+        }
+        else {
+            if(!isendofgame){
+                return NEXT_ROUND_STAGE;
+            }
+            else{
+                return END_OF_GAME;
+            }
+        }
     }
 }

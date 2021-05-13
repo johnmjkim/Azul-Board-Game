@@ -1,7 +1,5 @@
 package comp1110.ass2;
 
-import comp1110.ass2.backend.Constants;
-
 public interface TestStateCases extends Constants {
 
     public static final String EMPTY_PLAYER_STATE = "A0MSFB0MSF";

@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.backend.Constants;
+import comp1110.ass2.Constants;
 
 public class DiscardCoordinates implements Constants{
     private double[] pos_x = new double[MAX_DISCARD_SIZE];

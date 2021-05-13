@@ -1,6 +1,5 @@
 package comp1110.ass2;
 
-import comp1110.ass2.backend.Constants;
 import comp1110.ass2.backend.PlayerState;
 import comp1110.ass2.backend.SharedState;
 

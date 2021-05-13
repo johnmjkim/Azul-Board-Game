@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Constants;
 import comp1110.ass2.backend.*;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -32,12 +33,14 @@ public class Viewer extends Application implements Constants {
     private TextField playerTextField;
     private TextField boardTextField;
 
-    public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
-    MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
-    public char current_turn;
     SharedState ss;
     PlayerState ps;
     String[] currentState;
+    public char current_turn;
+    public char current_stage;
+
+    public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
 
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
     public FloorCoordinates FLOOR_COORDINATES = Game.FLOOR_COORDINATES;
@@ -47,6 +50,8 @@ public class Viewer extends Application implements Constants {
     public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
     public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
 
+    public ArrayList<ImageView> factoriesTiles = new ArrayList<>();
+    public ArrayList<ImageView> centerTiles = new ArrayList<>();
     public ArrayList<ImageView> storageTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> floorTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
@@ -81,15 +86,19 @@ public class Viewer extends Application implements Constants {
 
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
-        /*
+
         // VALID STATES : Drafting Stage
         state[0] = "BF0cdee1bdde4aaaeCbbbdeB1616181614D0000000000";
         state[1] = "A0MS2c14a1FB0MS2e1Ff";
 
+        /*
         // VALID STATES : Tiling Stage
         state[0]="AFCB1616181614D000000000";
         state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
+         */
+
+        /*
         // VALID STATES : Next Round Stage
         state[0]="AFCB1616181614D0001000300";
         state[1]="A2Me04b11S2c13a34a1FbeeeeB2Mc02d33S1b12e1Ff";
@@ -98,12 +107,10 @@ public class Viewer extends Application implements Constants {
         state[0]="BFCB0609090913D0003010402";
         state[1]="A29Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FabdfB12Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33S2a13c44a4Fa";
 
-         */
-
         // VALID STATES : End of Game
         state[0]="AFCfB0609090913D0204040502";
         state[1]="A35Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FB19Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33c34S2a14a4F";
-
+         */
         boolean valid_state = multiazul.isStateValid(state);
         boolean isdraftingstage = multiazul.isDraftingStage(state);
         boolean istilingstage = multiazul.isTilingStage(state);
@@ -115,22 +122,27 @@ public class Viewer extends Application implements Constants {
         //state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";
         //state[1] = "A07Me01b04a11d20b30b41e44S0a11b22c13c14d2FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
-        currentState = state;
+        this.currentState = state;
+        this.current_stage = multiazul.findCurrentStage(currentState);
 
         ss = new SharedState(state[0], PLAYER_NUMBER);
         ps = new PlayerState(state[1], PLAYER_NUMBER);
 
         String current_player_turn = ss.getTurnState();
-        current_turn = current_player_turn.charAt(0);
+        this.current_turn = current_player_turn.charAt(0);
         nPlayer current_player = ps.getnPlayer(current_turn);
 
-        // Display empty board
-        display_empty_Board();
+        // Display empty, snappable board
+        display_empty_Board(current_stage);
 
-        // Display undraggable board : Storage, Mosaic, Floor, Bag, Discard
+        // Display undraggable board :
+        // Drafting Stage : Storage, Mosaic, Floor, Bag, Discard
+        // Tiling Stage : Factories, Center, Mosaic, Floor, Bag, Discard
         displayUndraggableBoard(ss, current_player);
 
-        // Display draggable board : Factories, Center
+        // Display draggable board :
+        // Drafting Stage : Factories, Center
+        // Tiling Stage : Storage
         displayDraggableBoard(ss);
 
         //SCORE
@@ -144,51 +156,43 @@ public class Viewer extends Application implements Constants {
         scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
         scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
         controls.getChildren().add(scoreBox);
-
-        /*
-        //SCORE
-        String score_A = player_state_of_A.substring(player_state_of_A.indexOf("A") + 1, player_state_of_A.indexOf("M"));
-        String[] Score_A = score_A.split("");
-        int a = Integer.parseInt(Score_A[0])*10+Integer.parseInt(Score_A[1]);
-        Label Ascore = new Label("Score of Player A: "+a);
-        String score_B = player_state_of_B.substring(player_state_of_B.indexOf("B") + 1, player_state_of_B.indexOf("M"));
-        String[] Score_B = score_B.split("");
-        int b = Integer.parseInt(Score_B[0])*10+Integer.parseInt(Score_B[1]);
-        Label Bscore = new Label("Score of Player B: "+b);
-        HBox Sc = new HBox();
-        Sc.getChildren().addAll(Ascore, Bscore);
-        Sc.setSpacing(10);
-        Sc.setLayoutX(550);
-        Sc.setLayoutY(VIEWER_HEIGHT - 50);
-        controls.getChildren().add(Sc);
-
-         */
-
     }
 
-    private void display_empty_Board(){
-
-        display_empty_Mosaic();
+    private void display_empty_Board(char current_stage){
         display_empty_Center();
         display_empty_Factories();
-        display_empty_Storage();
-        display_empty_Floor();
+
         non_snappable_Tile.clear();
-        non_snappable_Tile.addAll(emptyMosaicList);
+        snappableTiles.clear();
+
         non_snappable_Tile.addAll(emptyCenterList);
         non_snappable_Tile.addAll(emptyFactoriesList);
+
+        if(current_stage == DRAFTING_STAGE){
+            display_empty_Mosaic();
+            display_empty_Storage();
+            display_empty_Floor();
+            non_snappable_Tile.addAll(emptyMosaicList);
+            snappableTiles.addAll(snappableStorageTiles);
+            snappableTiles.addAll(snappableFloorTiles);
+        }
+        else if(current_stage == TILING_STAGE){
+            display_empty_Mosaic();
+            display_empty_Storage();
+            display_empty_Floor();
+            non_snappable_Tile.addAll(emptyStorageList);
+            snappableTiles.addAll(snappableMosaicTiles);
+            snappableTiles.addAll(snappableFloorTiles);
+        }
+        else{
+            display_empty_Mosaic();
+            display_empty_Storage();
+            display_empty_Floor();
+            non_snappable_Tile.addAll(emptyStorageList);
+            non_snappable_Tile.addAll(emptyMosaicList);
+            non_snappable_Tile.addAll(emptyFloorList);
+        }
         matrixBoard.getChildren().addAll(non_snappable_Tile);
-        /*
-        snappable_Tile.clear();
-        snappable_Tile.addAll(emptyStorageList);
-        snappable_Tile.addAll(emptyFloorList);
-        matrixBoard.getChildren().addAll(snappable_Tile);
-
-         */
-
-        snappableTiles.clear();
-        snappableTiles.addAll(snappableStorageTiles);
-        snappableTiles.addAll(snappableFloorTiles);
         matrixBoard.getChildren().addAll(snappableTiles);
     }
 

@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.backend.Constants;
+import comp1110.ass2.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -51,9 +51,11 @@ public class DraggableTiles extends ImageView implements Constants {
             this.y = event.getSceneY() - BIG_TILE_IMAGE_SIZE_X/2;
             double mouse_highlight_dist = Math.sqrt(Math.pow(viewer.highlighted.x - this.x, 2) + Math.pow(viewer.highlighted.y - this.y, 2));
             System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
+
             if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
                 StringBuilder SB = new StringBuilder();
                 System.out.print(" Snapped , move : ");
+
                 System.out.println(findDraftingMove());
                 if(viewer.multiazul.isMoveValid(viewer.currentState, findDraftingMove())){
                     System.out.println("valid");
@@ -95,6 +97,12 @@ public class DraggableTiles extends ImageView implements Constants {
             setLayoutX(start_x);
             setLayoutY(start_y);
         }
+        else if(fromStorage()){
+            start_x = viewer.STORAGE_COORDINATES.getStorageRowCoordinates(index).getPos_x(tile_num);
+            start_y = viewer.STORAGE_COORDINATES.getStorageRowCoordinates(index).getPos_y(tile_num);
+            setLayoutX(start_x);
+            setLayoutY(start_y);
+        }
     }
 
     public boolean fromFactory(){
@@ -105,9 +113,14 @@ public class DraggableTiles extends ImageView implements Constants {
         return type == CENTER;
     }
 
+    public boolean fromStorage(){
+        return type == STORAGE;
+    }
+
     public String findDraftingMove(){
         StringBuilder SB = new StringBuilder();
         SB.append(viewer.current_turn);
+
         if(fromFactory()){
             SB.append(getIndex());
             SB.append(viewer.ss.factories.getFactory(getIndex()).getTileColor(getTileNum()));
@@ -116,8 +129,26 @@ public class DraggableTiles extends ImageView implements Constants {
             SB.append(CENTER);
             SB.append(viewer.ss.center.getTileColor(getTileNum()));
         }
+
         if(viewer.highlighted.toStorage()){
             SB.append(viewer.highlighted.getIndex());
+        }
+        else if(viewer.highlighted.toFloor()){
+            SB.append(FLOOR);
+        }
+        return String.valueOf(SB);
+    }
+
+    public String findTilingMove(){
+        StringBuilder SB = new StringBuilder();
+        SB.append(viewer.current_turn);
+
+        if(fromStorage()){
+            SB.append(getIndex());
+        }
+
+        if(viewer.highlighted.toMosaic()){
+            SB.append(viewer.highlighted.getTileNum());
         }
         else if(viewer.highlighted.toFloor()){
             SB.append(FLOOR);

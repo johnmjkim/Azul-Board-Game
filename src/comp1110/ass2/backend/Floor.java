@@ -1,5 +1,7 @@
 package comp1110.ass2.backend;
 
+import comp1110.ass2.Constants;
+
 public class Floor extends OrderTypedObject{
 
     // maximum player number, floor tiles
