@@ -38,6 +38,7 @@ public class Viewer extends Application implements Constants {
     private TextField boardTextField;
 
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
     public char current_turn;
     SharedState ss;
     PlayerState ps;
@@ -59,6 +60,7 @@ public class Viewer extends Application implements Constants {
     public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<DraggableTiles>();
     public ArrayList<ImageView> firstplayerCenterTiles = new ArrayList<ImageView>();
     public ArrayList<DraggableTiles> draggableFactoriesTiles = new ArrayList<DraggableTiles>();
+    public ArrayList<DraggableTiles> draggableStorageTiles = new ArrayList<DraggableTiles>();
     public ArrayList<ImageView> undraggableTiles = new ArrayList<ImageView>();
     public ArrayList<ImageView> draggableTiles = new ArrayList<ImageView>();
 
@@ -69,6 +71,7 @@ public class Viewer extends Application implements Constants {
     public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<Rectangle>();
     public ArrayList<SnappableTiles> snappableStorageTiles = new ArrayList<SnappableTiles>();
     public ArrayList<SnappableTiles> snappableFloorTiles = new ArrayList<SnappableTiles>();
+    public ArrayList<SnappableTiles> snappableMosaicTiles = new ArrayList<SnappableTiles>();
 
     public ArrayList<Rectangle> non_snappable_Tile = new ArrayList<>();
     public ArrayList<Rectangle> snappable_Tile = new ArrayList<Rectangle>();
@@ -84,10 +87,16 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        // VALID STATES
+        // VALID STATES : Drafting Move
+        state[0] = "BF0cdee1bdde4aaaeCbbbdeB1616181614D0000000000";
+        state[1] = "A0MS2c14a1FB0MS2e1Ff";
 
+        /*
+        // VALID STATES : Tiling Move
         state[0]="AFCB1616181614D000000000";
         state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
+
+         */
 
         //state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
         //state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
