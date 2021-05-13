@@ -86,26 +86,35 @@ public class Viewer extends Application implements Constants {
 
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
-
-        // VALID STATES : Drafting Move
+        /*
+        // VALID STATES : Drafting Stage
         state[0] = "BF0cdee1bdde4aaaeCbbbdeB1616181614D0000000000";
         state[1] = "A0MS2c14a1FB0MS2e1Ff";
 
-        /*
-        // VALID STATES : Tiling Move
+        // VALID STATES : Tiling Stage
         state[0]="AFCB1616181614D000000000";
         state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
+        // VALID STATES : Next Round Stage
+        state[0]="AFCB1616181614D0001000300";
+        state[1]="A2Me04b11S2c13a34a1FbeeeeB2Mc02d33S1b12e1Ff";
+
+        // VALID STATES : No More Next Round End of Game
+        state[0]="BFCB0609090913D0003010402";
+        state[1]="A29Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FabdfB12Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33S2a13c44a4Fa";
+
          */
 
-        //state[0]="AF0cdde2abde3cdee4bcceCaaabbbccdddeeefB1915161614D1618152019";
-        //state[1]="A07Me01b04a11d20b30b41e44S0a11b22c13c44d5FabeeB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc";
+        // VALID STATES : End of Game
+        state[0]="AFCfB0609090913D0204040502";
+        state[1]="A35Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FB19Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33c34S2a14a4F";
 
-        //state[0]=AF0cdde1bbbe2abde3cdee4bcceCaabbcaabbcaacbbefB1915161614D0000000000
-        //state[1]=A07Me01a11d20b30b41S0a11b22c13c44d1FeeabB08Md03b13e23c32b41S0b11c12a33d24e4Fabcc
-
-        //state[0]=AF0abde1bbbe2abde4bcceCaabbcebbfB1915161614D0020000019
-        //state[1]=A07Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeB08Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc
+        boolean valid_state = multiazul.isStateValid(state);
+        boolean isdraftingstage = multiazul.isDraftingStage(state);
+        boolean istilingstage = multiazul.isTilingStage(state);
+        boolean isnextroundstage = multiazul.isNextRoundStage(state);
+        boolean isendofgame = multiazul.isGameEndStage(state);
+        System.out.println(" valid : " + valid_state + ", drafting stage : " + isdraftingstage + ", tiling stage : " + istilingstage + ", next round stage : " + isnextroundstage + ", end of game : " + isendofgame);
 
         // Four players example
         //state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";

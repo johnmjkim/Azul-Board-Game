@@ -674,8 +674,6 @@ public class Azul implements Constants{
         String current_player = ss.turnState;
         char current_player_char = current_player.charAt(0);
 
-        boolean isdraftingstage = isDraftingStage(output_gameState);
-        boolean istilingstage = isTilingStage(output_gameState);
         boolean isnextround = isNextRoundStage(output_gameState);
         //boolean isNextRound = !(isdraftingstage || istilingstage);
 
