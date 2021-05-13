@@ -1,11 +1,12 @@
 package comp1110.ass2;
 
-import com.sun.jdi.ArrayReference;
-import comp1110.ass2.gui.Game;
+import comp1110.ass2.backend.Constants;
+import comp1110.ass2.backend.PlayerState;
+import comp1110.ass2.backend.SharedState;
 
 import java.util.*;
 
-public class Azul implements Constants{
+public class Azul implements Constants {
 
     // Maximum player numbers
     public static int MAX_PLAYER_NUMBER = 2;
@@ -671,7 +672,7 @@ public class Azul implements Constants{
         PlayerState ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
 
         // Find if it is time to progress next round
-        String current_player = ss.turnState;
+        String current_player = ss.getTurnState();
         char current_player_char = current_player.charAt(0);
 
         boolean isnextround = isNextRoundStage(output_gameState);
@@ -1006,7 +1007,7 @@ public class Azul implements Constants{
             PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
             char player_turn = move.charAt(0);
-            boolean right_player_turn = ss.turnState.equals(String.valueOf(player_turn));
+            boolean right_player_turn = ss.getTurnState().equals(String.valueOf(player_turn));
 
             if(!right_player_turn){
                 return false;

@@ -1,4 +1,4 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
 public class DiscardObject extends BagTypedObject{
     public DiscardObject(String bagTypedObjectState) {

@@ -1,6 +1,4 @@
-package comp1110.ass2;
-
-import comp1110.ass2.State;
+package comp1110.ass2.backend;
 
 import java.util.ArrayList;
 
@@ -13,7 +11,7 @@ public class Mosaic implements Tiles {
 
     int[] letters = new int[128];
 
-    boolean mosaicvalid = true;
+    public boolean mosaicvalid = true;
 
     /**
      * @author Min Jae, Kim
@@ -198,15 +196,15 @@ public class Mosaic implements Tiles {
      * Inner class MosaicRow of Mosaic class
      * Each player has MosaicRow state stored here
      */
-    public class MosaicRow implements CoordinateTyped{
+    public class MosaicRow implements CoordinateTyped {
         String mosaic_rowState = EMPTY_STATE;
         int[] letters = new int[128];
         int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int row;
 
-        boolean[] mosaicrow_tiles_occupy = new boolean[MAX_MOSAIC_COL];
-        char[] mosaicrow_tiles_color = new char[MAX_MOSAIC_COL];
-        boolean tiles_row_position_valid = true;
+        public boolean[] mosaicrow_tiles_occupy = new boolean[MAX_MOSAIC_COL];
+        public char[] mosaicrow_tiles_color = new char[MAX_MOSAIC_COL];
+        public boolean tiles_row_position_valid = true;
 
         public MosaicRow (String mosaic_rowState, int row){
             //System.out.println(" row " + row + " : " + mosaic_rowState);
@@ -416,9 +414,9 @@ public class Mosaic implements Tiles {
         int MAX_TILES_LIMIT = MAX_MOSAIC_COL;
         int col;
 
-        boolean[] mosaiccol_tiles_occupy = new boolean[MAX_MOSAIC_ROW];
-        char[] mosaiccol_tiles_color = new char[MAX_MOSAIC_ROW];
-        boolean tiles_col_position_valid = true;
+        public boolean[] mosaiccol_tiles_occupy = new boolean[MAX_MOSAIC_ROW];
+        public char[] mosaiccol_tiles_color = new char[MAX_MOSAIC_ROW];
+        public boolean tiles_col_position_valid = true;
 
         public MosaicCol(String mosaic_colState, int col) {
             //System.out.println(" col " + col + " : " + mosaic_colState);

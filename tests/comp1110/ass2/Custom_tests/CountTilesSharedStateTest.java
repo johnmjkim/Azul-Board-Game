@@ -1,6 +1,6 @@
 package comp1110.ass2.Custom_tests;
 
-import comp1110.ass2.SharedState;
+import comp1110.ass2.backend.SharedState;
 import comp1110.ass2.TestCountCases;
 import org.junit.jupiter.api.Test;
 

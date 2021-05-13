@@ -1,10 +1,6 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
-import comp1110.ass2.State;
-
-import java.util.Arrays;
-
-public class Center extends OrderTypedObject{
+public class Center extends OrderTypedObject {
 
     // maximum player number, center tiles
     int max_player_number;
@@ -59,7 +55,7 @@ public class Center extends OrderTypedObject{
      * Check if there is only one first player token if center has first player token
      * @return
      */
-    boolean hasOnlyOneFirstPlayerToken() {
+    public boolean hasOnlyOneFirstPlayerToken() {
         return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
     }
 
@@ -68,5 +64,5 @@ public class Center extends OrderTypedObject{
      * Check if the center has first player token
      * @return
      */
-    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+    public boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
 }

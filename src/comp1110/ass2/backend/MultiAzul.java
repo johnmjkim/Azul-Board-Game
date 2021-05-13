@@ -1,4 +1,4 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -514,7 +514,7 @@ public class MultiAzul implements Constants {
         PlayerState ps = new PlayerState(output_gameState[1], MAX_PLAYER_NUMBER);
 
         // Find if it is time to progress next round
-        String current_player = ss.turnState;
+        String current_player = ss.getTurnState();
         char current_player_char = current_player.charAt(0);
 
         boolean isnextround = isNextRoundStage(output_gameState);
@@ -786,7 +786,7 @@ public class MultiAzul implements Constants {
             PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
             char player_turn = move.charAt(0);
-            boolean right_player_turn = ss.turnState.equals(String.valueOf(player_turn));
+            boolean right_player_turn = ss.getTurnState().equals(String.valueOf(player_turn));
 
             if (!right_player_turn) {
                 return false;

@@ -1,7 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Azul;
-import comp1110.ass2.Constants;
+import comp1110.ass2.backend.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-import comp1110.ass2.Constants;
+import comp1110.ass2.backend.Constants;
 
 public interface TestStateCases extends Constants {
 

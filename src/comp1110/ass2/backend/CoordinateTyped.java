@@ -1,4 +1,4 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
 /**
  * @author Min Jae, Kim
@@ -7,7 +7,7 @@ package comp1110.ass2;
  * For storage : 3a34c3
  * Mosaic, Storage class stores tiles like above format
  */
-public interface CoordinateTyped extends Tiles{
+public interface CoordinateTyped extends Tiles {
 
     public boolean isTilesFull();
 

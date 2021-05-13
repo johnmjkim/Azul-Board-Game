@@ -1,8 +1,4 @@
-package comp1110.ass2;
-
-import comp1110.ass2.State;
-
-import java.util.Arrays;
+package comp1110.ass2.backend;
 
 public class Floor extends OrderTypedObject{
 
@@ -22,7 +18,7 @@ public class Floor extends OrderTypedObject{
     public Floor(String orderTypedObjectState, int max_player_number) {
         super(orderTypedObjectState);
         this.max_player_number = max_player_number;
-        this.max_floor_tiles_before_adjust = MAX_FLOOR_STRING_SIZE + CENTER_MAX_NUMBERS[max_player_number - DEFAULT_MAX_PLAYER];
+        this.max_floor_tiles_before_adjust = Constants.MAX_FLOOR_STRING_SIZE + Constants.CENTER_MAX_NUMBERS[max_player_number - Constants.DEFAULT_MAX_PLAYER];
         this.tiles_occupy = new boolean[max_floor_tiles_before_adjust];
         this.tiles_color = new char[max_floor_tiles_before_adjust];
         storeTilesColor();
@@ -32,7 +28,7 @@ public class Floor extends OrderTypedObject{
         if(super.isStateEmpty()){
             for(int col=0; col < max_floor_tiles_before_adjust; col++){
                 tiles_occupy[col] = false;
-                tiles_color[col] = NO_COLOR;
+                tiles_color[col] = Constants.NO_COLOR;
             }
         }
         else{
@@ -45,7 +41,7 @@ public class Floor extends OrderTypedObject{
             }
             for(int rest_col = col; rest_col < max_floor_tiles_before_adjust; rest_col++){
                 tiles_occupy[rest_col] = false;
-                tiles_color[rest_col] = NO_COLOR;
+                tiles_color[rest_col] = Constants.NO_COLOR;
             }
         }
     }
@@ -62,8 +58,8 @@ public class Floor extends OrderTypedObject{
      */
     public String getFloorTilesString(){
         StringBuilder SB = new StringBuilder();
-        char color = BLUE;
-        for (int i = 0; i <= FIRST_PLAYER - BLUE; i++) {
+        char color = Constants.BLUE;
+        for (int i = 0; i <= Constants.FIRST_PLAYER - Constants.BLUE; i++) {
             if(this.letters[color] < 10){
                 SB.append("0");
             }
@@ -73,9 +69,9 @@ public class Floor extends OrderTypedObject{
         return String.valueOf(SB);
     }
 
-    boolean hasOnlyOneFirstPlayerToken() {
-        return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
+    public boolean hasOnlyOneFirstPlayerToken() {
+        return (this.letters[Constants.FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
     }
 
-    boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+    public boolean hasFirstPlayerToken() {return (this.letters[Constants.FIRST_PLAYER] != 0); }
 }

@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import comp1110.ass2.backend.PlayerState;
+import comp1110.ass2.backend.SharedState;
+
 public class Experiment_PSVM implements TestCountCases {
 
     public static void main(String[] args) {
@@ -25,7 +28,7 @@ public class Experiment_PSVM implements TestCountCases {
         PlayerState ps = new PlayerState(input_playerState_6, DEFAULT_MAX_PLAYER);
 
         System.out.println(" SharedState : " + ss);
-        System.out.println("   TurnState : " + ss.turnState);
+        System.out.println("   TurnState : " + ss.getTurnState());
         System.out.println("   FactoryState : " + ss.factories);
         for (int i = 0; i < DEFAULT_FACTORY_MAX_NUMBER; i++) {
             System.out.println("     Factory " + i + " : " + ss.factories.getFactory(i));

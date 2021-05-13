@@ -1,6 +1,4 @@
-package comp1110.ass2;
-
-import comp1110.ass2.State;
+package comp1110.ass2.backend;
 
 public class States implements State {
     String State;

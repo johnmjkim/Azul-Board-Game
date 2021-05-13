@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-import comp1110.ass2.gui.Coordinates;
+import comp1110.ass2.backend.Constants;
 
 public class Experiment_PSVM2 implements Constants {
     public static void main(String[] args) {

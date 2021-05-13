@@ -1,5 +1,5 @@
 package comp1110.ass2.gui;
-import comp1110.ass2.Constants;
+import comp1110.ass2.backend.Constants;
 
 public class CenterCoordinates implements Constants {
     int max_player_number;

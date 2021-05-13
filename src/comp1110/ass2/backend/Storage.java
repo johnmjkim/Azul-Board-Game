@@ -1,9 +1,6 @@
-package comp1110.ass2;
-
-import comp1110.ass2.State;
+package comp1110.ass2.backend;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Storage implements Tiles {
 
@@ -12,7 +9,7 @@ public class Storage implements Tiles {
 
     int[] letters = new int[128];
 
-    boolean storagevalid = true;
+    public boolean storagevalid = true;
 
     /**
      * @author Min Jae, Kim
@@ -88,7 +85,7 @@ public class Storage implements Tiles {
         return isStorageTilesValid;
     }
 
-    boolean existsStorageRowTilesFull() {
+    public boolean existsStorageRowTilesFull() {
         boolean existsRowTilesFull = false;
         for( StorageRow sr : this.storage_rows){
             if(sr.isTilesFull()){
@@ -98,7 +95,7 @@ public class Storage implements Tiles {
         return existsRowTilesFull;
     }
 
-    boolean isStorageRowTilesFull( int row ){
+    public boolean isStorageRowTilesFull( int row ){
         return this.storage_rows.get(row).isTilesFull();
     }
 
@@ -186,7 +183,7 @@ public class Storage implements Tiles {
      * Inner class eachStorageRow of Storage class
      * Each player has eachStorageRow state stored here
      */
-    public class StorageRow implements CoordinateTyped{
+    public class StorageRow implements CoordinateTyped {
         String storage_rowState = EMPTY_STATE;
         char storage_row_color = NO_COLOR;
         int row;
@@ -215,11 +212,11 @@ public class Storage implements Tiles {
             }
         }
 
-        boolean isStorageRowTileColorValid(char color){
+        public boolean isStorageRowTileColorValid(char color){
             return (getRowTilesColor() == color);
         }
 
-        boolean isStorageRowTilesValid(){
+        public boolean isStorageRowTilesValid(){
             return (this.MAX_TILES_LIMIT >= getTotalTilesNumber());
         }
 

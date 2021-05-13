@@ -1,17 +1,12 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Constants;
+import comp1110.ass2.backend.Constants;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class Game extends Application implements Constants {
     /* board layout */

@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.*;
+import comp1110.ass2.backend.*;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -11,14 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class Viewer extends Application implements Constants {

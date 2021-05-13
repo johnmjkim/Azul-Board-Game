@@ -1,6 +1,6 @@
 package comp1110.ass2.Custom_tests;
 
-import comp1110.ass2.PlayerState;
+import comp1110.ass2.backend.PlayerState;
 import comp1110.ass2.TestStateCases;
 import org.junit.jupiter.api.Test;
 

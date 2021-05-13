@@ -1,4 +1,6 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
+
+import comp1110.ass2.backend.State;
 
 /**
  * Tiles interface counts all numbers of tiles contains in the class
@@ -7,7 +9,7 @@ package comp1110.ass2;
  * SharedState : factories, center, bag, discard
  * PlayerState : mosaic, storage, floor
  */
-public interface Tiles extends State{
+public interface Tiles extends State {
     public void countTilesNumber(String State);
 
     public int getTilesNumber(char color);

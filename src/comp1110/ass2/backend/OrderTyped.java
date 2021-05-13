@@ -1,4 +1,4 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
 /**
  * @author Min Jae, Kim
@@ -6,7 +6,7 @@ package comp1110.ass2;
  * aabbbccdef
  * Floor, Factory, Center class stores tiles like above format
  */
-public interface OrderTyped extends Tiles{
+public interface OrderTyped extends Tiles {
 
     public void refillTiles(char[] refill);
 

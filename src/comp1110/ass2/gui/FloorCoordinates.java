@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Constants;
+import comp1110.ass2.backend.Constants;
 
 public class FloorCoordinates implements Constants {
     private double[] pos_x = new double[MAX_CENTER_STRING_SIZE];

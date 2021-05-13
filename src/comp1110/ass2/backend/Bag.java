@@ -1,15 +1,15 @@
-package comp1110.ass2;
+package comp1110.ass2.backend;
 
 import java.util.Random;
 
-public class BagObject extends BagTypedObject{
+public class Bag extends BagTypedObject{
 
     /**
      * @author Min Jae, Kim
-     * Constructor method for BagObject class
+     * Constructor method for Bag class
      * @param bagTypedObjectState
      */
-    public BagObject(String bagTypedObjectState) {
+    public Bag(String bagTypedObjectState) {
         super(bagTypedObjectState);
     }
 
@@ -21,11 +21,11 @@ public class BagObject extends BagTypedObject{
      */
     public char getRandomTile(){
         char picked_tile = 'Z';
-        int prob_blue = getTilesNumber(BLUE);
-        int prob_green = prob_blue + getTilesNumber(GREEN);
-        int prob_orange = prob_green + getTilesNumber(ORANGE);
-        int prob_purple = prob_orange + getTilesNumber(PURPLE);
-        int prob_red = prob_purple + getTilesNumber(RED);
+        int prob_blue = getTilesNumber(Constants.BLUE);
+        int prob_green = prob_blue + getTilesNumber(Constants.GREEN);
+        int prob_orange = prob_green + getTilesNumber(Constants.ORANGE);
+        int prob_purple = prob_orange + getTilesNumber(Constants.PURPLE);
+        int prob_red = prob_purple + getTilesNumber(Constants.RED);
 
         Random r = new Random();
         int r_range = getTotalTilesNumber();
@@ -44,19 +44,19 @@ public class BagObject extends BagTypedObject{
         //System.out.println(r_range + " : " + prob_blue + ", " + prob_green + ", " + prob_orange + ", " + prob_purple + ", " + prob_red + " : " + r_output);
 
         if (r_output > 0 && r_output <= prob_blue) {
-            picked_tile = BLUE;
+            picked_tile = Constants.BLUE;
         }
         else if (r_output > prob_blue && r_output <= prob_green) {
-            picked_tile = GREEN;
+            picked_tile = Constants.GREEN;
         }
         else if (r_output > prob_green && r_output <= prob_orange) {
-            picked_tile = ORANGE;
+            picked_tile = Constants.ORANGE;
         }
         else if (r_output > prob_orange && r_output <= prob_purple) {
-            picked_tile = PURPLE;
+            picked_tile = Constants.PURPLE;
         }
         else if (r_output > prob_purple && r_output <= prob_red) {
-            picked_tile = RED;
+            picked_tile = Constants.RED;
         }
         return picked_tile;
     }
