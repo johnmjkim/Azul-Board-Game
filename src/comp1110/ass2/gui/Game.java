@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
+import comp1110.ass2.backend.MultiAzul;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,6 +20,8 @@ public class Game extends Application implements Constants {
 
     public static int PLAYER_NUMBER;
     public static int FACTORY_MAX_NUMBER;
+
+    public static String[] currentState;
 
     public static ArrayList<Integer> playerOrders = new ArrayList<Integer>();
     public static ArrayList<String> playerNames = new ArrayList<String>();
@@ -118,7 +121,7 @@ public class Game extends Application implements Constants {
 
     private void decidePlayers(){
         //PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
-        PLAYER_NUMBER = 4;
+        PLAYER_NUMBER = 2;
         FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
         String[] temporary_names = new String[] {"player1name", "player2name", "player3name", "player4name"};
         char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER, HUMAN_PLAYER, COMPUTER_PLAYER};
@@ -173,7 +176,9 @@ public class Game extends Application implements Constants {
     }
 
     private void initializeStates() {
-
+        MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
+        currentState = multiazul.setInitalStates(PLAYER_NUMBER);
+        currentState = multiazul.setStartingState(currentState);
     }
 
     private void makeCoordinates(){

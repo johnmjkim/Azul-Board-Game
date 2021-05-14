@@ -58,16 +58,12 @@ public class DraggableTiles extends ImageView implements Constants {
                 if(viewer.multiazul.isMoveValid(viewer.currentState, findDraftingMove())){
                     String draggable_move = findDraftingMove();
                     System.out.println("drafting valid : " + draggable_move);
-                    viewer.setMove(draggable_move);
-                    setLayoutX(viewer.highlighted.x);
-                    setLayoutY(viewer.highlighted.y);
+                    moveTile(draggable_move);
                 }
                 else if(viewer.multiazul.isMoveValid(viewer.currentState, findTilingMove())){
                     String draggable_move = findTilingMove();
                     System.out.println("tiling valid : " + draggable_move);
-                    viewer.setMove(draggable_move);
-                    setLayoutX(viewer.highlighted.x);
-                    setLayoutY(viewer.highlighted.y);
+                    moveTile(draggable_move);
                 }
                 else{
                     System.out.println("invalid");
@@ -110,6 +106,23 @@ public class DraggableTiles extends ImageView implements Constants {
             setLayoutX(start_x);
             setLayoutY(start_y);
         }
+    }
+
+    public void moveTile(String draggable_move){
+        setLayoutX(viewer.highlighted.x);
+        setLayoutY(viewer.highlighted.y);
+        /*
+        viewer.setMove(draggable_move);
+        System.out.println(viewer.currentState[0]);
+        System.out.println(viewer.currentState[1]);
+        viewer.setState(viewer.multiazul.applyMove(viewer.currentState, draggable_move));
+        System.out.println(viewer.currentState[0]);
+        System.out.println(viewer.currentState[1]);
+        viewer.displayState(viewer.currentState);
+
+         */
+        //viewer.refreshDisplay();
+        //viewer.setMove(null);
     }
 
     public boolean fromFactory(){

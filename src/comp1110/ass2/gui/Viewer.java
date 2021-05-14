@@ -98,8 +98,8 @@ public class Viewer extends Application implements Constants {
          */
 
         // VALID STATES : Tiling Stage to Floor
-        state[0]="AFCB1616181614D0000000000";
-        state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
+        //state[0]="AFCB1616181614D0000000000";
+        //state[1]="A0MS0e11b22c13a34a1FbeeeeB0MS0c11b12e13d4Ff";
 
         /*
         // VALID STATES : Next Round Stage
@@ -116,15 +116,10 @@ public class Viewer extends Application implements Constants {
          */
 
         // Four players example
-        state[0] = "AF0bcce1abcd2adde3bbce4aabe5abde6acde7aadd8bdddCfB1213151014D0000000000";
-        state[1] = "A0MSFB0MSFC0MSFD0MSF";
+        //state[0] = "AF0bcce1abcd2adde3bbce4aabe5abde6acde7aadd8bdddCfB1213151014D0000000000";
+        //state[1] = "A0MSFB0MSFC0MSFD0MSF";
 
-        boolean valid_state = multiazul.isStateValid(state);
-        boolean isdraftingstage = multiazul.isDraftingStage(state);
-        boolean istilingstage = multiazul.isTilingStage(state);
-        boolean isnextroundstage = multiazul.isNextRoundStage(state);
-        boolean isendofgame = multiazul.isGameEndStage(state);
-        System.out.println(" valid : " + valid_state + ", drafting stage : " + isdraftingstage + ", tiling stage : " + istilingstage + ", next round stage : " + isnextroundstage + ", end of game : " + isendofgame);
+        System.out.println(" valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state));
 
         this.currentState = state;
         this.current_stage = multiazul.findCurrentStage(currentState);
@@ -160,14 +155,6 @@ public class Viewer extends Application implements Constants {
         scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
         scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
         controls.getChildren().add(scoreBox);
-        System.out.println(state[0]);
-        System.out.println(state[1]);
-        if(move != null){
-            System.out.println(move);
-            String[] new_State = multiazul.applyMove(state, move);
-            System.out.println(new_State[0]);
-            System.out.println(new_State[1]);
-        }
     }
 
     private void display_empty_Board(char current_stage){
@@ -507,22 +494,9 @@ public class Viewer extends Application implements Constants {
 
         // Use lambda expression for button
         RefreshButton.setOnAction(ae -> {
-            matrixBoard.getChildren().clear();
-            //Rectangle r = new Rectangle(510, 550, 300, 30);
-            //r.setFill(Color.WHITE);
-            //controls.getChildren().add(r);
-            //add backboard each time to empty the tiles which has been displayed
-            ImageView boardA = new ImageView(new Image(EMPTY_BOARD_IMAGE));
-            boardA.setFitWidth(1200);
-            boardA.setFitHeight(500);
-            boardA.setLayoutX(0);
-            boardA.setLayoutY(15);
-            //boardA.setOpacity(0.2);
-            matrixBoard.getChildren().add(boardA);
-
-            displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
-
+            refreshDisplay();
         });
+
         HBox hb = new HBox();
         hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
                 boardTextField, RefreshButton);
@@ -531,6 +505,24 @@ public class Viewer extends Application implements Constants {
         hb.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(hb);
 
+    }
+
+    public void refreshDisplay(){
+        matrixBoard.getChildren().clear();
+        //Rectangle r = new Rectangle(510, 550, 300, 30);
+        //r.setFill(Color.WHITE);
+        //controls.getChildren().add(r);
+        //add backboard each time to empty the tiles which has been displayed
+        ImageView boardA = new ImageView(new Image(EMPTY_BOARD_IMAGE));
+        boardA.setFitWidth(1200);
+        boardA.setFitHeight(500);
+        boardA.setLayoutX(0);
+        boardA.setLayoutY(15);
+        //boardA.setOpacity(0.2);
+        matrixBoard.getChildren().add(boardA);
+
+        displayState(currentState);
+        //displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
     }
 
     private void ChoosePlayers() {
@@ -755,6 +747,7 @@ public class Viewer extends Application implements Constants {
                 System.exit(0);
             });
             GameNextRoundButton.setOnAction(ae1 -> {
+                //refreshDisplay();
                 start_page();
             });
 
@@ -779,6 +772,8 @@ public class Viewer extends Application implements Constants {
     // start() is to show the Game start.
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.currentState = Game.currentState;
+
         window = primaryStage;
         window.setTitle("Azul Viewer");
         scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
@@ -803,6 +798,10 @@ public class Viewer extends Application implements Constants {
 
         makeControls();
         window.show();
+    }
+
+    public void setState(String[] currentstate){
+        this.currentState = currentState;
     }
 
     public void setMove(String move){
