@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import java.util.HashMap;
+
 /**
  * @author Min Jae, Kim
  * @author Si Bo, Hu
@@ -172,9 +174,15 @@ public interface Constants {
     public final double INITIAL_SCORE_IMAGE_POS_Y = 550;
     public final double SCORE_IMAGE_GAP = 10;
 
+    // Game running : Game settings
+    public final char HUMAN_PLAYER = 'H';
+    public final char COMPUTER_PLAYER = 'C';
+
     // Game running : Game stage
     public final char DRAFTING_STAGE = 'D';
     public final char TILING_STAGE = 'T';
     public final char NEXT_ROUND_STAGE = 'N';
     public final char END_OF_GAME = 'E';
+
+
 }

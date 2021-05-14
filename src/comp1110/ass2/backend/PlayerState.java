@@ -65,7 +65,6 @@ public class PlayerState extends States {
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             this.nplayers.add(new nPlayer( playerStates[i] , playerNameState[i].charAt(0), max_player_number));
         }
-
     }
 
     public nPlayer getnPlayer( char player ){

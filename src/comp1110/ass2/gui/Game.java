@@ -8,13 +8,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
 public class Game extends Application implements Constants {
     /* board layout */
     private static final int BOARD_WIDTH = 1200;
     private static final int BOARD_HEIGHT = 700;
 
-    public static int PLAYER_NUMBER = 2;
-    public static int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
+    public static int PLAYER_NUMBER;
+    public static int FACTORY_MAX_NUMBER;
+
+    public static ArrayList<Integer> playerOrders = new ArrayList<Integer>();
+    public static ArrayList<String> playerNames = new ArrayList<String>();
+    public static ArrayList<Character> playerTypes = new ArrayList<Character>();
+    public static ArrayList<PlayersInformation.PlayerInfo> playerInfos = new ArrayList<PlayersInformation.PlayerInfo>();
+    public static HashMap<Character, PlayersInformation.PlayerInfo> playerMap = new HashMap<Character, PlayersInformation.PlayerInfo>();
+
     public static StorageCoordinates STORAGE_COORDINATES;
     public static FloorCoordinates FLOOR_COORDINATES;
     public static MosaicCoordinates MOSAIC_COORDINATES;
@@ -91,11 +102,8 @@ public class Game extends Application implements Constants {
         Group root = new Group();
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
+        decidePlayers();
         makeCoordinates();
-
-        Rectangle r = new Rectangle(50, 50, 100, 100);
-        r.setFill(Color.RED);
-        root.getChildren().add(r);
 
         stage.setScene(scene);
         stage.show();
@@ -107,7 +115,54 @@ public class Game extends Application implements Constants {
 
     }
 
+    private void decidePlayers(){
+        //PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
+        PLAYER_NUMBER = 4;
+        FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
+        String[] temporary_names = new String[] {"player1name", "player2name", "player3name", "player4name"};
+        char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER, HUMAN_PLAYER, COMPUTER_PLAYER};
+        for(int i=0; i < PLAYER_NUMBER; i++){
+            playerNames.add(temporary_names[i]);
+            playerTypes.add(temporary_types[i]);
+        }
+        randomizeOrders();
+        for(int i=0; i < PLAYER_NUMBER; i++){
+            System.out.println(playerOrders.get(i));
+        }
+        PlayersInformation playersinformation = new PlayersInformation(playerOrders, playerNames, playerTypes);
+        playerInfos = playersinformation.getPlayerInfos();
+        playerMap = playersinformation.getPlayerMap();
+        System.out.println(playersinformation);
 
+        for( char player_turn : ALL_PLAYERS ){
+            System.out.print(" Turn : " + player_turn + playerMap.get(player_turn));
+        }
+    }
+
+    private void randomizeOrders(){
+        Random r = new Random();
+        int bound = PLAYER_NUMBER;
+        for(int i=0; i < bound; i++){
+            int rand_num = r.nextInt(bound);
+            if(i == 0){
+                playerOrders.add(rand_num);
+            }
+            else{
+                boolean repeated = false;
+                for(int j=0; j < playerOrders.size(); j++){
+                    if(playerOrders.get(j) == rand_num){
+                        repeated = true;
+                    }
+                }
+                if(repeated){
+                    i--;
+                }
+                else{
+                    playerOrders.add(rand_num);
+                }
+            }
+        }
+    }
 
     private void makeCoordinates(){
         // Coordinates
