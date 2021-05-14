@@ -759,6 +759,9 @@ public class Azul implements Constants {
                     ss.changeTurn();
                 }
 
+                // Set First Player token at that center and end the next round preparation
+                ss.center.addTile(FIRST_PLAYER);
+
                 output_gameState[0] = ss.getUpdatedSharedState();
                 output_gameState[1] = ps.getUpdatedPlayerState();
             }

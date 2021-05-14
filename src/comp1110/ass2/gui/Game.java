@@ -103,6 +103,7 @@ public class Game extends Application implements Constants {
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
         decidePlayers();
+        initializeStates();
         makeCoordinates();
 
         stage.setScene(scene);
@@ -117,7 +118,7 @@ public class Game extends Application implements Constants {
 
     private void decidePlayers(){
         //PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
-        PLAYER_NUMBER = 4;
+        PLAYER_NUMBER = 2;
         FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
         String[] temporary_names = new String[] {"player1name", "player2name", "player3name", "player4name"};
         char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER, HUMAN_PLAYER, COMPUTER_PLAYER};
@@ -126,17 +127,24 @@ public class Game extends Application implements Constants {
             playerTypes.add(temporary_types[i]);
         }
         randomizeOrders();
+        /*
         for(int i=0; i < PLAYER_NUMBER; i++){
             System.out.println(playerOrders.get(i));
         }
+
+         */
+
         PlayersInformation playersinformation = new PlayersInformation(playerOrders, playerNames, playerTypes);
         playerInfos = playersinformation.getPlayerInfos();
         playerMap = playersinformation.getPlayerMap();
-        System.out.println(playersinformation);
+        //System.out.println(playersinformation);
 
+        /*
         for( char player_turn : ALL_PLAYERS ){
             System.out.print(" Turn : " + player_turn + playerMap.get(player_turn));
         }
+
+         */
     }
 
     private void randomizeOrders(){
@@ -162,6 +170,10 @@ public class Game extends Application implements Constants {
                 }
             }
         }
+    }
+
+    private void initializeStates() {
+
     }
 
     private void makeCoordinates(){

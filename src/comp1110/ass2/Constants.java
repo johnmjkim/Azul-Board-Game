@@ -56,6 +56,7 @@ public interface Constants {
     public static final char[] NUMBERS = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
 
     // Size, Numbers of all components : General
+    public final int NUMBER_OF_STATES = 2;
     public final String EMPTY_STATE = "";
 
     // Size, Numbers of all components : BagTyped
@@ -63,7 +64,8 @@ public interface Constants {
     public final int MAX_BAG_EACH_COLOR_SIZE = 20;
     public final int MAX_DISCARD_SIZE = 100;
     public final int MAX_BAG_SIZE = 100;
-    public final String EMPTY_TILES = "0000000000";
+    public final String EMPTY_TILES_STATE = "0000000000";
+    public final String FULL_TILES_STATE = "2020202020";
 
     // Size, Numbers of all components : OrderTyped
     public final int FACTORY_SIZE = 4;
@@ -86,6 +88,8 @@ public interface Constants {
     public final int MAX_STORAGE_COL = 5;
 
     // Size, Numbers of all components : Score
+    public final int INITIAL_SCORE = 0;
+    public final String INITIAL_SCORE_STATE = "0";
     public final int[] CLEARING_FLOOR_POINTS = new int[]{0, -1, -2, -4, -6, -8, -11, -14};
     public final int ROW_BONUS_POINT = 2;
     public final int COL_BONUS_POINT = 7;

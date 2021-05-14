@@ -602,8 +602,12 @@ public class MultiAzul implements Constants {
                     ss.changeTurn();
                 }
 
+                // Set First Player token at that center and end the next round preparation
+                ss.center.addTile(FIRST_PLAYER);
+
                 output_gameState[0] = ss.getUpdatedSharedState();
                 output_gameState[1] = ps.getUpdatedPlayerState();
+
             }
 
             //System.out.println(" Next round ready ");
@@ -1390,5 +1394,46 @@ public class MultiAzul implements Constants {
                 return END_OF_GAME;
             }
         }
+    }
+
+    public String[] setInitalStates(int max_player_number){
+        String ss_String;
+        String ps_String;
+        String[] output_gameState = new String[NUMBER_OF_STATES];
+        StringBuilder SB = new StringBuilder();
+
+        SB.append(PLAYER_A);
+        SB.append(FACTORY);
+        SB.append(CENTER);
+        SB.append(FIRST_PLAYER);
+        SB.append(BAG);
+        SB.append(FULL_TILES_STATE);
+        SB.append(DISCARD);
+        SB.append(EMPTY_TILES_STATE);
+        ss_String = String.valueOf(SB);
+        SB.delete(0, SB.length());
+
+        for(int idx=0; idx < max_player_number; idx++){
+            SB.append(ALL_PLAYERS[idx]);
+            SB.append(INITIAL_SCORE_STATE);
+            SB.append(MOSAIC);
+            SB.append(STORAGE);
+            SB.append(FLOOR);
+        }
+        ps_String = String.valueOf(SB);
+        SB.delete(0, SB.length());
+
+        output_gameState[0] = ss_String;
+        output_gameState[1] = ps_String;
+
+        return output_gameState;
+    }
+
+    public String[] setStartingState(String[] gameState){
+        String[] output_gameState = new String[NUMBER_OF_STATES];
+
+        output_gameState = refillFactories(gameState);
+
+        return output_gameState;
     }
 }

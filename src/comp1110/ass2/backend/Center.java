@@ -56,7 +56,7 @@ public class Center extends OrderTypedObject {
      * @return
      */
     public boolean hasOnlyOneFirstPlayerToken() {
-        return (this.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
+        return (super.letters[FIRST_PLAYER] == 1) && (getTotalTilesNumber() == 1);
     }
 
     /**
@@ -64,5 +64,5 @@ public class Center extends OrderTypedObject {
      * Check if the center has first player token
      * @return
      */
-    public boolean hasFirstPlayerToken() {return (this.letters[FIRST_PLAYER] != 0); }
+    public boolean hasFirstPlayerToken() {return (super.letters[FIRST_PLAYER] != 0); }
 }

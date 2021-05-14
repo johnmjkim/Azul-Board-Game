@@ -25,7 +25,6 @@ public class PlayersInformation implements Constants {
     private void setPlayerInfos(){
         for(int i=0; i < MAX_PLAYER_NUMBER; i++){
             int order = playerOrders.get(i);
-            System.out.println(order);
             this.playerInfos.add(new PlayerInfo(order, ALL_PLAYERS[order], playerNames.get(i), playerTypes.get(i)));
         }
         this.playermap = reorder();
