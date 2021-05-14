@@ -36,6 +36,7 @@ public class Viewer extends Application implements Constants {
     SharedState ss;
     PlayerState ps;
     String[] currentState;
+    String move;
     public char current_turn;
     public char current_stage;
 
@@ -114,16 +115,16 @@ public class Viewer extends Application implements Constants {
         state[1]="A35Mb00a01c02d03e04d10b11c13a14a20c21e22a32b33a43d44S1e1FB19Mb00a01c02e03d04c10d12a13b14c21b23e24b31d33c34S2a14a4F";
          */
 
+        // Four players example
+        state[0] = "AF0bcce1abcd2adde3bbce4aabe5abde6acde7aadd8bdddCfB1213151014D0000000000";
+        state[1] = "A0MSFB0MSFC0MSFD0MSF";
+
         boolean valid_state = multiazul.isStateValid(state);
         boolean isdraftingstage = multiazul.isDraftingStage(state);
         boolean istilingstage = multiazul.isTilingStage(state);
         boolean isnextroundstage = multiazul.isNextRoundStage(state);
         boolean isendofgame = multiazul.isGameEndStage(state);
         System.out.println(" valid : " + valid_state + ", drafting stage : " + isdraftingstage + ", tiling stage : " + istilingstage + ", next round stage : " + isnextroundstage + ", end of game : " + isendofgame);
-
-        // Four players example
-        //state[0] = "AF0cdde2abde3cdee4bcceCaaabbbccccdddeefB1915161614D1718152019";
-        //state[1] = "A07Me01b04a11d20b30b41e44S0a11b22c13c14d2FabeeB08Md03b13e23c32b41S0b11c12a33d24e4FabccC12Mb00e11e12a21d20b30b41b42S1b22c13c14d1FeD05Me11e12e13e14a22a23c32b41b42b44b43S2a33d24e4Fabcc";
 
         this.currentState = state;
         this.current_stage = multiazul.findCurrentStage(currentState);
@@ -159,6 +160,14 @@ public class Viewer extends Application implements Constants {
         scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
         scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
         controls.getChildren().add(scoreBox);
+        System.out.println(state[0]);
+        System.out.println(state[1]);
+        if(move != null){
+            System.out.println(move);
+            String[] new_State = multiazul.applyMove(state, move);
+            System.out.println(new_State[0]);
+            System.out.println(new_State[1]);
+        }
     }
 
     private void display_empty_Board(char current_stage){
@@ -794,6 +803,10 @@ public class Viewer extends Application implements Constants {
 
         makeControls();
         window.show();
+    }
+
+    public void setMove(String move){
+        this.move = move;
     }
 
     public static class Rectangle extends Polygon {

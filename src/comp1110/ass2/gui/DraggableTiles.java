@@ -56,12 +56,16 @@ public class DraggableTiles extends ImageView implements Constants {
                 StringBuilder SB = new StringBuilder();
                 System.out.print(" Snapped , move : ");
                 if(viewer.multiazul.isMoveValid(viewer.currentState, findDraftingMove())){
-                    System.out.println("drafting valid : " + findDraftingMove());
+                    String draggable_move = findDraftingMove();
+                    System.out.println("drafting valid : " + draggable_move);
+                    viewer.setMove(draggable_move);
                     setLayoutX(viewer.highlighted.x);
                     setLayoutY(viewer.highlighted.y);
                 }
                 else if(viewer.multiazul.isMoveValid(viewer.currentState, findTilingMove())){
-                    System.out.println("tiling valid : " + findTilingMove());
+                    String draggable_move = findTilingMove();
+                    System.out.println("tiling valid : " + draggable_move);
+                    viewer.setMove(draggable_move);
                     setLayoutX(viewer.highlighted.x);
                     setLayoutY(viewer.highlighted.y);
                 }
