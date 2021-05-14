@@ -76,7 +76,7 @@ public interface Constants {
     public final int MAX_FLOOR_BEFORE_ADJUST_STRING_SIZE = MAX_FLOOR_STRING_SIZE + CENTER_MAX_NUMBERS[2];
     public final int DEFAULT_FACTORY_MAX_NUMBER = 2 * DEFAULT_MAX_PLAYER + 1;
     public final int[] FACTORY_MAX_NUMBERS = {5, 7, 9};
-    public final int[] FACTORY_MAX_INDICES = {FOUR, SIX, SEVEN};
+    public final int[] FACTORY_MAX_INDICES = {FOUR, SIX, EIGHT};
 
     // Size, Numbers of all components : CoordinateTyped
     public final int MAX_STORAGE_STRING_SIZE = 5 * 3;

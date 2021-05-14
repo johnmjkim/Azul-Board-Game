@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Experiment_PSVM3 implements Constants{
     public static void main(String[] args) {
-        int PLAYER_NUMBER = 2;
+        int PLAYER_NUMBER = 4;
         String[] gameState = new String[NUMBER_OF_STATES];
         String move;
         MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
@@ -32,8 +32,8 @@ public class Experiment_PSVM3 implements Constants{
             System.out.println(" Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
         }
 
-        while(multiazul.findCurrentStage(gameState) != END_OF_GAME){
-            while(multiazul.findCurrentStage(gameState) != NEXT_ROUND_STAGE){
+        while(!(multiazul.findCurrentStage(gameState) == END_OF_GAME)){
+            while(!(multiazul.findCurrentStage(gameState) == NEXT_ROUND_STAGE || multiazul.findCurrentStage(gameState) == END_OF_GAME)){
                 move = multiazul.generateAction(gameState);
                 gameState = multiazul.applyMove(gameState, move);
                 for(int i=0; i < NUMBER_OF_STATES; i++){
@@ -46,8 +46,5 @@ public class Experiment_PSVM3 implements Constants{
             }
         }
 
-        for(int i=0; i < NUMBER_OF_STATES; i++){
-            System.out.println(" Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
-        }
     }
 }

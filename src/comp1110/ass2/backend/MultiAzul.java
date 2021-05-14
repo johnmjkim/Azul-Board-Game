@@ -26,7 +26,7 @@ public class MultiAzul implements Constants {
         // Filter valid capital letters
         for (char c : sharedState_array) {
             //System.out.println(c);
-            if (c >= PLAYER_A && c < ALL_PLAYERS[MAX_PLAYER_NUMBER] || c == FACTORY || c == CENTER || c == BAG || c == DISCARD) {
+            if (c >= PLAYER_A && c <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1] || c == FACTORY || c == CENTER || c == BAG || c == DISCARD) {
                 //System.out.println(String.valueOf(c));
                 sharedState_name_arr.add(c);
                 sharedState_content_arr.add(String.valueOf(SB));
@@ -222,7 +222,7 @@ public class MultiAzul implements Constants {
         // Filter valid capital letters
         for (char c : playerState_array) {
             //System.out.println(c);
-            if ((c >= PLAYER_A && c < ALL_PLAYERS[MAX_PLAYER_NUMBER]) || c == MOSAIC || c == STORAGE || c == FLOOR) {
+            if ((c >= PLAYER_A && c <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1]) || c == MOSAIC || c == STORAGE || c == FLOOR) {
                 //System.out.println(String.valueOf(c));
                 playerState_name_arr.add(c);
                 playerState_content_arr.add(String.valueOf(SB));
@@ -299,7 +299,7 @@ public class MultiAzul implements Constants {
 
     public boolean check_p_player_format(char p_player_char) {
         // Find capital letters valid
-        boolean p_player_name_format = (p_player_char >= PLAYER_A && p_player_char <= ALL_PLAYERS[MAX_PLAYER_NUMBER]);
+        boolean p_player_name_format = (p_player_char >= PLAYER_A && p_player_char <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1]);
 
         // P_Player is valid
         boolean p_player_format = p_player_name_format;
@@ -813,7 +813,7 @@ public class MultiAzul implements Constants {
             char player_turn = move.charAt(0);
             char storage_mosaic_row = move.charAt(1);
             char mosaic_column_or_floor = move.charAt(2);
-            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn < ALL_PLAYERS[MAX_PLAYER_NUMBER]);
+            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1]);
             boolean storage_mosaic_row_valid = (storage_mosaic_row >= ZERO) && (storage_mosaic_row <= FOUR);
             boolean mosaic_column_or_floor_valid = ((mosaic_column_or_floor >= ZERO) && (mosaic_column_or_floor <= FOUR)) || mosaic_column_or_floor == FLOOR;
             return player_turn_valid && storage_mosaic_row_valid && mosaic_column_or_floor_valid;
@@ -822,7 +822,7 @@ public class MultiAzul implements Constants {
             char factory_or_center = move.charAt(1);
             char color_of_tile = move.charAt(2);
             char storage_row_or_floor = move.charAt(3);
-            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn < ALL_PLAYERS[MAX_PLAYER_NUMBER]);
+            boolean player_turn_valid = (player_turn >= ALL_PLAYERS[0]) && (player_turn <= ALL_PLAYERS[MAX_PLAYER_NUMBER - 1]);
             boolean factory_or_center_valid = ((factory_or_center >= ZERO) && (factory_or_center <= FACTORY_MAX_INDICES[MAX_PLAYER_NUMBER - DEFAULT_MAX_PLAYER])) || factory_or_center == CENTER;
             boolean color_of_tile_valid = (color_of_tile >= BLUE) && (color_of_tile <= RED);
             boolean storage_row_or_floor_valid = ((storage_row_or_floor >= ZERO) && (storage_row_or_floor <= FOUR)) || storage_row_or_floor == FLOOR;
