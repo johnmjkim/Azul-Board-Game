@@ -500,7 +500,7 @@ public class Viewer extends Application implements Constants {
      */
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
-    private void setupViewer() {
+    public void setupViewer() {
         Label playerLabel = new Label("Player State:");
         playerTextField = new TextField();
         playerTextField.setPrefWidth(100);

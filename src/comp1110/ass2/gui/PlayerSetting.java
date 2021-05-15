@@ -159,8 +159,8 @@ public class PlayerSetting extends JFrame implements ActionListener {
 
         //choose to start the game or exit
         if (mes.equals("Yes, please start")) {
-            Viewer viewer = new Viewer();
-            viewer.setupViewer();
+            //Viewer viewer = new Viewer();
+            //viewer.setupViewer();
             //new Viewer().close();
             //new Viewer().middleprocess();
             //new Viewer().setupViewer();
