@@ -861,8 +861,8 @@ public class Viewer extends Application implements Constants {
             }
             i++;
         }
-        //System.out.print("closestID : " + closestID + " distance : " + distance);
-        //System.out.println(" snappableTiles x, y : " + snappableTiles.get(closestID).x + ", " + snappableTiles.get(closestID).y);
+        System.out.print("closestID : " + closestID + " distance : " + distance);
+        System.out.println(" snappableTiles x, y : " + snappableTiles.get(closestID).x + ", " + snappableTiles.get(closestID).y);
         return snappableTiles.get(closestID);
     }
 
