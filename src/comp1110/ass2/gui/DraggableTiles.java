@@ -86,6 +86,10 @@ public class DraggableTiles extends ImageView implements Constants {
         return this.tile_num;
     }
 
+    public char getType(){
+        return this.type;
+    }
+
     public void returnTile(){
         double start_x, start_y;
         if(fromFactory()){
@@ -93,7 +97,7 @@ public class DraggableTiles extends ImageView implements Constants {
             start_y = viewer.FACTORIES_COORDINATES.getFactoryCoordinates(index).getPos_y(tile_num);
             setLayoutX(start_x);
             setLayoutY(start_y);
-            System.out.print(" From factory : " + " index : " + index + " tile_num : " + tile_num);
+            System.out.print(" From " + getType() + " : " + " index : " + index + " tile_num : " + tile_num);
             System.out.println(" start_x : " + start_x + " start_y : " + start_y);
         }
         else if(fromCenter()){
@@ -101,7 +105,7 @@ public class DraggableTiles extends ImageView implements Constants {
             start_y = viewer.CENTER_COORDINATES.getPos_y(tile_num);
             setLayoutX(start_x);
             setLayoutY(start_y);
-            System.out.print(" From factory : " + " tile_num : " + tile_num);
+            System.out.print(" From " + getType() + " : " + " tile_num : " + tile_num);
             System.out.println(" start_x : " + start_x + " start_y : " + start_y);
         }
         else if(fromStorage()){
@@ -109,7 +113,7 @@ public class DraggableTiles extends ImageView implements Constants {
             start_y = viewer.STORAGE_COORDINATES.getStorageRowCoordinates(index).getPos_y(tile_num);
             setLayoutX(start_x);
             setLayoutY(start_y);
-            System.out.print(" From factory : " + " index : " + index + " tile_num : " + tile_num);
+            System.out.print(" From "  + getType() + " : " + " index : " + index + " tile_num : " + tile_num);
             System.out.println(" start_x : " + start_x + " start_y : " + start_y);
         }
     }
@@ -126,15 +130,15 @@ public class DraggableTiles extends ImageView implements Constants {
     }
 
     public boolean fromFactory(){
-        return this.type == FACTORY;
+        return getType() == FACTORY;
     }
 
     public boolean fromCenter(){
-        return this.type == CENTER;
+        return getType() == CENTER;
     }
 
     public boolean fromStorage(){
-        return this.type == STORAGE;
+        return getType() == STORAGE;
     }
 
     public String findDraftingMove(){

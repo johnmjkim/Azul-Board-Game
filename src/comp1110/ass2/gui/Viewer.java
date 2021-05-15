@@ -400,7 +400,7 @@ public class Viewer extends Application implements Constants {
                 double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(storage_col);
                 double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(storage_col);
                 if(current_player.storage.getStorageRow(storage_row).isTilesFull() && (current_stage == TILING_STAGE)){
-                    DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_IMAGE[storage_row_colors[storage_row] - BLUE],this, STORAGE ,storage_row , tiles);
+                    DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_IMAGE[storage_row_colors[storage_row] - BLUE],this, STORAGE ,storage_row , storage_col);
                     draggableTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                     draggableTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
                     draggableTile.setLayoutY(y);
