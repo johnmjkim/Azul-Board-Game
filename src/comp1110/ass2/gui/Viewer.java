@@ -500,7 +500,7 @@ public class Viewer extends Application implements Constants {
      */
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
-    private void setupViewer() {
+    public void setupViewer() {
         Label playerLabel = new Label("Player State:");
         playerTextField = new TextField();
         playerTextField.setPrefWidth(100);
@@ -541,7 +541,7 @@ public class Viewer extends Application implements Constants {
         System.out.println(currentState[1]);
         displayState(currentState);
     }
-
+/*
     private void ChoosePlayers() {
         Label playerNumber = new Label("Choose Number of Players: ");
         Button TwoPlayer = new Button("2 Players");
@@ -715,10 +715,11 @@ public class Viewer extends Application implements Constants {
         hb.setLayoutY(360);
         controls.getChildren().add(hb);
     }
-
+*/
     public static void main(String[] args) {
         launch(args);
     }
+    /*
     private void start_page() {
         matrixBoard.getChildren().clear();
         controls.getChildren().clear();
@@ -753,9 +754,10 @@ public class Viewer extends Application implements Constants {
             //boardA.setOpacity(0);
             matrixBoard.getChildren().clear();
             controls.getChildren().clear();
-            /*setupViewer();*/
+            //setupViewer();
 
-            ChoosePlayers();
+            //ChoosePlayers();
+            setupViewer();
 
             Button GameExitButton = new Button("Exit ");
             Button GameNextRoundButton = new Button("Next round");
@@ -764,15 +766,11 @@ public class Viewer extends Application implements Constants {
                 System.exit(0);
             });
             GameNextRoundButton.setOnAction(ae1 -> {
-                //refreshDisplay();
-                //start_page();
-                /*
+
                 if(current_stage == NEXT_ROUND_STAGE){
                     currentState = multiazul.nextRound(currentState);
                 }
                 setupViewer();
-
-                 */
             });
 
             HBox hb1 = new HBox(GameExitButton, GameNextRoundButton);
@@ -787,10 +785,12 @@ public class Viewer extends Application implements Constants {
         });
 
     }
+    */
+
 
     // makeControls() is to make control of the Viewer.
-    private void makeControls() {
-        start_page();
+    private void makeControls(){
+          setupViewer();
     }
 
     // start() is to show the Game start.
