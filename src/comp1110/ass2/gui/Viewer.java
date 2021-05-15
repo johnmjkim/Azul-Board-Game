@@ -509,9 +509,13 @@ public class Viewer extends Application implements Constants {
         boardTextField.setPrefWidth(100);
         Button RefreshButton = new Button("Refresh");
 
+        refreshDisplay();
         // Use lambda expression for button
         RefreshButton.setOnAction(ae -> {
-            refreshDisplay();
+            if(current_stage == NEXT_ROUND_STAGE) {
+                currentState = multiazul.nextRound(currentState);
+                refreshDisplay();
+            }
         });
 
         HBox hb = new HBox();
@@ -762,10 +766,13 @@ public class Viewer extends Application implements Constants {
             GameNextRoundButton.setOnAction(ae1 -> {
                 //refreshDisplay();
                 //start_page();
+                /*
                 if(current_stage == NEXT_ROUND_STAGE){
                     currentState = multiazul.nextRound(currentState);
                 }
                 setupViewer();
+
+                 */
             });
 
             HBox hb1 = new HBox(GameExitButton, GameNextRoundButton);
