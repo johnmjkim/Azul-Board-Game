@@ -500,7 +500,7 @@ public class Viewer extends Application implements Constants {
      */
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
-    public void setupViewer() {
+    private void setupViewer() {
         Label playerLabel = new Label("Player State:");
         playerTextField = new TextField();
         playerTextField.setPrefWidth(100);
@@ -509,9 +509,13 @@ public class Viewer extends Application implements Constants {
         boardTextField.setPrefWidth(100);
         Button RefreshButton = new Button("Refresh");
 
+        refreshDisplay();
         // Use lambda expression for button
         RefreshButton.setOnAction(ae -> {
-            refreshDisplay();
+            if(current_stage == NEXT_ROUND_STAGE) {
+                currentState = multiazul.nextRound(currentState);
+                refreshDisplay();
+            }
         });
 
         HBox hb = new HBox();
