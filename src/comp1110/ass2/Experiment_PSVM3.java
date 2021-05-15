@@ -32,7 +32,7 @@ public class Experiment_PSVM3 implements Constants{
 
          */
 
-        int TEST_TIMES = 1000;
+        int TEST_TIMES = 1;
         for(int test=1; test <= TEST_TIMES; test++){
             gameState = multiazul.setInitalStates(PLAYER_NUMBER);
             for(int i=0; i < NUMBER_OF_STATES; i++){

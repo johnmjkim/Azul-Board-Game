@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Viewer extends Application implements Constants {
 
@@ -40,8 +41,9 @@ public class Viewer extends Application implements Constants {
     public char current_turn;
     public char current_stage;
 
-    //public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
-    public int PLAYER_NUMBER = 4;
+    public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    //public int PLAYER_NUMBER = 4;
+    public static HashMap<Character, PlayersInformation.PlayerInfo> playerMap = Game.playerMap;
     MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
 
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
@@ -87,8 +89,8 @@ public class Viewer extends Application implements Constants {
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
 
-        //setState(state);
-        this.currentState = state;
+        setState(state);
+        //this.currentState = state;
         this.current_stage = multiazul.findCurrentStage(state);
 
         ss = new SharedState(state[0], PLAYER_NUMBER);
@@ -99,32 +101,39 @@ public class Viewer extends Application implements Constants {
         nPlayer current_player = ps.getnPlayer(current_turn);
 
         System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state));
-
-        // Display empty, snappable board
-        display_empty_Board(current_stage);
-
-        // Display undraggable board :
-        // Drafting Stage : Storage, Mosaic, Floor, Bag, Discard
-        // Tiling Stage : Factories, Center, Mosaic, Floor, Bag, Discard
-        displayUndraggableBoard(ss, current_player);
-
-        // Display draggable board :
-        // Drafting Stage : Factories, Center
-        // Tiling Stage : Storage
-        displayDraggableBoard(ss);
-
-        //SCORE
-        controls.getChildren().clear();
-        HBox scoreBox = new HBox();
-        for (int player = 0; player < PLAYER_NUMBER; player++) {
-            int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
-            Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
-            scoreBox.getChildren().add(score_label);
+        System.out.println(playerMap.get(current_turn));
+        if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER){
+            this.move = multiazul.generateSmartAction(currentState);
+            this.currentState = multiazul.applyMove(currentState, move);
+            refreshDisplay();
         }
-        scoreBox.setSpacing(SCORE_IMAGE_GAP);
-        scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
-        scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
-        controls.getChildren().add(scoreBox);
+        else{
+            // Display empty, snappable board
+            display_empty_Board(current_stage);
+
+            // Display undraggable board :
+            // Drafting Stage : Storage, Mosaic, Floor, Bag, Discard
+            // Tiling Stage : Factories, Center, Mosaic, Floor, Bag, Discard
+            displayUndraggableBoard(ss, current_player);
+
+            // Display draggable board :
+            // Drafting Stage : Factories, Center
+            // Tiling Stage : Storage
+            displayDraggableBoard(ss);
+
+            //SCORE
+            controls.getChildren().clear();
+            HBox scoreBox = new HBox();
+            for (int player = 0; player < PLAYER_NUMBER; player++) {
+                int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
+                Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
+                scoreBox.getChildren().add(score_label);
+            }
+            scoreBox.setSpacing(SCORE_IMAGE_GAP);
+            scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
+            scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
+            controls.getChildren().add(scoreBox);
+        }
     }
 
     private void display_empty_Board(char current_stage){
@@ -471,29 +480,7 @@ public class Viewer extends Application implements Constants {
 
     // setupViewer() is to start the Viewer, get the state and refresh it as the image shows
     public void setupViewer() {
-        /*
-        Label playerLabel = new Label("Player State:");
-        playerTextField = new TextField();
-        playerTextField.setPrefWidth(100);
-        Label boardLabel = new Label("Board State:");
-        boardTextField = new TextField();
-        boardTextField.setPrefWidth(100);
-        Button RefreshButton = new Button("Refresh");
-
-         */
-
         refreshDisplay();
-
-        /*
-        HBox hb = new HBox();
-        hb.getChildren().addAll(playerLabel, playerTextField, boardLabel,
-                boardTextField, RefreshButton);
-        hb.setSpacing(10);
-        hb.setLayoutX(50);
-        hb.setLayoutY(VIEWER_HEIGHT - 50);
-        controls.getChildren().add(hb);
-
-         */
     }
 
     public void refreshDisplay(){
@@ -522,256 +509,14 @@ public class Viewer extends Application implements Constants {
         matrixBoard.getChildren().add(boardA);
         displayState(currentState);
     }
-/*
-    private void ChoosePlayers() {
-        Label playerNumber = new Label("Choose Number of Players: ");
-        Button TwoPlayer = new Button("2 Players");
-        Button ThreePlayer = new Button("3 Players");
-        Button FourPlayer = new Button("4 Players");
 
-        HBox hb1 = new HBox(playerNumber,TwoPlayer,ThreePlayer,FourPlayer);
-        hb1.setSpacing(15);
-        hb1.setLayoutX(400);
-        hb1.setLayoutY(226);
-        controls.getChildren().add(hb1);
-
-        TwoPlayer.setOnAction(ae -> {
-            CoverButtonsInChoosePlayer();
-            LabelPlayerOne();
-            PlayerTwo();
-            PlayWithComputer();
-        });
-        ThreePlayer.setOnAction(ae -> {
-            CoverButtonsInChoosePlayer();
-            LabelPlayerOne();
-            PlayerTwo();
-            PlayerThree();
-            PlayWithComputer();
-        });
-        FourPlayer.setOnAction(ae -> {
-            CoverButtonsInChoosePlayer();
-            LabelPlayerOne();
-            PlayerTwo();
-            PlayerThree();
-            PlayerFour();
-            PlayWithComputer();
-        });
-    }
-
-    public void StartAzulGame() {
-        Button StartGame = new Button("Start Azul Game");
-        StartGame.setLayoutX(632);
-        StartGame.setLayoutY(470);
-        controls.getChildren().add(StartGame);
-        StartGame.setOnAction(ae -> {
-            setupViewer();
-            CoverChoosePlayerPage();
-        });
-    }
-
-    public void StartAzulGameWithComputer() {
-        Button StartGame = new Button("Start Azul Game with computer");
-        StartGame.setLayoutX(400);
-        StartGame.setLayoutY(470);
-        controls.getChildren().add(StartGame);
-        StartGame.setOnAction(ae -> {
-            setupViewer();
-            CoverChoosePlayerPage();
-        });
-    }
-
-    public void CoverChoosePlayerPage() {
-        ImageView white = new ImageView(new Image("file:src/comp1110/ass2/img/White.png"));
-        white.setLayoutX(400);
-        white.setLayoutY(220);
-        white.setFitHeight(300);
-        white.setFitWidth(500);
-        controls.getChildren().add(white);
-    }
-
-    public void CoverButtonsInChoosePlayer() {
-        ImageView white = new ImageView(new Image("file:src/comp1110/ass2/img/White.png"));
-        white.setLayoutX(400);
-        white.setLayoutY(270);
-        white.setFitHeight(300);
-        white.setFitWidth(500);
-        controls.getChildren().add(white);
-    }
-
-    public void CoverStartButton() {
-        ImageView white = new ImageView(new Image("file:src/comp1110/ass2/img/White.png"));
-        white.setLayoutX(390);
-        white.setLayoutY(470);
-        white.setFitHeight(30);
-        white.setFitWidth(500);
-        controls.getChildren().add(white);
-    }
-
-    public void CoverPlayerLabel() {
-        ImageView white = new ImageView(new Image("file:src/comp1110/ass2/img/White.png"));
-        white.setLayoutX(555);
-        white.setLayoutY(269);
-        white.setFitHeight(30);
-        white.setFitWidth(160);
-        controls.getChildren().add(white);
-    }
-
-    public void PlayWithComputer() {
-        Label FirstPlayer = new Label("Do you want to set Player 1 as a computer player?");
-        FirstPlayer.setLayoutX(400);
-        FirstPlayer.setLayoutY(400);
-        controls.getChildren().add(FirstPlayer);
-        Button NeedComputerPlayer = new Button("Yes ( Player 1 don't need a name )");
-        Button DoNotNeedComputerPlayer = new Button("No ( Player 1 need a name )");
-        NeedComputerPlayer.setOnAction(ae -> {
-            CoverPlayerLabel();
-            CoverStartButton();
-            StartAzulGameWithComputer();
-        });
-        DoNotNeedComputerPlayer.setOnAction(ae -> {
-            CoverStartButton();
-            TextFieldPlayerOne();
-            StartAzulGame();
-        });
-        HBox hb = new HBox();
-        hb.getChildren().addAll(NeedComputerPlayer,DoNotNeedComputerPlayer);
-        hb.setSpacing(20);
-        hb.setLayoutX(400);
-        hb.setLayoutY(430);
-        controls.getChildren().add(hb);
-    }
-
-    public void LabelPlayerOne() {
-        Label FirstPlayer = new Label("Name of Player 1: ");
-        FirstPlayer.setLayoutX(400);
-        FirstPlayer.setLayoutY(270);
-        controls.getChildren().add(FirstPlayer);
-    }
-
-    public void TextFieldPlayerOne() {
-        TextField PlayerTextField1;
-        PlayerTextField1 = new TextField();
-        PlayerTextField1.setPrefWidth(150);
-        PlayerTextField1.setLayoutX(556);
-        PlayerTextField1.setLayoutY(270);
-        controls.getChildren().add(PlayerTextField1);
-        PlayerTextField1.getText();
-    }
-
-    public void PlayerTwo() {
-        TextField PlayerTextField2;
-        Label SecondPlayer = new Label("Name of Player 2: ");
-        PlayerTextField2 = new TextField();
-        PlayerTextField2.setPrefWidth(150);
-        HBox hb = new HBox();
-        hb.getChildren().addAll(SecondPlayer, PlayerTextField2);
-        hb.setSpacing(50);
-        hb.setLayoutX(400);
-        hb.setLayoutY(300);
-        controls.getChildren().add(hb);
-    }
-
-    public void PlayerThree() {
-        TextField PlayerTextField3;
-        Label ThirdPlayer = new Label("Name of Player 3: ");
-        PlayerTextField3 = new TextField();
-        PlayerTextField3.setPrefWidth(150);
-        HBox hb = new HBox();
-        hb.getChildren().addAll(ThirdPlayer, PlayerTextField3);
-        hb.setSpacing(50);
-        hb.setLayoutX(400);
-        hb.setLayoutY(330);
-        controls.getChildren().add(hb);
-    }
-
-    public void PlayerFour() {
-        TextField PlayerTextField4;
-        Label FourthPlayer = new Label("Name of Player 4: ");
-        PlayerTextField4 = new TextField();
-        PlayerTextField4.setPrefWidth(150);
-        HBox hb = new HBox();
-        hb.getChildren().addAll(FourthPlayer, PlayerTextField4);
-        hb.setSpacing(50);
-        hb.setLayoutX(400);
-        hb.setLayoutY(360);
-        controls.getChildren().add(hb);
-    }
-*/
     public static void main(String[] args) {
         launch(args);
     }
-    /*
-    private void start_page() {
-        matrixBoard.getChildren().clear();
-        controls.getChildren().clear();
-
-        Rectangle r1 = new Rectangle(50, 548, 1200, 30);
-        r1.setFill(Color.WHITE);
-        controls.getChildren().add(r1);
-
-        Button WelcomeStartButton = new Button("Start");
-        Button WelcomeExitButton = new Button("Exit ");
-
-        ImageView boardA = new ImageView(new Image(WELCOME_PAGE_IMAGE));
-        boardA.setFitWidth(1200);
-        boardA.setFitHeight(600);
-        boardA.setLayoutX(0);
-        boardA.setLayoutY(15);
-        boardA.setOpacity(1.0);
-        matrixBoard.getChildren().add(boardA);
-
-        WelcomeStartButton.setLayoutX(430);
-        WelcomeStartButton.setLayoutY(360);
-        WelcomeStartButton.setPrefSize(120,50);
-        matrixBoard.getChildren().add(WelcomeStartButton);
-
-        WelcomeExitButton.setLayoutX(630);
-        WelcomeExitButton.setLayoutY(360);
-        WelcomeExitButton.setPrefSize(120,50);
-        matrixBoard.getChildren().add(WelcomeExitButton);
-
-        WelcomeStartButton.setOnAction(ae -> {
-
-            //boardA.setOpacity(0);
-            matrixBoard.getChildren().clear();
-            controls.getChildren().clear();
-            //setupViewer();
-
-            //ChoosePlayers();
-            setupViewer();
-
-            Button GameExitButton = new Button("Exit ");
-            Button GameNextRoundButton = new Button("Next round");
-
-            GameExitButton.setOnAction(ae1 -> {
-                System.exit(0);
-            });
-            GameNextRoundButton.setOnAction(ae1 -> {
-
-                if(current_stage == NEXT_ROUND_STAGE){
-                    currentState = multiazul.nextRound(currentState);
-                }
-                setupViewer();
-            });
-
-            HBox hb1 = new HBox(GameExitButton, GameNextRoundButton);
-            hb1.setSpacing(10);
-            hb1.setLayoutX(1000);
-            hb1.setLayoutY(VIEWER_HEIGHT - 50);
-            controls.getChildren().add(hb1);
-        });
-
-        WelcomeExitButton.setOnAction(ae -> {
-            System.exit(0);
-        });
-
-    }
-    */
-
 
     // makeControls() is to make control of the Viewer.
     private void makeControls(){
-          setupViewer();
+        setupViewer();
     }
 
     // start() is to show the Game start.
@@ -786,7 +531,7 @@ public class Viewer extends Application implements Constants {
         this.currentState = state;
 
          */
-        //this.currentState = Game.currentState;
+        this.currentState = Game.currentState;
 
         window = primaryStage;
         window.setTitle("Azul Viewer");
