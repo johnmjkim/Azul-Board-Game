@@ -5,6 +5,10 @@ import comp1110.ass2.backend.MultiAzul;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -14,6 +18,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Game extends Application implements Constants {
+
+    Group controls = new Group();
+    Group matrixBoard = new Group();
+
     /* board layout */
     private static final int BOARD_WIDTH = 1200;
     private static final int BOARD_HEIGHT = 700;
@@ -109,8 +117,12 @@ public class Game extends Application implements Constants {
         initializeStates();
         makeCoordinates();
 
-        stage.setScene(scene);
-        stage.show();
+        //start_page();
+        //PlayerSetting playerSetting = new PlayerSetting();
+        //playerSetting.main();
+
+        //stage.setScene(scene);
+        //stage.show();
 
         Viewer viewer = new Viewer();
         viewer.start(stage);
@@ -198,6 +210,72 @@ public class Game extends Application implements Constants {
         //System.out.println(DISCARD_COORDINATES);
         //System.out.println(CENTER_COORDINATES);
         //System.out.println(FACTORIES_COORDINATES);
+
+    }
+
+    private void start_page() {
+        matrixBoard.getChildren().clear();
+        controls.getChildren().clear();
+
+        Rectangle r1 = new Rectangle(50, 548, 1200, 30);
+        r1.setFill(Color.WHITE);
+        controls.getChildren().add(r1);
+
+        Button WelcomeStartButton = new Button("Start");
+        Button WelcomeExitButton = new Button("Exit ");
+
+        ImageView boardA = new ImageView(new Image(WELCOME_PAGE_IMAGE));
+        boardA.setFitWidth(1200);
+        boardA.setFitHeight(600);
+        boardA.setLayoutX(0);
+        boardA.setLayoutY(15);
+        boardA.setOpacity(1.0);
+        matrixBoard.getChildren().add(boardA);
+
+        WelcomeStartButton.setLayoutX(430);
+        WelcomeStartButton.setLayoutY(360);
+        WelcomeStartButton.setPrefSize(120,50);
+        matrixBoard.getChildren().add(WelcomeStartButton);
+
+        WelcomeExitButton.setLayoutX(630);
+        WelcomeExitButton.setLayoutY(360);
+        WelcomeExitButton.setPrefSize(120,50);
+        matrixBoard.getChildren().add(WelcomeExitButton);
+
+        WelcomeStartButton.setOnAction(ae -> {
+
+            //boardA.setOpacity(0);
+            matrixBoard.getChildren().clear();
+            controls.getChildren().clear();
+            //setupViewer();
+
+            //ChoosePlayers();
+            //setupViewer();
+
+            Button GameExitButton = new Button("Exit ");
+            //Button GameNextRoundButton = new Button("Next round");
+
+            GameExitButton.setOnAction(ae1 -> {
+                System.exit(0);
+            });
+            //GameNextRoundButton.setOnAction(ae1 -> {
+
+                //if(current_stage == NEXT_ROUND_STAGE){
+                //    currentState = multiazul.nextRound(currentState);
+                //}
+                //setupViewer();
+            //});
+
+            HBox hb1 = new HBox(GameExitButton);
+            hb1.setSpacing(10);
+            hb1.setLayoutX(1000);
+            hb1.setLayoutY(550);
+            controls.getChildren().add(hb1);
+        });
+
+        WelcomeExitButton.setOnAction(ae -> {
+            System.exit(0);
+        });
 
     }
 
