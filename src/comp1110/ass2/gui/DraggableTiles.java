@@ -42,7 +42,7 @@ public class DraggableTiles extends ImageView implements Constants {
 
             setLayoutX(mousex - BIG_TILE_IMAGE_SIZE_X/2);
             setLayoutY(mousey - BIG_TILE_IMAGE_SIZE_Y/2);
-            System.out.println(" mouse x, y : " + (mousex - BIG_TILE_IMAGE_SIZE_X/2) + ", " + (mousey - BIG_TILE_IMAGE_SIZE_Y/2));
+            //System.out.println(" mouse x, y : " + (mousex - BIG_TILE_IMAGE_SIZE_X/2) + ", " + (mousey - BIG_TILE_IMAGE_SIZE_Y/2));
             viewer.highlightNearestRectangle(mousex - BIG_TILE_IMAGE_SIZE_X/2,mousey - BIG_TILE_IMAGE_SIZE_Y/2);
 
         });
@@ -50,7 +50,7 @@ public class DraggableTiles extends ImageView implements Constants {
             this.x = event.getSceneX() - BIG_TILE_IMAGE_SIZE_X/2;
             this.y = event.getSceneY() - BIG_TILE_IMAGE_SIZE_X/2;
             double mouse_highlight_dist = Math.sqrt(Math.pow(viewer.highlighted.x - this.x, 2) + Math.pow(viewer.highlighted.y - this.y, 2));
-            System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
+            //System.out.println(" Released at : x = " + this.x + " y = " + this.y + " distance = " + mouse_highlight_dist);
 
             if(mouse_highlight_dist <= BIG_TILE_IMAGE_SNAP_DISTANCE){
                 StringBuilder SB = new StringBuilder();
@@ -111,17 +111,11 @@ public class DraggableTiles extends ImageView implements Constants {
     public void moveTile(String draggable_move){
         setLayoutX(viewer.highlighted.x);
         setLayoutY(viewer.highlighted.y);
-        /*
         viewer.setMove(draggable_move);
-        System.out.println(viewer.currentState[0]);
-        System.out.println(viewer.currentState[1]);
-        viewer.setState(viewer.multiazul.applyMove(viewer.currentState, draggable_move));
-        System.out.println(viewer.currentState[0]);
-        System.out.println(viewer.currentState[1]);
-        viewer.displayState(viewer.currentState);
-
-         */
-        //viewer.refreshDisplay();
+        String[] state = viewer.multiazul.applyMove(viewer.currentState, draggable_move);
+        viewer.setState(state);
+        //viewer.displayState(viewer.currentState);
+        viewer.refreshDisplay();
         //viewer.setMove(null);
     }
 

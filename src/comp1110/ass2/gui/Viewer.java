@@ -119,9 +119,7 @@ public class Viewer extends Application implements Constants {
         //state[0] = "AF0bcce1abcd2adde3bbce4aabe5abde6acde7aadd8bdddCfB1213151014D0000000000";
         //state[1] = "A0MSFB0MSFC0MSFD0MSF";
 
-        System.out.println(" valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state));
-
-        this.currentState = state;
+        //setState(state);
         this.current_stage = multiazul.findCurrentStage(currentState);
 
         ss = new SharedState(state[0], PLAYER_NUMBER);
@@ -130,6 +128,8 @@ public class Viewer extends Application implements Constants {
         String current_player_turn = ss.getTurnState();
         this.current_turn = current_player_turn.charAt(0);
         nPlayer current_player = ps.getnPlayer(current_turn);
+
+        System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state));
 
         // Display empty, snappable board
         display_empty_Board(current_stage);
@@ -158,6 +158,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Board(char current_stage){
+        System.out.println("display_empty_Board");
         display_empty_Center();
         display_empty_Factories();
 
@@ -196,6 +197,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Center() {
+        System.out.println("  display_empty_Center");
         emptyCenterList.clear();
         for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
             double x = CENTER_COORDINATES.getPos_x(tiles);
@@ -207,6 +209,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Storage() {
+        System.out.println("  display_empty_Storage");
         emptyStorageList.clear();
         snappableStorageTiles.clear();
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
@@ -223,6 +226,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Floor() {
+        System.out.println("  display_empty_Floor");
         emptyFloorList.clear();
         snappableFloorTiles.clear();
         for (int tiles = 0; tiles < MAX_FLOOR_TILES_COL_IMAGE; tiles++) {
@@ -237,6 +241,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Mosaic() {
+        System.out.println("  display_empty_Mosaic");
         emptyMosaicList.clear();
         snappableMosaicTiles.clear();
         for (int row = 0; row < MAX_MOSAIC_ROW; row++) {
@@ -253,6 +258,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void display_empty_Factories() {
+        System.out.println("  display_empty_Factories");
         emptyFactoriesList.clear();
         for (int factory = 0; factory < FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; factory++) {
             for (int tiles = 0; tiles < FACTORY_SIZE; tiles++) {
@@ -266,6 +272,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayUndraggableBoard(SharedState ss, nPlayer current_player){
+        System.out.println("displayUndraggableBoard");
         //STORAGE
         int[] storage_row_Tiles = new int[MAX_STORAGE_ROW];
         char[] storage_row_Colors = new char[MAX_STORAGE_ROW];
@@ -312,6 +319,7 @@ public class Viewer extends Application implements Constants {
 
 
     private void displayDraggableBoard(SharedState ss){
+        System.out.println("displayUndraggableBoard");
         //FACTORIES
         displayFactories(ss);
         //CENTER
@@ -334,6 +342,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayFactories(SharedState ss) {
+        System.out.println("  displayFactories");
         draggableFactoriesTiles.clear();
         for (int factory = 0; factory < FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; factory++) {
             for (int tiles = 0; tiles < FACTORY_SIZE; tiles++) {
@@ -352,6 +361,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayCenter(SharedState ss) {
+        System.out.println("  displayCenter");
         draggableCenterTiles.clear();
         firstplayerCenterTiles.clear();
         for (int tiles = 0; tiles < CENTER_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER]; tiles++) {
@@ -380,14 +390,16 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayStorage(nPlayer current_player, int[] storage_row_tiles, char[] storage_row_colors) {
+        System.out.println("  displayStorage");
         storageTiles.clear();
         draggableStorageTiles.clear();
+        System.out.println("    draggableStorageTiles size : " + draggableStorageTiles.size() + "  storageTiles size : " + storageTiles.size());
         for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
             for (int tiles = 0; tiles < storage_row_tiles[storage_row]; tiles++) {
                 int storage_col = storage_row - tiles;
                 double x = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_x(storage_col);
                 double y = STORAGE_COORDINATES.getStorageRowCoordinates(storage_row).getPos_y(storage_col);
-                if(current_player.storage.getStorageRow(storage_row).isTilesFull()){
+                if(current_player.storage.getStorageRow(storage_row).isTilesFull() && (current_stage == TILING_STAGE)){
                     DraggableTiles draggableTile = new DraggableTiles(x,y,COLORS_IMAGE[storage_row_colors[storage_row] - BLUE],this, STORAGE ,storage_row , tiles);
                     draggableTile.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
                     draggableTile.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
@@ -405,9 +417,11 @@ public class Viewer extends Application implements Constants {
                 }
             }
         }
+        System.out.println("    draggableStorageTiles size : " + draggableStorageTiles.size() + "  storageTiles size : " + storageTiles.size());
     }
 
     private void displayFloor(String floorState) {
+        System.out.println("  displayFloor");
         floorTiles.clear();
         char[] floor_chars = floorState.toCharArray();
         for (int tiles = 0; tiles < floor_chars.length; tiles++) {
@@ -423,6 +437,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayMosaic(nPlayer current_player) {
+        System.out.println("  displayMosaic");
         mosaicTiles.clear();
         for (int mosaic_row = 0; mosaic_row < MAX_MOSAIC_ROW; mosaic_row++) {
             for (int mosaic_col = 0; mosaic_col < MAX_MOSAIC_COL; mosaic_col++) {
@@ -443,6 +458,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayBag(int[] bag_tiles) {
+        System.out.println("  displayBag");
         bagTiles.clear();
         for (int tile_color = 0; tile_color < bag_tiles.length; tile_color++){
             for(int tiles = 0; tiles < bag_tiles[tile_color]; tiles++){
@@ -459,6 +475,7 @@ public class Viewer extends Application implements Constants {
     }
 
     private void displayDiscard(int[] discard_tiles) {
+        System.out.println("  displayDiscard");
         discardTiles.clear();
         for (int tile_color = 0; tile_color < discard_tiles.length; tile_color++){
             for(int tiles = 0; tiles < discard_tiles[tile_color]; tiles++){
@@ -509,20 +526,16 @@ public class Viewer extends Application implements Constants {
 
     public void refreshDisplay(){
         matrixBoard.getChildren().clear();
-        //Rectangle r = new Rectangle(510, 550, 300, 30);
-        //r.setFill(Color.WHITE);
-        //controls.getChildren().add(r);
         //add backboard each time to empty the tiles which has been displayed
         ImageView boardA = new ImageView(new Image(EMPTY_BOARD_IMAGE));
         boardA.setFitWidth(1200);
         boardA.setFitHeight(500);
         boardA.setLayoutX(0);
         boardA.setLayoutY(15);
-        //boardA.setOpacity(0.2);
         matrixBoard.getChildren().add(boardA);
-
+        System.out.println(currentState[0]);
+        System.out.println(currentState[1]);
         displayState(currentState);
-        //displayState(new String[]{playerTextField.getText(), boardTextField.getText()});
     }
 
     private void ChoosePlayers() {
@@ -748,7 +761,11 @@ public class Viewer extends Application implements Constants {
             });
             GameNextRoundButton.setOnAction(ae1 -> {
                 //refreshDisplay();
-                start_page();
+                //start_page();
+                if(current_stage == NEXT_ROUND_STAGE){
+                    currentState = multiazul.nextRound(currentState);
+                }
+                setupViewer();
             });
 
             HBox hb1 = new HBox(GameExitButton, GameNextRoundButton);
@@ -792,7 +809,6 @@ public class Viewer extends Application implements Constants {
         root.getChildren().add(r);
 
          */
-
         root.getChildren().add(controls);
         root.getChildren().add(matrixBoard);
 
@@ -801,7 +817,7 @@ public class Viewer extends Application implements Constants {
     }
 
     public void setState(String[] currentstate){
-        this.currentState = currentState;
+        this.currentState = currentstate;
     }
 
     public void setMove(String move){
@@ -838,8 +854,8 @@ public class Viewer extends Application implements Constants {
             }
             i++;
         }
-        System.out.print("closestID : " + closestID + " distance : " + distance);
-        System.out.println(" snappableTiles x, y : " + snappableTiles.get(closestID).x + ", " + snappableTiles.get(closestID).y);
+        //System.out.print("closestID : " + closestID + " distance : " + distance);
+        //System.out.println(" snappableTiles x, y : " + snappableTiles.get(closestID).x + ", " + snappableTiles.get(closestID).y);
         return snappableTiles.get(closestID);
     }
 
@@ -851,12 +867,12 @@ public class Viewer extends Application implements Constants {
             if (t.equals(this.highlighted)){
                 if(t.toStorage()){
                     SnappableTiles new_t = new SnappableTiles(t.x, t.y, HIGHLIGHT_IMAGE, this, STORAGE, t.index, t.tile_num);
-                    System.out.println(" Snap at : " + new_t.index);
+                    //System.out.println(" Snap at : " + new_t.index);
                     this.snappableTiles.set(i,new_t);
                 }
                 else if(t.toFloor()){
                     SnappableTiles new_t = new SnappableTiles(t.x, t.y, HIGHLIGHT_IMAGE, this, FLOOR, t.tile_num);
-                    System.out.println(" Snap at : " + "F");
+                    //System.out.println(" Snap at : " + "F");
                     this.snappableTiles.set(i,new_t);
                 }
 
