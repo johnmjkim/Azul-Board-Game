@@ -1,14 +1,12 @@
 package comp1110.ass2.backend;
 
-import comp1110.ass2.Constants;
-
 public class Factory extends OrderTypedObject{
     // number of Factory 0~4 for two players
     int number;
 
     // tiles occupy, color
-    boolean[] tiles_occupy = new boolean[Constants.FACTORY_SIZE];
-    char[] tiles_color = new char[Constants.FACTORY_SIZE];
+    boolean[] tiles_occupy = new boolean[FACTORY_SIZE];
+    char[] tiles_color = new char[FACTORY_SIZE];
 
     /**
      * @author Min Jae, Kim
@@ -24,9 +22,9 @@ public class Factory extends OrderTypedObject{
 
     private void storeTilesColor(){
         if(super.isStateEmpty()){
-            for(int col = 0; col < Constants.FACTORY_SIZE; col++){
+            for(int col = 0; col < FACTORY_SIZE; col++){
                 tiles_occupy[col] = false;
-                tiles_color[col] = Constants.NO_COLOR;
+                tiles_color[col] = NO_COLOR;
             }
         }
         else{
@@ -37,9 +35,9 @@ public class Factory extends OrderTypedObject{
                 tiles_color[col] = color;
                 col++;
             }
-            for(int rest_col = col; rest_col < Constants.FACTORY_SIZE; rest_col++){
+            for(int rest_col = col; rest_col < FACTORY_SIZE; rest_col++){
                 tiles_occupy[rest_col] = false;
-                tiles_color[rest_col] = Constants.NO_COLOR;
+                tiles_color[rest_col] = NO_COLOR;
             }
         }
     }

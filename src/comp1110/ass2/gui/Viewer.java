@@ -40,7 +40,8 @@ public class Viewer extends Application implements Constants {
     public char current_turn;
     public char current_stage;
 
-    public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    //public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    public int PLAYER_NUMBER = 4;
     MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
 
     public StorageCoordinates STORAGE_COORDINATES = Game.STORAGE_COORDINATES;
@@ -498,7 +499,15 @@ public class Viewer extends Application implements Constants {
     public void refreshDisplay(){
         this.current_stage = multiazul.findCurrentStage(currentState);
         if(this.current_stage == NEXT_ROUND_STAGE){
+            System.out.print(" Next Round : ");
+            System.out.print(currentState[0]);
+            System.out.print(" , ");
+            System.out.println(currentState[1]);
             this.currentState = multiazul.nextRound(currentState);
+            System.out.print(" Set to : ");
+            System.out.print(currentState[0]);
+            System.out.print(" , ");
+            System.out.println(currentState[1]);
         }
         else if(this.current_stage == END_OF_GAME){
             this.currentState = multiazul.nextRound(currentState);
@@ -768,7 +777,16 @@ public class Viewer extends Application implements Constants {
     // start() is to show the Game start.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.currentState = Game.currentState;
+        /*
+        String[] state = new String[NUMBER_OF_STATES];
+        // Empty bag, Discard 4 Players
+        state[0] = "AF0abdd1bdee2bcce3aaac4bccc5adee6bbdd7aaee8cdnnCfB0000000000D0000000000";
+        state[1] = "A0Md00c02e03b04b11e12d14d22c23e30S2a33a24e1FB0Ma01b02c03d04d10c12d23b34e40S1a12a13d14b5FC0Mc02d03e04b12a23a32S1d22c23e34c3FD0Md00c01e02b03a11c13d14b24d41b42c44S1e12e23b14a2F";
+
+        this.currentState = state;
+
+         */
+        //this.currentState = Game.currentState;
 
         window = primaryStage;
         window.setTitle("Azul Viewer");

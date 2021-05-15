@@ -194,6 +194,7 @@ public class Azul implements Constants {
             factory_alphabetical_order = check_alphabetical_order(factoryState_content_arr.get(0));
         }
         factory_content_format = factory_numerical_order && factory_alphabetical_order && factory_tilesnumber;
+        //System.out.println(factory_numerical_order + ", " + factory_alphabetical_order + ", " + factory_tilesnumber);
 
         boolean factory_format = factory_name_format && factory_content_format;
         //System.out.println(factory_name_format + ", " + factory_content_format);
@@ -256,7 +257,7 @@ public class Azul implements Constants {
 
         int idx = 0;
         for( char c : alphabet_string_char_arr){
-            if(!(c >= BLUE && c <= FIRST_PLAYER)){
+            if(!(c >= BLUE && c <= FIRST_PLAYER || c == NO_COLOR)){
                 string_alphabet = false;
             }
             if(c != alphabet_string_char_arr_sort[idx]){

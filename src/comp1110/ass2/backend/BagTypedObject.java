@@ -22,26 +22,26 @@ public class BagTypedObject implements BagTyped{
 
     @Override
     public void refillTiles(String refill) {
-        ArrayList<Integer> discards_counts = new ArrayList<Integer>();
+        ArrayList<Integer> bagtypedobject_counts = new ArrayList<Integer>();
         char[] refill_char_array = refill.toCharArray();
         StringBuilder SB = new StringBuilder();
         int len = 0;
         for(char c : refill_char_array){
             if( len % 2 == 0 && len != 0){
-                discards_counts.add(Integer.valueOf(String.valueOf(SB)));
+                bagtypedobject_counts.add(Integer.valueOf(String.valueOf(SB)));
                 SB.delete(0,SB.length());
             }
             SB.append(c);
             len++;
         }
-        discards_counts.add(Integer.valueOf(String.valueOf(SB)));
+        bagtypedobject_counts.add(Integer.valueOf(String.valueOf(SB)));
         SB.delete(0,SB.length());
         // 'a'~'f'
-        this.letters[BLUE] += discards_counts.get(0);
-        this.letters[GREEN] += discards_counts.get(1);
-        this.letters[ORANGE] += discards_counts.get(2);
-        this.letters[PURPLE] += discards_counts.get(3);
-        this.letters[RED] += discards_counts.get(4);
+        this.letters[BLUE] += bagtypedobject_counts.get(0);
+        this.letters[GREEN] += bagtypedobject_counts.get(1);
+        this.letters[ORANGE] += bagtypedobject_counts.get(2);
+        this.letters[PURPLE] += bagtypedobject_counts.get(3);
+        this.letters[RED] += bagtypedobject_counts.get(4);
         updateState();
     }
 
@@ -103,6 +103,7 @@ public class BagTypedObject implements BagTyped{
                 SB.append("0");
             }
             SB.append(String.valueOf(bagTypedObject_letters[color]));
+            //System.out.println(" string, value : " + SB + ", " + String.valueOf(bagTypedObject_letters[color]) + " ");
             color++;
         }
         this.bagTypedObjectState = String.valueOf(SB);
@@ -110,26 +111,28 @@ public class BagTypedObject implements BagTyped{
 
     @Override
     public void countTilesNumber(String bagTypedObjectState) {
-        ArrayList<Integer> discards_counts = new ArrayList<Integer>();
+        ArrayList<Integer> bagtypedobject_counts = new ArrayList<Integer>();
         char[] bagTypedObjectState_char_array = bagTypedObjectState.toCharArray();
         StringBuilder SB = new StringBuilder();
         int len = 0;
         for(char c : bagTypedObjectState_char_array){
             if( len % 2 == 0 && len != 0){
-                discards_counts.add(Integer.valueOf(String.valueOf(SB)));
+                //System.out.print(" string, value : " + SB + ", " + String.valueOf(SB) + " ");
+                bagtypedobject_counts.add(Integer.valueOf(String.valueOf(SB)));
                 SB.delete(0,SB.length());
             }
             SB.append(c);
             len++;
         }
-        discards_counts.add(Integer.valueOf(String.valueOf(SB)));
+        //System.out.println(" string, value : " + SB + ", " + String.valueOf(SB) + " ");
+        bagtypedobject_counts.add(Integer.valueOf(String.valueOf(SB)));
         SB.delete(0,SB.length());
         // 'a'~'f'
-        this.letters[BLUE] = discards_counts.get(0);
-        this.letters[GREEN] = discards_counts.get(1);
-        this.letters[ORANGE] = discards_counts.get(2);
-        this.letters[PURPLE] = discards_counts.get(3);
-        this.letters[RED] = discards_counts.get(4);
+        this.letters[BLUE] = bagtypedobject_counts.get(0);
+        this.letters[GREEN] = bagtypedobject_counts.get(1);
+        this.letters[ORANGE] = bagtypedobject_counts.get(2);
+        this.letters[PURPLE] = bagtypedobject_counts.get(3);
+        this.letters[RED] = bagtypedobject_counts.get(4);
     }
 
     @Override

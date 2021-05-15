@@ -54,6 +54,9 @@ public class OrderTypedObject implements OrderTyped{
             }
             color++;
         }
+        while(this.letters[NO_COLOR] > 0){
+            this.letters[NO_COLOR]--;
+        }
         updateState();
     }
 
@@ -98,6 +101,7 @@ public class OrderTypedObject implements OrderTyped{
             center_letters[color] = this.letters[color];
             color++;
         }
+        center_letters[NO_COLOR] = this.letters[NO_COLOR];
         color = BLUE;
         for(int i=0; i <= FIRST_PLAYER - BLUE; i++){
             while(center_letters[color] > 0){
@@ -105,6 +109,17 @@ public class OrderTypedObject implements OrderTyped{
                 center_letters[color]--;
             }
             color++;
+        }
+        if(!SB.isEmpty()){
+            while(center_letters[NO_COLOR] > 0){
+                SB.append(NO_COLOR);
+                center_letters[NO_COLOR]--;
+            }
+        }
+        else{
+            while(center_letters[NO_COLOR] > 0){
+                center_letters[NO_COLOR]--;
+            }
         }
         this.orderTypedObjectState = String.valueOf(SB);
     }
@@ -123,6 +138,7 @@ public class OrderTypedObject implements OrderTyped{
         this.letters[PURPLE] = letters_array[PURPLE];
         this.letters[RED] = letters_array[RED];
         this.letters[FIRST_PLAYER] = letters_array[FIRST_PLAYER];
+        this.letters[NO_COLOR] = letters_array[NO_COLOR];
     }
 
     @Override

@@ -155,11 +155,24 @@ public class SharedState extends States {
         for(int i=0; i < factory_num; i++){
             if(this.factories.factory.get(i).isStateEmpty()){
                 for(int j=0; j < FACTORY_SIZE; j++){
+                    //System.out.print(this.bag.getTotalTilesNumber());
                     if(!(this.bag.getTotalTilesNumber() > 0)){
+                        //System.out.print(" refill start " + this.bag.getStateString() + ", " + this.discard.getStateString());
                         this.refillDiscardtoBag();
+                        //System.out.println(" refill ends " + this.bag.getStateString() + ", " + this.discard.getStateString());
+                        if(this.bag.getTotalTilesNumber() > 0){
+                            factory_tiles[j] = this.bag.getRandomTile();
+                            this.bag.removeTile(factory_tiles[j]);
+                        }
+                        else{
+                            factory_tiles[j] = NO_COLOR;
+                        }
                     }
-                    factory_tiles[j] = this.bag.getRandomTile();
-                    this.bag.removeTile(factory_tiles[j]);
+                    else{
+                        factory_tiles[j] = this.bag.getRandomTile();
+                        this.bag.removeTile(factory_tiles[j]);
+                    }
+                    //System.out.println();
                 }
                 //this.factories.factory.get(i).refill_eachFactory(factory_tiles);
                 this.factories.factory.get(i).refillTiles(factory_tiles);
