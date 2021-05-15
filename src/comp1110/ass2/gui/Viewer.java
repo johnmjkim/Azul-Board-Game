@@ -104,7 +104,9 @@ public class Viewer extends Application implements Constants {
         System.out.println(playerMap.get(current_turn));
         if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER){
             this.move = multiazul.generateSmartAction(currentState);
+            System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
             this.currentState = multiazul.applyMove(currentState, move);
+            System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
             refreshDisplay();
         }
         else{

@@ -111,7 +111,7 @@ public class PlayersInformation implements Constants {
 
         @Override
         public String toString() {
-            return " Name : " + getName() + " Order : " + getOrder() + " Turn : " + getTurn() + " Type : " + getType() + "\n";
+            return " Name : " + getName() + " Order : " + getOrder() + " Turn : " + getTurn() + " Type : " + getType();
         }
 
         @Override
