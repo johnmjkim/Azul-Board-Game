@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import comp1110.ass2.backend.MultiAzul;
+import comp1110.ass2.backend.PlayerState;
 import comp1110.ass2.backend.SharedState;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class Experiment_PSVM3 implements Constants{
         String move;
         MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
 
-        /*
+        //gameState[0] = "AFCB0303050605D0002000004";
+        //gameState[1] = "A0Md02c03e13S0a11a12d23c34a2FeeeB0Ma00e03b13S1a12d13a44d3FbbbbbC15Ma00c04c10e12b13d20c21e23b24b30d31a33d42S1d23c44a4FdfD9Mc00e01d04e10c11b12b20e32e43a44SFbbbbcc";
+
         //gameState[0] = "CF7abdn8nnnnCaacceeeeB0000000000D000000000";
         //gameState[1] = "A0Ma02d03c04e20b30S1d22d13d14c5FaaabeefB0Mc01d04b11a13e14d33b42e43S0a11d22b23b14c5FadddddC0Mb01e03a22d23c30a34S0d11e22c33b34a5FceD0Ma00e02d03d12d34e41a43c44S1a12b33e34b4Fb";
         //move = "C7bF";
@@ -27,7 +30,7 @@ public class Experiment_PSVM3 implements Constants{
 
         //move = multiazul.generateSmartAction(gameState);
         //System.out.println(move);
-
+        /*
         for(int i=0; i < NUMBER_OF_STATES; i++){
             System.out.println(" Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
         }
@@ -72,6 +75,5 @@ public class Experiment_PSVM3 implements Constants{
             }
         }
         System.out.println(" tests finished");
-
     }
 }

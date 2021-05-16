@@ -491,6 +491,13 @@ public class Viewer extends Application implements Constants {
 
     public void refreshDisplay(){
         this.current_stage = multiazul.findCurrentStage(currentState);
+        if(this.current_stage == TILING_STAGE){
+            while(multiazul.generateSmartAction(currentState) == EMPTY_STATE){
+                System.out.print(" No move valid, changed turn from " + currentState[0].charAt(0));
+                this.currentState = multiazul.changeTurn(currentState);
+                System.out.println(" to " + currentState[0].charAt(0));
+            }
+        }
         if(this.current_stage == NEXT_ROUND_STAGE){
             System.out.print(" Next Round : ");
             System.out.print(currentState[0]);

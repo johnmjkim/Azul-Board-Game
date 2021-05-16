@@ -1492,7 +1492,9 @@ public class MultiAzul implements Constants {
 
             boolean storage_has_full_tiles = false;
             for(int i=0; i < MAX_PLAYER_NUMBER; i++){
-                storage_has_full_tiles = ps.getnPlayer(ALL_PLAYERS[i]).storage.existsStorageRowTilesFull();
+                if(ps.getnPlayer(ALL_PLAYERS[i]).storage.existsStorageRowTilesFull()){
+                    storage_has_full_tiles = true;
+                }
             }
 
             //char player_turn = ss.getTurnState().charAt(0);
