@@ -138,7 +138,7 @@ public class Game extends Application implements Constants {
         //Viewer viewer = new Viewer();
         //viewer.start(stage);
 
-        //new PlayerSetting();
+        new PlayerSetting();
 
         //Create draggable tiles
     }
