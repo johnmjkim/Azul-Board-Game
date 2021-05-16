@@ -117,15 +117,22 @@ public class Game extends Application implements Constants {
         initializeStates();
         makeCoordinates();
 
+        root.getChildren().add(controls);
+        root.getChildren().add(matrixBoard);
+
         //start_page();
         //PlayerSetting playerSetting = new PlayerSetting();
         //playerSetting.main();
 
-        //stage.setScene(scene);
-        //stage.show();
+        start_page();
 
-        Viewer viewer = new Viewer();
-        viewer.start(stage);
+        stage.setScene(scene);
+        stage.show();
+
+        //Viewer viewer = new Viewer();
+        //viewer.start(stage);
+
+        new PlayerSetting();
 
         //Create draggable tiles
 
@@ -217,10 +224,6 @@ public class Game extends Application implements Constants {
         matrixBoard.getChildren().clear();
         controls.getChildren().clear();
 
-        Rectangle r1 = new Rectangle(50, 548, 1200, 30);
-        r1.setFill(Color.WHITE);
-        controls.getChildren().add(r1);
-
         Button WelcomeStartButton = new Button("Start");
         Button WelcomeExitButton = new Button("Exit ");
 
@@ -242,6 +245,22 @@ public class Game extends Application implements Constants {
         WelcomeExitButton.setPrefSize(120,50);
         matrixBoard.getChildren().add(WelcomeExitButton);
 
+        //String mes = String.valueOf(PlayerSetting.comboBoxP5.getSelectedItem());
+        //System.out.println(mes);
+
+        WelcomeStartButton.setOnAction(ae -> {
+                    try {
+                        new Viewer().start(new Stage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+
+        WelcomeExitButton.setOnAction(actionEvent -> System.exit(0));}
+
+
+/*
         WelcomeStartButton.setOnAction(ae -> {
 
             //boardA.setOpacity(0);
@@ -275,8 +294,6 @@ public class Game extends Application implements Constants {
 
         WelcomeExitButton.setOnAction(ae -> {
             System.exit(0);
-        });
+        });*/
 
     }
-
-}
