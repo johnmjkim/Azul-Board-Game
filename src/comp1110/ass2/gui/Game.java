@@ -135,7 +135,6 @@ public class Game extends Application implements Constants {
         new PlayerSetting();
 
         //Create draggable tiles
-
     }
 
     private void decidePlayers(){
