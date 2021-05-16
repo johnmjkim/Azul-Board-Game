@@ -24,7 +24,7 @@ public class Game extends Application implements Constants {
 
     /* board layout */
     private static final int BOARD_WIDTH = 1200;
-    private static final int BOARD_HEIGHT = 700;
+    private static final int BOARD_HEIGHT = 600;
 
     public static int PLAYER_NUMBER;
     public static int FACTORY_MAX_NUMBER;
@@ -138,7 +138,7 @@ public class Game extends Application implements Constants {
         //Viewer viewer = new Viewer();
         //viewer.start(stage);
 
-        //new PlayerSetting();
+        new PlayerSetting();
 
         //Create draggable tiles
     }
@@ -299,7 +299,11 @@ public class Game extends Application implements Constants {
                 }
         );
 
-        WelcomeExitButton.setOnAction(actionEvent -> System.exit(0));}
+        WelcomeExitButton.setOnAction(ae -> {
+            System.exit(0);
+        });
+    }
+
 
 
 /*

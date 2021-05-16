@@ -29,7 +29,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
         JPanel tips = new JPanel();
         tips.setLayout(new GridLayout(1, 1));
-        JLabel label0 = new JLabel("  Important: Please submit the information first. If you choose submit, you can start  ");
+        JLabel label0 = new JLabel("  If you do not choose, you will play with one other people  ");
         this.add(label0);
 
         JPanel ChoosePlayerNumber = new JPanel();
@@ -177,9 +177,9 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
         //choose to start the game or exit
         if (mes.equals("Yes, submit")) {
-            getPlayerName();
-            getChoosePlayerNumber();
-            getPlayerType();
+            //getPlayerName();
+            //getChoosePlayerNumber();
+            //getPlayerType();
         }
         if (mes.equals("I don't want to play")) {
             System.exit(0);

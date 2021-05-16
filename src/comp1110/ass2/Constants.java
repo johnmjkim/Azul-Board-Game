@@ -106,8 +106,9 @@ public interface Constants {
     public final String HIGHLIGHT_IMAGE = "file:src/comp1110/ass2/img/" + String.valueOf(HIGHTLIGHT_COLOR) + "1.png";
     public final String[] COLORS_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE};
     public final String[] COLORS_WITH_FIRST_PLAYER_IMAGE = new String[]{BLUE_IMAGE, GREEN_IMAGE, ORANGE_IMAGE, PURPLE_IMAGE, RED_IMAGE, FIRST_PLAYER_IMAGE};
-    public final String EMPTY_BOARD_IMAGE = "file:src/comp1110/ass2/img/Storyboard.png";
+    public final String EMPTY_BOARD_IMAGE = "file:src/comp1110/ass2/img/empty-board.png";
     public final String WELCOME_PAGE_IMAGE = "file:src/comp1110/ass2/img/Welcome.png";
+    public final String END_PAGE_IMAGE = "file:src/comp1110/ass2/img/endpage.png";
 
     // Image dimensions : Tile
     public final double SMALL_TILE_IMAGE_SIZE_X = 14;
@@ -126,7 +127,7 @@ public interface Constants {
     // Image dimensions : Common Boards
     public final double FIRST_BOARD_POS_X = 50;
     public final double FIRST_BOARD_POS_Y = 50;
-    public final double SECOND_BOARD_POS_X = 601.5;
+    public final double SECOND_BOARD_POS_X = 601;
     public final double SECOND_BOARD_POS_Y = 280;
     public final double THIRD_BOARD_POS_X = 1000;
     public final double OTHER_BOARD_POS_X = 35;
@@ -200,5 +201,9 @@ public interface Constants {
     public final char NEXT_ROUND_STAGE = 'N';
     public final char END_OF_GAME = 'E';
 
-
+    // Information on Viewer
+    public final double INITIAL_INFORMATION_IMAGE_POS_X = 30;
+    public final double INITIAL_INFORMATION_IMAGE_POS_Y = 85;
+    public final double GAP_X = 85;
+    public final double GAP_Y = 35;
 }

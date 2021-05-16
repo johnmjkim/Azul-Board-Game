@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 public class Viewer extends Application implements Constants {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 600;
+    private static final int VIEWER_HEIGHT = 550;
 
     Stage window;
     Scene scene;
@@ -32,15 +33,18 @@ public class Viewer extends Application implements Constants {
 
     SnappableTiles highlighted = null;
 
+    private TextField playerTextField;
+    private TextField boardTextField;
+
     SharedState ss;
     PlayerState ps;
     String[] currentState;
     String move;
     public char current_turn;
     public char current_stage;
-    public boolean end_stage = Game.end_stage;
 
     public int PLAYER_NUMBER = Game.PLAYER_NUMBER;
+    //public int PLAYER_NUMBER = 4;
     public static HashMap<Character, PlayersInformation.PlayerInfo> playerMap = Game.playerMap;
     MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
 
@@ -51,34 +55,31 @@ public class Viewer extends Application implements Constants {
     public DiscardCoordinates DISCARD_COORDINATES = Game.DISCARD_COORDINATES;
     public CenterCoordinates CENTER_COORDINATES = Game.CENTER_COORDINATES;
     public FactoriesCoordinates FACTORIES_COORDINATES = Game.FACTORIES_COORDINATES;
-    public ArrayList<OtherStorageCoordinates> OTHER_STORAGE_COORDINATES_GROUP = Game.OTHER_STORAGE_COORDINATES_GROUP;
-    public ArrayList<OtherFloorCoordinates> OTHER_FLOOR_COORDINATES_GROUP = Game.OTHER_FLOOR_COORDINATES_GROUP;
-    public ArrayList<OtherMosaicCoordinates> OTHER_MOSAIC_COORDINATES_GROUP = Game.OTHER_MOSAIC_COORDINATES_GROUP;
 
-    public ArrayList<ImageView> storageTiles = new ArrayList<>();
-    public ArrayList<ImageView> floorTiles = new ArrayList<>();
-    public ArrayList<ImageView> mosaicTiles = new ArrayList<>();
-    public ArrayList<ImageView> bagTiles = new ArrayList<>();
-    public ArrayList<ImageView> discardTiles = new ArrayList<>();
-    public ArrayList<ImageView> otherTiles = new ArrayList<>();
-    public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<>();
-    public ArrayList<ImageView> firstplayerCenterTiles = new ArrayList<>();
-    public ArrayList<DraggableTiles> draggableFactoriesTiles = new ArrayList<>();
-    public ArrayList<DraggableTiles> draggableStorageTiles = new ArrayList<>();
-    public ArrayList<ImageView> undraggableTiles = new ArrayList<>();
-    public ArrayList<ImageView> draggableTiles = new ArrayList<>();
+    public ArrayList<ImageView> storageTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> floorTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> mosaicTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> bagTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> discardTiles = new ArrayList<ImageView>();
+    public ArrayList<DraggableTiles> draggableCenterTiles = new ArrayList<DraggableTiles>();
+    public ArrayList<ImageView> firstplayerCenterTiles = new ArrayList<ImageView>();
+    public ArrayList<DraggableTiles> draggableFactoriesTiles = new ArrayList<DraggableTiles>();
+    public ArrayList<DraggableTiles> draggableStorageTiles = new ArrayList<DraggableTiles>();
+    public ArrayList<ImageView> undraggableTiles = new ArrayList<ImageView>();
+    public ArrayList<ImageView> draggableTiles = new ArrayList<ImageView>();
 
-    public ArrayList<Rectangle> emptyStorageList = new ArrayList<>();
-    public ArrayList<Rectangle> emptyMosaicList = new ArrayList<>();
-    public ArrayList<Rectangle> emptyFloorList = new ArrayList<>();
-    public ArrayList<Rectangle> emptyCenterList = new ArrayList<>();
-    public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<>();
-    public ArrayList<SnappableTiles> snappableStorageTiles = new ArrayList<>();
-    public ArrayList<SnappableTiles> snappableFloorTiles = new ArrayList<>();
-    public ArrayList<SnappableTiles> snappableMosaicTiles = new ArrayList<>();
+    public ArrayList<Rectangle> emptyStorageList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyMosaicList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyFloorList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyCenterList = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> emptyFactoriesList = new ArrayList<Rectangle>();
+    public ArrayList<SnappableTiles> snappableStorageTiles = new ArrayList<SnappableTiles>();
+    public ArrayList<SnappableTiles> snappableFloorTiles = new ArrayList<SnappableTiles>();
+    public ArrayList<SnappableTiles> snappableMosaicTiles = new ArrayList<SnappableTiles>();
 
     public ArrayList<Rectangle> non_snappable_Tile = new ArrayList<>();
-    public ArrayList<SnappableTiles> snappableTiles = new ArrayList<>();
+    public ArrayList<Rectangle> snappable_Tile = new ArrayList<Rectangle>();
+    public ArrayList<SnappableTiles> snappableTiles = new ArrayList<SnappableTiles>();
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -103,8 +104,8 @@ public class Viewer extends Application implements Constants {
 
         System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state) + " previous move : " + this.move);
         System.out.println(playerMap.get(current_turn));
-        if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER && !(this.end_stage)){
-            if(!(multiazul.generateSmartAction(currentState).equals(EMPTY_STATE))){
+        if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER){
+            if(!(multiazul.generateSmartAction(currentState) == EMPTY_STATE)){
                 this.move = multiazul.generateSmartAction(currentState);
                 playerMap.get(current_turn).setMove(move);
                 System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
@@ -127,9 +128,7 @@ public class Viewer extends Application implements Constants {
             // Tiling Stage : Storage
             displayDraggableBoard(ss);
 
-            // Display other players board
-            displayOtherPlayersBoard(ps, current_turn);
-
+            /*
             //SCORE
             controls.getChildren().clear();
             HBox scoreBox = new HBox();
@@ -144,7 +143,112 @@ public class Viewer extends Application implements Constants {
             scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
             scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
             controls.getChildren().add(scoreBox);
+            */
+            displayScores();
+            displayPlayerNames();
+            displayPlayerTypes();
         }
+
+        Button linkToEnd = new Button("End The Game");
+        linkToEnd.setLayoutX(1000);
+        linkToEnd.setLayoutY(520);
+        linkToEnd.setOnAction(ae -> {
+            displayResult();
+        });
+        controls.getChildren().add(linkToEnd);
+
+    }
+
+    public void displayResult(){
+        matrixBoard.getChildren().clear();
+        controls.getChildren().clear();
+
+        Button FinalResultButton = new Button("Show me final Result");
+        Button ExitButton = new Button(" Exit ");
+
+        ImageView boardA = new ImageView(new Image(END_PAGE_IMAGE));
+        boardA.setFitWidth(1200);
+        boardA.setFitHeight(500);
+        boardA.setLayoutX(5);
+        boardA.setLayoutY(15);
+        matrixBoard.getChildren().add(boardA);
+
+        FinalResultButton.setLayoutX(30);
+        FinalResultButton.setLayoutY(470);
+        FinalResultButton.setPrefSize(160,30);
+        matrixBoard.getChildren().add(FinalResultButton);
+
+        ExitButton.setLayoutX(210);
+        ExitButton.setLayoutY(470);
+        ExitButton.setPrefSize(60,30);
+        matrixBoard.getChildren().add(ExitButton);
+
+        FinalResultButton.setOnAction(ae -> {
+            displayPlayerNames();
+            displayPlayerTypes();
+            displayScores();
+        });
+        ExitButton.setOnAction(actionEvent -> {
+            System.exit(0);
+        });
+
+    }
+
+    public void displayScores(){
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+        for (int player = 0; player < PlayerNumber; player++) {
+            int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
+            playerMap.get(ALL_PLAYERS[player]).setScore(score);
+            Label score_label = new Label(String.valueOf(score));
+            score_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(player+1)*GAP_X);
+            score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+            matrixBoard.getChildren().add(score_label);
+        }
+        Label scores = new Label("Scores :");
+        scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+        scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+        matrixBoard.getChildren().add(scores);
+    }
+
+    public void displayPlayerNames(){
+
+        String NameOfPlayerA = String.valueOf(PlayerSetting.comboBoxP2.getSelectedItem());
+        String NameOfPlayerB = String.valueOf(PlayerSetting.comboBoxP1.getSelectedItem());
+        String NameOfPlayerC = String.valueOf(PlayerSetting.comboBoxP3.getSelectedItem());
+        String NameOfPlayerD = String.valueOf(PlayerSetting.comboBoxP4.getSelectedItem());
+
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+
+        String[] AllNames = {"PlayerNames :",NameOfPlayerA,NameOfPlayerB,NameOfPlayerC,NameOfPlayerD};
+
+        int i;
+        for (i = 0; i <=PlayerNumber; i++){
+            Label EveryPlayerName = new Label(AllNames[i]);
+            EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i)*GAP_X);
+            EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y);
+            matrixBoard.getChildren().add(EveryPlayerName);
+        }
+
+    }
+
+    public void displayPlayerTypes(){
+
+        String TypeOfPlayerB = String.valueOf(PlayerSetting.comboBoxP11.getSelectedItem());
+        String TypeOfPlayerC = String.valueOf(PlayerSetting.comboBoxP31.getSelectedItem());
+        String TypeOfPlayerD = String.valueOf(PlayerSetting.comboBoxP41.getSelectedItem());
+
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+
+        String[] AllOrders = {"PlayerType :","Human",TypeOfPlayerB,TypeOfPlayerC,TypeOfPlayerD};
+
+        int i;
+        for (i = 0; i <=PlayerNumber; i++){
+            Label EveryPlayerOrder = new Label(AllOrders[i]);
+            EveryPlayerOrder.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i)*GAP_X);
+            EveryPlayerOrder.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*1);
+            matrixBoard.getChildren().add(EveryPlayerOrder);
+        }
+
     }
 
     private void display_empty_Board(char current_stage){
@@ -415,11 +519,11 @@ public class Viewer extends Application implements Constants {
         floorTiles.clear();
         char[] floor_chars = floorState.toCharArray();
         for (int tiles = 0; tiles < floor_chars.length; tiles++) {
-            double x = FLOOR_COORDINATES.getPos_x(tiles);
-            double y = FLOOR_COORDINATES.getPos_y(tiles);
             ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles] - BLUE]));
             Tile_View.setFitWidth(BIG_TILE_IMAGE_SIZE_X);
             Tile_View.setFitHeight(BIG_TILE_IMAGE_SIZE_Y);
+            double x = FLOOR_COORDINATES.getPos_x(tiles);
+            double y = FLOOR_COORDINATES.getPos_y(tiles);
             Tile_View.setLayoutX(x);
             Tile_View.setLayoutY(y);
             floorTiles.add(Tile_View);
@@ -481,85 +585,6 @@ public class Viewer extends Application implements Constants {
         }
     }
 
-    private void displayOtherPlayersBoard(PlayerState ps, char current_turn){
-        otherTiles.clear();
-        int index = 0;
-        for(int i=0; i < PLAYER_NUMBER; i++){
-            if(ALL_PLAYERS[i] != current_turn){
-                nPlayer other_player = ps.getnPlayer(ALL_PLAYERS[i]);
-
-                // OTHER STORAGE
-                int[] storage_row_Tiles = new int[MAX_STORAGE_ROW];
-                char[] storage_row_Colors = new char[MAX_STORAGE_ROW];
-                for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
-                    storage_row_Tiles[storage_row] = other_player.storage.getStorageRow(storage_row).getTotalTilesNumber();
-                    storage_row_Colors[storage_row] = other_player.storage.getStorageRow(storage_row).getRowTilesColor();
-                }
-
-                displayOtherStorage(other_player, storage_row_Tiles, storage_row_Colors, index);
-
-                // OTHER MOSAIC
-                displayOtherMosaic(other_player, index);
-
-                // OTHER FLOOR
-                String floorStateString = other_player.floor.getStateString();
-                displayOtherFloor(floorStateString, index);
-                index++;
-            }
-        }
-        matrixBoard.getChildren().addAll(otherTiles);
-    }
-
-    private void displayOtherStorage(nPlayer other_player, int[] storage_row_tiles, char[] storage_row_colors, int index) {
-        for (int storage_row = 0; storage_row < MAX_STORAGE_ROW; storage_row++) {
-            for (int tiles = 0; tiles < storage_row_tiles[storage_row]; tiles++) {
-                int storage_col = storage_row - tiles;
-                double x = OTHER_STORAGE_COORDINATES_GROUP.get(index).getStorageRowCoordinates(storage_row).getPos_x(storage_col);
-                double y = OTHER_STORAGE_COORDINATES_GROUP.get(index).getStorageRowCoordinates(storage_row).getPos_y(storage_col);
-                ImageView Tile_View = new ImageView(new Image(COLORS_IMAGE[storage_row_colors[storage_row] - BLUE]));
-                Tile_View.setFitWidth(SMALL_TILE_IMAGE_SIZE_X);
-                Tile_View.setFitHeight(SMALL_TILE_IMAGE_SIZE_Y);
-                Tile_View.setLayoutY(y);
-                Tile_View.setLayoutX(x);
-                otherTiles.add(Tile_View);
-            }
-        }
-        //System.out.println("    draggableStorageTiles size : " + draggableStorageTiles.size() + "  storageTiles size : " + storageTiles.size());
-    }
-
-    private void displayOtherMosaic(nPlayer other_player, int index) {
-        for (int mosaic_row = 0; mosaic_row < MAX_MOSAIC_ROW; mosaic_row++) {
-            for (int mosaic_col = 0; mosaic_col < MAX_MOSAIC_COL; mosaic_col++) {
-                boolean mosaic_tile_exists = other_player.mosaic.getMosaicRow(mosaic_row).existsTile(mosaic_col);
-                double x = OTHER_MOSAIC_COORDINATES_GROUP.get(index).getMosaicRowCoordinates(mosaic_row).getPos_x(mosaic_col);
-                double y = OTHER_MOSAIC_COORDINATES_GROUP.get(index).getMosaicRowCoordinates(mosaic_row).getPos_y(mosaic_col);
-                if (mosaic_tile_exists) {
-                    char mosaic_tile_color = other_player.mosaic.getMosaicRow(mosaic_row).getTileColor(mosaic_col);
-                    ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[mosaic_tile_color - BLUE]));
-                    Tile_View.setFitWidth(SMALL_TILE_IMAGE_SIZE_X);
-                    Tile_View.setFitHeight(SMALL_TILE_IMAGE_SIZE_Y);
-                    Tile_View.setLayoutY(y);
-                    Tile_View.setLayoutX(x);
-                    otherTiles.add(Tile_View);
-                }
-            }
-        }
-    }
-
-    private void displayOtherFloor(String floorState, int index) {
-        char[] floor_chars = floorState.toCharArray();
-        for (int tiles = 0; tiles < floor_chars.length; tiles++) {
-            double x = OTHER_FLOOR_COORDINATES_GROUP.get(index).getPos_x(tiles);
-            double y = OTHER_FLOOR_COORDINATES_GROUP.get(index).getPos_y(tiles);
-            ImageView Tile_View = new ImageView(new Image(COLORS_WITH_FIRST_PLAYER_IMAGE[floor_chars[tiles] - BLUE]));
-            Tile_View.setFitWidth(SMALL_TILE_IMAGE_SIZE_X);
-            Tile_View.setFitHeight(SMALL_TILE_IMAGE_SIZE_Y);
-            Tile_View.setLayoutX(x);
-            Tile_View.setLayoutY(y);
-            otherTiles.add(Tile_View);
-        }
-    }
-
     private void displayScore(String scoreState) {
 
     }
@@ -576,7 +601,7 @@ public class Viewer extends Application implements Constants {
     public void refreshDisplay(){
         this.current_stage = multiazul.findCurrentStage(currentState);
         if(this.current_stage == TILING_STAGE){
-            while(multiazul.generateSmartAction(currentState).equals(EMPTY_STATE)){
+            while(multiazul.generateSmartAction(currentState) == EMPTY_STATE){
                 System.out.print(" No move valid, changed turn from " + currentState[0].charAt(0));
                 this.currentState = multiazul.changeTurn(currentState);
                 System.out.println(" to " + currentState[0].charAt(0));
@@ -594,10 +619,9 @@ public class Viewer extends Application implements Constants {
             System.out.println(currentState[1]);
         }
         else if(this.current_stage == END_OF_GAME){
-            if(!this.end_stage){
-                this.currentState = multiazul.nextRound(currentState);
-            }
-            this.end_stage = true;
+            // TODO Stop loop once END_OF_GAME reached
+            this.currentState = multiazul.nextRound(currentState);
+
         }
         matrixBoard.getChildren().clear();
         //add backboard each time to empty the tiles which has been displayed
