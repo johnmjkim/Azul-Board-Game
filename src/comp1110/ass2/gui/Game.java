@@ -30,6 +30,7 @@ public class Game extends Application implements Constants {
     public static int FACTORY_MAX_NUMBER;
 
     public static String[] currentState;
+    public static boolean end_stage;
 
     public static ArrayList<Integer> playerOrders = new ArrayList<Integer>();
     public static ArrayList<String> playerNames = new ArrayList<String>();
@@ -44,6 +45,9 @@ public class Game extends Application implements Constants {
     public static DiscardCoordinates DISCARD_COORDINATES;
     public static CenterCoordinates CENTER_COORDINATES;
     public static FactoriesCoordinates FACTORIES_COORDINATES;
+    public static ArrayList<OtherStorageCoordinates> OTHER_STORAGE_COORDINATES_GROUP = new ArrayList<>();
+    public static ArrayList<OtherFloorCoordinates> OTHER_FLOOR_COORDINATES_GROUP = new ArrayList<>();
+    public static ArrayList<OtherMosaicCoordinates> OTHER_MOSAIC_COORDINATES_GROUP = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -113,6 +117,8 @@ public class Game extends Application implements Constants {
         Group root = new Group();
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
+        end_stage = false;
+
         decidePlayers();
         initializeStates();
         makeCoordinates();
@@ -132,7 +138,7 @@ public class Game extends Application implements Constants {
         //Viewer viewer = new Viewer();
         //viewer.start(stage);
 
-        new PlayerSetting();
+        //new PlayerSetting();
 
         //Create draggable tiles
     }
@@ -211,14 +217,49 @@ public class Game extends Application implements Constants {
         CENTER_COORDINATES = new CenterCoordinates(PLAYER_NUMBER);
         FACTORIES_COORDINATES = new FactoriesCoordinates(FACTORY_MAX_NUMBER);
 
-        //System.out.println(STORAGE_COORDINATES);
-        //System.out.println(FLOOR_COORDINATES);
-        //System.out.println(MOSAIC_COORDINATES);
-        //System.out.println(BAG_COORDINATES);
-        //System.out.println(DISCARD_COORDINATES);
-        //System.out.println(CENTER_COORDINATES);
-        //System.out.println(FACTORIES_COORDINATES);
+        // Coordinates for other storages
+        int[] max_row_col = new int[]{MAX_STORAGE_ROW, MAX_STORAGE_COL};
+        double[] initial_xy = new double[]{INITIAL_OTHER_STORAGE_IMAGE_POS_X,INITIAL_OTHER_STORAGE_IMAGE_POS_Y};
+        double[] gap_xy = new double[]{SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP,SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP};
+        for(int i=0; i < PLAYER_NUMBER - 1; i++){
+            OTHER_STORAGE_COORDINATES_GROUP.add(new OtherStorageCoordinates(max_row_col, initial_xy, gap_xy));
+            initial_xy[0] += OTHER_BOARD_GAP_X;
+        }
 
+        // Coordinates for other floors
+        max_row_col = new int[]{1, MAX_FLOOR_TILES_COL_IMAGE};
+        initial_xy = new double[]{INITIAL_OTHER_FLOOR_IMAGE_POS_X,INITIAL_OTHER_FLOOR_IMAGE_POS_Y};
+        gap_xy = new double[]{SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP,SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP};
+        for(int i=0; i < PLAYER_NUMBER - 1; i++){
+            OTHER_FLOOR_COORDINATES_GROUP.add(new OtherFloorCoordinates(max_row_col, initial_xy, gap_xy));
+            initial_xy[0] += OTHER_BOARD_GAP_X;
+        }
+
+        // Coordinates for other mosaics
+        max_row_col = new int[]{MAX_MOSAIC_ROW, MAX_MOSAIC_COL};
+        initial_xy = new double[]{INITIAL_OTHER_MOSAIC_IMAGE_POS_X,INITIAL_OTHER_MOSAIC_IMAGE_POS_Y};
+        gap_xy = new double[]{SMALL_TILE_IMAGE_SIZE_X + SMALL_TILE_IMAGE_SIZE_X_GAP,SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP};
+        for(int i=0; i < PLAYER_NUMBER - 1; i++){
+            OTHER_MOSAIC_COORDINATES_GROUP.add(new OtherMosaicCoordinates(max_row_col, initial_xy, gap_xy));
+            initial_xy[0] += OTHER_BOARD_GAP_X;
+        }
+        /*
+        for (int i=0; i < PLAYER_NUMBER - 1; i++){
+            System.out.print("Other PLayer " + i + " ");
+            System.out.println(OTHER_STORAGE_COORDINATES_GROUP.get(i));
+        }
+
+        for (int i=0; i < PLAYER_NUMBER - 1; i++){
+            System.out.print("Other PLayer " + i + " ");
+            System.out.println(OTHER_FLOOR_COORDINATES_GROUP.get(i));
+        }
+
+        for (int i=0; i < PLAYER_NUMBER - 1; i++){
+            System.out.print("Other PLayer " + i + " ");
+            System.out.println(OTHER_MOSAIC_COORDINATES_GROUP.get(i));
+        }
+
+         */
     }
 
     private void start_page() {
