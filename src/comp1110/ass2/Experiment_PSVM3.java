@@ -4,6 +4,8 @@ import comp1110.ass2.backend.MultiAzul;
 import comp1110.ass2.backend.SharedState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class Experiment_PSVM3 implements Constants{
@@ -32,6 +34,7 @@ public class Experiment_PSVM3 implements Constants{
 
          */
 
+        /*
         int TEST_TIMES = 1;
         for(int test=1; test <= TEST_TIMES; test++){
             gameState = multiazul.setInitalStates(PLAYER_NUMBER);
@@ -59,5 +62,40 @@ public class Experiment_PSVM3 implements Constants{
             }
         }
         System.out.println(" tests finished");
+
+         */
+
+        ArrayList<Integer> scores = new ArrayList<>();
+
+        scores.add(8);
+        scores.add(25);
+        scores.add(14);
+        scores.add(7);
+
+        int[] score_array = new int[scores.size()];
+        int[] ranks = new int[score_array.length];
+
+        for(int i=0; i < score_array.length; i++){
+            score_array[i] = scores.get(i);
+        }
+
+        Arrays.sort(score_array);
+
+        for(int i=0; i < scores.size(); i++){
+            System.out.println(score_array[i]);
+        }
+
+        for(int rank = ranks.length; rank >= 1; rank--){
+            for(int idx = 0; idx < scores.size(); idx++){
+                if(scores.get(idx) == score_array[ranks.length - rank]){
+                    ranks[idx] = rank;
+                }
+            }
+        }
+
+        for(int i=0; i < ranks.length; i++){
+            System.out.println(ranks[i]);
+        }
+
     }
 }

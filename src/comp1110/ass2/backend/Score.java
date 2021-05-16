@@ -15,7 +15,7 @@ public class Score implements State{
      */
     public Score ( String scoreState ){
         this.scoreState = scoreState;
-        this.score = Integer.valueOf(scoreState);
+        this.score = Integer.parseInt(scoreState);
     }
 
     public String getScoreState(){

@@ -68,7 +68,9 @@ public class PlayersInformation implements Constants {
         String name;
         char type;
         int order;
-        int score, rank;
+        int score = INITIAL_SCORE;
+        int rank;
+        String move;
 
         PlayerInfo(int order, char player_turn, String name, char type) {
             this.order = order;
@@ -85,12 +87,16 @@ public class PlayersInformation implements Constants {
             this.rank = rank;
         }
 
-        public char getTurn(){
-            return this.player_turn;
+        public void setMove(String move){
+            this.move = move;
         }
 
         public int getOrder(){
             return this.order;
+        }
+
+        public char getTurn(){
+            return this.player_turn;
         }
 
         public String getName(){
@@ -109,9 +115,13 @@ public class PlayersInformation implements Constants {
             return this.rank;
         }
 
+        public String getMove(){
+            return this.move;
+        }
+
         @Override
         public String toString() {
-            return " Name : " + getName() + " Order : " + getOrder() + " Turn : " + getTurn() + " Type : " + getType();
+            return " Name : " + getName() + " Order : " + getOrder() + " Turn : " + getTurn() + " Type : " + getType() + " Score : " + getScore() + " Rank : " + getRank() + " Move : " + getMove();
         }
 
         @Override

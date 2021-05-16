@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Viewer extends Application implements Constants {
@@ -100,10 +101,11 @@ public class Viewer extends Application implements Constants {
         this.current_turn = current_player_turn.charAt(0);
         nPlayer current_player = ps.getnPlayer(current_turn);
 
-        System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state));
+        System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state) + " previous move : " + this.move);
         System.out.println(playerMap.get(current_turn));
         if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER){
             this.move = multiazul.generateSmartAction(currentState);
+            playerMap.get(current_turn).setMove(move);
             System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
             this.currentState = multiazul.applyMove(currentState, move);
             System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
@@ -128,9 +130,11 @@ public class Viewer extends Application implements Constants {
             HBox scoreBox = new HBox();
             for (int player = 0; player < PLAYER_NUMBER; player++) {
                 int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
+                playerMap.get(ALL_PLAYERS[player]).setScore(score);
                 Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
                 scoreBox.getChildren().add(score_label);
             }
+            setRanks(playerMap);
             scoreBox.setSpacing(SCORE_IMAGE_GAP);
             scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
             scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
@@ -566,6 +570,23 @@ public class Viewer extends Application implements Constants {
 
     public void setMove(String move){
         this.move = move;
+    }
+
+    public void setRanks(HashMap<Character, PlayersInformation.PlayerInfo> playerMap){
+        int[] score_array = new int[PLAYER_NUMBER];
+
+        for(int i=0; i < PLAYER_NUMBER; i++){
+            score_array[i] = playerMap.get(ALL_PLAYERS[i]).getScore();
+        }
+        Arrays.sort(score_array);
+
+        for(int rank = PLAYER_NUMBER; rank >= 1; rank--){
+            for( char player : ALL_PLAYERS){
+                if(playerMap.get(player).getScore() == score_array[PLAYER_NUMBER - rank]){
+                    playerMap.get(player).setRank(rank);
+                }
+            }
+        }
     }
 
     public static class Rectangle extends Polygon {

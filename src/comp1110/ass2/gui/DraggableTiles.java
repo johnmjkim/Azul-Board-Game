@@ -122,6 +122,7 @@ public class DraggableTiles extends ImageView implements Constants {
         setLayoutX(viewer.highlighted.x);
         setLayoutY(viewer.highlighted.y);
         viewer.setMove(draggable_move);
+        viewer.playerMap.get(viewer.current_turn).setMove(viewer.move);
         String[] state = viewer.multiazul.applyMove(viewer.currentState, draggable_move);
         viewer.setState(state);
         //viewer.displayState(viewer.currentState);
