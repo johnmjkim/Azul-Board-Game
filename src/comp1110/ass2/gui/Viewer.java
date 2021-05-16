@@ -131,23 +131,13 @@ public class Viewer extends Application implements Constants {
             /*
             //SCORE
             controls.getChildren().clear();
-            //HBox scoreBox = new HBox();
-            int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
-            for (int player = 0; player < PlayerNumber; player++) {
+            HBox scoreBox = new HBox();
+            for (int player = 0; player < PLAYER_NUMBER; player++) {
                 int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
                 playerMap.get(ALL_PLAYERS[player]).setScore(score);
-                Label score_label = new Label(String.valueOf(score));
-                //scoreBox.getChildren().add(score_label);
-                score_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(player+1)*GAP_X);
-                score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
-                matrixBoard.getChildren().add(score_label);
+                Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
+                scoreBox.getChildren().add(score_label);
             }
-            Label scores = new Label("Scores :");
-            //scoreBox.getChildren().add(score_label);
-            scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
-            scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
-            matrixBoard.getChildren().add(scores);
-            /*
             setRanks(playerMap);
             scoreBox.setSpacing(SCORE_IMAGE_GAP);
             scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);

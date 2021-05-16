@@ -2,15 +2,13 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
 
-public class FloorCoordinates implements Constants {
+public class OtherFloorCoordinates implements Constants {
+
     private double[] pos_x = new double[MAX_FLOOR_STRING_SIZE];
     private double[] pos_y = new double[MAX_FLOOR_STRING_SIZE];
 
-    public FloorCoordinates(){
-        // Floor Coordinates
-        int[] max_row_col = new int[]{1, MAX_FLOOR_TILES_COL_IMAGE};
-        double[] initial_xy = new double[]{INITIAL_FLOOR_IMAGE_POS_X,INITIAL_FLOOR_IMAGE_POS_Y};
-        double[] gap_xy = new double[]{BIG_TILE_IMAGE_SIZE_X + BIG_TILE_IMAGE_SIZE_X_GAP,BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP};
+    public OtherFloorCoordinates(int[] max_row_col, double[] initial_xy, double[] gap_xy){
+        // Other Floor Coordinates
 
         Coordinates floor_Coordinates_Class = new Coordinates(max_row_col, initial_xy, gap_xy);
         for(int tiles=0; tiles< MAX_FLOOR_STRING_SIZE; tiles++){

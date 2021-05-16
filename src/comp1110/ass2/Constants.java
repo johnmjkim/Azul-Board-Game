@@ -130,6 +130,9 @@ public interface Constants {
     public final double SECOND_BOARD_POS_X = 601;
     public final double SECOND_BOARD_POS_Y = 280;
     public final double THIRD_BOARD_POS_X = 1000;
+    public final double OTHER_BOARD_POS_X = 35;
+    public final double OTHER_BOARD_POS_Y = 265;
+    public final double OTHER_BOARD_GAP_X = 182.5;
 
     // Image dimensions : Factories, Factory
     public final int MAX_FACTORIES_TILES_COL_IMAGE = 5;
@@ -163,16 +166,23 @@ public interface Constants {
     // Image dimensions : Storage
     public final double INITIAL_STORAGE_IMAGE_POS_X = SECOND_BOARD_POS_X;
     public final double INITIAL_STORAGE_IMAGE_POS_Y = SECOND_BOARD_POS_Y;
+    public final double INITIAL_OTHER_STORAGE_IMAGE_POS_X = OTHER_BOARD_POS_X;
+    public final double INITIAL_OTHER_STORAGE_IMAGE_POS_Y = OTHER_BOARD_POS_Y;
 
     // Image dimensions : Mosaic
     public final double STORAGE_MOSAIC_IMAGE_ROW_GAP = 15;
+    public final double OTHER_STORAGE_MOSAIC_IMAGE_ROW_GAP = 7.5;
     public final double INITIAL_MOSAIC_IMAGE_POS_X = SECOND_BOARD_POS_X + (BIG_TILE_IMAGE_SIZE_Y + BIG_TILE_IMAGE_SIZE_Y_GAP) * MAX_STORAGE_ROW + STORAGE_MOSAIC_IMAGE_ROW_GAP;
     public final double INITIAL_MOSAIC_IMAGE_POS_Y = SECOND_BOARD_POS_Y;
+    public final double INITIAL_OTHER_MOSAIC_IMAGE_POS_X = OTHER_BOARD_POS_X + + (SMALL_TILE_IMAGE_SIZE_Y + SMALL_TILE_IMAGE_SIZE_Y_GAP) * MAX_STORAGE_ROW + OTHER_STORAGE_MOSAIC_IMAGE_ROW_GAP;
+    public final double INITIAL_OTHER_MOSAIC_IMAGE_POS_Y = OTHER_BOARD_POS_Y;
 
     // Image dimensions : Floor
     public final int MAX_FLOOR_TILES_COL_IMAGE = 7;
     public final double INITIAL_FLOOR_IMAGE_POS_X = SECOND_BOARD_POS_X;
     public final double INITIAL_FLOOR_IMAGE_POS_Y = 465;
+    public final double INITIAL_OTHER_FLOOR_IMAGE_POS_X = OTHER_BOARD_POS_X;
+    public final double INITIAL_OTHER_FLOOR_IMAGE_POS_Y = 357.5;
 
     // Image dimensions : Status (Rank, Score, Current Player)
     public final double INITIAL_SCORE_IMAGE_POS_X = 500;
@@ -182,6 +192,8 @@ public interface Constants {
     // Game running : Game settings
     public final char HUMAN_PLAYER = 'H';
     public final char COMPUTER_PLAYER = 'C';
+    public final String HUMAN_STRING = "Human";
+    public final String COMPUTER_STRING = "Computer";
 
     // Game running : Game stage
     public final char DRAFTING_STAGE = 'D';

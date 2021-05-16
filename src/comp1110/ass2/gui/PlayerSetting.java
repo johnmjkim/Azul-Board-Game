@@ -1,12 +1,14 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //PlayerSetting just used to set the information, and have no function about generate new pages
-public class PlayerSetting extends JFrame implements ActionListener {
+public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
     public static JComboBox comboBoxP0;
     public static JComboBox comboBoxP1;
