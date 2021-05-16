@@ -55,7 +55,12 @@ public class Experiment_PSVM3 implements Constants{
             while(!(multiazul.findCurrentStage(gameState) == END_OF_GAME) && multiazul.isStateValid(gameState)){
                 while(!(multiazul.findCurrentStage(gameState) == NEXT_ROUND_STAGE || multiazul.findCurrentStage(gameState) == END_OF_GAME) && multiazul.isStateValid(gameState)){
                     move = multiazul.generateSmartAction(gameState);
-                    gameState = multiazul.applyMove(gameState, move);
+                    if(move == EMPTY_STATE){
+                        gameState = multiazul.changeTurn(gameState);
+                    }
+                    else {
+                        gameState = multiazul.applyMove(gameState, move);
+                    }
                     for(int i=0; i < NUMBER_OF_STATES; i++){
                         System.out.println(" test " + test + " Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i] + " Move : " + move);
                     }
