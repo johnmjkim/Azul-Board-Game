@@ -104,11 +104,13 @@ public class Viewer extends Application implements Constants {
         System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state) + " previous move : " + this.move);
         System.out.println(playerMap.get(current_turn));
         if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER){
-            this.move = multiazul.generateSmartAction(currentState);
-            playerMap.get(current_turn).setMove(move);
-            System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
-            this.currentState = multiazul.applyMove(currentState, move);
-            System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
+            if(!(multiazul.generateSmartAction(currentState) == EMPTY_STATE)){
+                this.move = multiazul.generateSmartAction(currentState);
+                playerMap.get(current_turn).setMove(move);
+                System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
+                this.currentState = multiazul.applyMove(currentState, move);
+                System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
+            }
             refreshDisplay();
         }
         else{
@@ -510,7 +512,9 @@ public class Viewer extends Application implements Constants {
             System.out.println(currentState[1]);
         }
         else if(this.current_stage == END_OF_GAME){
+            // TODO Stop loop once END_OF_GAME reached
             this.currentState = multiazul.nextRound(currentState);
+
         }
         matrixBoard.getChildren().clear();
         //add backboard each time to empty the tiles which has been displayed
