@@ -204,6 +204,6 @@ public interface Constants {
     // Information on Viewer
     public final double INITIAL_INFORMATION_IMAGE_POS_X = 30;
     public final double INITIAL_INFORMATION_IMAGE_POS_Y = 85;
-    public final double GAP_X = 85;
-    public final double GAP_Y = 35;
+    public final double INFORMATION_IMAGE_GAP_X = 85;
+    public final double INFORMATION_IMAGE_GAP_Y = 35;
 }
