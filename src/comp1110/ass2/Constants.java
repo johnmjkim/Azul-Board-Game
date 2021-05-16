@@ -181,6 +181,8 @@ public interface Constants {
     // Game running : Game settings
     public final char HUMAN_PLAYER = 'H';
     public final char COMPUTER_PLAYER = 'C';
+    public final String HUMAN_STRING = "Human";
+    public final String COMPUTER_STRING = "Computer";
 
     // Game running : Game stage
     public final char DRAFTING_STAGE = 'D';

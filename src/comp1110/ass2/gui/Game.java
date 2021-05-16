@@ -141,12 +141,14 @@ public class Game extends Application implements Constants {
         //PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
         PLAYER_NUMBER = 4;
         FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
+
         String[] temporary_names = new String[] {"player1name", "player2name", "player3name", "player4name"};
         char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER, COMPUTER_PLAYER, COMPUTER_PLAYER};
         for(int i=0; i < PLAYER_NUMBER; i++){
             playerNames.add(temporary_names[i]);
             playerTypes.add(temporary_types[i]);
         }
+
         randomizeOrders();
         /*
         for(int i=0; i < PLAYER_NUMBER; i++){
