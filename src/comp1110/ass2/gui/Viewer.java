@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 public class Viewer extends Application implements Constants {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 600;
+    private static final int VIEWER_HEIGHT = 550;
 
     Stage window;
     Scene scene;
@@ -127,21 +128,137 @@ public class Viewer extends Application implements Constants {
             // Tiling Stage : Storage
             displayDraggableBoard(ss);
 
+            /*
             //SCORE
             controls.getChildren().clear();
-            HBox scoreBox = new HBox();
-            for (int player = 0; player < PLAYER_NUMBER; player++) {
+            //HBox scoreBox = new HBox();
+            int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+            for (int player = 0; player < PlayerNumber; player++) {
                 int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
                 playerMap.get(ALL_PLAYERS[player]).setScore(score);
-                Label score_label = new Label("Score of Player " + ALL_PLAYERS[player] + ": " + score);
-                scoreBox.getChildren().add(score_label);
+                Label score_label = new Label(String.valueOf(score));
+                //scoreBox.getChildren().add(score_label);
+                score_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(player+1)*GAP_X);
+                score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+                matrixBoard.getChildren().add(score_label);
             }
+            Label scores = new Label("Scores :");
+            //scoreBox.getChildren().add(score_label);
+            scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+            scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+            matrixBoard.getChildren().add(scores);
+            /*
             setRanks(playerMap);
             scoreBox.setSpacing(SCORE_IMAGE_GAP);
             scoreBox.setLayoutX(INITIAL_SCORE_IMAGE_POS_X);
             scoreBox.setLayoutY(INITIAL_SCORE_IMAGE_POS_Y);
             controls.getChildren().add(scoreBox);
+            */
+            displayScores();
+            displayPlayerNames();
+            displayPlayerTypes();
         }
+
+        Button linkToEnd = new Button("End The Game");
+        linkToEnd.setLayoutX(1000);
+        linkToEnd.setLayoutY(520);
+        linkToEnd.setOnAction(ae -> {
+            displayResult();
+        });
+        controls.getChildren().add(linkToEnd);
+
+    }
+
+    public void displayResult(){
+        matrixBoard.getChildren().clear();
+        controls.getChildren().clear();
+
+        Button FinalResultButton = new Button("Show me final Result");
+        Button ExitButton = new Button(" Exit ");
+
+        ImageView boardA = new ImageView(new Image(END_PAGE_IMAGE));
+        boardA.setFitWidth(1200);
+        boardA.setFitHeight(500);
+        boardA.setLayoutX(5);
+        boardA.setLayoutY(15);
+        matrixBoard.getChildren().add(boardA);
+
+        FinalResultButton.setLayoutX(30);
+        FinalResultButton.setLayoutY(470);
+        FinalResultButton.setPrefSize(160,30);
+        matrixBoard.getChildren().add(FinalResultButton);
+
+        ExitButton.setLayoutX(210);
+        ExitButton.setLayoutY(470);
+        ExitButton.setPrefSize(60,30);
+        matrixBoard.getChildren().add(ExitButton);
+
+        FinalResultButton.setOnAction(ae -> {
+            displayPlayerNames();
+            displayPlayerTypes();
+            displayScores();
+        });
+        ExitButton.setOnAction(actionEvent -> {
+            System.exit(0);
+        });
+
+    }
+
+    public void displayScores(){
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+        for (int player = 0; player < PlayerNumber; player++) {
+            int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
+            playerMap.get(ALL_PLAYERS[player]).setScore(score);
+            Label score_label = new Label(String.valueOf(score));
+            score_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(player+1)*GAP_X);
+            score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+            matrixBoard.getChildren().add(score_label);
+        }
+        Label scores = new Label("Scores :");
+        scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+        scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*2);
+        matrixBoard.getChildren().add(scores);
+    }
+
+    public void displayPlayerNames(){
+
+        String NameOfPlayerA = String.valueOf(PlayerSetting.comboBoxP2.getSelectedItem());
+        String NameOfPlayerB = String.valueOf(PlayerSetting.comboBoxP1.getSelectedItem());
+        String NameOfPlayerC = String.valueOf(PlayerSetting.comboBoxP3.getSelectedItem());
+        String NameOfPlayerD = String.valueOf(PlayerSetting.comboBoxP4.getSelectedItem());
+
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+
+        String[] AllNames = {"PlayerNames :",NameOfPlayerA,NameOfPlayerB,NameOfPlayerC,NameOfPlayerD};
+
+        int i;
+        for (i = 0; i <=PlayerNumber; i++){
+            Label EveryPlayerName = new Label(AllNames[i]);
+            EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i)*GAP_X);
+            EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y);
+            matrixBoard.getChildren().add(EveryPlayerName);
+        }
+
+    }
+
+    public void displayPlayerTypes(){
+
+        String TypeOfPlayerB = String.valueOf(PlayerSetting.comboBoxP11.getSelectedItem());
+        String TypeOfPlayerC = String.valueOf(PlayerSetting.comboBoxP31.getSelectedItem());
+        String TypeOfPlayerD = String.valueOf(PlayerSetting.comboBoxP41.getSelectedItem());
+
+        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
+
+        String[] AllOrders = {"PlayerType :","Human",TypeOfPlayerB,TypeOfPlayerC,TypeOfPlayerD};
+
+        int i;
+        for (i = 0; i <=PlayerNumber; i++){
+            Label EveryPlayerOrder = new Label(AllOrders[i]);
+            EveryPlayerOrder.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i)*GAP_X);
+            EveryPlayerOrder.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y+GAP_Y*1);
+            matrixBoard.getChildren().add(EveryPlayerOrder);
+        }
+
     }
 
     private void display_empty_Board(char current_stage){
