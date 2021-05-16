@@ -1602,6 +1602,13 @@ public class Azul implements Constants {
         else{
             SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
             PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+            /*
+            boolean storage_has_full_tiles = false;
+            for(int i=0; i < MAX_PLAYER_NUMBER; i++){
+                storage_has_full_tiles = ps.getnPlayer(ALL_PLAYERS[i]).storage.existsStorageRowTilesFull();
+            }
+
+             */
             char player_turn = ss.getTurnState().charAt(0);
             boolean storage_has_full_tiles = ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull();
             return storage_has_full_tiles;
