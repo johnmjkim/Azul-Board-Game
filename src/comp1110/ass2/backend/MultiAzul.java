@@ -1390,9 +1390,9 @@ public class MultiAzul implements Constants {
             }
             int num = valid_drafting_moves.size();
             if(num <= 0){
-                System.out.println(" ss : " + gameState[0]);
-                System.out.println(" ss : " + gameState[1]);
-                System.out.println(num);
+                //System.out.println(" ss : " + gameState[0]);
+                //System.out.println(" ss : " + gameState[1]);
+                //System.out.println(num);
                 return EMPTY_STATE;
             }
             int move_idx = r.nextInt(num);
@@ -1446,9 +1446,9 @@ public class MultiAzul implements Constants {
              */
             int num = valid_tiling_moves.size();
             if(num <= 0){
-                System.out.println(" ss : " + gameState[0]);
-                System.out.println(" ss : " + gameState[1]);
-                System.out.println(num);
+                //System.out.println(" ss : " + gameState[0]);
+                //System.out.println(" ss : " + gameState[1]);
+                //System.out.println(num);
                 return EMPTY_STATE;
             }
             int move_idx = r.nextInt(num);

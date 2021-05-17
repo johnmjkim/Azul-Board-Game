@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.*;
