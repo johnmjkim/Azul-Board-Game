@@ -894,6 +894,7 @@ public class MultiAzul implements Constants {
 
         char storage_row_color = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).getRowTilesColor();
         boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(storage_row).isTilesFull();
+        boolean storage_row_full_exists = ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull();
 
         if (!(mosaic_column_or_floor == FLOOR)) {
             int mosaic_col = Character.getNumericValue(mosaic_column_or_floor);
