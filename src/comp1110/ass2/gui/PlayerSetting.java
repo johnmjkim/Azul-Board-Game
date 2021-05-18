@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
     public static Game game;
+    public static Viewer viewer;
     public static int PLAYER_NUMBER;
+    public static boolean game_starts = false;
     public static ArrayList<String> playerNamesSetting = new ArrayList<>();
     public static ArrayList<Character> playerTypesSetting = new ArrayList<>();
 
@@ -188,12 +190,20 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
         //choose to start the game or exit
         if (mes.equals("Yes, submit")) {
-            getPlayerName();
             getChoosePlayerNumber();
+            getPlayerName();
             getPlayerType();
+            game_starts = true;
+            setVisible(false);
+            dispose();
         }
         if (mes.equals("I don't want to play")) {
-            System.exit(0);
+            try {
+                game.start(new Stage());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            //System.exit(0);
         }
 
         //if (e.getActionCommand().equals("showMeViewer")){
@@ -219,6 +229,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         char PlayType2 = typeToChar(Player2Type);
         char PlayType3 = typeToChar(Player3Type);
         char PlayType4 = typeToChar(Player4Type);
+        playerTypesSetting.clear();
         playerTypesSetting.add(PlayType1);
         playerTypesSetting.add(PlayType2);
         if (PLAYER_NUMBER>=3){
@@ -241,17 +252,11 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         }
 
     }
-    /*
-    public char getType(String ){
-
-    }
-
-     */
 
     public void getChoosePlayerNumber(){
         int ChoosePlayerNumber = comboBoxP0.getSelectedIndex()+2;
         PLAYER_NUMBER = ChoosePlayerNumber;
-        System.out.println(ChoosePlayerNumber);
+        //System.out.println(ChoosePlayerNumber);
     }
 
 
@@ -260,12 +265,16 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         String PlayerB = String.valueOf(comboBoxP1.getSelectedItem());
         String PlayerC = String.valueOf(comboBoxP3.getSelectedItem());
         String PlayerD = String.valueOf(comboBoxP4.getSelectedItem());
+        playerNamesSetting.clear();
         playerNamesSetting.add(PlayerA);
         playerNamesSetting.add(PlayerB);
+        System.out.println("A, B added");
         if (PLAYER_NUMBER>=3){
             playerNamesSetting.add(PlayerC);
+            System.out.println("C added");
             if (PLAYER_NUMBER>=4){
                 playerNamesSetting.add(PlayerD);
+                System.out.println("D added");
             }
         }
     }

@@ -36,6 +36,7 @@ public class Game extends Application implements Constants {
 
     public static String[] currentState;
     public static boolean end_stage;
+    public Viewer viewer;
 
     public static ArrayList<Integer> playerOrders = new ArrayList<Integer>();
     public static ArrayList<String> playerNames = new ArrayList<String>();
@@ -124,12 +125,6 @@ public class Game extends Application implements Constants {
 
         end_stage = false;
 
-        new PlayerSetting();
-
-        decidePlayers();
-        initializeStates();
-        makeCoordinates();
-
         root.getChildren().add(controls);
         root.getChildren().add(matrixBoard);
 
@@ -152,16 +147,19 @@ public class Game extends Application implements Constants {
 
     private void decidePlayers(){
         //PLAYER_NUMBER = DEFAULT_MAX_PLAYER;
-        PLAYER_NUMBER = 4;
+        //PLAYER_NUMBER = 4;
+        PLAYER_NUMBER = PlayerSetting.PLAYER_NUMBER;
         FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
-/*
+        /*
         String[] temporary_names = new String[] {"Player 1", "Player 2", "Player 3", "Player 4"};
-        char[] temporary_types = new char[] {HUMAN_PLAYER, , COMPUTER_PLAYER, COMPUTER_PLAYER};
+        char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER , COMPUTER_PLAYER, COMPUTER_PLAYER};
         for(int i=0; i < PLAYER_NUMBER; i++){
             playerNames.add(temporary_names[i]);
             playerTypes.add(temporary_types[i]);
         }
-*/
+
+         */
+
         playerTypes = PlayerSetting.playerTypesSetting;
         playerNames = PlayerSetting.playerNamesSetting;
 
@@ -171,6 +169,7 @@ public class Game extends Application implements Constants {
         for(int i=0; i < PLAYER_NUMBER; i++){
             System.out.println(playerNames.get(i));
         }
+
         randomizeOrders();
         /*
         for(int i=0; i < PLAYER_NUMBER; i++){
@@ -307,14 +306,22 @@ public class Game extends Application implements Constants {
         //System.out.println(mes);
 
         WelcomeStartButton.setOnAction(ae -> {
+                if(PlayerSetting.game_starts){
+                    decidePlayers();
+                    initializeStates();
+                    makeCoordinates();
 
-                try {
-                    new Viewer().start(new Stage());
-                }
-                catch (Exception e) {
+                    try {
+                        new Viewer().start(new Stage());
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+                else{
+                    new PlayerSetting();
+                }
+        }
         );
 
         WelcomeExitButton.setOnAction(ae -> {
