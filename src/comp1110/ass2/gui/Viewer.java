@@ -20,6 +20,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+
+/**
+ * @author Si Bo, Hu
+ * This part is the main part of the whole game
+ * "Display part"
+ * We have the empty board(image), fill it with empty tiles(gray rectangles), cover the empty rectangles with Tiles(images)
+ * Player in current turn can move their tiles in the big player borad
+ * Other players' board will just showed in small boards
+ * We also show players' information like their names, player kind, Scores that changes in every round
+ * "Method part"
+ * We creat a method to refrash things we display
+ * add the method to find and highlight nearest rectangles, but "highlight" we found it is not nessary, so we didn't finish that
+ */
 public class Viewer extends Application implements Constants {
 
     private static final int VIEWER_WIDTH = 1200;

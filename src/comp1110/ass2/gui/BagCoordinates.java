@@ -2,6 +2,10 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
 
+/**
+ * @author Si Bo, Hu
+ * this is a method to get the coordinates of tiles in Bag
+ */
 public class BagCoordinates implements Constants {
     private double[] pos_x = new double[MAX_BAG_SIZE];
     private double[] pos_y = new double[MAX_BAG_SIZE];

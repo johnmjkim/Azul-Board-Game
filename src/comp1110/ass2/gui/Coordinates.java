@@ -1,5 +1,9 @@
 package comp1110.ass2.gui;
 
+/**
+ * @author Si Bo, Hu
+ * this is an initial setting of coordinates, we used this in different kinds of coordinates
+ */
 public class Coordinates {
     int max_row, max_col;
     double initial_x, initial_y;

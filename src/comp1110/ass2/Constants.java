@@ -130,9 +130,9 @@ public interface Constants {
     public final double SECOND_BOARD_POS_X = 601;
     public final double SECOND_BOARD_POS_Y = 280;
     public final double THIRD_BOARD_POS_X = 1000;
-    public final double OTHER_BOARD_POS_X = 35;
+    public final double OTHER_BOARD_POS_X = 36;
     public final double OTHER_BOARD_POS_Y = 265;
-    public final double OTHER_BOARD_GAP_X = 182.5;
+    public final double OTHER_BOARD_GAP_X = 181;
 
     // Image dimensions : Factories, Factory
     public final int MAX_FACTORIES_TILES_COL_IMAGE = 5;

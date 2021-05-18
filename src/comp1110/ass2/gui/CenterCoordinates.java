@@ -1,6 +1,10 @@
 package comp1110.ass2.gui;
 import comp1110.ass2.Constants;
 
+/**
+ * @author Si Bo, Hu
+ * this is a method to get the coordinates of tiles in Center
+ */
 public class CenterCoordinates implements Constants {
     int max_player_number;
     int max_center_number;

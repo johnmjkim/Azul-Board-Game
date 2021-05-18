@@ -4,6 +4,11 @@ import comp1110.ass2.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * @author Si Bo, Hu
+ * those coordinates are provide for the main player board for player in current turn
+ * this is a method to get the coordinates of tiles in Mosaic
+ */
 public class MosaicCoordinates implements Constants {
 
     ArrayList<MosaicRowCoordinates> mosaicrowcoordinates = new ArrayList<MosaicRowCoordinates>();

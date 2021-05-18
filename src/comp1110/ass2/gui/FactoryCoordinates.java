@@ -2,6 +2,11 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
 
+
+/**
+ * @author Si Bo, Hu
+ * this is a method to get the coordinates of tiles in each Factory
+ */
 public class FactoryCoordinates implements Constants {
     int number;
     private double[] pos_x = new double[FACTORY_SIZE];

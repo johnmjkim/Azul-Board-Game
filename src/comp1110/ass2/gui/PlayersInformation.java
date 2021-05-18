@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 
+/**
+ * @author Si Bo, Hu
+ * In this class, we put different kinds of information of players in different ArrayList,
+ * We can use it in other classes
+ */
 public class PlayersInformation implements Constants {
     int MAX_PLAYER_NUMBER;
     HashMap<Character, PlayerInfo> playermap;

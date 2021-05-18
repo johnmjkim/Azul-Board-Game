@@ -7,7 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//PlayerSetting just used to set the information, and have no function about generate new pages
+/**
+ * @author Si Bo, Hu
+ * PlayerSetting is the first page, players use it to fill the information include: player number, names, kind,
+ * It has no function, just get information and provide to viewer page then going to show them.
+**/
 public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
     public static JComboBox comboBoxP0;

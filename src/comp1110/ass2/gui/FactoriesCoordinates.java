@@ -4,6 +4,11 @@ import comp1110.ass2.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * @author Si Bo, Hu
+ * this is a method to get the coordinates of tiles in Factories
+ */
+
 public class FactoriesCoordinates implements Constants {
     int max_factories_number;
     ArrayList<FactoryCoordinates> factoriescoordinates = new ArrayList<FactoryCoordinates>();

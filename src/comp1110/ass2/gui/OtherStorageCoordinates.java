@@ -4,6 +4,13 @@ import comp1110.ass2.Constants;
 
 import java.util.ArrayList;
 
+
+/**
+ * @author Si Bo, Hu
+ * As we have to show servel players' boards in the same page, we got this called Other coordinates
+ * those coordinates are for the players who are not in current turn
+ * this is a method to get the coordinates of tiles in Storage
+ */
 public class OtherStorageCoordinates implements Constants {
     ArrayList<OtherStorageRowCoordinates> otherstoragerowcoordinates = new ArrayList<>();
 

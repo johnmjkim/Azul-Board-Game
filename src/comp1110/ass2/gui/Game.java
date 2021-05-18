@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * @author Si Bo, Hu
+ * We show all the game pages in this class, include Playsetting, welcomePage, Viewer
+ * We can play the Game here
+ */
 public class Game extends Application implements Constants {
 
     Group controls = new Group();

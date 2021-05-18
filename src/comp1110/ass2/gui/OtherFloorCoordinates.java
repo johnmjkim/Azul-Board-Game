@@ -2,6 +2,14 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
 
+
+
+/**
+ * @author Si Bo, Hu
+ * As we have to show servel players' boards in the same page, we got this called Other coordinates
+ * those coordinates are for the players who are not in current turn
+ * this is a method to get the coordinates of tiles in Floor
+ */
 public class OtherFloorCoordinates implements Constants {
 
     private double[] pos_x = new double[MAX_FLOOR_STRING_SIZE];

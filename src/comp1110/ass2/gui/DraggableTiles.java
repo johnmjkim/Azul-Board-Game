@@ -4,6 +4,13 @@ import comp1110.ass2.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
+/**
+ * @author Si Bo, Hu
+ * This part is setting Tiles(we show them as images) from Storage, Center, Mosaic as the Draggable Tiles,
+ * then add the mouse function
+ * One thing is highlight nearest position not finished, fortunately it is not necessary.
+ */
 public class DraggableTiles extends ImageView implements Constants {
     double x, y;
     int tile_num, index;
