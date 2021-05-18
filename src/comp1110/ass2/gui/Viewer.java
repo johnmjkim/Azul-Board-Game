@@ -107,7 +107,6 @@ public class Viewer extends Application implements Constants {
 
     void displayState(String[] state) {
         // FIXME Task 4: implement the simple state viewer
-
         setState(state);
         //this.currentState = state;
         this.current_stage = multiazul.findCurrentStage(state);
@@ -151,13 +150,15 @@ public class Viewer extends Application implements Constants {
             displayPlayerNames();
             displayPlayerTypes();
             displayScores();
+            displayRanks();
+            displayMoves();
         }
 
         Button linkToEnd = new Button("End The Game");
         linkToEnd.setLayoutX(1000);
         linkToEnd.setLayoutY(520);
         linkToEnd.setOnAction(ae -> {
-            //displayResult();
+            displayResult();
         });
         controls.getChildren().add(linkToEnd);
 
@@ -205,7 +206,7 @@ public class Viewer extends Application implements Constants {
                 EveryPlayerName = new Label("PlayerNames :");
             }
             else{
-                EveryPlayerName = new Label(playerMap.get(ALL_PLAYERS[i-1]).name);
+                EveryPlayerName = new Label(playerMap.get(ALL_PLAYERS[i-1]).getName());
             }
             EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i) * INFORMATION_IMAGE_GAP_X);
             EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y);
@@ -220,7 +221,7 @@ public class Viewer extends Application implements Constants {
                 EveryPlayerName = new Label("PlayerTypes :");
             }
             else{
-                EveryPlayerName = new Label(typetoString(playerMap.get(ALL_PLAYERS[i-1]).type));
+                EveryPlayerName = new Label(typetoString(playerMap.get(ALL_PLAYERS[i-1]).getType()));
             }
             EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X + (i) * INFORMATION_IMAGE_GAP_X);
             EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 1);
@@ -249,10 +250,90 @@ public class Viewer extends Application implements Constants {
             score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 2);
             matrixBoard.getChildren().add(score_label);
         }
+        setRanks(playerMap);
         Label scores = new Label("Scores :");
         scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
         scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 2);
         matrixBoard.getChildren().add(scores);
+    }
+
+    public void displayRanks(){
+        for (int player = 0; player < PLAYER_NUMBER; player++) {
+            Label rank_label = new Label(String.valueOf(playerMap.get(ALL_PLAYERS[player]).getRank()));
+            rank_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X + (player+1) * INFORMATION_IMAGE_GAP_X);
+            rank_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 3);
+            matrixBoard.getChildren().add(rank_label);
+        }
+        Label ranks = new Label("Ranks :");
+        ranks.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+        ranks.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 3);
+        matrixBoard.getChildren().add(ranks);
+    }
+
+    public void displayMoves(){
+        for (int player = 0; player < PLAYER_NUMBER; player++) {
+            Label move_label = new Label(translateMoves(playerMap.get(ALL_PLAYERS[player]).getMove()));
+            move_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+            move_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 4 + (player+1) * INFORMATION_IMAGE_GAP_Y);
+            matrixBoard.getChildren().add(move_label);
+        }
+        Label moves = new Label("Moves Log :");
+        moves.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
+        moves.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 4);
+        matrixBoard.getChildren().add(moves);
+    }
+
+    public String translateMoves( String move ){
+        StringBuilder SB = new StringBuilder();
+        String player_name;
+        String picked_tile;
+        String picked_from;
+        String moved_to;
+        if(move != null){
+            if(move.length() == 3){
+                player_name = playerMap.get(move.charAt(0)).getName();
+                picked_from = " from storage row " + move.charAt(1);
+                if(move.charAt(2) == FLOOR){
+                    moved_to = " to floor!";
+                }
+                else{
+                    moved_to = " to mosaic!";
+                }
+                SB.append(player_name);
+                SB.append(" moved tile ");
+                SB.append(picked_from);
+                SB.append(moved_to);
+                return String.valueOf(SB);
+            }
+            else if(move.length() == 4){
+                player_name = playerMap.get(move.charAt(0)).getName();
+                picked_tile = String.valueOf(move.charAt(2));
+                if(move.charAt(1) == CENTER){
+                    picked_from = " from center";
+                }
+                else{
+                    picked_from = " from factory " + move.charAt(1);
+                }
+                if(move.charAt(3) == FLOOR){
+                    moved_to = " to floor!";
+                }
+                else{
+                    moved_to = " to storage row " + move.charAt(3) + "!";
+                }
+                SB.append(player_name);
+                SB.append(" picked tile ");
+                SB.append(picked_tile);
+                SB.append(picked_from);
+                SB.append(moved_to);
+                return String.valueOf(SB);
+            }
+            else{
+                return EMPTY_STATE;
+            }
+        }
+        else{
+            return EMPTY_STATE;
+        }
     }
 
     private void displayOtherPlayersBoard(PlayerState ps, char current_turn){
@@ -679,6 +760,7 @@ public class Viewer extends Application implements Constants {
     }
 
     public void refreshDisplay(){
+        setRanks(playerMap);
         this.current_stage = multiazul.findCurrentStage(currentState);
         if(this.current_stage == TILING_STAGE){
             while(multiazul.generateSmartAction(currentState) == EMPTY_STATE){

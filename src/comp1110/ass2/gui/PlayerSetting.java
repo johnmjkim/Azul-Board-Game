@@ -90,7 +90,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public void TwoPlayer() {
         JPanel ChoosePlayer1 = new JPanel();
         ChoosePlayer1.setLayout(new GridLayout(1, 2));
-        String[] SelectKind = {"Human", "Computer"};
+        String[] SelectKind = {HUMAN_STRING, COMPUTER_STRING};
         comboBoxP11 = new JComboBox(SelectKind);
         comboBoxP11.addActionListener(this);
         ChoosePlayer1.add(comboBoxP11);
@@ -118,7 +118,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public void ThreePlayer() {
         JPanel ChoosePlayer3 = new JPanel();
         ChoosePlayer3.setLayout(new GridLayout(1, 2));
-        String[] SelectKind = {"Human", "Computer"};
+        String[] SelectKind = {HUMAN_STRING, COMPUTER_STRING};
         comboBoxP31 = new JComboBox(SelectKind);
         comboBoxP31.addActionListener(this);
         comboBoxP31.setEnabled(false);
@@ -135,7 +135,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public void FourPlayer() {
         JPanel ChoosePlayer4 = new JPanel();
         ChoosePlayer4.setLayout(new GridLayout(1, 2));
-        String[] SelectKind = {"Human", "Computer"};
+        String[] SelectKind = {HUMAN_STRING, COMPUTER_STRING};
         comboBoxP41 = new JComboBox(SelectKind);
         comboBoxP41.addActionListener(this);
         comboBoxP41.setEnabled(false);
@@ -268,13 +268,10 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         playerNamesSetting.clear();
         playerNamesSetting.add(PlayerA);
         playerNamesSetting.add(PlayerB);
-        System.out.println("A, B added");
         if (PLAYER_NUMBER>=3){
             playerNamesSetting.add(PlayerC);
-            System.out.println("C added");
             if (PLAYER_NUMBER>=4){
                 playerNamesSetting.add(PlayerD);
-                System.out.println("D added");
             }
         }
     }
