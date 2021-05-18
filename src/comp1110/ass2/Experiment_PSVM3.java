@@ -43,37 +43,64 @@ public class Experiment_PSVM3 implements Constants{
 
          */
 
-        int TEST_TIMES = 10;
+        int TEST_TIMES = 1;
         for(int test=1; test <= TEST_TIMES; test++){
             gameState = multiazul.setInitalStates(PLAYER_NUMBER);
+            /*
             for(int i=0; i < NUMBER_OF_STATES; i++){
                 System.out.println(" test " + test + " Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
             }
 
+             */
+
             gameState = multiazul.setStartingState(gameState);
+            /*
             for(int i=0; i < NUMBER_OF_STATES; i++){
                 System.out.println(" test " + test + " Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
             }
+
+             */
 
             while(!(multiazul.findCurrentStage(gameState) == END_OF_GAME) && multiazul.isStateValid(gameState)){
                 while(!(multiazul.findCurrentStage(gameState) == NEXT_ROUND_STAGE || multiazul.findCurrentStage(gameState) == END_OF_GAME) && multiazul.isStateValid(gameState)){
                     move = multiazul.generateSmartAction(gameState);
+                    printStates(gameState[0], gameState[1], move);
                     if(move == EMPTY_STATE){
                         gameState = multiazul.changeTurn(gameState);
                     }
                     else {
                         gameState = multiazul.applyMove(gameState, move);
                     }
+                    /*
                     for(int i=0; i < NUMBER_OF_STATES; i++){
                         System.out.println(" test " + test + " Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i] + " Move : " + move);
                     }
+
+                     */
                 }
+                printStates(gameState[0], gameState[1], EMPTY_STATE);
                 gameState = multiazul.nextRound(gameState);
+                /*
                 for(int i=0; i < NUMBER_OF_STATES; i++){
                     System.out.println(" test " + test + " Stage : " + multiazul.findCurrentStage(gameState) + " Valid : " + multiazul.isStateValid(gameState) + " State : " + gameState[i]);
                 }
+
+                 */
             }
         }
+        printStates(gameState[0], gameState[1], EMPTY_STATE);
         System.out.println(" tests finished");
+    }
+
+    public static void printStates( String ss, String ps, String mv){
+        System.out.print("new String[]{\"");
+        System.out.print(ss);
+        System.out.print("\", \"");
+        System.out.print(ps);
+        if(mv != EMPTY_STATE){
+            System.out.print("\", \"");
+            System.out.print(mv);
+        }
+        System.out.println("\"},");
     }
 }

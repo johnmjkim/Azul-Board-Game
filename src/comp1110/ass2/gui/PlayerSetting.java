@@ -1,11 +1,13 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Constants;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * @author Si Bo, Hu
@@ -13,6 +15,11 @@ import java.awt.event.ActionListener;
  * It has no function, just get information and provide to viewer page then going to show them.
 **/
 public class PlayerSetting extends JFrame implements ActionListener, Constants {
+
+    public static Game game;
+    public static int PLAYER_NUMBER;
+    public static ArrayList<String> playerNamesSetting = new ArrayList<>();
+    public static ArrayList<Character> playerTypesSetting = new ArrayList<>();
 
     public static JComboBox comboBoxP0;
     public static JComboBox comboBoxP1;
@@ -181,9 +188,9 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
         //choose to start the game or exit
         if (mes.equals("Yes, submit")) {
-            //getPlayerName();
-            //getChoosePlayerNumber();
-            //getPlayerType();
+            getPlayerName();
+            getChoosePlayerNumber();
+            getPlayerType();
         }
         if (mes.equals("I don't want to play")) {
             System.exit(0);
@@ -209,11 +216,19 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         System.out.println(Player3Type);
         String Player4Type = String.valueOf(comboBoxP41.getSelectedItem());
         System.out.println(Player4Type);
+
         //System.out.println(Player4Type);
     }
+    /*
+    public char getType(String ){
+
+    }
+
+     */
 
     public void getChoosePlayerNumber(){
         int ChoosePlayerNumber = comboBoxP0.getSelectedIndex()+2;
+        PLAYER_NUMBER = ChoosePlayerNumber;
         System.out.println(ChoosePlayerNumber);
     }
 
@@ -236,8 +251,5 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public static void main(String[] args) {
         new PlayerSetting();
     }
-
-
-
 
 }

@@ -143,9 +143,9 @@ public class Game extends Application implements Constants {
         //Viewer viewer = new Viewer();
         //viewer.start(stage);
 
-        new PlayerSetting();
-
         //Create draggable tiles
+
+        //new PlayerSetting();
     }
 
     private void decidePlayers(){
@@ -153,7 +153,7 @@ public class Game extends Application implements Constants {
         PLAYER_NUMBER = 4;
         FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
 
-        String[] temporary_names = new String[] {"player1name", "player2name", "player3name", "player4name"};
+        String[] temporary_names = new String[] {"Player 1", "Player 2", "Player 3", "Player 4"};
         char[] temporary_types = new char[] {HUMAN_PLAYER, COMPUTER_PLAYER, COMPUTER_PLAYER, COMPUTER_PLAYER};
         for(int i=0; i < PLAYER_NUMBER; i++){
             playerNames.add(temporary_names[i]);
@@ -296,9 +296,11 @@ public class Game extends Application implements Constants {
         //System.out.println(mes);
 
         WelcomeStartButton.setOnAction(ae -> {
-                    try {
-                        new Viewer().start(new Stage());
-                    } catch (Exception e) {
+
+                try {
+                    new Viewer().start(new Stage());
+                }
+                catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

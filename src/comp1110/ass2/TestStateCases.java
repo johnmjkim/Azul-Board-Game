@@ -311,7 +311,7 @@ public interface TestStateCases extends Constants {
 
     /**
      * Valid Player Mosaic Col States
-     * Include 10 columns: Player A Mosaic Col 0, 1, 2, 3, 4, 5 and Player B Mosaic Row 0, 1, 2, 3, 4
+     * Include 10 columns: Player A Mosaic Col 0, 1, 2, 3, 4 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
     public static final String[][] VALID_STATES_MOSAIC_COL = {
             // ROUND 1

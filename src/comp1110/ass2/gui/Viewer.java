@@ -148,16 +148,16 @@ public class Viewer extends Application implements Constants {
             // Display other players board
             displayOtherPlayersBoard(ps, current_turn);
 
-            displayScores();
             displayPlayerNames();
             displayPlayerTypes();
+            displayScores();
         }
 
         Button linkToEnd = new Button("End The Game");
         linkToEnd.setLayoutX(1000);
         linkToEnd.setLayoutY(520);
         linkToEnd.setOnAction(ae -> {
-            displayResult();
+            //displayResult();
         });
         controls.getChildren().add(linkToEnd);
 
@@ -198,61 +198,61 @@ public class Viewer extends Application implements Constants {
 
     }
 
+    public void displayPlayerNames(){
+        for(int i=0; i <= PLAYER_NUMBER; i++){
+            Label EveryPlayerName = new Label();
+            if(i == 0){
+                EveryPlayerName = new Label("PlayerNames :");
+            }
+            else{
+                EveryPlayerName = new Label(playerMap.get(ALL_PLAYERS[i-1]).name);
+            }
+            EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i) * INFORMATION_IMAGE_GAP_X);
+            EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y);
+            matrixBoard.getChildren().add(EveryPlayerName);
+        }
+    }
+
+    public void displayPlayerTypes(){
+        for(int i=0; i <= PLAYER_NUMBER; i++){
+            Label EveryPlayerName = new Label();
+            if(i == 0){
+                EveryPlayerName = new Label("PlayerTypes :");
+            }
+            else{
+                EveryPlayerName = new Label(typetoString(playerMap.get(ALL_PLAYERS[i-1]).type));
+            }
+            EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X + (i) * INFORMATION_IMAGE_GAP_X);
+            EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 1);
+            matrixBoard.getChildren().add(EveryPlayerName);
+        }
+    }
+
+    public String typetoString(char player_type){
+        if(player_type == HUMAN_PLAYER){
+            return HUMAN_STRING;
+        }
+        else if(player_type == COMPUTER_PLAYER){
+            return COMPUTER_STRING;
+        }
+        else{
+            return EMPTY_STATE;
+        }
+    }
+
     public void displayScores(){
-        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
-        for (int player = 0; player < PlayerNumber; player++) {
+        for (int player = 0; player < PLAYER_NUMBER; player++) {
             int score = ps.getnPlayer(ALL_PLAYERS[player]).score.getScore();
             playerMap.get(ALL_PLAYERS[player]).setScore(score);
             Label score_label = new Label(String.valueOf(score));
             score_label.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X + (player+1) * INFORMATION_IMAGE_GAP_X);
-            score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y*2);
+            score_label.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 2);
             matrixBoard.getChildren().add(score_label);
         }
         Label scores = new Label("Scores :");
         scores.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X);
         scores.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y * 2);
         matrixBoard.getChildren().add(scores);
-    }
-
-    public void displayPlayerNames(){
-
-        String NameOfPlayerA = String.valueOf(PlayerSetting.comboBoxP2.getSelectedItem());
-        String NameOfPlayerB = String.valueOf(PlayerSetting.comboBoxP1.getSelectedItem());
-        String NameOfPlayerC = String.valueOf(PlayerSetting.comboBoxP3.getSelectedItem());
-        String NameOfPlayerD = String.valueOf(PlayerSetting.comboBoxP4.getSelectedItem());
-
-        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
-
-        String[] AllNames = {"PlayerNames :",NameOfPlayerA,NameOfPlayerB,NameOfPlayerC,NameOfPlayerD};
-
-        int i;
-        for (i = 0; i <=PlayerNumber; i++){
-            Label EveryPlayerName = new Label(AllNames[i]);
-            EveryPlayerName.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X+(i) * INFORMATION_IMAGE_GAP_X);
-            EveryPlayerName.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y);
-            matrixBoard.getChildren().add(EveryPlayerName);
-        }
-
-    }
-
-    public void displayPlayerTypes(){
-
-        String TypeOfPlayerB = String.valueOf(PlayerSetting.comboBoxP11.getSelectedItem());
-        String TypeOfPlayerC = String.valueOf(PlayerSetting.comboBoxP31.getSelectedItem());
-        String TypeOfPlayerD = String.valueOf(PlayerSetting.comboBoxP41.getSelectedItem());
-
-        int PlayerNumber = PlayerSetting.comboBoxP0.getSelectedIndex()+2;
-
-        String[] AllOrders = {"PlayerType :","Human",TypeOfPlayerB,TypeOfPlayerC,TypeOfPlayerD};
-
-        int i;
-        for (i = 0; i <=PlayerNumber; i++){
-            Label EveryPlayerOrder = new Label(AllOrders[i]);
-            EveryPlayerOrder.setLayoutX(INITIAL_INFORMATION_IMAGE_POS_X + (i) * INFORMATION_IMAGE_GAP_X);
-            EveryPlayerOrder.setLayoutY(INITIAL_INFORMATION_IMAGE_POS_Y + INFORMATION_IMAGE_GAP_Y*1);
-            matrixBoard.getChildren().add(EveryPlayerOrder);
-        }
-
     }
 
     private void displayOtherPlayersBoard(PlayerState ps, char current_turn){
