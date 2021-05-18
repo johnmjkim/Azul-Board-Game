@@ -7,9 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 //PlayerSetting just used to set the information, and have no function about generate new pages
 public class PlayerSetting extends JFrame implements ActionListener, Constants {
+
+    public static Game game;
+    public static int PLAYER_NUMBER;
+    public static ArrayList<String> playerNamesSetting = new ArrayList<>();
+    public static ArrayList<Character> playerTypesSetting = new ArrayList<>();
 
     public static JComboBox comboBoxP0;
     public static JComboBox comboBoxP1;
@@ -178,9 +184,9 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
         //choose to start the game or exit
         if (mes.equals("Yes, submit")) {
-            //getPlayerName();
-            //getChoosePlayerNumber();
-            //getPlayerType();
+            getPlayerName();
+            getChoosePlayerNumber();
+            getPlayerType();
         }
         if (mes.equals("I don't want to play")) {
             System.exit(0);
@@ -206,11 +212,19 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         System.out.println(Player3Type);
         String Player4Type = String.valueOf(comboBoxP41.getSelectedItem());
         System.out.println(Player4Type);
+
         //System.out.println(Player4Type);
     }
+    /*
+    public char getType(String ){
+
+    }
+
+     */
 
     public void getChoosePlayerNumber(){
         int ChoosePlayerNumber = comboBoxP0.getSelectedIndex()+2;
+        PLAYER_NUMBER = ChoosePlayerNumber;
         System.out.println(ChoosePlayerNumber);
     }
 
@@ -233,8 +247,5 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public static void main(String[] args) {
         new PlayerSetting();
     }
-
-
-
 
 }
