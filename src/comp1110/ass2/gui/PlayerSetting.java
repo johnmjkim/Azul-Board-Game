@@ -207,17 +207,39 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     //We choose what kind of information about player numbers we got, to generate the state
     //If we got player number 3, we go to make an ArrayList and just have ArrayList[0,player number)
 
-    public void getPlayerType(){
-        String Player1Type = "Human";
-        System.out.println(Player1Type);
-        String Player2Type = String.valueOf(comboBoxP11.getSelectedItem());
-        System.out.println(Player2Type);
-        String Player3Type = String.valueOf(comboBoxP31.getSelectedItem());
-        System.out.println(Player3Type);
-        String Player4Type = String.valueOf(comboBoxP41.getSelectedItem());
-        System.out.println(Player4Type);
 
-        //System.out.println(Player4Type);
+
+
+    public void getPlayerType(){
+        String Player1Type = HUMAN_STRING;
+        String Player2Type = String.valueOf(comboBoxP11.getSelectedItem());
+        String Player3Type = String.valueOf(comboBoxP31.getSelectedItem());
+        String Player4Type = String.valueOf(comboBoxP41.getSelectedItem());
+        char PlayType1 = typeToChar(Player1Type);
+        char PlayType2 = typeToChar(Player2Type);
+        char PlayType3 = typeToChar(Player3Type);
+        char PlayType4 = typeToChar(Player4Type);
+        playerTypesSetting.add(PlayType1);
+        playerTypesSetting.add(PlayType2);
+        if (PLAYER_NUMBER>=3){
+            playerTypesSetting.add(PlayType3);
+            if (PLAYER_NUMBER>=4){
+                playerTypesSetting.add(PlayType4);
+            }
+        }
+    }
+
+    public char typeToChar(String player_type){
+        if(player_type.equals(HUMAN_STRING)){
+            return HUMAN_PLAYER;
+        }
+        else if(player_type.equals(COMPUTER_STRING)){
+            return COMPUTER_PLAYER;
+        }
+        else{
+            return ' ';
+        }
+
     }
     /*
     public char getType(String ){
@@ -238,14 +260,14 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         String PlayerB = String.valueOf(comboBoxP1.getSelectedItem());
         String PlayerC = String.valueOf(comboBoxP3.getSelectedItem());
         String PlayerD = String.valueOf(comboBoxP4.getSelectedItem());
-        Game.playerNames.add(PlayerA);
-        Game.playerNames.add(PlayerB);
-        Game.playerNames.add(PlayerC);
-        Game.playerNames.add(PlayerD);
-        System.out.println(PlayerA);
-        System.out.println(PlayerB);
-        System.out.println(PlayerC);
-        System.out.println(PlayerD);
+        playerNamesSetting.add(PlayerA);
+        playerNamesSetting.add(PlayerB);
+        if (PLAYER_NUMBER>=3){
+            playerNamesSetting.add(PlayerC);
+            if (PLAYER_NUMBER>=4){
+                playerNamesSetting.add(PlayerD);
+            }
+        }
     }
 
     public static void main(String[] args) {
