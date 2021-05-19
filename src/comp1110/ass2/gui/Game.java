@@ -162,13 +162,15 @@ public class Game extends Application implements Constants {
 
         playerTypes = PlayerSetting.playerTypesSetting;
         playerNames = PlayerSetting.playerNamesSetting;
-
+        /*
         for(int i=0; i < PLAYER_NUMBER; i++){
             System.out.println(playerTypes.get(i));
         }
         for(int i=0; i < PLAYER_NUMBER; i++){
             System.out.println(playerNames.get(i));
         }
+
+         */
 
         randomizeOrders();
         /*

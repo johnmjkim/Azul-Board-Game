@@ -206,4 +206,10 @@ public interface Constants {
     public final double INITIAL_INFORMATION_IMAGE_POS_Y = 50;
     public final double INFORMATION_IMAGE_GAP_X = 85;
     public final double INFORMATION_IMAGE_GAP_Y = 15;
+    public final double INITIAL_CURRENT_INFO_IMAGE_POS_X = 450;
+    public final double INITIAL_CURRENT_INFO_IMAGE_POS_Y = INITIAL_INFORMATION_IMAGE_POS_Y - 30;
+    public final double CURRENT_INFO_IMAGE_GAP_Y = INFORMATION_IMAGE_GAP_Y;
+    public final double INITIAL_OTHER_PLAYER_INFO_IMAGE_POS_X = OTHER_BOARD_POS_X;
+    public final double INITIAL_OTHER_PLAYER_INFO_IMAGE_POS_Y = OTHER_BOARD_POS_Y - 45;
+    public final double OTHER_PLAYER_INFO_IMAGE_GAP_X = OTHER_BOARD_GAP_X;
 }

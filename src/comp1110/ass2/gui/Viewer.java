@@ -12,10 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -118,15 +120,15 @@ public class Viewer extends Application implements Constants {
         this.current_turn = current_player_turn.charAt(0);
         nPlayer current_player = ps.getnPlayer(current_turn);
 
-        System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state) + " previous move : " + this.move);
-        System.out.println(playerMap.get(current_turn));
+        //System.out.println(" turn : " + this.current_turn + " valid : " + multiazul.isStateValid(state) + " stage : " + multiazul.findCurrentStage(state) + " previous move : " + this.move);
+        //System.out.println(playerMap.get(current_turn));
         if(playerMap.get(current_turn).getType() == COMPUTER_PLAYER && !(this.end_stage)){
             if(!(multiazul.generateSmartAction(currentState).equals(EMPTY_STATE))){
                 this.move = multiazul.generateSmartAction(currentState);
                 playerMap.get(current_turn).setMove(move);
-                System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
+                //System.out.println(" move : " + move + " From : " + currentState[0] + ", " + currentState[1]);
                 this.currentState = multiazul.applyMove(currentState, move);
-                System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
+                //System.out.println(" To : " + currentState[0] + ", " + currentState[1]);
             }
             refreshDisplay();
         }
@@ -152,6 +154,8 @@ public class Viewer extends Application implements Constants {
             displayScores();
             displayRanks();
             displayMoves();
+            displayCurrentInformation();
+            displayOtherPlayers();
         }
 
         Button linkToEnd = new Button("End The Game");
@@ -283,7 +287,7 @@ public class Viewer extends Application implements Constants {
         matrixBoard.getChildren().add(moves);
     }
 
-    public String translateMoves( String move ){
+    private String translateMoves( String move ){
         StringBuilder SB = new StringBuilder();
         String player_name;
         String picked_tile;
@@ -334,6 +338,63 @@ public class Viewer extends Application implements Constants {
         else{
             return EMPTY_STATE;
         }
+    }
+
+    private void displayCurrentInformation(){
+        Label current_status_label = new Label("Current Status ");
+        current_status_label.setLayoutX(INITIAL_CURRENT_INFO_IMAGE_POS_X);
+        current_status_label.setLayoutY(INITIAL_CURRENT_INFO_IMAGE_POS_Y);
+        current_status_label.setFont(new Font("Regular", 15));
+        matrixBoard.getChildren().add(current_status_label);
+        current_status_label = new Label("Current PLayer : ");
+        current_status_label.setLayoutX(INITIAL_CURRENT_INFO_IMAGE_POS_X);
+        current_status_label.setLayoutY(INITIAL_CURRENT_INFO_IMAGE_POS_Y + 2 * CURRENT_INFO_IMAGE_GAP_Y);
+        matrixBoard.getChildren().add(current_status_label);
+        current_status_label = new Label("  " + playerMap.get(current_turn).name);
+        current_status_label.setLayoutX(INITIAL_CURRENT_INFO_IMAGE_POS_X);
+        current_status_label.setLayoutY(INITIAL_CURRENT_INFO_IMAGE_POS_Y + 3 * CURRENT_INFO_IMAGE_GAP_Y);
+        matrixBoard.getChildren().add(current_status_label);
+        current_status_label = new Label("Current Stage : ");
+        current_status_label.setLayoutX(INITIAL_CURRENT_INFO_IMAGE_POS_X);
+        current_status_label.setLayoutY(INITIAL_CURRENT_INFO_IMAGE_POS_Y + 5 * CURRENT_INFO_IMAGE_GAP_Y);
+        matrixBoard.getChildren().add(current_status_label);
+        current_status_label = new Label("  " + translateStage(current_stage));
+        current_status_label.setLayoutX(INITIAL_CURRENT_INFO_IMAGE_POS_X);
+        current_status_label.setLayoutY(INITIAL_CURRENT_INFO_IMAGE_POS_Y + 6 * CURRENT_INFO_IMAGE_GAP_Y);
+        matrixBoard.getChildren().add(current_status_label);
+    }
+
+    private String translateStage(char current_stage){
+        if(current_stage == DRAFTING_STAGE){
+            return "Drafting Stage";
+        }
+        else if(current_stage == TILING_STAGE){
+            return "Tiling Stage";
+        }
+        else if(current_stage == NEXT_ROUND_STAGE){
+            return "Next Round Stage";
+        }
+        else if(current_stage == END_OF_GAME){
+            return "End of Game";
+        }
+        else{
+            return EMPTY_STATE;
+        }
+    }
+
+    private void displayOtherPlayers(){
+        int gap = 0;
+        for(int i=0; i < PLAYER_NUMBER; i++){
+            if(ALL_PLAYERS[i] != current_turn){
+                Label other_player_label = new Label(playerMap.get(ALL_PLAYERS[i]).name + "'s Board");
+                other_player_label.setLayoutX(INITIAL_OTHER_PLAYER_INFO_IMAGE_POS_X + OTHER_PLAYER_INFO_IMAGE_GAP_X * gap);
+                other_player_label.setLayoutY(INITIAL_OTHER_PLAYER_INFO_IMAGE_POS_Y);
+                other_player_label.setFont(new Font("Regular", 15));
+                matrixBoard.getChildren().add(other_player_label);
+                gap++;
+            }
+        }
+
     }
 
     private void displayOtherPlayersBoard(PlayerState ps, char current_turn){
@@ -862,9 +923,9 @@ public class Viewer extends Application implements Constants {
         Arrays.sort(score_array);
 
         for(int rank = PLAYER_NUMBER; rank >= 1; rank--){
-            for( char player : ALL_PLAYERS){
-                if(playerMap.get(player).getScore() == score_array[PLAYER_NUMBER - rank]){
-                    playerMap.get(player).setRank(rank);
+            for(int i=0; i < PLAYER_NUMBER; i++){
+                if(playerMap.get(ALL_PLAYERS[i]).getScore() == score_array[PLAYER_NUMBER - rank]){
+                    playerMap.get(ALL_PLAYERS[i]).setRank(rank);
                 }
             }
         }
