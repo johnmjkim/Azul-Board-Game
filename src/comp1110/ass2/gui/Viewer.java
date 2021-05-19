@@ -196,6 +196,7 @@ public class Viewer extends Application implements Constants {
             displayPlayerNames();
             displayPlayerTypes();
             displayScores();
+            displayRanks();
         });
         ExitButton.setOnAction(actionEvent -> {
             System.exit(0);

@@ -72,7 +72,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         GameStart.setLayout(new GridLayout(1, 2));
         JLabel label2 = new JLabel(" Do you want to submit the information? ");
         GameStart.add(label2);
-        String[] SelectStart = {"No, I still need to think", "Yes, submit", "I don't want to play"};
+        String[] SelectStart = {"No, I still need to think", "Yes, submit"};
         comboBoxP5 = new JComboBox(SelectStart);
         comboBoxP5.addActionListener(this);
         GameStart.add(comboBoxP5);
@@ -197,14 +197,7 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
             setVisible(false);
             dispose();
         }
-        if (mes.equals("I don't want to play")) {
-            try {
-                game.start(new Stage());
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            //System.exit(0);
-        }
+
 
         //if (e.getActionCommand().equals("showMeViewer")){
             //new Viewer().setupViewer();
