@@ -1,5 +1,10 @@
 package comp1110.ass2.backend;
 
+/**
+ * @author Min Jae, Kim
+ * Input sharedstate string, maximum player number
+ * Stores every information of Factories, Center, Bag, Discard
+ */
 public class SharedState extends States {
 
     // Shared fields Strings

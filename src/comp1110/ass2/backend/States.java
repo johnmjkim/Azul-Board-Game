@@ -1,5 +1,10 @@
 package comp1110.ass2.backend;
 
+/**
+ * @author Min Jae, Kim
+ * States class implements interface State
+ * SharedState, PlayerState extends this class
+ */
 public class States implements State {
     String State;
 

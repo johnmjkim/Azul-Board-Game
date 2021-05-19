@@ -1,7 +1,11 @@
 package comp1110.ass2.backend;
 
 import java.util.ArrayList;
-
+/**
+ * @author Min Jae, Kim
+ * BagTypedObject implements interface BagTyped
+ * Bag, Discard extends this class
+ */
 public class BagTypedObject implements BagTyped{
 
     String bagTypedObjectState = EMPTY_STATE;
@@ -20,6 +24,11 @@ public class BagTypedObject implements BagTyped{
         countTilesNumber(bagTypedObjectState);
     }
 
+    /**
+     * @author Min Jae Kim
+     * BagTypedObject refills tiles with the format with Strings
+     * @param refill
+     */
     @Override
     public void refillTiles(String refill) {
         ArrayList<Integer> bagtypedobject_counts = new ArrayList<Integer>();
@@ -92,6 +101,11 @@ public class BagTypedObject implements BagTyped{
         return getStateString();
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Uses all information of tiles
+     * Update the state of this object in String
+     */
     @Override
     public void updateState() {
         StringBuilder SB = new StringBuilder();
@@ -109,6 +123,11 @@ public class BagTypedObject implements BagTyped{
         this.bagTypedObjectState = String.valueOf(SB);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Counts all number of tiles and saves by color of tiles
+     * @param bagTypedObjectState
+     */
     @Override
     public void countTilesNumber(String bagTypedObjectState) {
         ArrayList<Integer> bagtypedobject_counts = new ArrayList<Integer>();
@@ -135,11 +154,22 @@ public class BagTypedObject implements BagTyped{
         this.letters[RED] = bagtypedobject_counts.get(4);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of tiles by color
+     * @param color
+     * @return
+     */
     @Override
     public int getTilesNumber(char color) {
         return this.letters[color];
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of total tiles regardless of color
+     * @return
+     */
     @Override
     public int getTotalTilesNumber() {
         int tot_tiles = 0;

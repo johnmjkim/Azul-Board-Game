@@ -61,6 +61,11 @@ public class nPlayer implements State {
         this.floor = new Floor( floorState , max_player_number);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Find if this player made full row of mosaic and end the game
+     * @return
+     */
     public boolean isEnder(){
         boolean isEnder = false;
         for(int i=0; i < MAX_MOSAIC_ROW; i++){
@@ -75,6 +80,11 @@ public class nPlayer implements State {
         return this.nplayerNameState;
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Checki if the player has storagerow full
+     * @return
+     */
     boolean existsStorageRowTilesFull() {
         return this.storage.existsStorageRowTilesFull();
     }

@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * @author Min Jae, Kim
+ * @author Si Bo, Hu
+ * MultiAzul class allows to use all methods from Azul class
+ * It allows to expand up to 4 players
+ * Methods for finding below stages are included
+ * Stage : Drafting Move, Tiling Move, Next Round, End of Game
+ */
 public class MultiAzul implements Constants {
     public final int MAX_PLAYER_NUMBER;
     public final int FACTORY_MAX_NUMBER;

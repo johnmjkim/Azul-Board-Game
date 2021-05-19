@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+/**
+ * @author Min Jae, Kim
+ * Test all tiles counted in playerstates are correct
+ */
 public class CountTilesPlayerStateTest implements TestCountCases {
 
     private void CountMosaictest(String in, int[] expected, int player) {

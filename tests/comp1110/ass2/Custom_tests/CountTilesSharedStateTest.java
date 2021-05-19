@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+/**
+ * @author Min Jae, Kim
+ * Test all tiles counted in sharedstates are correct
+ */
 public class CountTilesSharedStateTest implements TestCountCases {
 
     private void CountFactoriestest(String in, int[] expected) {

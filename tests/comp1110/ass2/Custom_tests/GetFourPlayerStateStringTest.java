@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
-public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases {
+public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases, TestFourStorageAndFloorCases {
 
     // TODO 1 : Change all below code to test 4 Players version of game
     // TODO 2 : Use PLAYER_NUMBER (= 4), FULL_FOUR_PLAYER_GAME_WITH_MOVES to finish test
@@ -122,7 +122,7 @@ public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases {
     public void testStorageState(){
         for (int i = 0; i < FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES.length; i++) {
             for(int j = 0; j < PLAYER_NUMBER; j++){
-                Storagetest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], TestFourStorageAndFloorCases.FULL_FOUR_PLAYER_GAME_STATES_STORAGE[i][j], j);
+                Storagetest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], FULL_FOUR_PLAYER_GAME_STATES_STORAGE[i][j], j);
             }
         }
     }
@@ -132,7 +132,7 @@ public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases {
         for (int i = 0; i < FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES.length; i++) {
             for(int j = 0; j < PLAYER_NUMBER; j++){
                 for(int row = 0; row < MAX_STORAGE_ROW; row++){
-                    StorageRowtest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], TestFourStorageAndFloorCases.FULL_FOUR_PLAYER_GAME_STATES_STORAGE_ROW[i][j*5+row], j, row);
+                    StorageRowtest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], FULL_FOUR_PLAYER_GAME_STATES_STORAGE_ROW[i][j*5+row], j, row);
                 }
             }
         }
@@ -142,7 +142,7 @@ public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases {
     public void testFloorState(){
         for (int i = 0; i < FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES.length; i++) {
             for(int j = 0; j < PLAYER_NUMBER; j++){
-                Floortest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], TestFourStorageAndFloorCases.FULL_FOUR_PLAYER_GAME_STATES_FLOOR[i][j], j);
+                Floortest(FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES[i][1], FULL_FOUR_PLAYER_GAME_STATES_FLOOR[i][j], j);
             }
         }
     }

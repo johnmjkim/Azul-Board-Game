@@ -121,6 +121,11 @@ public class Storage implements Tiles {
         return (this.storageState.equals(String.valueOf(SB)));
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Counts all number of tiles and saves by color of tiles
+     * @param storageState
+     */
     @Override
     public void countTilesNumber(String storageState){
         for( StorageRow sr : this.storage_rows){
@@ -131,6 +136,12 @@ public class Storage implements Tiles {
         }
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of tiles by color
+     * @param color
+     * @return
+     */
     @Override
     public int getTilesNumber(char color) {
         return this.letters[color];
@@ -192,6 +203,12 @@ public class Storage implements Tiles {
         boolean[] storagerow_tiles_occupy;
         char[] storagerow_tiles_color;
 
+        /**
+         * @author Min Jae, Kim
+         * Constructor method for StorageRow class
+         * @param storage_rowState
+         * @param row
+         */
         public StorageRow (String storage_rowState, int row){
             this.storage_rowState = storage_rowState;
             this.row = row;
@@ -202,6 +219,11 @@ public class Storage implements Tiles {
             countTilesNumber(storage_rowState);
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Gets tile color of storage row
+         * @return
+         */
         public char getRowTilesColor(){
             if(this.isStateEmpty()){
                 return NO_COLOR;
@@ -212,10 +234,21 @@ public class Storage implements Tiles {
             }
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Check if storagae row tile color is valid
+         * @param color
+         * @return
+         */
         public boolean isStorageRowTileColorValid(char color){
             return (getRowTilesColor() == color);
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Check is storage row do not exceed maximum tile numbers
+         * @return
+         */
         public boolean isStorageRowTilesValid(){
             return (this.MAX_TILES_LIMIT >= getTotalTilesNumber());
         }
@@ -293,6 +326,11 @@ public class Storage implements Tiles {
             this.storage_rowState = String.valueOf(SB);
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Counts all number of tiles and saves by color of tiles
+         * @param State
+         */
         @Override
         public void countTilesNumber(String State) {
             this.storage_row_color = getRowTilesColor();
@@ -318,6 +356,12 @@ public class Storage implements Tiles {
             }
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Gets number of tiles by color
+         * @param color
+         * @return
+         */
         @Override
         public int getTilesNumber(char color) {
             if(this.isStateEmpty()){
@@ -328,16 +372,32 @@ public class Storage implements Tiles {
             }
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Gets number of total tiles regardless of color
+         * @return
+         */
         @Override
         public int getTotalTilesNumber() {
             return getTilesNumber(this.storage_row_color);
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Check if tile in the column is full
+         * @return
+         */
         @Override
         public boolean isTilesFull() {
             return (this.MAX_TILES_LIMIT == getTotalTilesNumber());
         }
 
+        /**
+         * @author Min Jae, Kim
+         * Gets color of tiles by column
+         * @param column
+         * @return
+         */
         @Override
         public char getTileColor(int column) {
             return storagerow_tiles_color[column];

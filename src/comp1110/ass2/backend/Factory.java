@@ -1,5 +1,10 @@
 package comp1110.ass2.backend;
 
+/**
+ * @author Min Jae, Kim
+ * Inherits all trait from OrderTypedObject
+ * Add method that necessary
+ */
 public class Factory extends OrderTypedObject{
     // number of Factory 0~4 for two players
     int number;
@@ -20,6 +25,10 @@ public class Factory extends OrderTypedObject{
         storeTilesColor();
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Stores color of tiles in center class
+     */
     private void storeTilesColor(){
         if(super.isStateEmpty()){
             for(int col = 0; col < FACTORY_SIZE; col++){
@@ -42,6 +51,12 @@ public class Factory extends OrderTypedObject{
         }
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Find color of tile with the index of center
+     * @param index
+     * @return
+     */
     public char getTileColor(int index){
         return tiles_color[index];
     }

@@ -2,6 +2,12 @@ package comp1110.ass2.backend;
 
 import java.util.ArrayList;
 
+/**
+ * @author Min Jae, Kim
+ * Input playerstate string, maximum player number
+ * Stores every information of nPlayer
+ * Each nPlayer stores information of Storage, Mosaic, Floor
+ */
 public class PlayerState extends States {
 
     // Player fields strings
@@ -77,11 +83,21 @@ public class PlayerState extends States {
         return this.nplayers.get(nplayer_index);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Update the playerstate first and then get state string
+     * @return
+     */
     public String getUpdatedPlayerState(){
         updatePlayerState();
         return super.playerState;
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Update the playerstate first get state of specific player string
+     * @return
+     */
     public String getUpdatedPlayerState( char player ){
         updatePlayerState();
         int index = getPlayer_index( player );
@@ -127,6 +143,11 @@ public class PlayerState extends States {
         return isGameEnd;
     }
 
+    /**
+     * @author Min Jae Kim
+     * Find out which player ended the game
+     * @return
+     */
     public char getEnder(){
         int ender_idx = 0;
         for( nPlayer p : this.nplayers ){
@@ -140,7 +161,7 @@ public class PlayerState extends States {
 
     /**
      * @author Min Jae, Kim
-     * Find out if the player has full storage row
+     * Find out if there is at least one player has full storage row
      * @return
      */
     public boolean existsPlayerFullStorageRow(){

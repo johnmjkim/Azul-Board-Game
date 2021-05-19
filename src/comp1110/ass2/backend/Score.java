@@ -1,5 +1,9 @@
 package comp1110.ass2.backend;
 
+/**
+ * @author Min Jae, Kim
+ * Score class calculates score of players
+ */
 public class Score implements State{
 
     // Size, Numbers of all components

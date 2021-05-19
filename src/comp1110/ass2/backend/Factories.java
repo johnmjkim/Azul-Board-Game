@@ -2,6 +2,11 @@ package comp1110.ass2.backend;
 
 import java.util.ArrayList;
 
+/**
+ * @author Min Jae, Kim
+ * Stores ArrayList of factory
+ * 2,3,4 Players have 5, 7, 9 maximum factories
+ */
 public class Factories implements Tiles {
 
     String factoriesState;
@@ -69,6 +74,12 @@ public class Factories implements Tiles {
 
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of tiles by color
+     * @param color
+     * @return
+     */
     @Override
     public int getTilesNumber(char color) {
         int tot_tiles = 0;
@@ -93,47 +104,6 @@ public class Factories implements Tiles {
 
     public Factory getFactory(int factory_number){
         return this.factory.get(factory_number);
-    }
-
-    public boolean isFactoriesNumberValid(){
-        ArrayList<Integer> factories_number = new ArrayList<Integer>();
-
-        char[] factoriesState_char_array = factoriesState.toCharArray();
-        int len = 0;
-        int div = 5;
-        int i = 0;
-        for( char c : factoriesState_char_array ){
-            if(i % div == 0){
-                factories_number.add(Character.getNumericValue(c));
-                len++;
-            }
-            i++;
-        }
-        if(len > max_factories_number){
-            return false;
-        }
-        else if(len > 1){
-            for(int j=1; j < len; j++){
-                if(factories_number.get(j) <= factories_number.get(j-1)){
-                    return false;
-                }
-                else if(factories_number.get(j) > max_factories_number - 1){
-                    return false;
-                }
-            }
-            return true;
-        }
-        else if(len == 1){
-            if(factories_number.get(0) > max_factories_number - 1){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else{
-            return true;
-        }
     }
 
     @Override

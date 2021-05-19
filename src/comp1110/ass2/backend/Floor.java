@@ -26,6 +26,10 @@ public class Floor extends OrderTypedObject{
         storeTilesColor();
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Stores color of tiles in center class
+     */
     private void storeTilesColor(){
         if(super.isStateEmpty()){
             for(int col=0; col < max_floor_tiles_before_adjust; col++){
@@ -48,6 +52,12 @@ public class Floor extends OrderTypedObject{
         }
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Find color of tile with the index of center
+     * @param index
+     * @return
+     */
     public char getTileColor(int index){
         return tiles_color[index];
     }

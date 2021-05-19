@@ -2,6 +2,11 @@ package comp1110.ass2.backend;
 
 import java.util.Arrays;
 
+/**
+ * @author Min Jae, Kim
+ * OrderTypedObject implements interface OrderTyped
+ * Floor, Factory, Center extends this class
+ */
 public class OrderTypedObject implements OrderTyped{
 
     String orderTypedObjectState = EMPTY_STATE;
@@ -20,6 +25,11 @@ public class OrderTypedObject implements OrderTyped{
         countTilesNumber(orderTypedObjectState);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Refills tiles with array of characters
+     * @param refill
+     */
     @Override
     public void refillTiles(char[] refill) {
         StringBuilder SB = new StringBuilder();
@@ -91,6 +101,11 @@ public class OrderTypedObject implements OrderTyped{
         return getStateString();
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Uses all information of tiles
+     * Update the state of this object in String
+     */
     @Override
     public void updateState() {
         StringBuilder SB = new StringBuilder();
@@ -124,6 +139,11 @@ public class OrderTypedObject implements OrderTyped{
         this.orderTypedObjectState = String.valueOf(SB);
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Counts all number of tiles and saves by color of tiles
+     * @param orderTypedObjectState
+     */
     @Override
     public void countTilesNumber(String orderTypedObjectState) {
         int[] letters_array = new int[128];
@@ -141,11 +161,22 @@ public class OrderTypedObject implements OrderTyped{
         this.letters[NO_COLOR] = letters_array[NO_COLOR];
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of tiles by color
+     * @param color
+     * @return
+     */
     @Override
     public int getTilesNumber(char color) {
         return this.letters[color];
     }
 
+    /**
+     * @author Min Jae, Kim
+     * Gets number of total tiles regardless of color
+     * @return
+     */
     @Override
     public int getTotalTilesNumber() {
         int tot_tiles = 0;

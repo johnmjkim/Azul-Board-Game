@@ -13,6 +13,10 @@ import comp1110.ass2.TestFourPlayerStateCases;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+/**
+ * @author Min Jae, Kim
+ * Test move applied to four player version
+ */
 public class FourPlayerApplyMoveTest implements TestFourPlayerStateCases {
 
     private void applyFourPlayerMovetest(String[] in, String[] expected, String move){
