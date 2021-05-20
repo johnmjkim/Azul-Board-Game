@@ -10,14 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+
+/**
+ * @author Si Bo, Hu
+ * Test if four player state are correct
+ */
 public class GetFourPlayerStateStringTest implements TestFourPlayerStateCases, TestFourStorageAndFloorCases {
 
-    // TODO 1 : Change all below code to test 4 Players version of game
-    // TODO 2 : Use PLAYER_NUMBER (= 4), FULL_FOUR_PLAYER_GAME_WITH_MOVES to finish test
-    // TODO 3 : Add valid states in interface TestFourPlayerStateCases
-    // TODO 4 : Finish Turntest, PlayerStatetest, Mosaictest, MosaicRowtest, MosaicColtest, Storagetest, StorageRowtest, Floortest
-    // TODO 5 : Finish testTurnState, testPlayerState, testMosaicState, testMosaicRowState, testMosaicColState, testStorageState, testStorageRowState, testFloorState
-    // TODO 6 : Once done, get checked by Min Jae (John) Kim
 
     private void Turntest(String in, String expected, int player) {
         PlayerState ps = new PlayerState(in, PLAYER_NUMBER);
