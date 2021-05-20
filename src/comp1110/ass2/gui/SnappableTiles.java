@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * This part is setting Snappable Tiles(we show them as images) from Storage, Mosaic and Floor
  * Snappable means tiles can be snapped in Stroage, Mosaic and Floor
  * Snap is the process after nothing can be drag from Factories and center, before next round

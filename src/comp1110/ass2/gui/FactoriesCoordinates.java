@@ -5,7 +5,7 @@ import comp1110.ass2.Constants;
 import java.util.ArrayList;
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * this is a method to get the coordinates of tiles in Factories
  */
 

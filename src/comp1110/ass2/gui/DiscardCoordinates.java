@@ -3,7 +3,7 @@ package comp1110.ass2.gui;
 import comp1110.ass2.Constants;
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * this is a method to get the coordinates of tiles in Discard
  */
 public class DiscardCoordinates implements Constants{

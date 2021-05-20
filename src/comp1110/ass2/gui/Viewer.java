@@ -24,7 +24,8 @@ import java.util.HashMap;
 
 
 /**
- * @author Min Jae, Kim and Si Bo, Hu
+ * @author Min Jae, Kim
+ * @author Si Bo, Hu
  * This part is the main part of the whole game
  * "Display part"
  * We have the empty board(image), fill it with empty tiles(gray rectangles), cover the empty rectangles with Tiles(images)

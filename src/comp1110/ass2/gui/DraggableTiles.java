@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * This part is setting Tiles(we show them as images) from Storage, Center, Mosaic as the Draggable Tiles,
  * then add the mouse function
  * One thing is highlight nearest position not finished, fortunately it is not necessary.

@@ -1,7 +1,7 @@
 package comp1110.ass2.gui;
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * this is an initial setting of coordinates, we used this in different kinds of coordinates
  */
 public class Coordinates {

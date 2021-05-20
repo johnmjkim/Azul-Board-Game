@@ -7,7 +7,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 
 /**
- * @author Si Bo, Hu
+ * @author Min Jae, Kim
  * In this class, we put different kinds of information of players in different ArrayList,
  * We can use it in other classes
  */

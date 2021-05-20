@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * @author @author Min Jae, Kim and Si Bo, Hu
+ * @author Min Jae, Kim
+ * @author Si Bo, Hu
  * We show all the game pages in this class, include Playsetting, welcomePage, Viewer
  * We can play the Game here
  */
