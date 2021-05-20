@@ -5,6 +5,7 @@ public interface TestStateCases extends Constants {
     public static final String EMPTY_PLAYER_STATE = "A0MSFB0MSF";
 
     /**
+     * @author Si Bo, Hu
      * Valid States
      */
     public static final String[][] VALID_STATES = {
@@ -39,6 +40,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Turn
      * Include 3 columns : Turn of SharedState, Turn of Player A, Turn of Player B State
      */
@@ -73,6 +75,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Factories and Factory
      * Include 6 columns : Factories, Factory 0, Factory 1, ... ,Factory 4
      */
@@ -108,6 +111,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Center
      * Include : Center
      */
@@ -142,6 +146,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Bag
      * Include : Bag
      */
@@ -175,6 +180,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Discard
      * Include : Discard
      */
@@ -208,6 +214,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player States
      * Include 2 columns : Player A's state, Player B's state
      */
@@ -243,6 +250,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic States
      * Include 2 columns: PLayer A Mosaic, Player B Mosaic
      */
@@ -276,6 +284,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic Row States
      * Include 10 columns: Player A Mosaic Row 0, 1, 2, 3, 4 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
@@ -310,6 +319,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic Col States
      * Include 10 columns: Player A Mosaic Col 0, 1, 2, 3, 4 and Player B Mosaic Row 0, 1, 2, 3, 4
      */
@@ -343,6 +353,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Storage States
      * Include 2 columns: PLayer A Storage, Player B Storage
      */
@@ -377,6 +388,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Storage Row States
      * Include 10 columns: Player A Storage Row 0, 1, 2, 3, 4 and Player B Storage Row 0, 1, 2, 3, 4
      */
@@ -410,6 +422,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Floor States
      * Include 2 columns: PLayer A Floor, Player B Floor
      */
@@ -444,6 +457,7 @@ public interface TestStateCases extends Constants {
     };
 
     /**
+     * @author Si Bo, Hu
      * Full Game Moves
      */
     public static final String[][] FULL_GAME_WITH_MOVES = {

@@ -1,7 +1,7 @@
 package comp1110.ass2;
 
 public interface TestFourPlayerStateCases extends TestFourStateCases{
-    /**
+    /**@author Si Bo, Hu
      * Valid Player States
      * Include 4 columns : Player A's state, Player B's state, Player C's state, Player D's state
      */
@@ -196,6 +196,7 @@ public interface TestFourPlayerStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic States
      * Include 4 columns: PLayer A Mosaic, Player B Mosaic, Player C Mosaic, Player D Mosaic
      */
@@ -390,6 +391,7 @@ public interface TestFourPlayerStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic Row States
      * Include 20 columns: Player A Mosaic Row 0, 1, 2, 3, 4, Player B Mosaic Row 0, 1, 2, 3, 4, Player C Mosaic Row 0, 1, 2, 3, 4, Player D Mosaic Row 0, 1, 2, 3, 4
      */
@@ -585,6 +587,7 @@ public interface TestFourPlayerStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Mosaic Col States
      * Include 20 columns: Player A Mosaic Col 0, 1, 2, 3, 4, Player B Mosaic Row 0, 1, 2, 3, 4, Player C Mosaic Row 0, 1, 2, 3, 4, Player D Mosaic Row 0, 1, 2, 3, 4
      */
