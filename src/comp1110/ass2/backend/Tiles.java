@@ -3,6 +3,7 @@ package comp1110.ass2.backend;
 import comp1110.ass2.backend.State;
 
 /**
+ * @author Min Jae, Kim
  * Tiles interface counts all numbers of tiles contains in the class
  * It also counts number of tiles by color
  * Used for all classes

@@ -1,5 +1,9 @@
 package comp1110.ass2.backend;
 
+/**
+ * @authoer Min Jae, Kim
+ * Stores all information of each player : Player A, B, C, D
+ */
 public class nPlayer implements State {
 
     // Player fields strings
@@ -18,7 +22,7 @@ public class nPlayer implements State {
 
     /**
      * @author Min Jae, Kim
-     * Constructor method for nPLayer class
+     * Constructor method for nPlayer class
      * This class represents playerstate of each player : PLayer A, B, C, D
      * @param nplayerState
      * @param nplayerNameState

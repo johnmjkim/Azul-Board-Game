@@ -2,6 +2,14 @@ package comp1110.ass2.backend;
 
 import comp1110.ass2.Constants;
 
+/**
+ * @author Min Jae, Kim
+ * Basic functions for State are performed
+ * Check state is empty
+ * Get state string
+ * Print state string
+ * Updating state string
+ */
 public interface State extends Constants {
 
     /**

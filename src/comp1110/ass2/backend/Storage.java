@@ -2,6 +2,10 @@ package comp1110.ass2.backend;
 
 import java.util.ArrayList;
 
+/**
+ * @author Min Jae, Kim
+ * Stores all information of storage
+ */
 public class Storage implements Tiles {
 
     String storageState = EMPTY_STATE;

@@ -2,6 +2,11 @@ package comp1110.ass2.backend;
 
 import comp1110.ass2.Constants;
 
+/**
+ * @author Min Jae, Kim
+ * Inherits all trait from OrderTypedObject
+ * Add method that necessary
+ */
 public class Floor extends OrderTypedObject{
 
     // maximum player number, floor tiles
