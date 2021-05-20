@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+/**
+ * @author Si Bo, Hu
+ * Test if two shared state are correct
+ */
 public class GetSharedStateStringsTest implements TestStateCases {
 
     private void Turntest(String in, String expected) {

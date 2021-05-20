@@ -9,14 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @org.junit.jupiter.api.Timeout(value = 1000, unit = MILLISECONDS)
 
+/**
+ * @author Si Bo, Hu
+ * Test if four shared state are correct
+ */
 public class GetFourSharedStateStringTest implements TestFourSharedStateCases {
 
-    // TODO 1 : Change all below code to test 4 Players version of game
-    // TODO 2 : Use PLAYER_NUMBER (= 4), FULL_FOUR_PLAYER_GAME_WITH_MOVES to finish test
-    // TODO 3 : Add valid states in interface TestFourPlayerStateCases
-    // TODO 4 : Finish Turntest, Factoriestest, Factorytest, Centertest, Bagtest, Discardtest
-    // TODO 5 : Finish testTurnState, testFactoriesState, testFactoryState, testCenterState, testBagState, testDiscardState
-    // TODO 6 : Once done, get checked by Min Jae (John) Kim
 
     private void Turntest(String in, String expected) {
         SharedState ss = new SharedState(in,PLAYER_NUMBER);
