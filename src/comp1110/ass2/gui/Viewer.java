@@ -828,21 +828,27 @@ public class Viewer extends Application implements Constants {
         this.current_stage = multiazul.findCurrentStage(currentState);
         if(this.current_stage == TILING_STAGE){
             while(multiazul.generateSmartAction(currentState) == EMPTY_STATE){
-                System.out.print(" No move valid, changed turn from " + currentState[0].charAt(0));
+                //System.out.print(" No move valid, changed turn from " + currentState[0].charAt(0));
                 this.currentState = multiazul.changeTurn(currentState);
-                System.out.println(" to " + currentState[0].charAt(0));
+                //System.out.println(" to " + currentState[0].charAt(0));
             }
         }
         if(this.current_stage == NEXT_ROUND_STAGE){
+            /*
             System.out.print(" Next Round : ");
             System.out.print(currentState[0]);
             System.out.print(" , ");
             System.out.println(currentState[1]);
+
+             */
             this.currentState = multiazul.nextRound(currentState);
+            /*
             System.out.print(" Set to : ");
             System.out.print(currentState[0]);
             System.out.print(" , ");
             System.out.println(currentState[1]);
+
+             */
         }
         else if(this.current_stage == END_OF_GAME){
             if(!this.end_stage){
@@ -858,7 +864,12 @@ public class Viewer extends Application implements Constants {
         boardA.setLayoutX(0);
         boardA.setLayoutY(15);
         matrixBoard.getChildren().add(boardA);
-        displayState(currentState);
+        if(this.end_stage){
+            displayResult();
+        }
+        else{
+            displayState(currentState);
+        }
     }
 
     public static void main(String[] args) {

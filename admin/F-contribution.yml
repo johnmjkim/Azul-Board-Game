@@ -11,9 +11,9 @@ declaration: >-
 # members).
 contributions:
   - uid: u7269158
-    contribution: 50 / 65
+    contribution: 50
   - uid: u7271125
-    contribution: 50 / 35
+    contribution: 50
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members)
