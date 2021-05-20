@@ -5,6 +5,7 @@ public interface TestFourStateCases extends Constants{
     int PLAYER_NUMBER = 4;
     int FACTORY_MAX_NUMBER = FACTORY_MAX_NUMBERS[PLAYER_NUMBER - DEFAULT_MAX_PLAYER];
     /**
+     * @author Si Bo, Hu
      * All valid states of four players with moves
      */
     public static final String[][] FULL_FOUR_PLAYER_GAME_STATES_WITH_MOVES = {
@@ -198,6 +199,7 @@ public interface TestFourStateCases extends Constants{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Turn
      * Include 3 columns : Turn of SharedState, Turn of Player A, Turn of Player B, Turn of Player C, Turn of Player D State
      */
@@ -391,6 +393,11 @@ public interface TestFourStateCases extends Constants{
             new String[]{"C", "A", "B", "C", "D"},
 
     };
+
+    /**
+     * @author Si Bo, Hu
+     * Valid States Apply Moves for four players
+     */
     public static final String[][] FOUR_PLAYER_APPLY_MOVES = {
             new String[]{"AF0acee1adde2acde3bbee4abdd5abde6abbc7abbd8addeCfB1212171112D0000000000", "A0MSFB0MSFC0MSFD0MSF", "A2a4", "BF0acee1adde3bbee4abdd5abde6abbc7abbd8addeCcdefB1212171112D0000000000", "A0MS4a1FB0MSFC0MSFD0MSF"},
             new String[]{"BF0acee1adde3bbee4abdd5abde6abbc7abbd8addeCcdefB1212171112D0000000000", "A0MS4a1FB0MSFC0MSFD0MSF", "B1e4", "CF0acee3bbee4abdd5abde6abbc7abbd8addeCacdddefB1212171112D0000000000", "A0MS4a1FB0MS4e1FC0MSFD0MSF"},

@@ -2,6 +2,7 @@ package comp1110.ass2;
 
 public interface TestFourStorageAndFloorCases extends TestFourStateCases{
     /**
+     * @author Si Bo, Hu
      * Valid Player Storage States
      * Include 4 columns: PLayer A Storage, Player B Storage, PLayer C Storage, Player D Storage
      */
@@ -196,6 +197,7 @@ public interface TestFourStorageAndFloorCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Storage Row States
      * Include 20 columns: Player A Storage Row 0, 1, 2, 3, 4, Player B Storage Row 0, 1, 2, 3, 4, Player C Storage Row 0, 1, 2, 3, 4, Player D Storage Row 0, 1, 2, 3, 4
      */
@@ -390,6 +392,7 @@ public interface TestFourStorageAndFloorCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid Player Floor States
      * Include 4 columns: PLayer A Floor, Player B Floor, Player C Floor, Player D Floor
      */

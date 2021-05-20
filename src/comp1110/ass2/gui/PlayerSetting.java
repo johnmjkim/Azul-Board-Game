@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 /**
  * @author Si Bo, Hu
- * PlayerSetting is the first page, players use it to fill the information include: player number, names, kind,
- * It has no function, just get information and provide to viewer page then going to show them.
+ * PlayerSetting is the second page, players use it to fill the information include: player number, names, kind,
 **/
 public class PlayerSetting extends JFrame implements ActionListener, Constants {
 
@@ -34,6 +33,11 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     public static JComboBox comboBoxP5;
     public static int i = 100;
 
+    /**
+     * @author Si Bo, Hu
+     * This is the main part of PlaySetting, conclude 8 rows, Tips in row 1 and 3, select playerNumber in row 2
+     * type or choose player name and kind in row 4 to 7, submit in row 8.
+     */
     PlayerSetting() {
         this.setTitle("Players' information");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,11 +81,6 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         comboBoxP5.addActionListener(this);
         GameStart.add(comboBoxP5);
         this.add(GameStart);
-
-        //JButton submit = new JButton("submit");
-        //submit.setActionCommand("showMeViewer");
-        //submit.addActionListener(this);
-        //this.add(submit);
 
         this.pack();
         this.setVisible(true);
@@ -149,6 +148,14 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
         this.add(ChoosePlayer4);
     }
 
+    /**
+     * @author Si Bo, Hu
+     * This is the actionPerformed part
+     * Player choose numbers first and it will show same number of drop-down list for them,
+     * Player make choose or type in drop-down list,
+     * when they choose submit, game will get and show information in Viewer.
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox) e.getSource();
@@ -209,10 +216,6 @@ public class PlayerSetting extends JFrame implements ActionListener, Constants {
     //We choose the computer players in what we choose
     //We choose what kind of information about player numbers we got, to generate the state
     //If we got player number 3, we go to make an ArrayList and just have ArrayList[0,player number)
-
-
-
-
     public void getPlayerType(){
         String Player1Type = HUMAN_STRING;
         String Player2Type = String.valueOf(comboBoxP11.getSelectedItem());

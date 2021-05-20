@@ -2,6 +2,7 @@ package comp1110.ass2;
 
 public interface TestFourSharedStateCases extends TestFourStateCases{
     /**
+     * @author Si Bo, Hu
      * Valid States Factories and Factory
      * Include 10 columns : Factories, Factory 0, Factory 1, ... ,Factory 8
      */
@@ -196,6 +197,7 @@ public interface TestFourSharedStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Center
      * Include : Center
      */
@@ -390,6 +392,7 @@ public interface TestFourSharedStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Bag
      * Include : Bag
      */
@@ -584,6 +587,7 @@ public interface TestFourSharedStateCases extends TestFourStateCases{
     };
 
     /**
+     * @author Si Bo, Hu
      * Valid States Discard
      * Include : Discard
      */
