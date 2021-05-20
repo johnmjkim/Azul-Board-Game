@@ -23,10 +23,24 @@ Everyone : D2C up to task 8 done - meeting 15:00 AEDT 12 Apr
 
 ## Week 7
 
+Everyone : Part One tasks are all done. Implemented Object-Oriented Programming with detailed structure division.
+
 ## Week 8
+
+Everyone : D2D Assignments Done. Several unit tests were created check state of game, count tiles. Task 9~11 worked.
 
 ## Week 9
 
+Everyone : D2E Assignments Done. Game.jar file created and executed. Code authorship, review to peer done.
+
 ## Week 10
 
+Everyone : D2F Assignments Ongoing.
+Min Jae, Kim : Work on Task 15 (preliminary research and finish generateSmartAction method)
+Si Bo, Hu : Work on Task 12, 14, 16
+
 ## Week 11
+
+Everyone : D2F Assignments Ongoing. Task 12, 14, 16 Done.
+Min Jae, Kim : Work on Task 14, 16 (Computer opponents and 4 players version playing, Connect with MultiAzul class) first and then 15
+Si Bo, Hu : Work on Task 14, 16 (Player status displays, Player setting selections)
