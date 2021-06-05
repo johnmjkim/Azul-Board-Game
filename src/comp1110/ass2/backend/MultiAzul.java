@@ -1397,6 +1397,14 @@ public class MultiAzul implements Constants {
                     }
                 }
             }
+
+            System.out.println(" Valid Drafting Moves : ");
+            for (String str : valid_drafting_moves) {
+                System.out.print(str);
+                System.out.print(", ");
+            }
+            System.out.println();
+
             int num = valid_drafting_moves.size();
             if(num <= 0){
                 //System.out.println(" ss : " + gameState[0]);
@@ -1404,16 +1412,10 @@ public class MultiAzul implements Constants {
                 //System.out.println(num);
                 return EMPTY_STATE;
             }
+
             int move_idx = r.nextInt(num);
             return valid_drafting_moves.get(move_idx);
-            /*
-            System.out.println(" Valid Drafting Moves : ");
-            for (String str : valid_drafting_moves) {
-                System.out.print(str);
-                System.out.print(", ");
-            }
-            System.out.println();
-             */
+
         }
         else if(current_stage == TILING_STAGE){
             // Generate Tiling Moves
@@ -1444,7 +1446,7 @@ public class MultiAzul implements Constants {
                     }
                 }
             }
-            /*
+
             System.out.println(" Valid Tiling Moves : ");
             for( String str : valid_tiling_moves){
                 System.out.print(str);
@@ -1452,7 +1454,6 @@ public class MultiAzul implements Constants {
             }
             System.out.println();
 
-             */
             int num = valid_tiling_moves.size();
             if(num <= 0){
                 //System.out.println(" ss : " + gameState[0]);

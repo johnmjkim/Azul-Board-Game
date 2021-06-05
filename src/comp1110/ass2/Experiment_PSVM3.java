@@ -12,7 +12,7 @@ import java.util.Random;
 public class Experiment_PSVM3 implements Constants{
     public static void main(String[] args) {
 
-        int PLAYER_NUMBER = 4;
+        int PLAYER_NUMBER = 2;
         String[] gameState = new String[NUMBER_OF_STATES];
         String move;
         MultiAzul multiazul = new MultiAzul(PLAYER_NUMBER);
