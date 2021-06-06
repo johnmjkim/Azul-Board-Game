@@ -14,11 +14,15 @@ public class Experiment_PSVM5 implements Constants{
 
         gameState = multiazul.setInitalStates(PLAYER_NUMBER);
         gameState = multiazul.setStartingState(gameState);
-        gameState[0] = "BFCcccB1716171416D0000000000";
-        gameState[1] = "A0MS1b12d14d3FbbbeeB0MS2e24a2Faddf";
+
+        gameState[0] = "BFCceB1713191615D0000000000";
+        gameState[1] = "A0MS0b11d22b33d24e1FbbbB0MS0a11e22a13e1Faf";
+        /*
         all_moves = multiazul.generateAllActions(gameState);
         for(int i=0; i < all_moves.size(); i++){
             System.out.println(all_moves.get(i));
         }
+         */
+        move = multiazul.generateSmartAction(gameState);
     }
 }

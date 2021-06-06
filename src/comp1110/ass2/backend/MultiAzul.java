@@ -1325,8 +1325,9 @@ public class MultiAzul implements Constants {
 
     public String generateSmartAction(String[] gameState) {
         // FIXME Task 15 Implement a "smart" generateAction()
+
+        Random rand = new Random();
         /*
-        Random r = new Random();
         String[] output_gameState = new String[2];
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
@@ -1495,20 +1496,31 @@ public class MultiAzul implements Constants {
         }
         System.out.println();
 
-        if(all_moves.size() > 20){
-            eval_idx = minimax_val_idx(gameState, 1, 0, 0, ss.getTurnState().charAt(0));
+        if(all_moves.size() > 15){
+            int rand_idx = rand.nextInt(all_moves.size());
+            System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
+            return all_moves.get(rand_idx);
         }
-        else if(all_moves.size() > 10){
-            eval_idx = minimax_val_idx(gameState, 5, 0, 0, ss.getTurnState().charAt(0));
+        else if(all_moves.size() > 8){
+            eval_idx = minimax_val_idx(gameState, 0, 8, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 4){
+            eval_idx = minimax_val_idx(gameState, 0, 15, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 1){
+            eval_idx = minimax_val_idx(gameState, 0, 20, 0, 0, ss.getTurnState().charAt(0));
         }
         else{
-            eval_idx = minimax_val_idx(gameState, 7, 0, 0, ss.getTurnState().charAt(0));
+            System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
+            return all_moves.get(0);
         }
-        System.out.println(" index : " + eval_idx[0] + ", score : " + eval_idx[1]);
+
+        System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
         return all_moves.get(eval_idx[0]);
     }
 
     public ArrayList<String> generateAllActions(String[] gameState){
+        boolean no_need_floor = false;
         String[] output_gameState = new String[2];
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
@@ -1569,13 +1581,28 @@ public class MultiAzul implements Constants {
                     SB.delete(2, SB.length());
                     SB.append(third_char);
                     for (char fourth_char : fourth_drafting_chars) {
-                        SB.delete(3, SB.length());
-                        SB.append(fourth_char);
-                        input_move = String.valueOf(SB);
-                        //System.out.println(input_move);
-                        if (isMoveValid(output_gameState, input_move)) {
-                            valid_drafting_moves.add(input_move);
-                            //return input_move;
+                        if(fourth_char != FLOOR){
+                            SB.delete(3, SB.length());
+                            SB.append(fourth_char);
+                            input_move = String.valueOf(SB);
+                            //System.out.println(input_move);
+                            if (isMoveValid(output_gameState, input_move)) {
+                                no_need_floor = true;
+                                valid_drafting_moves.add(input_move);
+                                //return input_move;
+                            }
+                        }
+                        else{
+                            if(!no_need_floor){
+                                SB.delete(3, SB.length());
+                                SB.append(fourth_char);
+                                input_move = String.valueOf(SB);
+                                //System.out.println(input_move);
+                                if (isMoveValid(output_gameState, input_move)) {
+                                    valid_drafting_moves.add(input_move);
+                                    //return input_move;
+                                }
+                            }
                         }
                     }
                 }
@@ -1603,13 +1630,28 @@ public class MultiAzul implements Constants {
                 SB.delete(1, SB.length());
                 SB.append(second_char);
                 for (char third_char : third_tiling_chars) {
-                    SB.delete(2, SB.length());
-                    SB.append(third_char);
-                    input_move = String.valueOf(SB);
-                    //System.out.println(input_move);
-                    if (isMoveValid(output_gameState, input_move)) {
-                        valid_tiling_moves.add(input_move);
-                        //return input_move;
+                    if(third_char != FLOOR){
+                        SB.delete(2, SB.length());
+                        SB.append(third_char);
+                        input_move = String.valueOf(SB);
+                        //System.out.println(input_move);
+                        if (isMoveValid(output_gameState, input_move)) {
+                            no_need_floor = true;
+                            valid_tiling_moves.add(input_move);
+                            //return input_move;
+                        }
+                    }
+                    else{
+                        if(!no_need_floor){
+                            SB.delete(2, SB.length());
+                            SB.append(third_char);
+                            input_move = String.valueOf(SB);
+                            //System.out.println(input_move);
+                            if (isMoveValid(output_gameState, input_move)) {
+                                valid_tiling_moves.add(input_move);
+                                //return input_move;
+                            }
+                        }
                     }
                 }
             }
@@ -1622,54 +1664,96 @@ public class MultiAzul implements Constants {
         }
     }
 
-    public int[] minimax_val_idx(String[] gameState, int depth, int alpha, int beta, char maximize_player){
+    public int[] minimax_val_idx(String[] gameState, int idx, int depth, int alpha, int beta, char maximize_player){
+        Random rand = new Random();
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-        if(depth == 0 || isNextRoundStage(gameState)){
-            //System.out.println(" depth : " + depth + " next round : " + isNextRoundStage(gameState) + " score : " + getScore(gameState));
-            return new int[]{0, getScore(gameState)};
+        int maxIdx = 0, minIdx = 0, Idx = 0;
+        ArrayList<String> all_moves = generateAllActions(gameState);
+        ArrayList<String> some_moves = new ArrayList<>();
+        ArrayList<Integer> indice = new ArrayList<>();
+        int numbers = 10, low = 0, high = 0;
+        if(all_moves.size() > numbers){
+            for(int i=0; i < numbers; i++){
+                high = low + all_moves.size()/numbers;
+                indice.add(rand.nextInt(high - low) + low);
+                some_moves.add(all_moves.get(indice.get(i)));
+                low = high;
+            }
+        }
+        else{
+            some_moves = all_moves;
+            for(int i=0; i < some_moves.size(); i++){
+                indice.add(i);
+            }
+        }
+        /*
+        System.out.print(" depth : " + depth + " current turn : " + ss.getTurnState() + " maximizing player " + maximize_player + " ");
+        for(int i=0; i < some_moves.size(); i++){
+            System.out.print(some_moves.get(i));
+            System.out.print(", ");
+        }
+        System.out.println();
+
+         */
+
+        boolean isnextround = isNextRoundStage(gameState);
+        if(depth == 0 || isnextround){
+            //System.out.println("      returns, idx : " + idx + ", score : " + getScore(gameState, maximize_player));
+            if(isnextround){
+                String[] new_gameState = nextRound(gameState);
+                return new int[]{idx, getScore(new_gameState, maximize_player)};
+            }
+            else{
+                return new int[]{idx, getScore(gameState, maximize_player)};
+            }
         }
         else if(maximize_player == ss.getTurnState().charAt(0)){
             int maxEval = -Integer.MAX_VALUE;
-            int maxIdx = 0;
-            int Idx = 0;
-            for(String move : generateAllActions(gameState)){
-                int[] eval_idx = minimax_val_idx(applyMove(gameState, move), depth - 1, alpha, beta, maximize_player);
+            for(String move : some_moves){
+                //System.out.println("   depth : " + depth + " Idx : " + indice.get(Idx) + " move " + move);
+                String[] new_gameState = applyMove(gameState, move);
+                int[] eval_idx = minimax_val_idx(new_gameState, indice.get(Idx), depth - 1, alpha, beta, maximize_player);
+                //System.out.println("   maxEval : " + maxEval + " eval_idx[1] : " + eval_idx[1]);
                 if(maxEval < eval_idx[1]){
-                    maxIdx = Idx;
+                    maxIdx = indice.get(Idx);
                 }
                 maxEval = Math.max(maxEval, eval_idx[1]);
                 alpha = Math.max(alpha, maxEval);
                 if(maxEval > beta){
-                    return new int[]{maxIdx, maxEval};
+                    //System.out.println("      returns : " + indice.get(Idx) + ", " + maxEval);
+                    return new int[]{indice.get(Idx), maxEval};
                 }
                 Idx++;
             }
+            //System.out.println("      returns, maxIdx : " + maxIdx + ", maxEval : " + maxEval);
             return new int[]{maxIdx, maxEval};
         }
         else{
             int minEval = Integer.MAX_VALUE;
-            int minIdx = 0;
-            int Idx = 0;
-            for(String move : generateAllActions(gameState)){
-                int[] eval_idx = minimax_val_idx(applyMove(gameState, move), depth - 1, alpha, beta, maximize_player);
+            for(String move : some_moves){
+                //System.out.println("   depth : " + depth + " Idx : " + indice.get(Idx) + " move " + move);
+                String[] new_gameState = applyMove(gameState, move);
+                int[] eval_idx = minimax_val_idx(new_gameState, indice.get(Idx), depth - 1, alpha, beta, maximize_player);
+                //System.out.println("   minEval : " + minEval + " eval_idx[1] : " + eval_idx[1]);
                 if(minEval > eval_idx[1]){
-                    minIdx = Idx;
+                    minIdx = indice.get(Idx);
                 }
                 minEval = Math.min(minEval, eval_idx[1]);
                 beta = Math.min(beta, minEval);
                 if(minEval < alpha){
-                    return new int[]{minIdx, minEval};
+                    //System.out.println("      returns : " + indice.get(Idx) + ", " + minEval);
+                    return new int[]{indice.get(Idx), minEval};
                 }
                 Idx++;
             }
+            //System.out.println("      returns, minIdx : " + minIdx + ", minEval : " + minEval);
             return new int[]{minIdx, minEval};
         }
     }
 
-    public int getScore(String[] gameState){
-        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+    public int getScore(String[] gameState, char maximize_player){
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
-        return ps.getnPlayer(ss.getTurnState().charAt(0)).score.getScore();
+        return ps.getnPlayer(maximize_player).score.getScore();
     }
 
     // isStartingValid() checks if starting round movement is valid
