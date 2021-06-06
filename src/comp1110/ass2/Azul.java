@@ -1597,13 +1597,13 @@ public class Azul implements Constants {
             return all_moves.get(rand_idx);
         }
         else if(all_moves.size() > 8){
-            eval_idx = minimax_val_idx(gameState, 0, 3, 0, 0, ss.getTurnState().charAt(0));
+            eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
         }
         else if(all_moves.size() > 4){
-            eval_idx = minimax_val_idx(gameState, 0, 6, 0, 0, ss.getTurnState().charAt(0));
+            eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
         }
         else if(all_moves.size() > 1){
-            eval_idx = minimax_val_idx(gameState, 0, 9, 0, 0, ss.getTurnState().charAt(0));
+            eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
         }
         else{
             System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
