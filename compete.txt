@@ -1,0 +1,2 @@
+Name : EagleEye
+Description : Alpha-Beta Pruning Method to Compete
