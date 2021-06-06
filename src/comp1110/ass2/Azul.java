@@ -1442,18 +1442,22 @@ public class Azul implements Constants {
     // This is “6. Other players play”.
     public static String generateAction(String[] gameState) {
         // FIXME Task 13
+        /*
         String[] output_gameState = new String[2];
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
+
+         */
         /*
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
 
          */
 
+        /*
         boolean draftingStage = isDraftingStage(output_gameState);
         char player_turn = ss.getTurnState().charAt(0);
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
@@ -1512,6 +1516,8 @@ public class Azul implements Constants {
                 }
             }
         }
+
+         */
         /*
         System.out.println(" Valid Drafting Moves : ");
         for( String str : valid_drafting_moves){
@@ -1521,7 +1527,7 @@ public class Azul implements Constants {
         System.out.println();
 
          */
-
+        /*
         // Generate Tiling Moves
         if(valid_drafting_moves.isEmpty()){
             ArrayList<Character> second_tiling_chars = new ArrayList<Character>();
@@ -1550,6 +1556,8 @@ public class Azul implements Constants {
                     }
                 }
             }
+
+         */
             /*
             System.out.println(" Valid Tiling Moves : ");
             for( String str : valid_tiling_moves){
@@ -1559,14 +1567,288 @@ public class Azul implements Constants {
             System.out.println();
 
              */
-
+        /*
             return valid_tiling_moves.get(0);
         }
         else{
             return valid_drafting_moves.get(0);
         }
 
+         */
+
         // FIXME Task 15 Implement a "smart" generateAction()
+        Random rand = new Random();
+
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        int[] eval_idx = new int[2];
+
+        ArrayList<String> all_moves = new ArrayList<>();
+        all_moves = generateAllActions(gameState);
+
+        for(int i=0; i < all_moves.size(); i++){
+            System.out.print(all_moves.get(i));
+            System.out.print(", ");
+        }
+        System.out.println();
+
+        if(all_moves.size() > 15){
+            int rand_idx = rand.nextInt(all_moves.size());
+            System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
+            return all_moves.get(rand_idx);
+        }
+        else if(all_moves.size() > 8){
+            eval_idx = minimax_val_idx(gameState, 0, 8, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 4){
+            eval_idx = minimax_val_idx(gameState, 0, 15, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 1){
+            eval_idx = minimax_val_idx(gameState, 0, 20, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else{
+            System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
+            return all_moves.get(0);
+        }
+
+        System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
+        return all_moves.get(eval_idx[0]);
+    }
+
+    public static ArrayList<String> generateAllActions(String[] gameState){
+        boolean no_need_floor = false;
+        String[] output_gameState = new String[2];
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+
+        output_gameState[0] = ss.getStateString();
+        output_gameState[1] = ps.getStateString();
+        /*
+        System.out.println(gameState[0]);
+        System.out.println(gameState[1]);
+
+         */
+
+        char current_stage = findCurrentStage(gameState);
+        char player_turn = ss.getTurnState().charAt(0);
+        ArrayList<String> valid_drafting_moves = new ArrayList<String>();
+        ArrayList<String> valid_tiling_moves = new ArrayList<String>();
+        String input_move;
+        StringBuilder SB = new StringBuilder();
+
+        if(current_stage == DRAFTING_STAGE){
+            // Generate Drafting Moves
+            ArrayList<Character> second_drafting_chars = new ArrayList<Character>();
+            ArrayList<Character> third_drafting_chars = new ArrayList<Character>();
+            char[] fourth_drafting_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
+
+            boolean factories_has_tile = !ss.factories.isStateEmpty();
+            boolean center_has_tile = !(ss.center.isStateEmpty() || ss.center.hasOnlyOneFirstPlayerToken());
+
+            if (factories_has_tile) {
+                for (int i = 0; i < FACTORY_MAX_NUMBER; i++) {
+                    boolean factory_has_tile = !ss.factories.getFactory(i).getStateString().isEmpty();
+                    if (factory_has_tile) {
+                        second_drafting_chars.add(NUMBERS[i]);
+                        for (char color : COLORS) {
+                            boolean factory_has_color = ss.factories.getFactory(i).getTilesNumber(color) > 0;
+                            if (factory_has_color) {
+                                third_drafting_chars.add(color);
+                            }
+                        }
+                    }
+                }
+            }
+            if (center_has_tile) {
+                second_drafting_chars.add(CENTER);
+                for (char color : COLORS) {
+                    boolean center_has_color = ss.center.getTilesNumber(color) > 0;
+                    if (center_has_color) {
+                        third_drafting_chars.add(color);
+                    }
+                }
+            }
+
+            SB.append(player_turn);
+            for (Character second_char : second_drafting_chars) {
+                SB.delete(1, SB.length());
+                SB.append(second_char);
+                for (Character third_char : third_drafting_chars) {
+                    SB.delete(2, SB.length());
+                    SB.append(third_char);
+                    for (char fourth_char : fourth_drafting_chars) {
+                        if(fourth_char != FLOOR){
+                            SB.delete(3, SB.length());
+                            SB.append(fourth_char);
+                            input_move = String.valueOf(SB);
+                            //System.out.println(input_move);
+                            if (isMoveValid(output_gameState, input_move)) {
+                                no_need_floor = true;
+                                valid_drafting_moves.add(input_move);
+                                //return input_move;
+                            }
+                        }
+                        else{
+                            if(!no_need_floor){
+                                SB.delete(3, SB.length());
+                                SB.append(fourth_char);
+                                input_move = String.valueOf(SB);
+                                //System.out.println(input_move);
+                                if (isMoveValid(output_gameState, input_move)) {
+                                    valid_drafting_moves.add(input_move);
+                                    //return input_move;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return valid_drafting_moves;
+
+        }
+        else if(current_stage == TILING_STAGE){
+            // Generate Tiling Moves
+            ArrayList<Character> second_tiling_chars = new ArrayList<Character>();
+            char[] third_tiling_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
+
+            for (int i = 0; i < MAX_STORAGE_ROW; i++) {
+                if (second_tiling_chars.isEmpty()) {
+                    boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(i).isTilesFull();
+                    if (storage_row_full) {
+                        second_tiling_chars.add(NUMBERS[i]);
+                    }
+                }
+            }
+
+            SB.append(player_turn);
+            for (Character second_char : second_tiling_chars) {
+                SB.delete(1, SB.length());
+                SB.append(second_char);
+                for (char third_char : third_tiling_chars) {
+                    if(third_char != FLOOR){
+                        SB.delete(2, SB.length());
+                        SB.append(third_char);
+                        input_move = String.valueOf(SB);
+                        //System.out.println(input_move);
+                        if (isMoveValid(output_gameState, input_move)) {
+                            no_need_floor = true;
+                            valid_tiling_moves.add(input_move);
+                            //return input_move;
+                        }
+                    }
+                    else{
+                        if(!no_need_floor){
+                            SB.delete(2, SB.length());
+                            SB.append(third_char);
+                            input_move = String.valueOf(SB);
+                            //System.out.println(input_move);
+                            if (isMoveValid(output_gameState, input_move)) {
+                                valid_tiling_moves.add(input_move);
+                                //return input_move;
+                            }
+                        }
+                    }
+                }
+            }
+            return valid_tiling_moves;
+        }
+        else {
+            ArrayList<String> no_move = new ArrayList<>();
+            no_move.add(EMPTY_STATE);
+            return no_move;
+        }
+    }
+
+    public static int[] minimax_val_idx(String[] gameState, int idx, int depth, int alpha, int beta, char maximize_player){
+        Random rand = new Random();
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        int maxIdx = 0, minIdx = 0, Idx = 0;
+        ArrayList<String> all_moves = generateAllActions(gameState);
+        ArrayList<String> some_moves = new ArrayList<>();
+        ArrayList<Integer> indice = new ArrayList<>();
+        int numbers = 10, low = 0, high = 0;
+        if(all_moves.size() > numbers){
+            for(int i=0; i < numbers; i++){
+                high = low + all_moves.size()/numbers;
+                indice.add(rand.nextInt(high - low) + low);
+                some_moves.add(all_moves.get(indice.get(i)));
+                low = high;
+            }
+        }
+        else{
+            some_moves = all_moves;
+            for(int i=0; i < some_moves.size(); i++){
+                indice.add(i);
+            }
+        }
+        /*
+        System.out.print(" depth : " + depth + " current turn : " + ss.getTurnState() + " maximizing player " + maximize_player + " ");
+        for(int i=0; i < some_moves.size(); i++){
+            System.out.print(some_moves.get(i));
+            System.out.print(", ");
+        }
+        System.out.println();
+
+         */
+
+        boolean isnextround = isNextRoundStage(gameState);
+        if(depth == 0 || isnextround){
+            //System.out.println("      returns, idx : " + idx + ", score : " + getScore(gameState, maximize_player));
+            if(isnextround){
+                String[] new_gameState = nextRound(gameState);
+                return new int[]{idx, getScore(new_gameState, maximize_player)};
+            }
+            else{
+                return new int[]{idx, getScore(gameState, maximize_player)};
+            }
+        }
+        else if(maximize_player == ss.getTurnState().charAt(0)){
+            int maxEval = -Integer.MAX_VALUE;
+            for(String move : some_moves){
+                //System.out.println("   depth : " + depth + " Idx : " + indice.get(Idx) + " move " + move);
+                String[] new_gameState = applyMove(gameState, move);
+                int[] eval_idx = minimax_val_idx(new_gameState, indice.get(Idx), depth - 1, alpha, beta, maximize_player);
+                //System.out.println("   maxEval : " + maxEval + " eval_idx[1] : " + eval_idx[1]);
+                if(maxEval < eval_idx[1]){
+                    maxIdx = indice.get(Idx);
+                }
+                maxEval = Math.max(maxEval, eval_idx[1]);
+                alpha = Math.max(alpha, maxEval);
+                if(maxEval > beta){
+                    //System.out.println("      returns : " + indice.get(Idx) + ", " + maxEval);
+                    return new int[]{indice.get(Idx), maxEval};
+                }
+                Idx++;
+            }
+            //System.out.println("      returns, maxIdx : " + maxIdx + ", maxEval : " + maxEval);
+            return new int[]{maxIdx, maxEval};
+        }
+        else{
+            int minEval = Integer.MAX_VALUE;
+            for(String move : some_moves){
+                //System.out.println("   depth : " + depth + " Idx : " + indice.get(Idx) + " move " + move);
+                String[] new_gameState = applyMove(gameState, move);
+                int[] eval_idx = minimax_val_idx(new_gameState, indice.get(Idx), depth - 1, alpha, beta, maximize_player);
+                //System.out.println("   minEval : " + minEval + " eval_idx[1] : " + eval_idx[1]);
+                if(minEval > eval_idx[1]){
+                    minIdx = indice.get(Idx);
+                }
+                minEval = Math.min(minEval, eval_idx[1]);
+                beta = Math.min(beta, minEval);
+                if(minEval < alpha){
+                    //System.out.println("      returns : " + indice.get(Idx) + ", " + minEval);
+                    return new int[]{indice.get(Idx), minEval};
+                }
+                Idx++;
+            }
+            //System.out.println("      returns, minIdx : " + minIdx + ", minEval : " + minEval);
+            return new int[]{minIdx, minEval};
+        }
+    }
+
+    public static int getScore(String[] gameState, char maximize_player){
+        PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
+        return ps.getnPlayer(maximize_player).score.getScore();
     }
 
     // isStartingValid() checks if starting round movement is valid
@@ -1635,6 +1917,26 @@ public class Azul implements Constants {
         else{
             PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
             return ps.isEndofGame();
+        }
+    }
+
+    public static char findCurrentStage(String[] state){
+        boolean isdraftingstage = isDraftingStage(state);
+        boolean istilingstage = isTilingStage(state);
+        boolean isendofgame = isGameEndStage(state);
+        if(isdraftingstage){
+            return DRAFTING_STAGE;
+        }
+        else if(istilingstage){
+            return TILING_STAGE;
+        }
+        else {
+            if(!isendofgame){
+                return NEXT_ROUND_STAGE;
+            }
+            else{
+                return END_OF_GAME;
+            }
         }
     }
 
