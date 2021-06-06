@@ -1584,33 +1584,35 @@ public class Azul implements Constants {
 
         ArrayList<String> all_moves = new ArrayList<>();
         all_moves = generateAllActions(gameState);
-
+        /*
         for(int i=0; i < all_moves.size(); i++){
             System.out.print(all_moves.get(i));
             System.out.print(", ");
         }
         System.out.println();
 
+         */
+
         if(all_moves.size() > 15){
             int rand_idx = rand.nextInt(all_moves.size());
-            System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
+            //System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
             return all_moves.get(rand_idx);
         }
         else if(all_moves.size() > 8){
             eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
         }
         else if(all_moves.size() > 4){
-            eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
+            eval_idx = minimax_val_idx(gameState, 0, 2, 0, 0, ss.getTurnState().charAt(0));
         }
         else if(all_moves.size() > 1){
-            eval_idx = minimax_val_idx(gameState, 0, 1, 0, 0, ss.getTurnState().charAt(0));
+            eval_idx = minimax_val_idx(gameState, 0, 3, 0, 0, ss.getTurnState().charAt(0));
         }
         else{
-            System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
+            //System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
             return all_moves.get(0);
         }
 
-        System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
+        //System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
         return all_moves.get(eval_idx[0]);
     }
 
