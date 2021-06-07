@@ -1327,24 +1327,60 @@ public class MultiAzul implements Constants {
         // FIXME Task 15 Implement a "smart" generateAction()
 
         Random rand = new Random();
-        /*
+        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
+        int[] eval_idx = new int[2];
+
+        ArrayList<String> all_moves = new ArrayList<>();
+        all_moves = generateAllActions(gameState);
+
+        for(int i=0; i < all_moves.size(); i++){
+            System.out.print(all_moves.get(i));
+            System.out.print(", ");
+        }
+        System.out.println();
+
+        if(all_moves.size() > 10){
+            int rand_idx = rand.nextInt(all_moves.size());
+            System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
+            return all_moves.get(rand_idx);
+        }
+        else if(all_moves.size() > 7){
+            eval_idx = minimax_val_idx(gameState, 0, 4, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 4){
+            eval_idx = minimax_val_idx(gameState, 0, 8, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else if(all_moves.size() > 1){
+            eval_idx = minimax_val_idx(gameState, 0, 12, 0, 0, ss.getTurnState().charAt(0));
+        }
+        else{
+            System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
+            return all_moves.get(0);
+        }
+
+        System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
+        return all_moves.get(eval_idx[0]);
+    }
+
+    public ArrayList<String> generateAllActions(String[] gameState){
         String[] output_gameState = new String[2];
         SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
         PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
 
         output_gameState[0] = ss.getStateString();
         output_gameState[1] = ps.getStateString();
-
-         */
         /*
         System.out.println(gameState[0]);
         System.out.println(gameState[1]);
 
          */
 
-        /*
         char current_stage = findCurrentStage(gameState);
         char player_turn = ss.getTurnState().charAt(0);
+        int min_floor_tiles = MAX_FLOOR_STRING_SIZE;
+        boolean storage_full_exist = false;
+        int high_storage_row_full = 0;
+        int min_storage_empty_tiles = MAX_STORAGE_COL;
         ArrayList<String> valid_drafting_moves = new ArrayList<String>();
         ArrayList<String> valid_tiling_moves = new ArrayList<String>();
         String input_move;
@@ -1396,34 +1432,69 @@ public class MultiAzul implements Constants {
                         input_move = String.valueOf(SB);
                         //System.out.println(input_move);
                         if (isMoveValid(output_gameState, input_move)) {
+                            String[] new_gameState = applyMove(gameState, input_move);
+                            PlayerState new_ps = new PlayerState(new_gameState[1], MAX_PLAYER_NUMBER);
+                            if(new_ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()){
+                                storage_full_exist = true;
+                            }
+                            if(storage_full_exist){
+                                min_storage_empty_tiles = 0;
+                                int new_min_floor_tiles = new_ps.getnPlayer(player_turn).floor.getTotalTilesNumber();
+                                int new_high_storage_row_full = new_ps.getnPlayer(player_turn).storage.findHighestStorageRowFull();
+                                if(new_min_floor_tiles < min_floor_tiles){
+                                    min_floor_tiles = new_min_floor_tiles;
+                                    high_storage_row_full = 0;
+                                }
+                                if(min_floor_tiles == new_min_floor_tiles){
+                                    if(new_high_storage_row_full > high_storage_row_full){
+                                        high_storage_row_full = new_high_storage_row_full;
+                                    }
+                                }
+                            }
+                            else{
+                                int new_min_storage_empty_tiles = new_ps.getnPlayer(player_turn).storage.findMinimumEmptyStorageTiles();
+                                if(new_min_storage_empty_tiles < min_storage_empty_tiles){
+                                    min_storage_empty_tiles = new_min_storage_empty_tiles;
+                                }
+                            }
                             valid_drafting_moves.add(input_move);
                             //return input_move;
                         }
                     }
                 }
             }
-
-         */
-            /*
-            System.out.println(" Valid Drafting Moves : ");
-            for (String str : valid_drafting_moves) {
-                System.out.print(str);
-                System.out.print(", ");
+            int idx =0;
+            ArrayList<String> some_drafting_moves = valid_drafting_moves;
+            ArrayList<Integer> delete_indice = new ArrayList<>();
+            for(String move_candidate : valid_drafting_moves) {
+                String[] new_gameState = applyMove(gameState, move_candidate);
+                PlayerState new_ps = new PlayerState(new_gameState[1], MAX_PLAYER_NUMBER);
+                if(storage_full_exist){
+                    if(!new_ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()){
+                        delete_indice.add(idx);
+                    }
+                    else{
+                        if(new_ps.getnPlayer(player_turn).floor.getTotalTilesNumber() > min_floor_tiles){
+                            delete_indice.add(idx);
+                        }
+                        else{
+                            if(new_ps.getnPlayer(player_turn).storage.findHighestStorageRowFull() < high_storage_row_full){
+                                delete_indice.add(idx);
+                            }
+                        }
+                    }
+                }
+                else{
+                    if(new_ps.getnPlayer(player_turn).storage.findMinimumEmptyStorageTiles() > min_storage_empty_tiles){
+                        delete_indice.add(idx);
+                    }
+                }
+                idx++;
             }
-            System.out.println();
-             */
-
-        /*
-            int num = valid_drafting_moves.size();
-            if(num <= 0){
-                //System.out.println(" ss : " + gameState[0]);
-                //System.out.println(" ss : " + gameState[1]);
-                //System.out.println(num);
-                return EMPTY_STATE;
+            for(int i=0; i < delete_indice.size(); i++){
+                some_drafting_moves.remove(delete_indice.get(i) - i);
             }
-
-            int move_idx = r.nextInt(num);
-            return valid_drafting_moves.get(move_idx);
+            return some_drafting_moves;
 
         }
         else if(current_stage == TILING_STAGE){
@@ -1452,206 +1523,6 @@ public class MultiAzul implements Constants {
                     if (isMoveValid(output_gameState, input_move)) {
                         valid_tiling_moves.add(input_move);
                         //return input_move;
-                    }
-                }
-            }
-
-         */
-            /*
-            System.out.println(" Valid Tiling Moves : ");
-            for( String str : valid_tiling_moves){
-                System.out.print(str);
-                System.out.print(", ");
-            }
-            System.out.println();
-
-             */
-
-        /*
-            int num = valid_tiling_moves.size();
-            if(num <= 0){
-                //System.out.println(" ss : " + gameState[0]);
-                //System.out.println(" ss : " + gameState[1]);
-                //System.out.println(num);
-                return EMPTY_STATE;
-            }
-            int move_idx = r.nextInt(num);
-            return valid_tiling_moves.get(move_idx);
-        }
-        else {
-            return EMPTY_STATE;
-        }
-
-         */
-
-        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-        int[] eval_idx = new int[2];
-
-        ArrayList<String> all_moves = new ArrayList<>();
-        all_moves = generateAllActions(gameState);
-
-        for(int i=0; i < all_moves.size(); i++){
-            System.out.print(all_moves.get(i));
-            System.out.print(", ");
-        }
-        System.out.println();
-
-        if(all_moves.size() > 15){
-            int rand_idx = rand.nextInt(all_moves.size());
-            System.out.println(" index : " + rand_idx + ", move : " + all_moves.get(rand_idx) + ", score : " + "random");
-            return all_moves.get(rand_idx);
-        }
-        else if(all_moves.size() > 8){
-            eval_idx = minimax_val_idx(gameState, 0, 8, 0, 0, ss.getTurnState().charAt(0));
-        }
-        else if(all_moves.size() > 4){
-            eval_idx = minimax_val_idx(gameState, 0, 15, 0, 0, ss.getTurnState().charAt(0));
-        }
-        else if(all_moves.size() > 1){
-            eval_idx = minimax_val_idx(gameState, 0, 20, 0, 0, ss.getTurnState().charAt(0));
-        }
-        else{
-            System.out.println(" index : " + 0 + ", move : " + all_moves.get(0) + ", score : " + "one");
-            return all_moves.get(0);
-        }
-
-        System.out.println(" index : " + eval_idx[0] + ", move : " + all_moves.get(eval_idx[0]) + ", score : " + eval_idx[1]);
-        return all_moves.get(eval_idx[0]);
-    }
-
-    public ArrayList<String> generateAllActions(String[] gameState){
-        boolean no_need_floor = false;
-        String[] output_gameState = new String[2];
-        SharedState ss = new SharedState(gameState[0], MAX_PLAYER_NUMBER);
-        PlayerState ps = new PlayerState(gameState[1], MAX_PLAYER_NUMBER);
-
-        output_gameState[0] = ss.getStateString();
-        output_gameState[1] = ps.getStateString();
-        /*
-        System.out.println(gameState[0]);
-        System.out.println(gameState[1]);
-
-         */
-
-        char current_stage = findCurrentStage(gameState);
-        char player_turn = ss.getTurnState().charAt(0);
-        ArrayList<String> valid_drafting_moves = new ArrayList<String>();
-        ArrayList<String> valid_tiling_moves = new ArrayList<String>();
-        String input_move;
-        StringBuilder SB = new StringBuilder();
-
-        if(current_stage == DRAFTING_STAGE){
-            // Generate Drafting Moves
-            ArrayList<Character> second_drafting_chars = new ArrayList<Character>();
-            ArrayList<Character> third_drafting_chars = new ArrayList<Character>();
-            char[] fourth_drafting_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
-
-            boolean factories_has_tile = !ss.factories.isStateEmpty();
-            boolean center_has_tile = !(ss.center.isStateEmpty() || ss.center.hasOnlyOneFirstPlayerToken());
-
-            if (factories_has_tile) {
-                for (int i = 0; i < FACTORY_MAX_NUMBER; i++) {
-                    boolean factory_has_tile = !ss.factories.getFactory(i).getStateString().isEmpty();
-                    if (factory_has_tile) {
-                        second_drafting_chars.add(NUMBERS[i]);
-                        for (char color : COLORS) {
-                            boolean factory_has_color = ss.factories.getFactory(i).getTilesNumber(color) > 0;
-                            if (factory_has_color) {
-                                third_drafting_chars.add(color);
-                            }
-                        }
-                    }
-                }
-            }
-            if (center_has_tile) {
-                second_drafting_chars.add(CENTER);
-                for (char color : COLORS) {
-                    boolean center_has_color = ss.center.getTilesNumber(color) > 0;
-                    if (center_has_color) {
-                        third_drafting_chars.add(color);
-                    }
-                }
-            }
-
-            SB.append(player_turn);
-            for (Character second_char : second_drafting_chars) {
-                SB.delete(1, SB.length());
-                SB.append(second_char);
-                for (Character third_char : third_drafting_chars) {
-                    SB.delete(2, SB.length());
-                    SB.append(third_char);
-                    for (char fourth_char : fourth_drafting_chars) {
-                        if(fourth_char != FLOOR){
-                            SB.delete(3, SB.length());
-                            SB.append(fourth_char);
-                            input_move = String.valueOf(SB);
-                            //System.out.println(input_move);
-                            if (isMoveValid(output_gameState, input_move)) {
-                                no_need_floor = true;
-                                valid_drafting_moves.add(input_move);
-                                //return input_move;
-                            }
-                        }
-                        else{
-                            if(!no_need_floor){
-                                SB.delete(3, SB.length());
-                                SB.append(fourth_char);
-                                input_move = String.valueOf(SB);
-                                //System.out.println(input_move);
-                                if (isMoveValid(output_gameState, input_move)) {
-                                    valid_drafting_moves.add(input_move);
-                                    //return input_move;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return valid_drafting_moves;
-
-        }
-        else if(current_stage == TILING_STAGE){
-            // Generate Tiling Moves
-            ArrayList<Character> second_tiling_chars = new ArrayList<Character>();
-            char[] third_tiling_chars = new char[]{ZERO, ONE, TWO, THREE, FOUR, FLOOR};
-
-            for (int i = 0; i < MAX_STORAGE_ROW; i++) {
-                if (second_tiling_chars.isEmpty()) {
-                    boolean storage_row_full = ps.getnPlayer(player_turn).storage.getStorageRow(i).isTilesFull();
-                    if (storage_row_full) {
-                        second_tiling_chars.add(NUMBERS[i]);
-                    }
-                }
-            }
-
-            SB.append(player_turn);
-            for (Character second_char : second_tiling_chars) {
-                SB.delete(1, SB.length());
-                SB.append(second_char);
-                for (char third_char : third_tiling_chars) {
-                    if(third_char != FLOOR){
-                        SB.delete(2, SB.length());
-                        SB.append(third_char);
-                        input_move = String.valueOf(SB);
-                        //System.out.println(input_move);
-                        if (isMoveValid(output_gameState, input_move)) {
-                            no_need_floor = true;
-                            valid_tiling_moves.add(input_move);
-                            //return input_move;
-                        }
-                    }
-                    else{
-                        if(!no_need_floor){
-                            SB.delete(2, SB.length());
-                            SB.append(third_char);
-                            input_move = String.valueOf(SB);
-                            //System.out.println(input_move);
-                            if (isMoveValid(output_gameState, input_move)) {
-                                valid_tiling_moves.add(input_move);
-                                //return input_move;
-                            }
-                        }
                     }
                 }
             }

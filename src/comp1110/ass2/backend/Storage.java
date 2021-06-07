@@ -89,10 +89,33 @@ public class Storage implements Tiles {
         return isStorageTilesValid;
     }
 
+    public int findHighestStorageRowFull(){
+        int highest_row = 0;
+        if(existsStorageRowTilesFull()){
+            for(int row=0; row < MAX_STORAGE_ROW; row++){
+                if(this.getStorageRow(row).isTilesFull()){
+                    highest_row = row;
+                }
+            }
+        }
+        return highest_row;
+    }
+
+    public int findMinimumEmptyStorageTiles(){
+        int minimum_empty_tiles = MAX_STORAGE_COL;
+        for(int row=0; row < MAX_STORAGE_ROW; row++){
+            int minimum_empty_row_tiles = this.getStorageRow(row).findMinimumEmptyStorageRowTiles();
+            if(minimum_empty_tiles > minimum_empty_row_tiles){
+                minimum_empty_tiles = minimum_empty_row_tiles;
+            }
+        }
+        return minimum_empty_tiles;
+    }
+
     public boolean existsStorageRowTilesFull() {
         boolean existsRowTilesFull = false;
-        for( StorageRow sr : this.storage_rows){
-            if(sr.isTilesFull()){
+        for(int row=0; row < MAX_STORAGE_ROW; row++){
+            if(isStorageRowTilesFull(row)){
                 existsRowTilesFull = true;
             }
         }
@@ -294,6 +317,10 @@ public class Storage implements Tiles {
 
         public int getMaxTilesLimit() {
             return this.MAX_TILES_LIMIT;
+        }
+
+        public int findMinimumEmptyStorageRowTiles(){
+            return getMaxTilesLimit() - getTotalTilesNumber();
         }
 
         @Override
