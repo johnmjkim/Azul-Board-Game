@@ -1520,25 +1520,15 @@ public class Azul implements Constants {
                     boolean factory_has_tile = !ss.factories.getFactory(i).getStateString().isEmpty();
                     if (factory_has_tile) {
                         second_drafting_chars.add(NUMBERS[i]);
-                        for (char color : COLORS) {
-                            boolean factory_has_color = ss.factories.getFactory(i).getTilesNumber(color) > 0;
-                            if (factory_has_color) {
-                                third_drafting_chars.add(color);
-                            }
-                        }
                     }
                 }
             }
             if (center_has_tile) {
                 second_drafting_chars.add(CENTER);
-                for (char color : COLORS) {
-                    boolean center_has_color = ss.center.getTilesNumber(color) > 0;
-                    if (center_has_color) {
-                        third_drafting_chars.add(color);
-                    }
-                }
             }
-
+            for (char color : COLORS) {
+                third_drafting_chars.add(color);
+            }
             SB.append(player_turn);
             for (Character second_char : second_drafting_chars) {
                 SB.delete(1, SB.length());
@@ -1583,38 +1573,33 @@ public class Azul implements Constants {
                     }
                 }
             }
-            int idx =0;
-            ArrayList<String> some_drafting_moves = valid_drafting_moves;
-            ArrayList<Integer> delete_indice = new ArrayList<>();
-            for(String move_candidate : valid_drafting_moves) {
+
+            int idx = 0;
+            ArrayList<String> some_moves = new ArrayList<>();
+            ArrayList<Integer> save_indice = new ArrayList<>();
+            for (String move_candidate : valid_drafting_moves) {
                 String[] new_gameState = applyMove(gameState, move_candidate);
                 PlayerState new_ps = new PlayerState(new_gameState[1], MAX_PLAYER_NUMBER);
-                if(storage_full_exist){
-                    if(!new_ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()){
-                        delete_indice.add(idx);
-                    }
-                    else{
-                        if(new_ps.getnPlayer(player_turn).floor.getTotalTilesNumber() > min_floor_tiles){
-                            delete_indice.add(idx);
-                        }
-                        else{
-                            if(new_ps.getnPlayer(player_turn).storage.findHighestStorageRowFull() < high_storage_row_full){
-                                delete_indice.add(idx);
+                if (storage_full_exist) {
+                    if (new_ps.getnPlayer(player_turn).storage.existsStorageRowTilesFull()) {
+                        if (new_ps.getnPlayer(player_turn).floor.getTotalTilesNumber() == min_floor_tiles) {
+                            if (new_ps.getnPlayer(player_turn).storage.findHighestStorageRowFull() == high_storage_row_full) {
+                                save_indice.add(idx);
                             }
                         }
                     }
                 }
-                else{
-                    if(new_ps.getnPlayer(player_turn).storage.findMinimumEmptyStorageTiles() > min_storage_empty_tiles){
-                        delete_indice.add(idx);
+                else {
+                    if (new_ps.getnPlayer(player_turn).storage.findMinimumEmptyStorageTiles() == min_storage_empty_tiles) {
+                        save_indice.add(idx);
                     }
                 }
                 idx++;
             }
-            for(int i=0; i < delete_indice.size(); i++){
-                some_drafting_moves.remove(delete_indice.get(i) - i);
+            for(int i=0; i < save_indice.size(); i++){
+                some_moves.add(valid_drafting_moves.get(save_indice.get(i)));
             }
-            return some_drafting_moves;
+            return some_moves;
 
         }
         else if(current_stage == TILING_STAGE){

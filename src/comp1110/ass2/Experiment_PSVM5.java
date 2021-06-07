@@ -31,30 +31,29 @@ public class Experiment_PSVM5 implements Constants{
         PlayerState ps = new PlayerState(gameState[1], PLAYER_NUMBER);
         char current_turn = ss.getTurnState().charAt(0);
         all_moves = multiazul.generateAllActions(gameState);
-        for(int i=0; i < all_moves.size(); i++) {
+        for (int i = 0; i < all_moves.size(); i++) {
             move = all_moves.get(i);
             String[] new_gameState = multiazul.applyMove(gameState, move);
             PlayerState new_ps = new PlayerState(new_gameState[1], PLAYER_NUMBER);
-            if(new_ps.getnPlayer(current_turn).storage.existsStorageRowTilesFull()){
+            if (new_ps.getnPlayer(current_turn).storage.existsStorageRowTilesFull()) {
                 storage_full_exist = true;
             }
-            if(storage_full_exist){
+            if (storage_full_exist) {
                 min_storage_empty_tiles = 0;
                 int new_min_floor_tiles = new_ps.getnPlayer(current_turn).floor.getTotalTilesNumber();
                 int new_high_storage_row_full = new_ps.getnPlayer(current_turn).storage.findHighestStorageRowFull();
-                if(new_min_floor_tiles < min_floor_tiles){
+                if (new_min_floor_tiles < min_floor_tiles) {
                     min_floor_tiles = new_min_floor_tiles;
                     high_storage_row_full = 0;
                 }
-                if(min_floor_tiles == new_min_floor_tiles){
-                    if(new_high_storage_row_full > high_storage_row_full){
+                if (min_floor_tiles == new_min_floor_tiles) {
+                    if (new_high_storage_row_full > high_storage_row_full) {
                         high_storage_row_full = new_high_storage_row_full;
                     }
                 }
-            }
-            else{
+            } else {
                 int new_min_storage_empty_tiles = new_ps.getnPlayer(current_turn).storage.findMinimumEmptyStorageTiles();
-                if(new_min_storage_empty_tiles < min_storage_empty_tiles){
+                if (new_min_storage_empty_tiles < min_storage_empty_tiles) {
                     min_storage_empty_tiles = new_min_storage_empty_tiles;
                 }
             }
@@ -69,44 +68,42 @@ public class Experiment_PSVM5 implements Constants{
             System.out.print(new_ps.getnPlayer(current_turn).storage.findMinimumEmptyStorageTiles());
             System.out.println(" || max floor tiles : " + min_floor_tiles + " ,storage full exists : " + storage_full_exist + " ,min storage empty tiles : " + min_storage_empty_tiles);
 
-            for(int row=0; row < MAX_STORAGE_ROW; row++){
+            for (int row = 0; row < MAX_STORAGE_ROW; row++) {
                 System.out.print("( row " + row + " full = ");
                 System.out.print(new_ps.getnPlayer(current_turn).storage.getStorageRow(row).isTilesFull());
                 System.out.print(" ) ");
             }
             System.out.println();
         }
-        int idx =0;
-        ArrayList<String> some_moves = all_moves;
-        ArrayList<Integer> delete_indice = new ArrayList<>();
-        for(String move_candidate : all_moves) {
+        int idx = 0;
+        ArrayList<String> some_moves = new ArrayList<>();
+        ArrayList<Integer> save_indice = new ArrayList<>();
+        for (String move_candidate : all_moves) {
             String[] new_gameState = multiazul.applyMove(gameState, move_candidate);
             PlayerState new_ps = new PlayerState(new_gameState[1], PLAYER_NUMBER);
-            if(storage_full_exist){
-                if(!new_ps.getnPlayer(current_turn).storage.existsStorageRowTilesFull()){
-                    delete_indice.add(idx);
-                }
-                else{
-                    if(new_ps.getnPlayer(current_turn).floor.getTotalTilesNumber() > min_floor_tiles){
-                        delete_indice.add(idx);
-                    }
-                    else{
-                        if(new_ps.getnPlayer(current_turn).storage.findHighestStorageRowFull() < high_storage_row_full){
-                            delete_indice.add(idx);
+            if (storage_full_exist) {
+                if (new_ps.getnPlayer(current_turn).storage.existsStorageRowTilesFull()) {
+                    if (new_ps.getnPlayer(current_turn).floor.getTotalTilesNumber() == min_floor_tiles) {
+                        if (new_ps.getnPlayer(current_turn).storage.findHighestStorageRowFull() == high_storage_row_full) {
+                            save_indice.add(idx);
                         }
                     }
                 }
             }
-            else{
-                if(new_ps.getnPlayer(current_turn).storage.findMinimumEmptyStorageTiles() > min_storage_empty_tiles){
-                    delete_indice.add(idx);
+            else {
+                if (new_ps.getnPlayer(current_turn).storage.findMinimumEmptyStorageTiles() == min_storage_empty_tiles) {
+                    save_indice.add(idx);
                 }
             }
             idx++;
         }
-        for(int i=0; i < delete_indice.size(); i++){
-            some_moves.remove(delete_indice.get(i) - i);
+        for(int i=0; i < save_indice.size(); i++){
+            some_moves.add(all_moves.get(save_indice.get(i)));
+            System.out.print(save_indice.get(i));
+            System.out.println(", " + all_moves.get(save_indice.get(i)));
         }
+        idx = 0;
+
         System.out.println(" pruned ");
         for(int i=0; i < some_moves.size(); i++) {
             move = some_moves.get(i);
